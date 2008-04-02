@@ -1,0 +1,95 @@
+body,td,a,div,.p{font-family:arial,sans-serif;}
+
+h1 { 	text-align: center;
+   }
+
+
+a:link,.w,.w a:link{color:#0000cc;}
+
+a:visited{color:#551a8b;}
+
+a:active{color:#ff0000;}
+
+
+.body{		
+		color: black;
+		margin-top: 0px;
+		margin-bottom: 0px;
+		margin-right: 0px;
+		margin-left: 0px ;
+		background-color: white;
+		text-align:center;
+		}
+			
+.content{
+ 		width: 650px;
+		height: 100%;
+		margin: auto;
+		}
+
+.topoBox{
+		color: white;
+		margin-right: 0px;
+		margin-left: 0px;
+		margin: auto;
+		height: 1px;
+		width: 700px;
+		background-color: black;
+		}
+			
+.sugestoesBox{	
+		width: 500px;
+		height: 100%;
+		background-color: #f3f3f3; 
+		}
+
+.menuBox{
+		width: 200px;
+		height: 100%;
+		background-color: #777777;	 
+		}
+		
+.sugestoes{	
+		position: relative;  
+		
+		}		
+		
+.menu{
+		color: blue;
+		left: 6px;
+		position: relative;  
+		}				
+
+.sugestao{
+		border-width: 2px;
+		border-color: black;
+		border-style: solid;
+		padding: 6px;
+		margin: 10px;
+		text-align: justify;
+		}
+		
+.gwt-Button {
+		background:#C3D9FF;
+		border:1px solid #aaa;
+		border-top:1px solid #ddd;
+		border-left:1px solid #ddd;
+		padding: 2px;
+		width: 8em;
+}
+
+.gwt-Button:active {
+		border:1px solid #aaa;
+		border-bottom:1px solid #ccc;
+		border-right:1px solid #ccc;
+}
+
+.gwt-Button[disabled] {
+		background: #ccc;
+		border:1px solid #999;
+		border-top:1px solid #ccc;
+		border-left:1px solid #ccc;
+		color: #888;
+}
+
+
