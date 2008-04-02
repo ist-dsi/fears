@@ -58,7 +58,7 @@ public class Fears implements EntryPoint {
 		features = new VerticalPanel();
 
 		features.setStyleName("sugestoes");
-		featuresBox.add( new HTML("<br><h1>Sugestoes</h1><br>"));
+		featuresBox.add( new HTML("<h1>Sugestoes</h1><br>"));
 
 		featuresBox.add(features);
 
