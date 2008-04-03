@@ -6,9 +6,9 @@ h1 { 	text-align: center;
 
 a:link,.w,.w a:link{color:#0000cc;}
 
-a:visited{color:#551a8b;}
+a:visited{color:#0000cc;}
 
-a:active{color:#ff0000;}
+a:active{ 	}
 
 
 .body{		
@@ -23,11 +23,11 @@ a:active{color:#ff0000;}
 			
 .content{
  		width: 650px;
-		height: 100%;
+		height: 97%;
 		margin: auto;
 		}
 
-.topoBox{
+.topBG{
 		color: white;
 		margin-right: 0px;
 		margin-left: 0px;
@@ -37,36 +37,48 @@ a:active{color:#ff0000;}
 		background-color: black;
 		}
 			
-.sugestoesBox{	
+.featuresBG{	
 		width: 500px;
 		height: 100%;
 		background-color: #f3f3f3; 
 		}
 
-.menuBox{
+.menuBG{
 		width: 200px;
 		height: 100%;
 		background-color: #777777;	 
 		}
 		
-.sugestoes{	
-		position: relative;  
-		
-		}		
-		
 .menu{
 		color: blue;
 		left: 6px;
-		position: relative;  
+		position: relative;
+		padding: 3px;
 		}				
 
-.sugestao{
+.featuresList{
+		width: 500px;
+		height: 1%;
+}
+
+.createFeature{
+		width: 500px;
+		height: 1%;
+}
+
+.featureResume{
 		border-width: 2px;
 		border-color: black;
 		border-style: solid;
+		width: 480px;
 		padding: 6px;
 		margin: 10px;
-		text-align: justify;
+		}
+		
+.featureResume{
+		width: 480px;
+		padding: 6px;
+		margin: 10px;
 		}
 		
 .gwt-Button {
@@ -75,7 +87,7 @@ a:active{color:#ff0000;}
 		border-top:1px solid #ddd;
 		border-left:1px solid #ddd;
 		padding: 2px;
-		width: 8em;
+		width: 10em;
 }
 
 .gwt-Button:active {

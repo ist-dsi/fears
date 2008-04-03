@@ -1,1 +1,1 @@
-@java -cp "%~dp0\src;%~dp0\bin;C:/Program Files/gwt-windows-1.4.61/gwt-user.jar;C:/Program Files/gwt-windows-1.4.61/gwt-dev-windows.jar" com.google.gwt.dev.GWTCompiler -out "%~dp0\www" %* eu.ist.fears.Fears
+@java -cp "%~dp0\src;%~dp0\bin;C:/Program Files/gwt-windows-1.4.61/gwt-user.jar;C:/Program Files/gwt-windows-1.4.61/gwt-dev-windows.jar" com.google.gwt.dev.GWTCompiler -style DETAILED -out "%~dp0\www" %* eu.ist.fears.Fears

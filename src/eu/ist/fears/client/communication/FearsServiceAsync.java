@@ -8,5 +8,6 @@ public interface FearsServiceAsync {
 	public void addFeature(String name, String description,  AsyncCallback callback);
 	public void getFeatures(AsyncCallback callback);
 	public void getFeature(String name, AsyncCallback callback);
+	public void addComment(String featureName, String comment, AsyncCallback callback);
 		
 }

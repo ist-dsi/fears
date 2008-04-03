@@ -1,23 +1,33 @@
 package eu.ist.fears.server;
 
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 
 
 public class FeatureRequest {
-	
-	
-		
+			
 	private static Hashtable<String,FeatureRequest> _features;
 	private String _name;
 	private String _description;
 	private int _votes;
+	private List<String> _comments;
+	
+	
+	FeatureRequest(String name, String description){
+		_name=name;
+		_description=description;
+		_votes=1;
+		_comments = new ArrayList<String>();
+	}
 	
 	public static void addFeature(FeatureRequest s){
 		if(_features==null){
 			_features = new Hashtable<String,FeatureRequest>();
 		}
+		if(_features.get(s.getName())==null)
 		_features.put(s.getName(), s);
 	}
 	
@@ -48,11 +58,6 @@ public class FeatureRequest {
 		return new String[] {_name, _description,new Integer(_votes).toString() };	
 	}
 	
-	FeatureRequest(String name, String description){
-		_name=name;
-		_description=description;
-		_votes=1;
-	}
 	
 	public int getVotes(){
 		return _votes;
@@ -64,6 +69,22 @@ public class FeatureRequest {
 	
 	public String getName(){
 		return _name;
+	}
+
+	public void addComment(String comment) {
+		_comments.add(comment);
+		
+	}
+
+	public String[] toStringsWithComments() {
+		List<String> feat = new ArrayList<String>();
+		feat.add(_name);
+		feat.add(_description);
+		feat.add(new Integer(_votes).toString());
+		feat.addAll(_comments);
+		String[] res= new String[1];
+	
+		return feat.toArray(res);
 	}
 
 }

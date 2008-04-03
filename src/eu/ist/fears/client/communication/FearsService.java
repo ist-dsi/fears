@@ -1,5 +1,6 @@
 package eu.ist.fears.client.communication;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService; 
 
 
@@ -9,5 +10,6 @@ public interface FearsService extends RemoteService  {
 	public void addFeature(String name, String description);
 	public String[][] getFeatures();
 	public String[] getFeature(String name);
+	public String[] addComment(String featureName, String comment);
 		
 }

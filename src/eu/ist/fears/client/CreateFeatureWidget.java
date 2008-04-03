@@ -4,6 +4,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -27,6 +28,8 @@ public class CreateFeatureWidget extends Composite {
 		_com= new Communication("service");
 		_sugPanel = new VerticalPanel();
 		initWidget(_sugPanel);
+		_sugPanel.setStyleName("createFeature");
+		_sugPanel.add( new HTML("<h1>Criar Sugestao</h1><br>"));
 		_nome = new TextBox();
 		_descricao= new TextArea();
 		_botaoEnviar = new Button("Enviar");
@@ -52,7 +55,7 @@ public class CreateFeatureWidget extends Composite {
 		public void onSuccess(Object result){ 
 			// do some UI stuff to show success
 			
-			Fears.viewFeatures();
+			Fears.listFeatures();
 			
 		}
 

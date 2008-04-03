@@ -1,5 +1,6 @@
 package eu.ist.fears.server;
 
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import eu.ist.fears.client.communication.FearsService;
 
@@ -32,7 +33,17 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	}
 	
 	public String[] getFeature(String name){
-		return FeatureRequest.getFeature(name).toStrings();
+		if(FeatureRequest.getFeature(name)!=null)
+		return FeatureRequest.getFeature(name).toStringsWithComments();
+		else return null;
+	}
+
+	public String[] addComment(String featureName, String comment) {
+		if(FeatureRequest.getFeature(featureName)!=null){
+			FeatureRequest.getFeature(featureName).addComment(comment);
+			return FeatureRequest.getFeature(featureName).toStringsWithComments();
+			
+		}else return null;
 	}
 	
 }
