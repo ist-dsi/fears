@@ -75,7 +75,7 @@ public class FeatureDisplayWidget  extends Composite{
 		_description.setText(description);
 		_votes.setText(votes);
 		_comments.clear();
-		_comments.add(new Label(comments.length-3 + " Comentarios;"));
+		_comments.add(new Label(comments.length-3 + " Comentarios:"));
 		if(comments.length>3){
 			for(int i=3;i<comments.length;i++){
 				_comments.add(new Label(comments[i]));

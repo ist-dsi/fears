@@ -14,7 +14,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	private static final long serialVersionUID = -9186875057311859285L;
 
 	public String[] vote(String nome){
-		FeatureRequest s=FeatureRequest.getFeature(nome);
+		FeatureRequest s=FearsApp.getFears().getProject("qualquer um").getFeature(nome);
 		if(s!=null){
 			s.vote();
 			return s.toStrings();
@@ -25,23 +25,23 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	}
 	
 	public void addFeature(String name, String description){
-		FeatureRequest.addFeature(new FeatureRequest(name, description));
+		FearsApp.getFears().getProject("qualquer um").addFeature(new FeatureRequest(name, description));
 	}
 	
 	public String[][] getFeatures(){
-		return FeatureRequest.getFeatures();
+		return FearsApp.getFears().getProject("qualquer um").getFeatures();
 	}
 	
 	public String[] getFeature(String name){
-		if(FeatureRequest.getFeature(name)!=null)
-		return FeatureRequest.getFeature(name).toStringsWithComments();
+		if(FearsApp.getFears().getProject("qualquer um").getFeature(name)!=null)
+		return FearsApp.getFears().getProject("qualquer um").getFeature(name).toStringsWithComments();
 		else return null;
 	}
 
 	public String[] addComment(String featureName, String comment) {
-		if(FeatureRequest.getFeature(featureName)!=null){
-			FeatureRequest.getFeature(featureName).addComment(comment);
-			return FeatureRequest.getFeature(featureName).toStringsWithComments();
+		if(FearsApp.getFears().getProject("qualquer um").getFeature(featureName)!=null){
+			FearsApp.getFears().getProject("qualquer um").getFeature(featureName).addComment(comment);
+			return FearsApp.getFears().getProject("qualquer um").getFeature(featureName).toStringsWithComments();
 			
 		}else return null;
 	}

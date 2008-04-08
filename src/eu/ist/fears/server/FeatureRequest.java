@@ -9,50 +9,19 @@ import java.util.List;
 
 public class FeatureRequest {
 			
-	private static Hashtable<String,FeatureRequest> _features;
 	private String _name;
 	private String _description;
 	private int _votes;
-	private List<String> _comments;
+	private List<Comment> _comments;
 	
 	
-	FeatureRequest(String name, String description){
+	public FeatureRequest(String name, String description){
 		_name=name;
 		_description=description;
 		_votes=1;
-		_comments = new ArrayList<String>();
+		_comments = new ArrayList<Comment>();
 	}
 	
-	public static void addFeature(FeatureRequest s){
-		if(_features==null){
-			_features = new Hashtable<String,FeatureRequest>();
-		}
-		if(_features.get(s.getName())==null)
-		_features.put(s.getName(), s);
-	}
-	
-	public static FeatureRequest getFeature(String nome){
-		if(_features==null){
-			return null;
-		}
-		
-		return _features.get(nome);
-	}
-	
-	
-	public static String[][] getFeatures(){
-		if( _features==null || _features.size()==0)
-			return null;
-		
-		String[][] res = new String[_features.size()][3];
-		Iterator<FeatureRequest>  i = _features.values().iterator();
-		int j=0;
-		while(i.hasNext()){
-			res[j]=i.next().toStrings();
-			j++;
-		}
-		return res;
-	}
 	
 	public String[] toStrings(){
 		return new String[] {_name, _description,new Integer(_votes).toString() };	
@@ -72,8 +41,7 @@ public class FeatureRequest {
 	}
 
 	public void addComment(String comment) {
-		_comments.add(comment);
-		
+		_comments.add(new Comment(comment));
 	}
 
 	public String[] toStringsWithComments() {
@@ -81,7 +49,10 @@ public class FeatureRequest {
 		feat.add(_name);
 		feat.add(_description);
 		feat.add(new Integer(_votes).toString());
-		feat.addAll(_comments);
+		
+		for(Comment c : _comments){
+			feat.add(c.getComment());
+		}
 		String[] res= new String[1];
 	
 		return feat.toArray(res);
