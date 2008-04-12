@@ -1,15 +1,17 @@
 package eu.ist.fears.client.communication;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService; 
+
+import eu.ist.fears.client.views.ViewFeatureDetailed;
+import eu.ist.fears.client.views.ViewFeatureResume;
 
 
 public interface FearsService extends RemoteService  {
 	
-	public String[] vote(String feature);
+	public void vote(String feature);
 	public void addFeature(String name, String description);
-	public String[][] getFeatures();
-	public String[] getFeature(String name);
-	public String[] addComment(String featureName, String comment);
+	public ViewFeatureResume[] getFeatures();
+	public ViewFeatureDetailed getFeature(String name);
+	public ViewFeatureDetailed addComment(String featureName, String comment);
 		
 }

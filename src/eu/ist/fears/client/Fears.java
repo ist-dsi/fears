@@ -7,6 +7,7 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
@@ -23,7 +24,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 
 
-	HorizontalPanel content;
+	DockPanel content;
 	static VerticalPanel featuresBox; 
 	VerticalPanel menuBox;
 	HorizontalPanel topBox; 
@@ -39,15 +40,16 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 		RootPanel.get().setStyleName("body");
 
-		content= new HorizontalPanel();
+		content= new DockPanel();
 		featuresBox = new VerticalPanel();
 		menuBox = new VerticalPanel();
 		topBox = new HorizontalPanel();
 
-		RootPanel.get().add(topBox);
+		
 		RootPanel.get().add(content);
-		content.add(featuresBox);
-		content.add(menuBox);
+		content.add(topBox, DockPanel.NORTH);
+		content.add(featuresBox, DockPanel.CENTER);
+		content.add(menuBox,DockPanel.EAST);
 
 		content.setStyleName("content");
 		topBox.setStyleName("topBG");
@@ -67,11 +69,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 		menu.add(new Hyperlink("Ver Sugestoes","listFeatures"));
 		menu.add(new Hyperlink("Adicionar Sugestao","addFeature"));
 		menu.add(new Hyperlink("Sugestoes Default","defaultFeatures"));
-		
-	
-		//Ir buscar as sugestões que tao no server
-		featPanel.init();
-		
+				
 		History.addHistoryListener(this);
 		
 		
@@ -81,14 +79,17 @@ public class Fears implements EntryPoint, HistoryListener  {
 			onHistoryChanged(initToken);			
 		}
 		
+		//Pagina Default:
+		listFeatures();
 
 	
 	}	
 
 	public static void listFeatures(){
 		featuresBox.clear();
+		featPanel.update();	
 		featuresBox.add(featPanel);
-		featPanel.init();		
+			
 
 
 	}
@@ -101,8 +102,9 @@ public class Fears implements EntryPoint, HistoryListener  {
 	
 	public static void viewFeature(String feature){
 		featuresBox.clear();
-		featuresBox.add(new FeatureDisplayWidget(feature));
+		featuresBox.add(new DisplayFeatureDetailedWidget(feature));
 	}
+	
 	
 	
 

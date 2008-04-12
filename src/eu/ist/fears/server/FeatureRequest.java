@@ -6,6 +6,9 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
+import eu.ist.fears.client.views.ViewComment;
+import eu.ist.fears.client.views.ViewFeatureDetailed;
+
 
 public class FeatureRequest {
 			
@@ -32,30 +35,38 @@ public class FeatureRequest {
 		return _votes;
 	}
 	
-	public void vote(){
-		++_votes;
-	}
+
 	
 	public String getName(){
 		return _name;
 	}
+	
+	public String getDescription(){
+		return _description;
+		
+	}
+	
+	public int getNComments(){
+		return  _comments.size();
+		
+	}
 
+	public void vote(){
+		++_votes;
+	}
+	
 	public void addComment(String comment) {
 		_comments.add(new Comment(comment));
 	}
 
-	public String[] toStringsWithComments() {
-		List<String> feat = new ArrayList<String>();
-		feat.add(_name);
-		feat.add(_description);
-		feat.add(new Integer(_votes).toString());
-		
-		for(Comment c : _comments){
-			feat.add(c.getComment());
+
+	public ViewFeatureDetailed getDetailedView() {
+		List comments = new ArrayList<ViewComment>();
+		for(Comment c : _comments ){
+			comments.add(c.getView());
 		}
-		String[] res= new String[1];
-	
-		return feat.toArray(res);
+		
+		return new ViewFeatureDetailed(_name, _description, _votes, comments );
 	}
 
 }

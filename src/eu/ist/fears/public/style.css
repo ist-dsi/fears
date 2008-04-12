@@ -3,6 +3,9 @@ body,td,a,div,.p{font-family:arial,sans-serif;}
 h1 { 	text-align: center;
    }
 
+h3 {
+
+}
 
 a:link,.w,.w a:link{color:#0000cc;}
 
@@ -14,17 +17,21 @@ a:active{ 	}
 .body{		
 		color: black;
 		margin-top: 0px;
-		margin-bottom: 0px;
+		margin-bottom: 55px;
 		margin-right: 0px;
 		margin-left: 0px ;
 		background-color: white;
 		text-align:center;
+		background-color: #ffff04;
 		}
 			
 .content{
- 		width: 650px;
-		height: 97%;
+ 		width: 1px;
+		height: 1px;
 		margin: auto;
+		background-color: white;
+		margin: 6px;
+		text-align:top;
 		}
 
 .topBG{
@@ -32,20 +39,22 @@ a:active{ 	}
 		margin-right: 0px;
 		margin-left: 0px;
 		margin: auto;
-		height: 1px;
-		width: 700px;
+		padding: 8px;
+		width: 100%;
 		background-color: black;
 		}
 			
 .featuresBG{	
 		width: 500px;
-		height: 100%;
-		background-color: #f3f3f3; 
+		height: 500px;
+		background-color: #f3f3f3;
+		padding: 10px; 
 		}
 
 .menuBG{
 		width: 200px;
 		height: 100%;
+		min-height: 500px;
 		background-color: #777777;	 
 		}
 		
@@ -58,12 +67,12 @@ a:active{ 	}
 
 .featuresList{
 		width: 500px;
-		height: 1%;
+		height: 1px;	
 }
 
 .createFeature{
 		width: 500px;
-		height: 1%;
+		height: 1px;
 }
 
 .featureResume{
@@ -71,13 +80,7 @@ a:active{ 	}
 		border-color: black;
 		border-style: solid;
 		width: 480px;
-		padding: 6px;
-		margin: 10px;
-		}
-		
-.featureResume{
-		width: 480px;
-		padding: 6px;
+		padding: 9px;
 		margin: 10px;
 		}
 		

@@ -1,5 +1,7 @@
 package eu.ist.fears.server;
 
+import eu.ist.fears.client.views.ViewComment;
+
 public class Comment {
 	
 	private String _comment;
@@ -12,4 +14,8 @@ public class Comment {
 		return _comment;
 	}
 
+	public ViewComment getView(){
+		return new ViewComment(_comment);
+	}
+	
 }

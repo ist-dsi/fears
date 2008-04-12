@@ -1,9 +1,6 @@
 package eu.ist.fears.client;
 
 
-
-import java.util.HashMap;
-
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -18,73 +15,82 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import eu.ist.fears.client.communication.Communication;
+import eu.ist.fears.client.views.ViewFeatureResume;
 
 
 public class ListFeaturesWidget extends Composite {
-	
+
 	Communication _com;
 	private VerticalPanel _sugPanel;
-	private HashMap _sugWidgets;
+	//private HashMap _sugWidgets;
 
 	public ListFeaturesWidget(){
 		_com= new Communication("service");
 		_sugPanel = new VerticalPanel();
 		initWidget(_sugPanel);
 		_sugPanel.setStyleName("featuresList");
-		_sugWidgets = new HashMap();
-		_sugPanel.add( new HTML("<h1>Sugestoes</h1><br>"));
+		_sugPanel.add( new HTML("<h1>Sugestoes</h1>"));
 	}
 
 	private class FeatureResumeWidget extends Composite{
-		
+
 		VerticalPanel _feature; 
+		VerticalPanel _featureContainer; 
 		Label _name;
 		Label _description;
 		Label _votes;
-		Label _msg;
+		Label _nComments;
+		Label _alert;
 		HorizontalPanel _info;
 		Button _voteButton;
-		
-		
-		FeatureResumeWidget(String nome, String descricao, String votos){
-			
-			_name = new Label(nome);
-			_description= new Label(descricao);
-			_votes = new Label(votos);
+
+
+		FeatureResumeWidget(ViewFeatureResume f){
+
+			_name = new Label(f.getName());
+			_description= new Label(f.getDescription());
+			_votes = new Label(new Integer(f.getVotes()).toString());
+			_nComments = new Label(new Integer(f.getNComments()).toString());
+
 			_feature = new VerticalPanel();
-			_msg = new Label();
+			_featureContainer = new VerticalPanel();
+			_featureContainer.add(_feature);
+			_alert = new Label();
 			_voteButton = new Button("Votar");
 			_voteButton.addClickListener(new BotaoVoto());
 			_info=new HorizontalPanel();
-			
-			
-			_feature.setStyleName("featureResume");
-			_feature.add(new Hyperlink("<h3>"+_name.getText()+ "</h3>",true, "viewFeature" + _name.getText() )); 
+
+			_featureContainer.setStyleName("featureResume");
+			_feature.add(new Hyperlink("<b>"+_name.getText()+ "</b>",true, "viewFeature" + _name.getText() )); 
 			_feature.add(_description);
-			_feature.add(_voteButton);
-			_feature.add(_msg);
+			_feature.add(new Label(" ")); //Line Break
 			_feature.add(_info);
-			_info.add(new Label("Autor: ...  | N de Votos:  "));
+			_feature.add(new Label(" ")); //Line Break
+			_feature.add(_voteButton);
+			_feature.add(_alert);
+			_info.add(new Label("Autor: ...   |  N de Votos:  "));
 			_info.add(_votes);
-					
-			initWidget(_feature);
+			_info.add(new Label("  |  N de Comentarios:  "));
+			_info.add(_nComments);
+
+			initWidget(_featureContainer);
 		}
-		
+
 		public void updateValues(String nome,String  descricao, String votos ){
 			_name.setText(nome);
 			_description.setText(descricao);
 			_votes.setText(votos);	
 		}
-		
+
 		public void updateVotos(String votos){
 			_votes.setText(votos);
 		}
-		
-		
+
+
 		private class BotaoVoto implements ClickListener{
-		
+
 			public void onClick(Widget sender) {
-				_msg.setText("O teu voto em " + _name.getText() + " foi contabilizado.");
+				_alert.setText("O teu voto em " + _name.getText() + " foi contabilizado.");
 				_com.vote(_name.getText(), voteCB);
 			}
 
@@ -92,10 +98,10 @@ public class ListFeaturesWidget extends Composite {
 
 	}
 
-	public void init(){
+	public void update(){
 		_com.getFeatures(getFeaturesCB);		
 	}
-	
+
 	public void test(){
 
 		_com.addFeature("Sug1", "blalha vhajbv ahsha fgf dg  fg d gfg fghf fhd", addFeatureCB);
@@ -106,26 +112,16 @@ public class ListFeaturesWidget extends Composite {
 
 
 
-	public void actualizaSugestoes(String[][] sugestoes){
-		
-		if(sugestoes==null)
+	public void actualizaSugestoes(ViewFeatureResume[] features){
+
+		if(features==null)
 			return;
 
-		for(int i=0;i< sugestoes.length;i++){
-			FeatureResumeWidget sugestao = (FeatureResumeWidget) _sugWidgets.get(sugestoes[i][0]);
-			
-			//Sugestao já está no painel, vamos actualiza-la.
-			if(sugestao!=null){
-				sugestao.updateValues(sugestoes[i][0], sugestoes[i][1], sugestoes[i][2]);
-			}
-			else{ //A sugestao ainda nao existia, vamos cria-la e mostra-la.
-				_sugWidgets.put(sugestoes[i][0],
-						new FeatureResumeWidget(sugestoes[i][0], sugestoes[i][1], sugestoes[i][2]));
-				_sugPanel.add((FeatureResumeWidget) _sugWidgets.get(sugestoes[i][0]));
-			}
-			
-		}
+		_sugPanel.clear();
 
+		for(int i=0;i< features.length;i++){
+			_sugPanel.add(new FeatureResumeWidget(features[i]));
+		}
 	}
 
 	AsyncCallback addFeatureCB = new AsyncCallback() {
@@ -134,13 +130,13 @@ public class ListFeaturesWidget extends Composite {
 		}
 
 		public void onFailure(Throwable caught) {
-			RootPanel.get().add(new Label("Isto não correu nada bem"),0,30);
+			RootPanel.get().add(new Label("Isto não correu nada bem"));
 		}
-	};
+	}; 
 
 	AsyncCallback getFeaturesCB = new AsyncCallback() {
 		public void onSuccess(Object result){ 
-			actualizaSugestoes((String[][])result);
+			actualizaSugestoes((ViewFeatureResume[])result);
 		}
 
 		public void onFailure(Throwable caught) {
@@ -148,22 +144,10 @@ public class ListFeaturesWidget extends Composite {
 		}
 	};
 
-	AsyncCallback featureCB = new AsyncCallback() {
-		public void onSuccess(Object result){ 
-
-		}
-
-		public void onFailure(Throwable caught) {
-			RootPanel.get().add(new Label("Isto não correu nada bem"));
-		}
-	};
 
 	AsyncCallback voteCB = new AsyncCallback() {
 		public void onSuccess(Object result){ 
-			String[] feat = (String[])result;
-			FeatureResumeWidget s= ((FeatureResumeWidget)_sugWidgets.get(feat[0]));
-			s.updateVotos(feat[2]);
-
+			update();	
 		}
 
 		public void onFailure(Throwable caught) {

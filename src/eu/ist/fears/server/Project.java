@@ -5,6 +5,8 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
 
+import eu.ist.fears.client.views.ViewFeatureResume;
+
 
 public class Project {
 
@@ -12,14 +14,14 @@ public class Project {
 	private String _description;
 	private Map<String,FeatureRequest> _features;
 
-	
+
 	public Project(String name, String description){
 		_name = name;
 		_description = description;
 		_features = new Hashtable<String,FeatureRequest>();
 	}
 
-	
+
 	public String getName() {
 		return _name;
 	}
@@ -28,26 +30,29 @@ public class Project {
 	public String getDescription() {
 		return _description;
 	}
-	
-	
+
+
 	public  FeatureRequest getFeature(String nome){
 		return _features.get(nome);
 	}
-	
-	public String[][] getFeatures(){
+
+	public ViewFeatureResume[] getViewFeaturesResumes(){
 		if( _features.size()==0)
 			return null;
-		
-		String[][] res = new String[_features.size()][3];
+
+		ViewFeatureResume[] res = new ViewFeatureResume[_features.size()];
 		Iterator<FeatureRequest>  i = _features.values().iterator();
+		FeatureRequest temp;
 		int j=0;
 		while(i.hasNext()){
-			res[j]=i.next().toStrings();
+			temp=i.next();
+			res[j]= new ViewFeatureResume(temp.getName(), temp.getDescription(),
+					temp.getVotes(), temp.getNComments() );
 			j++;
 		}
 		return res;
 	}
-	
+
 
 	public  void addFeature(FeatureRequest s){
 		if(_features.get(s.getName())==null)
