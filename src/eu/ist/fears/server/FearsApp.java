@@ -1,6 +1,10 @@
 package eu.ist.fears.server;
 
+import java.util.Collection;
 import java.util.Hashtable;
+import java.util.List;
+
+import eu.ist.fears.client.views.ViewProject;
 
 
 public class FearsApp {
@@ -19,11 +23,7 @@ public class FearsApp {
 	
 	
 	public Project getProject(String projectName){
-		//TODO: Tirar esta martelada, de usar sempre o mesmo projecto.
-		if(_projects.size()==0){
-			_projects.put("default", new Project("default","projecto por defeito do Fears."));
-		}
-		return _projects.get("default");
+		return _projects.get(projectName);
 	}
 	
 	
@@ -33,8 +33,21 @@ public class FearsApp {
 	
 	
 	public void deleteProject(String name){
-		_projects.remove(_projects.get(name));
+		_projects.remove(name);
+	}
+
+
+	public ViewProject[] getProjects() {
+		Collection<Project> projects = _projects.values();
+		ViewProject[] res = new ViewProject[_projects.size()];
 		
+		int i=0;
+		for(Project p : projects){
+			res[i] = new ViewProject(p.getName(), p.getDescription(), p.getNFeatures() );
+			i++;
+		}
+		
+		return res;
 	}
 	
 }

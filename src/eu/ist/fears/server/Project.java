@@ -32,8 +32,12 @@ public class Project {
 	}
 
 
-	public  FeatureRequest getFeature(String nome){
+	public FeatureRequest getFeature(String nome){
 		return _features.get(nome);
+	}
+	
+	public int getNFeatures(){
+		return _features.size();
 	}
 
 	public ViewFeatureResume[] getViewFeaturesResumes(){

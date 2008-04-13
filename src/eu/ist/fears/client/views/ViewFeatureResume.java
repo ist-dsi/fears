@@ -10,7 +10,7 @@ public class ViewFeatureResume implements Serializable{
 	 */
 	private static final long serialVersionUID = 4220452812727161930L;
 	
-	String _name;
+	private String _name;
 	private String _description;
 	private int _votes;
 	private int _nComments;

@@ -20,6 +20,7 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 
 	private Communication _com;
 	private VerticalPanel _feature; 
+	private String _projectName;
 	private Label _name;
 	private Label _description;
 	private Label _votes;
@@ -31,12 +32,12 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 	private Button _commentButton;
 
 
-	DisplayFeatureDetailedWidget(String name){
+	DisplayFeatureDetailedWidget(String projectName, String featureName){
 
 		_com = new Communication("service");
-		_com.getFeature(name, getFeatureCB);
+		_projectName = projectName;
 
-		_name = new Label(name);
+		_name = new Label(featureName);
 		_description= new Label();
 		_votes = new Label();
 		_feature = new VerticalPanel();
@@ -49,6 +50,8 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 		_commentButton = new Button("Adicionar Comentario");
 		_commentButton.addClickListener(new CommentButton());
 
+		_com.getFeature(projectName, featureName, getFeatureCB);
+		
 		_feature.setStyleName("featureDetailed");
 		_feature.add(new HTML("<h2>"+_name.getText()+ "</h2>")); 
 		_feature.add(_description);
@@ -66,9 +69,9 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 		_commentTextArea.setCharacterWidth(40);
 		_feature.add(_commentTextArea);
 		_feature.add(_commentButton);
-
-
 		initWidget(_feature);
+		
+		
 
 	}
 
@@ -85,7 +88,7 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 	}
 
 	private void update(){
-		_com.getFeature(_name.getText(), getFeatureCB);
+		_com.getFeature(_projectName, _name.getText(), getFeatureCB);
 	}
 
 
@@ -93,7 +96,7 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 
 		public void onClick(Widget sender) {
 			_alert.setText("O teu voto em " + _name.getText() + " foi contabilizado.");
-			_com.vote(_name.getText(), voteCB);
+			_com.vote(_projectName, _name.getText(), voteCB);
 		}
 
 	}
@@ -102,7 +105,7 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 
 		public void onClick(Widget sender) {
 			_alert.setText("O teu comentario foi inserido.");
-			_com.addComment(_name.getText(),_commentTextArea.getText(), getFeatureCB);
+			_com.addComment(_projectName, _name.getText(),_commentTextArea.getText(), getFeatureCB);
 			_commentTextArea.setText("");
 		}
 
@@ -133,7 +136,17 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 		}
 
 		public void onFailure(Throwable caught) {
-			RootPanel.get().add(new Label("Isto não correu nada bem"));
+			 _feature.clear();
+				_feature.add((new Label("A Sugestao " + _name.getText() + " nao foi encontrada.")));
+			try {
+			       throw caught;
+			     } catch(RuntimeException e){
+					_feature.add(new Label("Erro:"+e.getMessage()));
+			    	 
+			     } catch (Throwable e) {
+			    	 _feature.add(new Label(e.getMessage()));
+				}
+			
 		}
 	};
 

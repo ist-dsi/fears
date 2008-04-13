@@ -20,16 +20,24 @@ import eu.ist.fears.client.views.ViewFeatureResume;
 
 public class ListFeaturesWidget extends Composite {
 
-	Communication _com;
+	private Communication _com;
 	private VerticalPanel _sugPanel;
-	//private HashMap _sugWidgets;
+	private String _projectName;
 
-	public ListFeaturesWidget(){
+	public ListFeaturesWidget(String projectName){
 		_com= new Communication("service");
 		_sugPanel = new VerticalPanel();
-		initWidget(_sugPanel);
+		_projectName = projectName;
 		_sugPanel.setStyleName("featuresList");
-		_sugPanel.add( new HTML("<h1>Sugestoes</h1>"));
+		init();
+		initWidget(_sugPanel);
+	}
+	
+	private void init(){
+		_sugPanel.clear();
+		_sugPanel.add( new HTML("<h1>Sugestoes " + _projectName+"</h1>"));
+
+		
 	}
 
 	private class FeatureResumeWidget extends Composite{
@@ -51,17 +59,17 @@ public class ListFeaturesWidget extends Composite {
 			_description= new Label(f.getDescription());
 			_votes = new Label(new Integer(f.getVotes()).toString());
 			_nComments = new Label(new Integer(f.getNComments()).toString());
+			_alert = new Label();
+			_voteButton = new Button("Votar");
+			_voteButton.addClickListener(new VoteButton());
+			_info=new HorizontalPanel();
 
 			_feature = new VerticalPanel();
 			_featureContainer = new VerticalPanel();
 			_featureContainer.add(_feature);
-			_alert = new Label();
-			_voteButton = new Button("Votar");
-			_voteButton.addClickListener(new BotaoVoto());
-			_info=new HorizontalPanel();
-
 			_featureContainer.setStyleName("featureResume");
-			_feature.add(new Hyperlink("<b>"+_name.getText()+ "</b>",true, "viewFeature" + _name.getText() )); 
+			
+			_feature.add(new Hyperlink("<b>"+_name.getText()+ "</b>",true, "Project" + _projectName + "?" +"viewFeature" + _name.getText() )); 
 			_feature.add(_description);
 			_feature.add(new Label(" ")); //Line Break
 			_feature.add(_info);
@@ -87,11 +95,11 @@ public class ListFeaturesWidget extends Composite {
 		}
 
 
-		private class BotaoVoto implements ClickListener{
+		private class VoteButton implements ClickListener{
 
 			public void onClick(Widget sender) {
 				_alert.setText("O teu voto em " + _name.getText() + " foi contabilizado.");
-				_com.vote(_name.getText(), voteCB);
+				_com.vote(_projectName, _name.getText(), voteCB);
 			}
 
 		}
@@ -99,29 +107,24 @@ public class ListFeaturesWidget extends Composite {
 	}
 
 	public void update(){
-		_com.getFeatures(getFeaturesCB);		
-	}
-
-	public void test(){
-
-		_com.addFeature("Sug1", "blalha vhajbv ahsha fgf dg  fg d gfg fghf fhd", addFeatureCB);
-		_com.addFeature("Sug2", "vh   ajbv ah  sha blal   fhdh fgh gh  gfh f  ha ", addFeatureCB);
-		_com.addFeature("Sug3", ".. .. .. ...   .... hgfghf  hhfgf fh ghf", addFeatureCB);
-		_com.getFeatures(getFeaturesCB);
+		_com.getFeatures(_projectName, getFeaturesCB);		
 	}
 
 
+	public void updateFeatures(ViewFeatureResume[] features){
+		
+		init();
 
-	public void actualizaSugestoes(ViewFeatureResume[] features){
-
-		if(features==null)
+		if(features==null || features.length ==0 ){
+			_sugPanel.add(new Label("Nao ha Sugestoes."));
 			return;
-
-		_sugPanel.clear();
-
+		}
+			
 		for(int i=0;i< features.length;i++){
 			_sugPanel.add(new FeatureResumeWidget(features[i]));
 		}
+		
+		
 	}
 
 	AsyncCallback addFeatureCB = new AsyncCallback() {
@@ -136,7 +139,7 @@ public class ListFeaturesWidget extends Composite {
 
 	AsyncCallback getFeaturesCB = new AsyncCallback() {
 		public void onSuccess(Object result){ 
-			actualizaSugestoes((ViewFeatureResume[])result);
+			updateFeatures((ViewFeatureResume[])result);
 		}
 
 		public void onFailure(Throwable caught) {

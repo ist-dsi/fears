@@ -18,34 +18,36 @@ import eu.ist.fears.client.communication.Communication;
 
 public class CreateFeatureWidget extends Composite {
 
-	Communication _com;
+	private Communication _com;
 	private VerticalPanel _sugPanel;
-	private TextBox _nome; 
-	private TextArea _descricao; 
-	private Button _botaoEnviar;
+	private TextBox _name; 
+	private TextArea _description; 
+	private Button _sendButton;
+	private String _projectName;
 
-	public CreateFeatureWidget(){
+	public CreateFeatureWidget(String projectName){
 		_com= new Communication("service");
 		_sugPanel = new VerticalPanel();
+		_projectName = projectName;
 		initWidget(_sugPanel);
 		_sugPanel.setStyleName("createFeature");
 		_sugPanel.add( new HTML("<h1>Criar Sugestao</h1><br>"));
-		_nome = new TextBox();
-		_descricao= new TextArea();
-		_botaoEnviar = new Button("Enviar");
+		_name = new TextBox();
+		_description= new TextArea();
+		_sendButton = new Button("Enviar");
 		
 		
 		_sugPanel.add(new Label("Nome da Sugestão:"));
-		_sugPanel.add(_nome);
+		_sugPanel.add(_name);
 		_sugPanel.add(new Label("Descrição da Sugestão:"));
-		_descricao.setVisibleLines(7);
-		_descricao.setCharacterWidth(40);
-		_sugPanel.add(_descricao);
-		_sugPanel.add(_botaoEnviar);
+		_description.setVisibleLines(7);
+		_description.setCharacterWidth(40);
+		_sugPanel.add(_description);
+		_sugPanel.add(_sendButton);
 
-		_botaoEnviar.addClickListener(new ClickListener(){
+		_sendButton.addClickListener(new ClickListener(){
 			public void onClick(Widget sender) {
-				_com.addFeature(_nome.getText(), _descricao.getText(), addSugestaoCB);
+				_com.addFeature(_projectName, _name.getText(), _description.getText(), addSugestaoCB);
 				
 			}
 		});
@@ -55,7 +57,7 @@ public class CreateFeatureWidget extends Composite {
 		public void onSuccess(Object result){ 
 			// do some UI stuff to show success
 			
-			Fears.listFeatures();
+			Fears.listFeatures(_projectName);
 			
 		}
 

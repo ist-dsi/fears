@@ -16,7 +16,7 @@ a:active{ 	}
 
 .body{		
 		color: black;
-		margin-top: 0px;
+		margin-top: 6px;
 		margin-bottom: 55px;
 		margin-right: 0px;
 		margin-left: 0px ;
@@ -25,16 +25,14 @@ a:active{ 	}
 		background-color: #ffff04;
 		}
 			
-.content{
+.main{
  		width: 1px;
 		height: 1px;
-		margin: auto;
-		background-color: white;
-		margin: 6px;
+		margin: 0 auto;
 		text-align:top;
 		}
 
-.topBG{
+.top{
 		color: white;
 		margin-right: 0px;
 		margin-left: 0px;
@@ -44,25 +42,24 @@ a:active{ 	}
 		background-color: black;
 		}
 			
-.featuresBG{	
+.content{	
 		width: 500px;
 		height: 500px;
-		background-color: #f3f3f3;
+		background-color: #e3e3e3;
 		padding: 10px; 
 		}
 
-.menuBG{
+.menuBox{
 		width: 200px;
 		height: 100%;
 		min-height: 500px;
-		background-color: #777777;	 
+		background-color: #ffffff;	 
 		}
 		
-.menu{
-		color: blue;
+.menu{  
 		left: 6px;
 		position: relative;
-		padding: 3px;
+		padding: 0px;
 		}				
 
 .featuresList{
@@ -85,7 +82,7 @@ a:active{ 	}
 		}
 		
 .gwt-Button {
-		background:#C3D9FF;
+		background: #ffff74 ; <!-- #C3D9FF; -->
 		border:1px solid #aaa;
 		border-top:1px solid #ddd;
 		border-left:1px solid #ddd;
