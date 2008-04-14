@@ -43,10 +43,10 @@ a:active{ 	}
 		}
 			
 .content{	
-		width: 500px;
+		width: 550px;
 		height: 500px;
 		background-color: #e3e3e3;
-		padding: 10px; 
+		padding: 0px; 
 		}
 
 .menuBox{
@@ -63,21 +63,24 @@ a:active{ 	}
 		}				
 
 .featuresList{
-		width: 500px;
-		height: 1px;	
+		width: 530px;
+		height: 1px;
+		margin-right: 20px;
 }
 
-.createFeature{
-		width: 500px;
+.projectsList{
+		width: 530px;
 		height: 1px;
+		margin-right: 20px;	
 }
+
 
 .project {
 
 		border-width: 2px;
 		border-color: #FFC700;
 		border-style: solid;
-		width: 480px;
+		width: 98%;
 		padding: 9px;
 		margin: 10px;
 }
@@ -86,10 +89,16 @@ a:active{ 	}
 		border-width: 2px;
 		border-color: red;
 		border-style: solid;
-		width: 480px;
+		width: 98%;
 		padding: 9px;
 		margin: 10px;
 		}
+
+.createFeature{
+		width: 100%;
+		height: 1px;
+}
+
 		
 .gwt-Button {
 		background: #ffff74 ; <!-- #C3D9FF; -->

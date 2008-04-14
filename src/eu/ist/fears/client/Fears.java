@@ -166,8 +166,8 @@ public class Fears implements EntryPoint, HistoryListener  {
 			parse = string.substring(parseAt+1);
 			
 		}else{
-			projectName = string.substring(0,parseAt);
-			parse = string.substring(parseB+2);
+			projectName = string.substring(0,parseB);
+			parse = string.substring(parseB+3);
 		}
 		
 		if("listFeatures".equals(parse)){
