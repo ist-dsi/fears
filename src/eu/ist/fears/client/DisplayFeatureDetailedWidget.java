@@ -55,16 +55,16 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 		_feature.setStyleName("featureDetailed");
 		_feature.add(new HTML("<h2>"+_name.getText()+ "</h2>")); 
 		_feature.add(_description);
-		_feature.add(new Label(" ")); //Line Break
+		_feature.add(new HTML("<br>")); //Line Break
 		_feature.add(_info);
 		_info.add(new Label("Autor: ...  | N de Votos:  "));
 		_info.add(_votes);	
 		_feature.add(_voteButton);
 		_feature.add(_alert);	
 		
-		_feature.add(new Label(" ")); //Line Break
+		_feature.add(new HTML("<br>")); //Line Break
 		_feature.add(_comments);
-		_feature.add(new Label(" ")); //Line Break
+		_feature.add(new HTML("<br>")); //Line Break
 		_commentTextArea.setVisibleLines(7);
 		_commentTextArea.setCharacterWidth(40);
 		_feature.add(_commentTextArea);
@@ -82,7 +82,7 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 		_comments.add(new Label(f.getComments().size() + " Comentarios:"));
 		if(f.getComments().size()>0)
 			for(int i=0; i<f.getComments().size();i++){
-				_comments.add(new Label(" ")); //Line Break
+				_comments.add(new HTML("<br>")); //Line Break
 				_comments.add(new Label(((ViewComment)f.getComments().get(i)).getComment()));
 			}
 	}

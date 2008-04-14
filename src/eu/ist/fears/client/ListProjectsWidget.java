@@ -1,5 +1,6 @@
 package eu.ist.fears.client;
 
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -46,8 +47,10 @@ public class ListProjectsWidget extends Composite{
 	private void displayCreateProject(){
 
 		
-		_projPanel.add(new HTML("<br><br><br><h2>Criar Projecto</h2>"));
+		_projPanel.add(new HTML("<br><br><h2>Criar Projecto</h2>"));
 		_projPanel.add(new Label("Nome do Projecto:"));
+		_newProjectName.setText("");
+		_newProjectDescription.setText("");
 		_projPanel.add(_newProjectName);
 		_projPanel.add(new Label("Descricao do Projecto:"));
 		_newProjectDescription.setVisibleLines(7);
@@ -58,8 +61,6 @@ public class ListProjectsWidget extends Composite{
 		_createProjectButton.addClickListener(new ClickListener(){
 			public void onClick(Widget sender) {
 				_com.addProject(_newProjectName.getText(), _newProjectDescription.getText(), updateCB);
-				_newProjectName.setText("");
-				_newProjectDescription.setText("");
 			}
 		});
 	}
@@ -93,9 +94,8 @@ public class ListProjectsWidget extends Composite{
 
 			_project.add(new Hyperlink("<b>"+_name.getText() + "</b>", true, "Project" + _name.getText())); 
 			_project.add(_description);
-			_project.add(new Label(" ")); //Line Break
+			_project.add(new HTML("<br>")); //Line Break
 			_project.add(_info);
-			_project.add(new Label(" ")); //Line Break
 			_project.add(_removeButton);
 			_project.add(_alert);
 			_info.add(new Label("Autor: ...   |  N de Feature Requests:  "));
@@ -130,9 +130,8 @@ public class ListProjectsWidget extends Composite{
 		
 
 		for(int i=0;i< projects.length;i++){
-			_projPanel.add(new Label(" ")); //Line Break
-			_projPanel.add(new Label(" ")); //Line Break
 			_projPanel.add(new ProjectWidget(projects[i]));
+			_projPanel.add(new HTML("<br>")); //Line Break
 		}
 
 		displayCreateProject();

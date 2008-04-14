@@ -22,7 +22,7 @@ a:active{ 	}
 		margin-left: 0px ;
 		background-color: white;
 		text-align:center;
-		background-color: #ffff04;
+		background-color: #FFC700; <!-- #efef04 -->
 		}
 			
 .main{
@@ -72,9 +72,19 @@ a:active{ 	}
 		height: 1px;
 }
 
+.project {
+
+		border-width: 2px;
+		border-color: #FFC700;
+		border-style: solid;
+		width: 480px;
+		padding: 9px;
+		margin: 10px;
+}
+
 .featureResume{
 		border-width: 2px;
-		border-color: black;
+		border-color: red;
 		border-style: solid;
 		width: 480px;
 		padding: 9px;

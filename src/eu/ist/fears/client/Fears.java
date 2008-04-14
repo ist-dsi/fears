@@ -81,18 +81,18 @@ public class Fears implements EntryPoint, HistoryListener  {
 		menu.clear();
 		if(project==""){
 			menu.add(new Hyperlink("Ver Lista de Projectos", "listProjects"));
-			menu.add(new Label(" "));
-			menu.add(new Label(" "));
+			menu.add(new HTML("<br>"));
+			menu.add(new HTML("<br>"));
 			menu.add(new Hyperlink("Sugestoes Default","defaultFeatures"));
 
 		}else{
 			menu.add(new Hyperlink("Ver Lista de Projectos", "listProjects"));
-			menu.add(new Label(" "));
+			menu.add(new HTML("<br>"));
 			menu.add(new HTML("<b>" + project + "</b>"));
 			menu.add(new Hyperlink("     -  Ver Sugestoes","Project" + project + "?" + "listFeatures"));
 			menu.add(new Hyperlink("     -  Adicionar Sugestao","Project" + project + "?" + "addFeature"));
-			menu.add(new Label(" "));
-			menu.add(new Label(" "));
+			menu.add(new HTML("<br>"));
+			menu.add(new HTML("<br>"));
 			menu.add(new Hyperlink("Sugestoes Default","defaultFeatures"));
 		}
 		
@@ -150,18 +150,26 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 	private void projectParse(String string){
 		int parseAt =  string.indexOf('?');
+		int parseB =  string.indexOf("%3F");
 		String projectName;
+		String parse;
 
 		//Estamos no Caso: #ProjectXPTO  
-		if(parseAt==-1){
+		if(parseAt==-1 && parseB==-1 ){
 			projectName=string;
-			History.newItem("Project" + projectName + "?" + "listFeatures");
-			return;
+			listFeatures(projectName);
+			return;	
 		}
 
-		projectName = string.substring(0,parseAt);
-		String parse = string.substring(parseAt+1);
-
+		if(parseAt!=-1){
+			projectName = string.substring(0,parseAt);
+			parse = string.substring(parseAt+1);
+			
+		}else{
+			projectName = string.substring(0,parseAt);
+			parse = string.substring(parseB+2);
+		}
+		
 		if("listFeatures".equals(parse)){
 			listFeatures(projectName);	
 		}else if("addFeature".equals(parse)){

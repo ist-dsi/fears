@@ -71,9 +71,9 @@ public class ListFeaturesWidget extends Composite {
 			
 			_feature.add(new Hyperlink("<b>"+_name.getText()+ "</b>",true, "Project" + _projectName + "?" +"viewFeature" + _name.getText() )); 
 			_feature.add(_description);
-			_feature.add(new Label(" ")); //Line Break
+			_feature.add(new HTML("<br>")); //Line Break
 			_feature.add(_info);
-			_feature.add(new Label(" ")); //Line Break
+			_feature.add(new HTML("<br>")); //Line Break
 			_feature.add(_voteButton);
 			_feature.add(_alert);
 			_info.add(new Label("Autor: ...   |  N de Votos:  "));
