@@ -61,7 +61,7 @@ public class FeatureRequest {
 
 
 	public ViewFeatureDetailed getDetailedView() {
-		List comments = new ArrayList<ViewComment>();
+		List<ViewComment> comments = new ArrayList<ViewComment>();
 		for(Comment c : _comments ){
 			comments.add(c.getView());
 		}
