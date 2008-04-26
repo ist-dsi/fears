@@ -86,7 +86,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 			menu.add(new Hyperlink("Ver Lista de Projectos", "listProjects"));
 			menu.add(new HTML("<br>"));
 			menu.add(new HTML("<br>"));
-			menu.add(new Hyperlink("Sugestoes Default","defaultFeatures"));
+			menu.add(new HTML("<a href=\"Admin.html\">Administracao</a>"));
 
 		}else{
 			menu.add(new Hyperlink("Ver Lista de Projectos", "listProjects"));
@@ -97,6 +97,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 			menu.add(new HTML("<br>"));
 			menu.add(new HTML("<br>"));
 			menu.add(new Hyperlink("Sugestoes Default","defaultFeatures"));
+			menu.add(new HTML("<a href=\"Admin.html\">Administracao</a>"));
 		}
 		
 	}
