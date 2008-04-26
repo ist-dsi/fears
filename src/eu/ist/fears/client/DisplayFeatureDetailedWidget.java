@@ -32,7 +32,7 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 	private Button _commentButton;
 
 
-	DisplayFeatureDetailedWidget(String projectName, String featureName){
+	public DisplayFeatureDetailedWidget(String projectName, String featureName){
 
 		_com = new Communication("service");
 		_projectName = projectName;

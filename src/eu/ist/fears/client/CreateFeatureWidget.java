@@ -1,5 +1,6 @@
 package eu.ist.fears.client;
 
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -57,7 +58,8 @@ public class CreateFeatureWidget extends Composite {
 		public void onSuccess(Object result){ 
 			// do some UI stuff to show success
 			
-			Fears.listFeatures(_projectName);
+			History.newItem("Project" + _projectName );
+			//Fears.listFeatures(_projectName);
 			
 		}
 

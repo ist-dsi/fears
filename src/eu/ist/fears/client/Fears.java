@@ -6,8 +6,6 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -15,8 +13,7 @@ import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.Widget;
-
+import eu.ist.fears.client.admin.*;
 import eu.ist.fears.client.communication.Communication;
 
 
@@ -31,6 +28,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 	static VerticalPanel contentBox; 
 	static VerticalPanel menu;
 	static HorizontalPanel topBox; 
+	static Admin admin;
 
 
 
@@ -39,8 +37,13 @@ public class Fears implements EntryPoint, HistoryListener  {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-
-
+		
+		if (RootPanel.get("Admin") != null){
+			admin = new Admin();
+			admin.onModuleLoad();
+			return;			
+		}
+		
 		RootPanel.get().setStyleName("body");
 
 		main= new DockPanel();
@@ -137,6 +140,12 @@ public class Fears implements EntryPoint, HistoryListener  {
 	public void onHistoryChanged(String historyToken) {
 		// This method is called whenever the application's history changes. Set
 		// the label to reflect the current history token.
+		
+		if (RootPanel.get("Admin") != null){
+			admin.onHistoryChanged(historyToken);
+			return;			
+		}
+		
 		if("defaultFeatures".equals(historyToken)){
 			test();
 			History.newItem("Project" + "Fenix");

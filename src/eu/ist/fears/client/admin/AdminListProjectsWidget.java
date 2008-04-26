@@ -1,4 +1,4 @@
-package eu.ist.fears.client;
+package eu.ist.fears.client.admin;
 
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -17,16 +17,22 @@ import com.google.gwt.user.client.ui.Widget;
 import eu.ist.fears.client.communication.Communication;
 import eu.ist.fears.client.views.ViewProject;
 
-public class ListProjectsWidget extends Composite{
+public class AdminListProjectsWidget extends Composite{
 
 	private Communication _com;
 	private VerticalPanel _projPanel;
+	private TextBox _newProjectName; 
+	private TextArea _newProjectDescription; 
+	private Button _createProjectButton;
 
-	public ListProjectsWidget(){
+	public AdminListProjectsWidget(){
 
 		_com= new Communication("service");
 		_projPanel = new VerticalPanel();
 		_projPanel.setStyleName("projectsList");
+		_newProjectName = new TextBox();
+		_newProjectDescription= new TextArea();
+		_createProjectButton = new Button("Adicionar Projecto");
 
 		init();
 		initWidget(_projPanel);
@@ -36,6 +42,27 @@ public class ListProjectsWidget extends Composite{
 	private void init(){
 		_projPanel.clear();
 		_projPanel.add( new HTML("<h1>Projectos</h1>"));
+	}
+
+	private void displayCreateProject(){
+
+		
+		_projPanel.add(new HTML("<br><br><h2>Criar Projecto</h2>"));
+		_projPanel.add(new Label("Nome do Projecto:"));
+		_newProjectName.setText("");
+		_newProjectDescription.setText("");
+		_projPanel.add(_newProjectName);
+		_projPanel.add(new Label("Descricao do Projecto:"));
+		_newProjectDescription.setVisibleLines(7);
+		_newProjectDescription.setCharacterWidth(40);
+		_projPanel.add(_newProjectDescription);
+		_projPanel.add(_createProjectButton);
+
+		_createProjectButton.addClickListener(new ClickListener(){
+			public void onClick(Widget sender) {
+				_com.addProject(_newProjectName.getText(), _newProjectDescription.getText(), updateCB);
+			}
+		}); 
 	}
 
 	private class ProjectWidget extends Composite{
@@ -55,6 +82,8 @@ public class ListProjectsWidget extends Composite{
 			_nFeatures = new Label(new Integer(p.getNFeatures()).toString());
 
 			_alert = new Label();
+			_removeButton = new Button("Remover Projecto");
+			_removeButton.addClickListener(new RemoveButton());
 			_info=new HorizontalPanel();
 
 			_project = new VerticalPanel();
@@ -67,10 +96,21 @@ public class ListProjectsWidget extends Composite{
 			_project.add(_description);
 			_project.add(new HTML("<br>")); //Line Break
 			_project.add(_info);
+			_project.add(_removeButton);
 			_project.add(_alert);
 			_info.add(new Label("Autor: ...   |  N de Feature Requests:  "));
 			_info.add(_nFeatures);			
 			initWidget(_projectContainer);
+		}
+
+
+		private class RemoveButton implements ClickListener{
+
+			public void onClick(Widget sender) {
+				_alert.setText("O Projecto " + _name.getText() + " foi removido.");
+				_com.deleteProject(_name.getText(), updateCB);
+			}
+
 		}
 
 	}
@@ -94,6 +134,7 @@ public class ListProjectsWidget extends Composite{
 			_projPanel.add(new HTML("<br>")); //Line Break
 		}
 
+		displayCreateProject();
 
 	}
 
