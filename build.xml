@@ -41,7 +41,11 @@
       <fileset dir="bin" includes="**/*.class"/>
     </delete>
   </target>
-
+	
+<target name="run linux" depends="compile">
+	<exec executable="Fears-shell-linux.sh"/> 
+</target>
+	
   <target name="all" depends="package"/>
 
 </project>
