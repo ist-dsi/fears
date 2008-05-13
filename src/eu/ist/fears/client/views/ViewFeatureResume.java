@@ -14,32 +14,41 @@ public class ViewFeatureResume implements Serializable{
 	private String _description;
 	private int _votes;
 	private int _nComments;
+	private String _author;
 	
 	public  ViewFeatureResume(){
 		
 	}
 	
-	public  ViewFeatureResume(String name, String description, int votes, int nComments ) {
+	public  ViewFeatureResume(String name, String description,
+			int votes, int nComments, String author){
 		_name= name;
 		_description=description;
 		_votes=votes;
 		_nComments= nComments;
-		
+		_author = author;
 	}
 	
 	public String getName() {
 		return _name;
 	}
+	
 	public String getDescription() {
 		return _description;
 	}
+	
 	public int getVotes() {
 		return _votes;
 	}
+	
 	public int getNComments() {
 		return _nComments;
 	}
 	
+	
+	public String getAuthor() {
+		return _author;
+	}
 	
 	
 	

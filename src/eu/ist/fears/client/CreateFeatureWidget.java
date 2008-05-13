@@ -1,5 +1,6 @@
 package eu.ist.fears.client;
 
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -48,7 +49,8 @@ public class CreateFeatureWidget extends Composite {
 
 		_sendButton.addClickListener(new ClickListener(){
 			public void onClick(Widget sender) {
-				_com.addFeature(_projectName, _name.getText(), _description.getText(), addSugestaoCB);
+				_com.addFeature(_projectName, _name.getText(),
+						_description.getText(),  Cookies.getCookie("fears"), addSugestaoCB);
 				
 			}
 		});

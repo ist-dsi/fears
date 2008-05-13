@@ -8,31 +8,32 @@ import java.util.List;
 
 import eu.ist.fears.client.views.ViewComment;
 import eu.ist.fears.client.views.ViewFeatureDetailed;
+import eu.ist.fears.client.views.ViewVoter;
 
 
 public class FeatureRequest {
 			
 	private String _name;
 	private String _description;
-	private int _votes;
+	private List<Voter> _voters;
 	private List<Comment> _comments;
+	private Voter _author;
 	
 	
-	public FeatureRequest(String name, String description){
+	public FeatureRequest(String name, String description, Voter voter){
 		_name=name;
 		_description=description;
-		_votes=1;
+		_voters= new ArrayList<Voter>();
+		_voters.add(voter);
+		voter.addCreatedFeature(this);
+		voter.addVotedFeature(this);
+		_author=voter;
 		_comments = new ArrayList<Comment>();
 	}
 	
 	
-	public String[] toStrings(){
-		return new String[] {_name, _description,new Integer(_votes).toString() };	
-	}
-	
-	
 	public int getVotes(){
-		return _votes;
+		return _voters.size();
 	}
 	
 
@@ -51,14 +52,25 @@ public class FeatureRequest {
 		
 	}
 
-	public void vote(){
-		++_votes;
+	public void vote(Voter voter){
+		voter.addVotedFeature(this);
+		_voters.add(voter);
 	}
 	
-	public void addComment(String comment) {
+	public void removeVote(Voter voter){
+		_voters.remove(voter);
+	}
+	
+	
+	public void addComment(String comment, Voter voter) {
 		_comments.add(new Comment(comment));
 	}
 
+	public String getAuthor(){
+		return _author.getName();
+	}
+	
+	
 
 	public ViewFeatureDetailed getDetailedView() {
 		List<ViewComment> comments = new ArrayList<ViewComment>();
@@ -66,7 +78,12 @@ public class FeatureRequest {
 			comments.add(c.getView());
 		}
 		
-		return new ViewFeatureDetailed(_name, _description, _votes, comments );
+		List<ViewVoter> voters = new ArrayList<ViewVoter>();
+		for(Voter v : _voters ){
+			voters.add(new ViewVoter(v.getName(), v.getFeaturesCreated(), null ));
+		}
+		
+		return new ViewFeatureDetailed(_name, _description, _voters.size(), comments );
 	}
 
 }

@@ -2,7 +2,6 @@ package eu.ist.fears.client.admin;
 
 
 import com.google.gwt.core.client.EntryPoint;
-
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -17,24 +16,15 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 import eu.ist.fears.client.CreateFeatureWidget;
 import eu.ist.fears.client.DisplayFeatureDetailedWidget;
+import eu.ist.fears.client.Fears;
 import eu.ist.fears.client.ListFeaturesWidget;
-import eu.ist.fears.client.ListProjectsWidget;
 import eu.ist.fears.client.communication.Communication;
 
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class Admin implements EntryPoint, HistoryListener  {
-
-
-
-	static DockPanel main;
-	static VerticalPanel contentBox; 
-	static VerticalPanel menu;
-	static HorizontalPanel topBox; 
-
-
+public class Admin extends Fears implements EntryPoint, HistoryListener  {
 
 
 	/**
@@ -42,7 +32,11 @@ public class Admin implements EntryPoint, HistoryListener  {
 	 */
 	public void onModuleLoad() {
 
+		if (RootPanel.get("Admin")== null){
+			return;			
+		}
 
+		_com = new Communication("service");
 		RootPanel.get().setStyleName("body");
 
 		main= new DockPanel();
@@ -62,7 +56,9 @@ public class Admin implements EntryPoint, HistoryListener  {
 		contentBox.setStyleName("content");
 		menuBox.setStyleName("menuBox");
 
-		topBox.add(new Label("Username: ..."));
+		topBox.add(new Label("Username: "));
+		userName = new Label("...");
+		topBox.add(userName);
 		topBox.add(new Label("PAGINA DE ADMINISTRACAO"));
 
 		menuBox.add(menu);
@@ -70,63 +66,35 @@ public class Admin implements EntryPoint, HistoryListener  {
 		updateMenu("");
 
 		History.addHistoryListener(this);
-
-		/*Mostrar o #  actual */
-		String initToken = History.getToken();
-		if (initToken.length() > 0) {
-			onHistoryChanged(initToken);
-		}else //Pagina Default:
-			viewListProjects();
+		
+		onHistoryChanged(History.getToken());
 	}	
 	
-	public static void updateMenu(String project){
+	public void updateMenu(String project){
 		menu.clear();
 		if(project==""){
 			menu.add(new Hyperlink("Ver Lista de Projectos", "listProjects"));
-			menu.add(new HTML("<br>"));
-			menu.add(new HTML("<br>"));
-			menu.add(new Hyperlink("Sugestoes Default","defaultFeatures"));
-
 		}else{
 			menu.add(new Hyperlink("Ver Lista de Projectos", "listProjects"));
 			menu.add(new HTML("<br>"));
 			menu.add(new HTML("<b>" + project + "</b>"));
 			menu.add(new Hyperlink("     -  Ver Sugestoes","Project" + project + "?" + "listFeatures"));
 			menu.add(new Hyperlink("     -  Adicionar Sugestao","Project" + project + "?" + "addFeature"));
-			menu.add(new HTML("<br>"));
-			menu.add(new HTML("<br>"));
-			menu.add(new Hyperlink("Sugestoes Default","defaultFeatures"));
+			
 		}
+		menu.add(new HTML("<br>"));
+		menu.add(new HTML("<br>"));
 		
 	}
 
-	public static void listFeatures(String projectName){
-		ListFeaturesWidget features = new ListFeaturesWidget(projectName);
+	
+	public void viewListProjects(){
+		
 		contentBox.clear();
-		//RootPanel.get().setTitle(projectName);
-		updateMenu(projectName);
-		features.update();
-		contentBox.add(features);
-	}
-
-	public static void addFeature(String projectName){
-		contentBox.clear();
-		//RootPanel.get().setTitle("Adicionar Sugestao a "+  projectName);
-		updateMenu(projectName);
-		contentBox.add(new CreateFeatureWidget(projectName));
-
-	}
-
-	public static void viewFeature(String projectName, String featureName){
-		contentBox.clear();
-		//RootPanel.get().setTitle(featureName);
-		updateMenu(projectName);
-		contentBox.add(new DisplayFeatureDetailedWidget(projectName, featureName));
-	}
-
-	public static void viewListProjects(){
+		if(!verifyLogin(true))
+			return;
+		
 		AdminListProjectsWidget projects = new AdminListProjectsWidget();
-		contentBox.clear();
 		//RootPanel.get().setTitle("Projectos");
 		updateMenu("");
 		projects.update();	
@@ -135,71 +103,16 @@ public class Admin implements EntryPoint, HistoryListener  {
 	}
 
 
-
 	public void onHistoryChanged(String historyToken) {
 		// This method is called whenever the application's history changes. Set
 		// the label to reflect the current history token.
-		if("defaultFeatures".equals(historyToken)){
-			test();
-			History.newItem("Project" + "Fenix");
-		}else if(historyToken.startsWith("listProjects")){
-			viewListProjects();
-		}else if(historyToken.startsWith("Project")){
-			projectParse(historyToken.substring("Project".length()));	
-		}
-
-	}
-
-	private void projectParse(String string){
-		int parseAt =  string.indexOf('?');
-		int parseB =  string.indexOf("%3F");
-		String projectName;
-		String parse;
-
-		//Estamos no Caso: #ProjectXPTO  
-		if(parseAt==-1 && parseB==-1 ){
-			projectName=string;
-			listFeatures(projectName);
-			return;	
-		}
-
-		if(parseAt!=-1){
-			projectName = string.substring(0,parseAt);
-			parse = string.substring(parseAt+1);
-			
-		}else{
-			projectName = string.substring(0,parseB);
-			parse = string.substring(parseB+3);
+		
+		if (RootPanel.get("Admin")== null){
+			return;			
 		}
 		
-		if("listFeatures".equals(parse)){
-			listFeatures(projectName);	
-		}else if("addFeature".equals(parse)){
-			addFeature(projectName);
-		}else if(parse.startsWith("viewFeature")){
-			viewFeature(projectName, parse.substring("viewFeature".length()));
-		}
+		Fears.parseURL(historyToken, this);
 
 	}
-
-	public void test(){
-
-		Communication _com= new Communication("service");
-		_com.addProject("Fenix", "sugestoes para o fenix", testCB);
-		String s;
-		
-		_com.addFeature("Fenix","Sugestao 1", "blalha vhajbv ahsha fgf dg  fg d gfg fghf fhd", testCB);
-		_com.addFeature("Fenix", "Login", "vh   ajbv ah  sha blal   fhdh fgh gh  gfh f  ha ", testCB);
-		_com.addFeature("Fenix", "Sug3", ".. .. .. ...   .... hgfghf  hhfgf fh ghf", testCB);
-		_com.addFeature("Fenix", "4", "dfs mmmmfds  fdsfds fsd fds fds fdsff", testCB);
-	}
-
-	AsyncCallback testCB = new AsyncCallback() {
-		public void onSuccess(Object result){ 
-		}
-
-		public void onFailure(Throwable caught) {
-		}
-	};
 
 }

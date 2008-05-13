@@ -20,47 +20,61 @@ public class Communication implements FearsServiceAsync{
 	}
 
 	public  void addFeature(String projectName, String name, String description,
+			 String sessionID, AsyncCallback callback) {
+		_service.addFeature(projectName, name, description, sessionID, callback);
+
+	}
+
+
+	public  void getFeature(String projectName, String name,
+			 String sessionID, AsyncCallback callback) {
+		_service.getFeature(projectName, name, sessionID, callback);
+
+	}
+
+
+	public  void getFeatures(String projectName, String sessionID, AsyncCallback callback) {
+		_service.getFeatures(projectName, sessionID, callback);
+
+	}
+
+
+	public  void vote(String projectName, String feature,
+			 String sessionID, AsyncCallback callback) {
+		_service.vote(projectName, feature, sessionID, callback);
+
+	}
+
+	public void addComment(String projectName, String featureName,
+			String comment, String sessionID, AsyncCallback callback) {
+		_service.addComment(projectName, featureName, comment, sessionID, callback);
+
+	}
+
+	public void addProject(String name, String description,
+			String sessionID, AsyncCallback callback) {
+		_service.addProject(name, description, sessionID, callback);
+
+	}
+
+	public void getProjects(String sessionID, AsyncCallback callback) {
+		_service.getProjects(sessionID, callback);
+
+	}
+
+	public void deleteProject(String name, String sessionID, AsyncCallback callback) {
+		_service.deleteProject(name, sessionID , callback );
+
+	}
+
+	public void validateSessionID(String sessionID,
 			AsyncCallback callback) {
-		_service.addFeature(projectName, name, description, callback);
-
+		_service.validateSessionID(sessionID, callback);
 	}
 
-
-	public  void getFeature(String projectName, String name, AsyncCallback callback) {
-		_service.getFeature(projectName, name, callback);
-
-	}
-
-
-	public  void getFeatures(String projectName, AsyncCallback callback) {
-		_service.getFeatures(projectName, callback);
-
-	}
-
-
-	public  void vote(String projectName, String feature, AsyncCallback callback) {
-		_service.vote(projectName, feature, callback);
-
-	}
-
-	public void addComment(String projectName, String featureName, String comment, AsyncCallback callback) {
-		_service.addComment(projectName, featureName, comment, callback);
-
-	}
-
-	public void addProject(String name, String description, AsyncCallback callback) {
-		_service.addProject(name, description, callback);
-
-	}
-
-	public void getProjects(AsyncCallback callback) {
-		_service.getProjects(callback);
-
-	}
-
-	public void deleteProject(String name, AsyncCallback callback) {
-		_service.deleteProject(name,  callback);
-
+	public void login(String user, String password, AsyncCallback callback ) {
+		_service.login(user,password,  callback);
+		
 	}
 
 

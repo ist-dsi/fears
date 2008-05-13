@@ -1,11 +1,17 @@
 package eu.ist.fears.server;
 
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import eu.ist.fears.client.communication.FearsService;
 import eu.ist.fears.client.views.ViewFeatureDetailed;
 import eu.ist.fears.client.views.ViewFeatureResume;
 import eu.ist.fears.client.views.ViewProject;
+import eu.ist.fears.client.views.ViewVoter;
 
 
 
@@ -15,8 +21,9 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	 * 
 	 */	
 	private static final long serialVersionUID = -9186875057311859285L;
+	private static final Boolean True = null;
 
-	public void vote(String projectName, String name){
+	public void vote(String projectName, String name, String sessionID){
 		Project p =FearsApp.getFears().getProject(projectName);
 
 		if(p==null)
@@ -27,28 +34,31 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		if(f==null)
 			throw new RuntimeException("Nao existe essa sugestao: " + name);
 
-		f.vote();
+		f.vote(getVoterFromSession(sessionID));
 	}
 
-	public void addFeature(String projectName, String name, String description){
+	public void addFeature(String projectName, String name,
+			String description, String sessionID){
 		Project p =FearsApp.getFears().getProject(projectName);
 
 		if(p==null)
 			throw new RuntimeException("Nao existe esse projecto: " + projectName);
 
-		p.addFeature(new FeatureRequest(name, description));
+		p.addFeature(new FeatureRequest(name, description, getVoterFromSession(sessionID)));
 	}
 
-	public ViewFeatureResume[] getFeatures(String projectName){
+	public List<ViewFeatureResume> getFeatures(String projectName, String sessionID){
 		Project p =FearsApp.getFears().getProject(projectName);
 
 		if(p==null)
 			throw new RuntimeException("Nao existe esse projecto: " + projectName);
 
-		return p.getViewFeaturesResumes();
+		return FearsApp.getViewFeaturesResumes(p.getFeatures());
+		
 	}
 
-	public ViewFeatureDetailed getFeature(String projectName, String name){
+	public ViewFeatureDetailed getFeature(String projectName,
+			String name, String sessionID){
 		Project p =FearsApp.getFears().getProject(projectName);
 
 		if(p==null)
@@ -61,7 +71,8 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 	}
 
-	public ViewFeatureDetailed addComment(String projectName, String featureName, String comment) {
+	public ViewFeatureDetailed addComment(String projectName,
+			String featureName, String comment, String sessionID) {
 		Project p =FearsApp.getFears().getProject(projectName);
 
 		if(p==null)
@@ -71,21 +82,53 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		if(p.getFeature(featureName)==null)
 			throw new RuntimeException("Nao existe essa sugestao: " + featureName);
 
-		p.getFeature(featureName).addComment(comment);
+		p.getFeature(featureName).addComment(comment, getVoterFromSession(sessionID));
 		return p.getFeature(featureName).getDetailedView();
 	}
 
-	public void addProject(String name, String description) {
-		FearsApp.getFears().addProject(new Project(name, description));
+	public void addProject(String name, String description, String sessionID) {
+		FearsApp.getFears().addProject(new Project(name, description, getVoterFromSession(sessionID)), getVoterFromSession(sessionID));
 	}
 
-	public ViewProject[] getProjects() {
+	public ViewProject[] getProjects(String sessionID) {
 		return  FearsApp.getFears().getProjects();
 	}
 
-	public void deleteProject(String name){
+	public void deleteProject(String name, String sessionID){
 		FearsApp.getFears().deleteProject(name);
 	}
+	
+	public ViewVoter login(String username, String password ){
+		HttpSession session = this.getThreadLocalRequest().getSession();
+		System.out.println("login:"+session.getId());
+		
+		//Fingir que esta tudo bem.
+		
+		Voter temp = FearsApp.getFears().getVoter(username);
+		ViewVoter ret =  new ViewVoter(temp.getName(), temp.getFeaturesCreated(), session.getId());
+		session.setAttribute("fears_voter", ret);
+		return ret;
+		
+	}
+
+	public ViewVoter validateSessionID(String sessionID) {
+		HttpSession session = this.getThreadLocalRequest().getSession();
+		System.out.println("validate:"+session.getId());
+		ViewVoter temp = (ViewVoter)session.getAttribute("fears_voter");
+		//System.out.println("validate:"+temp.getName());
+		if(temp==null){
+			System.out.println("sessao invalida....");
+			throw new RuntimeException("Sessao invalida");
+		}
+		return temp;
+	}
+	
+	private Voter getVoterFromSession(String sessionID){
+		HttpSession session = this.getThreadLocalRequest().getSession();
+		ViewVoter temp = (ViewVoter)session.getAttribute("fears_voter");
+		return FearsApp.getFears().getVoter(temp.getName());
+	}
+	
 
 
 }

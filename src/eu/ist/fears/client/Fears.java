@@ -1,8 +1,11 @@
 package eu.ist.fears.client;
 
 
+import java.util.Date;
+
 import com.google.gwt.core.client.EntryPoint;
 
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -15,6 +18,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import eu.ist.fears.client.admin.*;
 import eu.ist.fears.client.communication.Communication;
+import eu.ist.fears.client.views.ViewFeatureDetailed;
+import eu.ist.fears.client.views.ViewVoter;
 
 
 /**
@@ -24,33 +29,34 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 
 
-	static DockPanel main;
-	static VerticalPanel contentBox; 
-	static VerticalPanel menu;
-	static HorizontalPanel topBox; 
-	static Admin admin;
-
-
+	protected DockPanel main;
+	protected VerticalPanel contentBox; 
+	protected VerticalPanel menu;
+	protected HorizontalPanel topBox; 
+	protected Admin admin;
+	protected Communication _com;
+	protected Label userName;
+	protected boolean validCookie;
 
 
 	/**
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-		
+
 		if (RootPanel.get("Admin") != null){
-			admin = new Admin();
-			admin.onModuleLoad();
 			return;			
 		}
-		
+
+
+		_com = new Communication("service");
 		RootPanel.get().setStyleName("body");
 
 		main= new DockPanel();
 		contentBox = new VerticalPanel();
 		VerticalPanel menuBox = new VerticalPanel();
 		topBox = new HorizontalPanel();
-		
+
 		menu = new VerticalPanel();
 
 		RootPanel.get().add(main);
@@ -63,7 +69,9 @@ public class Fears implements EntryPoint, HistoryListener  {
 		contentBox.setStyleName("content");
 		menuBox.setStyleName("menuBox");
 
-		topBox.add(new Label("Username: ..."));
+		topBox.add(new Label("Username: "));
+		userName = new Label("...");
+		topBox.add(userName);
 		topBox.add(new Label("Nº de Votos Restante: ..."));
 
 		menuBox.add(menu);
@@ -72,93 +80,149 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 		History.addHistoryListener(this);
 
-		/*Mostrar o #  actual */
-		String initToken = History.getToken();
-		if (initToken.length() > 0) {
-			onHistoryChanged(initToken);
-		}else //Pagina Default:
-			viewListProjects();
+		onHistoryChanged(History.getToken());
+		
 	}	
-	
-	public static void updateMenu(String project){
+
+
+	protected void updateUsername(String user){
+		userName.setText(user);
+	}
+
+	public void updateMenu(String project){
 		menu.clear();
 		if(project==""){
 			menu.add(new Hyperlink("Ver Lista de Projectos", "listProjects"));
-			menu.add(new HTML("<br>"));
-			menu.add(new HTML("<br>"));
-			menu.add(new HTML("<a href=\"Admin.html\">Administracao</a>"));
-
 		}else{
 			menu.add(new Hyperlink("Ver Lista de Projectos", "listProjects"));
 			menu.add(new HTML("<br>"));
 			menu.add(new HTML("<b>" + project + "</b>"));
 			menu.add(new Hyperlink("     -  Ver Sugestoes","Project" + project + "?" + "listFeatures"));
 			menu.add(new Hyperlink("     -  Adicionar Sugestao","Project" + project + "?" + "addFeature"));
-			menu.add(new HTML("<br>"));
-			menu.add(new HTML("<br>"));
-			menu.add(new Hyperlink("Sugestoes Default","defaultFeatures"));
-			menu.add(new HTML("<a href=\"Admin.html\">Administracao</a>"));
+			
+			
 		}
-		
+		menu.add(new HTML("<br>"));
+		menu.add(new HTML("<br>"));
+		menu.add(new HTML("<a href=\"Admin.html\">Administracao</a>"));
+		if(!validCookie){
+			menu.add(new Hyperlink("Login","login"));
+		}
 	}
 
-	public static void listFeatures(String projectName){
-		ListFeaturesWidget features = new ListFeaturesWidget(projectName);
+	public void listFeatures(String projectName){
 		contentBox.clear();
+		
+		verifyLogin(false);
+		
+		ListFeaturesWidget features = new ListFeaturesWidget(projectName);
+		
 		//RootPanel.get().setTitle(projectName);
 		updateMenu(projectName);
 		features.update();
 		contentBox.add(features);
 	}
 
-	public static void addFeature(String projectName){
+	public void addFeature(String projectName){
 		contentBox.clear();
 		//RootPanel.get().setTitle("Adicionar Sugestao a "+  projectName);
+
+		if(!verifyLogin(true))
+			return;
+		
 		updateMenu(projectName);
 		contentBox.add(new CreateFeatureWidget(projectName));
 
 	}
 
-	public static void viewFeature(String projectName, String featureName){
+	public void viewFeature(String projectName, String featureName){
 		contentBox.clear();
+		
+		verifyLogin(false);
+			
+				
 		//RootPanel.get().setTitle(featureName);
 		updateMenu(projectName);
 		contentBox.add(new DisplayFeatureDetailedWidget(projectName, featureName));
 	}
 
-	public static void viewListProjects(){
-		ListProjectsWidget projects = new ListProjectsWidget();
+	public void viewListProjects(){
 		contentBox.clear();
+		
+		verifyLogin(false);
+		
+		ListProjectsWidget projects = new ListProjectsWidget();
+		
 		//RootPanel.get().setTitle("Projectos");
 		updateMenu("");
 		projects.update();	
 		contentBox.add(projects);
+	}
+
+	public void viewLogin(){
+		contentBox.clear();
+		
+		verifyLogin(false);
+			
+		LoginWidget login = new LoginWidget(this);
+		updateMenu("");
+		contentBox.add(login);		
+	}
+
+	public void setCookie(String value, String userName){
+		final long DURATION = 1000 * 60 * 60 * 1; //duration remembering login, 1 hour
+		Date expires = new Date(System.currentTimeMillis() + DURATION);
+		Cookies.setCookie("fears", value, expires, null, "/", false);
+		updateUsername(userName);		
+		validCookie=true;
+	}
+	
+	
+	protected boolean verifyLogin(boolean tryToLogin){
+		
+		if(validCookie){
+			return true;
+		}	
+		
+		String sessionID = Cookies.getCookie("fears");
+		if(sessionID == null){
+			if(tryToLogin)
+				viewLogin();
+			return false;
+		}
+		
+		_com.validateSessionID(sessionID, new ValidateSession(this));
+		return false;
 		
 	}
 
-
-
 	public void onHistoryChanged(String historyToken) {
+		if (RootPanel.get("Admin") != null){
+			return;			
+		}
+
+		parseURL(historyToken, this);
+	}
+
+	public static void parseURL(String url, Fears f){
 		// This method is called whenever the application's history changes. Set
 		// the label to reflect the current history token.
 		
-		if (RootPanel.get("Admin") != null){
-			admin.onHistoryChanged(historyToken);
-			return;			
+		if(url.length()==0){
+			f.viewListProjects();
 		}
 		
-		if("defaultFeatures".equals(historyToken)){
-			test();
-			History.newItem("Project" + "Fenix");
-		}else if(historyToken.startsWith("listProjects")){
-			viewListProjects();
-		}else if(historyToken.startsWith("Project")){
-			projectParse(historyToken.substring("Project".length()));	
+		if(url.startsWith("listProjects")){
+			f.viewListProjects();
+		}else if(url.startsWith("login")){
+			f.viewLogin();
+		}else if(url.startsWith("Project")){
+			projectParse(url.substring("Project".length()), f);	
 		}
 
 	}
 
-	private void projectParse(String string){
+	private static void projectParse(String string, Fears f){
 		int parseAt =  string.indexOf('?');
 		int parseB =  string.indexOf("%3F");
 		String projectName;
@@ -167,46 +231,51 @@ public class Fears implements EntryPoint, HistoryListener  {
 		//Estamos no Caso: #ProjectXPTO  
 		if(parseAt==-1 && parseB==-1 ){
 			projectName=string;
-			listFeatures(projectName);
+			f.listFeatures(projectName);
 			return;	
 		}
 
 		if(parseAt!=-1){
 			projectName = string.substring(0,parseAt);
 			parse = string.substring(parseAt+1);
-			
+
 		}else{
 			projectName = string.substring(0,parseB);
 			parse = string.substring(parseB+3);
 		}
-		
+
 		if("listFeatures".equals(parse)){
-			listFeatures(projectName);	
+			f.listFeatures(projectName);	
 		}else if("addFeature".equals(parse)){
-			addFeature(projectName);
+			f.addFeature(projectName);
 		}else if(parse.startsWith("viewFeature")){
-			viewFeature(projectName, parse.substring("viewFeature".length()));
+			f.viewFeature(projectName, parse.substring("viewFeature".length()));
 		}
 
 	}
 
-	public void test(){
+	protected class ValidateSession implements AsyncCallback{
+		Fears _f;
 
-		Communication _com= new Communication("service");
-		_com.addProject("Fenix", "sugestoes para o fenix", testCB);
-		String s;
-		
-		_com.addFeature("Fenix","Sugestao 1", "blalha vhajbv ahsha fgf dg  fg d gfg fghf fhd", testCB);
-		_com.addFeature("Fenix", "Login", "vh   ajbv ah  sha blal   fhdh fgh gh  gfh f  ha ", testCB);
-		_com.addFeature("Fenix", "Sug3", ".. .. .. ...   .... hgfghf  hhfgf fh ghf", testCB);
-		_com.addFeature("Fenix", "4", "dfs mmmmfds  fdsfds fsd fds fds fdsff", testCB);
-	}
+		public ValidateSession(Fears f){
+			_f=f;
+		}
 
-	AsyncCallback testCB = new AsyncCallback() {
-		public void onSuccess(Object result){ 
+		public void onSuccess(Object result){
+			ViewVoter voter = (ViewVoter) result;
+			_f.updateUsername(voter.getName());
+			validCookie= true;
+			_f.onHistoryChanged(History.getToken());
 		}
 
 		public void onFailure(Throwable caught) {
+			try {
+				throw caught;
+			} catch (Throwable e) {
+
+			}
+			//viewLogin();
+			//O que fazer se a sessao estiver invalida?
 		}
 	};
 

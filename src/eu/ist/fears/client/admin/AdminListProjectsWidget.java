@@ -1,5 +1,6 @@
 package eu.ist.fears.client.admin;
 
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -46,7 +47,7 @@ public class AdminListProjectsWidget extends Composite{
 
 	private void displayCreateProject(){
 
-		
+
 		_projPanel.add(new HTML("<br><br><h2>Criar Projecto</h2>"));
 		_projPanel.add(new Label("Nome do Projecto:"));
 		_newProjectName.setText("");
@@ -60,7 +61,8 @@ public class AdminListProjectsWidget extends Composite{
 
 		_createProjectButton.addClickListener(new ClickListener(){
 			public void onClick(Widget sender) {
-				_com.addProject(_newProjectName.getText(), _newProjectDescription.getText(), updateCB);
+				_com.addProject(_newProjectName.getText(),
+						_newProjectDescription.getText(), Cookies.getCookie("fears"), updateCB);
 			}
 		}); 
 	}
@@ -75,11 +77,13 @@ public class AdminListProjectsWidget extends Composite{
 		Label _alert;
 		HorizontalPanel _info;
 		Button _removeButton;
+		Label _author;
 
 		ProjectWidget(ViewProject p){
 			_name = new Label(p.getName());
 			_description= new Label(p.getDescription());
 			_nFeatures = new Label(new Integer(p.getNFeatures()).toString());
+			_author = new Label(p.getAuthor());
 
 			_alert = new Label();
 			_removeButton = new Button("Remover Projecto");
@@ -98,8 +102,14 @@ public class AdminListProjectsWidget extends Composite{
 			_project.add(_info);
 			_project.add(_removeButton);
 			_project.add(_alert);
-			_info.add(new Label("Autor: ...   |  N de Feature Requests:  "));
-			_info.add(_nFeatures);			
+			
+			HorizontalPanel row = new HorizontalPanel();
+			_info.add(row);
+			row.add(new Label("Autor:  "));
+			row.add(_author);
+			row.add(new Label(" |  N de Feature Requests:  "));
+			row.add(_nFeatures);
+			
 			initWidget(_projectContainer);
 		}
 
@@ -108,7 +118,7 @@ public class AdminListProjectsWidget extends Composite{
 
 			public void onClick(Widget sender) {
 				_alert.setText("O Projecto " + _name.getText() + " foi removido.");
-				_com.deleteProject(_name.getText(), updateCB);
+				_com.deleteProject(_name.getText(), Cookies.getCookie("fears"), updateCB);
 			}
 
 		}
@@ -117,17 +127,17 @@ public class AdminListProjectsWidget extends Composite{
 
 
 	public void update(){
-		_com.getProjects(getProjectsCB);	
+		_com.getProjects(Cookies.getCookie("fears"), getProjectsCB);	
 	}
 
 	protected void updateProjects(ViewProject[] projects) {
-		
+
 		init();
 
 		if(projects==null || projects.length ==0){
 			_projPanel.add(new Label("Nao ha Projectos"));
 		}
-		
+
 
 		for(int i=0;i< projects.length;i++){
 			_projPanel.add(new ProjectWidget(projects[i]));

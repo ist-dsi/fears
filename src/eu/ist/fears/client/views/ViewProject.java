@@ -12,15 +12,17 @@ public class ViewProject implements Serializable {
 	private String _name;
 	private String _description;
 	private int _nFeatures;
+	private String _author;
 
 	public ViewProject(){
 
 	}
 
-	public ViewProject(String name, String description, int nFeatures){
+	public ViewProject(String name, String description, int nFeatures, String author){
 		_name=name;
 		_description=description;
 		_nFeatures = nFeatures;
+		_author=author;
 	}
 
 	public String getName() {
@@ -33,6 +35,10 @@ public class ViewProject implements Serializable {
 
 	public int getNFeatures() {
 		return _nFeatures;
+	}
+	
+	public String getAuthor() {
+		return _author;
 	}
 	
 	

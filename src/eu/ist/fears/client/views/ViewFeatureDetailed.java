@@ -31,7 +31,6 @@ public class ViewFeatureDetailed implements Serializable{
 		_description=description;
 		_votes=votes;
 		_comments= comments;
-		
 	}
 	
 	public String getName() {

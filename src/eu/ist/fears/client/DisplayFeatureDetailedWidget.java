@@ -1,6 +1,7 @@
 package eu.ist.fears.client;
 
 
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -50,7 +51,7 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 		_commentButton = new Button("Adicionar Comentario");
 		_commentButton.addClickListener(new CommentButton());
 
-		_com.getFeature(projectName, featureName, getFeatureCB);
+		_com.getFeature(projectName, featureName , Cookies.getCookie("fears"), getFeatureCB);
 		
 		_feature.setStyleName("featureDetailed");
 		_feature.add(new HTML("<h2>"+_name.getText()+ "</h2>")); 
@@ -88,7 +89,7 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 	}
 
 	private void update(){
-		_com.getFeature(_projectName, _name.getText(), getFeatureCB);
+		_com.getFeature(_projectName, _name.getText(), Cookies.getCookie("fears"), getFeatureCB);
 	}
 
 
@@ -96,7 +97,7 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 
 		public void onClick(Widget sender) {
 			_alert.setText("O teu voto em " + _name.getText() + " foi contabilizado.");
-			_com.vote(_projectName, _name.getText(), voteCB);
+			_com.vote(_projectName, _name.getText(), Cookies.getCookie("fears"), voteCB);
 		}
 
 	}
@@ -105,7 +106,8 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 
 		public void onClick(Widget sender) {
 			_alert.setText("O teu comentario foi inserido.");
-			_com.addComment(_projectName, _name.getText(),_commentTextArea.getText(), getFeatureCB);
+			_com.addComment(_projectName, _name.getText(),
+					_commentTextArea.getText(), Cookies.getCookie("fears"), getFeatureCB);
 			_commentTextArea.setText("");
 		}
 

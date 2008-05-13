@@ -1,5 +1,6 @@
 package eu.ist.fears.client;
 
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -30,7 +31,6 @@ public class ListProjectsWidget extends Composite{
 
 		init();
 		initWidget(_projPanel);
-
 	}
 
 	private void init(){
@@ -46,6 +46,7 @@ public class ListProjectsWidget extends Composite{
 		Label _description;
 		Label _nFeatures;
 		Label _alert;
+		Label _author;
 		HorizontalPanel _info;
 		Button _removeButton;
 
@@ -53,6 +54,7 @@ public class ListProjectsWidget extends Composite{
 			_name = new Label(p.getName());
 			_description= new Label(p.getDescription());
 			_nFeatures = new Label(new Integer(p.getNFeatures()).toString());
+			 _author= new Label(p.getAuthor());
 
 			_alert = new Label();
 			_info=new HorizontalPanel();
@@ -68,8 +70,13 @@ public class ListProjectsWidget extends Composite{
 			_project.add(new HTML("<br>")); //Line Break
 			_project.add(_info);
 			_project.add(_alert);
-			_info.add(new Label("Autor: ...   |  N de Feature Requests:  "));
-			_info.add(_nFeatures);			
+			
+			HorizontalPanel row = new HorizontalPanel();
+			_info.add(row);
+			row.add(new Label("Autor:  "));
+			row.add(_author);
+			row.add(new Label(" |  N de Feature Requests:  "));
+			row.add(_nFeatures);			
 			initWidget(_projectContainer);
 		}
 
@@ -77,7 +84,7 @@ public class ListProjectsWidget extends Composite{
 
 
 	public void update(){
-		_com.getProjects(getProjectsCB);	
+		_com.getProjects(Cookies.getCookie("fears"), getProjectsCB);	
 	}
 
 	protected void updateProjects(ViewProject[] projects) {
@@ -93,7 +100,6 @@ public class ListProjectsWidget extends Composite{
 			_projPanel.add(new ProjectWidget(projects[i]));
 			_projPanel.add(new HTML("<br>")); //Line Break
 		}
-
 
 	}
 

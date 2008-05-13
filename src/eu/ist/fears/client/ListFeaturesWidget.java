@@ -1,6 +1,9 @@
 package eu.ist.fears.client;
 
 
+import java.util.List;
+
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -49,6 +52,7 @@ public class ListFeaturesWidget extends Composite {
 		Label _votes;
 		Label _nComments;
 		Label _alert;
+		Label _author;
 		HorizontalPanel _info;
 		Button _voteButton;
 
@@ -59,6 +63,8 @@ public class ListFeaturesWidget extends Composite {
 			_description= new Label(f.getDescription());
 			_votes = new Label(new Integer(f.getVotes()).toString());
 			_nComments = new Label(new Integer(f.getNComments()).toString());
+			_author = new Label(f.getAuthor());
+			
 			_alert = new Label();
 			_voteButton = new Button("Votar");
 			_voteButton.addClickListener(new VoteButton());
@@ -76,8 +82,14 @@ public class ListFeaturesWidget extends Composite {
 			_feature.add(new HTML("<br>")); //Line Break
 			_feature.add(_voteButton);
 			_feature.add(_alert);
-			_info.add(new Label("Autor: ...   |  N de Votos:  "));
-			_info.add(_votes);
+			
+			HorizontalPanel row = new HorizontalPanel();
+			_info.add(row);
+			row.add(new Label("Autor:  "));
+			row.add(_author);
+			row.add(new Label(" | N de Votos:  "));
+			row.add(_votes);
+			
 			_info.add(new Label("  |  N de Comentarios:  "));
 			_info.add(_nComments);
 
@@ -99,7 +111,7 @@ public class ListFeaturesWidget extends Composite {
 
 			public void onClick(Widget sender) {
 				_alert.setText("O teu voto em " + _name.getText() + " foi contabilizado.");
-				_com.vote(_projectName, _name.getText(), voteCB);
+				_com.vote(_projectName, _name.getText(),  Cookies.getCookie("fears"), voteCB);
 			}
 
 		}
@@ -107,21 +119,21 @@ public class ListFeaturesWidget extends Composite {
 	}
 
 	public void update(){
-		_com.getFeatures(_projectName, getFeaturesCB);		
+		_com.getFeatures(_projectName, Cookies.getCookie("fears"), getFeaturesCB);		
 	}
 
 
-	public void updateFeatures(ViewFeatureResume[] features){
+	public void updateFeatures(List features){
 		
 		init();
 
-		if(features==null || features.length ==0 ){
+		if(features==null || features.size() ==0 ){
 			_sugPanel.add(new Label("Nao ha Sugestoes."));
 			return;
 		}
 			
-		for(int i=0;i< features.length;i++){
-			_sugPanel.add(new FeatureResumeWidget(features[i]));
+		for(int i=0;i< features.size();i++){
+			_sugPanel.add(new FeatureResumeWidget((ViewFeatureResume)features.get(i)));
 		}
 		
 		
@@ -139,7 +151,7 @@ public class ListFeaturesWidget extends Composite {
 
 	AsyncCallback getFeaturesCB = new AsyncCallback() {
 		public void onSuccess(Object result){ 
-			updateFeatures((ViewFeatureResume[])result);
+			updateFeatures((List)result);
 		}
 
 		public void onFailure(Throwable caught) {
