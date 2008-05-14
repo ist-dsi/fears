@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
 import eu.ist.fears.client.communication.Communication;
 import eu.ist.fears.client.views.ViewComment;
 import eu.ist.fears.client.views.ViewFeatureDetailed;
+import eu.ist.fears.client.views.ViewVoter;
 
 public class DisplayFeatureDetailedWidget  extends Composite{
 
@@ -31,6 +32,8 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 	private VerticalPanel _comments;
 	private TextArea _commentTextArea;
 	private Button _commentButton;
+	private Label _voters;
+	private Label _author;
 
 
 	public DisplayFeatureDetailedWidget(String projectName, String featureName){
@@ -45,24 +48,37 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 		_alert = new Label();
 		_voteButton = new Button("Votar");
 		_voteButton.addClickListener(new VoteButton());
+		_author = new Label("");
 		_info=new HorizontalPanel();
+		_voters= new Label("");
 		_comments = new VerticalPanel();
 		_commentTextArea= new TextArea();
 		_commentButton = new Button("Adicionar Comentario");
 		_commentButton.addClickListener(new CommentButton());
 
 		_com.getFeature(projectName, featureName , Cookies.getCookie("fears"), getFeatureCB);
-		
+
 		_feature.setStyleName("featureDetailed");
 		_feature.add(new HTML("<h2>"+_name.getText()+ "</h2>")); 
 		_feature.add(_description);
 		_feature.add(new HTML("<br>")); //Line Break
 		_feature.add(_info);
-		_info.add(new Label("Autor: ...  | N de Votos:  "));
+
+
+		_info.add(new Label("Autor: "));
+		_info.add(_author);
+		_info.add(new Label("  | N de Votos:  "));
 		_info.add(_votes);	
 		_feature.add(_voteButton);
 		_feature.add(_alert);	
-		
+
+		_feature.add(new HTML("<br>")); //Line Break
+		HorizontalPanel row =  new HorizontalPanel();
+		_feature.add(row);
+		row.add(new Label("Quem votou nesta ideia:"));
+		row.add(_voters);
+
+
 		_feature.add(new HTML("<br>")); //Line Break
 		_feature.add(_comments);
 		_feature.add(new HTML("<br>")); //Line Break
@@ -71,21 +87,29 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 		_feature.add(_commentTextArea);
 		_feature.add(_commentButton);
 		initWidget(_feature);
-		
-		
 
 	}
 
 	private void updateFeature(ViewFeatureDetailed f){
 		_description.setText(f.getDescription());
 		_votes.setText(new Integer(f.getVotes()).toString());
+		_author.setText(f.getAuthor());
 		_comments.clear();
+		_voters.setText("");
+
+		if(f.getVoters().size()>0)
+			for(int i=0; i<f.getVoters().size();i++){
+				if(i!=0)_voters.setText(_voters.getText() + ", "); 
+				_voters.setText(_voters.getText() + ((ViewVoter)f.getVoters().get(i)).getName()); 
+			}
+
 		_comments.add(new Label(f.getComments().size() + " Comentarios:"));
 		if(f.getComments().size()>0)
 			for(int i=0; i<f.getComments().size();i++){
 				_comments.add(new HTML("<br>")); //Line Break
 				_comments.add(new Label(((ViewComment)f.getComments().get(i)).getComment()));
 			}
+		_alert.setText("");
 	}
 
 	private void update(){
@@ -138,17 +162,17 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 		}
 
 		public void onFailure(Throwable caught) {
-			 _feature.clear();
-				_feature.add((new Label("A Sugestao " + _name.getText() + " nao foi encontrada.")));
+			_feature.clear();
+			_feature.add((new Label("A Sugestao " + _name.getText() + " nao foi encontrada.")));
 			try {
-			       throw caught;
-			     } catch(RuntimeException e){
-					_feature.add(new Label("Erro:"+e.getMessage()));
-			    	 
-			     } catch (Throwable e) {
-			    	 _feature.add(new Label(e.getMessage()));
-				}
-			
+				throw caught;
+			} catch(RuntimeException e){
+				_feature.add(new Label("Erro:"+e.getMessage()));
+
+			} catch (Throwable e) {
+				_feature.add(new Label(e.getMessage()));
+			}
+
 		}
 	};
 

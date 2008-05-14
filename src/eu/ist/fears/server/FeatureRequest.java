@@ -53,6 +53,9 @@ public class FeatureRequest {
 	}
 
 	public void vote(Voter voter){
+		if(_voters.contains(voter))
+			return;
+		
 		voter.addVotedFeature(this);
 		_voters.add(voter);
 	}
@@ -83,7 +86,7 @@ public class FeatureRequest {
 			voters.add(new ViewVoter(v.getName(), v.getFeaturesCreated(), null ));
 		}
 		
-		return new ViewFeatureDetailed(_name, _description, _voters.size(), comments );
+		return new ViewFeatureDetailed(_name,  _description, _author.getName(), voters , comments );
 	}
 
 }

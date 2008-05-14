@@ -19,10 +19,12 @@ public class Voter {
 	}
 
 	public void addCreatedFeature(FeatureRequest f){
+		if(!_featuresCreated.contains(f))
 		_featuresCreated.add(f);
 	}
 
 	public void addVotedFeature(FeatureRequest f){
+		if(!_featuresVoted.contains(f))
 		_featuresVoted.add(f);
 	}
 

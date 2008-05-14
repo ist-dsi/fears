@@ -38,7 +38,7 @@ public class ListProjectsWidget extends Composite{
 		_projPanel.add( new HTML("<h1>Projectos</h1>"));
 	}
 
-	private class ProjectWidget extends Composite{
+	public class ProjectWidget extends Composite{
 
 		VerticalPanel _project; 
 		VerticalPanel _projectContainer;

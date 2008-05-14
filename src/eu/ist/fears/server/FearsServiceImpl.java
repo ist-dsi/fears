@@ -113,13 +113,13 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 	public ViewVoter validateSessionID(String sessionID) {
 		HttpSession session = this.getThreadLocalRequest().getSession();
-		System.out.println("validate:"+session.getId());
+		System.out.println("validating:"+session.getId());
 		ViewVoter temp = (ViewVoter)session.getAttribute("fears_voter");
-		//System.out.println("validate:"+temp.getName());
 		if(temp==null){
 			System.out.println("sessao invalida....");
 			throw new RuntimeException("Sessao invalida");
 		}
+		System.out.println("valido:"+temp.getName());
 		return temp;
 	}
 	

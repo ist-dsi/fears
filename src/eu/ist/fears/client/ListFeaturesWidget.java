@@ -43,7 +43,7 @@ public class ListFeaturesWidget extends Composite {
 		
 	}
 
-	private class FeatureResumeWidget extends Composite{
+	public class FeatureResumeWidget extends Composite{
 
 		VerticalPanel _feature; 
 		VerticalPanel _featureContainer; 

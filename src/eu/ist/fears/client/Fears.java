@@ -81,7 +81,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 		History.addHistoryListener(this);
 
 		onHistoryChanged(History.getToken());
-		
+
 	}	
 
 
@@ -99,8 +99,8 @@ public class Fears implements EntryPoint, HistoryListener  {
 			menu.add(new HTML("<b>" + project + "</b>"));
 			menu.add(new Hyperlink("     -  Ver Sugestoes","Project" + project + "?" + "listFeatures"));
 			menu.add(new Hyperlink("     -  Adicionar Sugestao","Project" + project + "?" + "addFeature"));
-			
-			
+
+
 		}
 		menu.add(new HTML("<br>"));
 		menu.add(new HTML("<br>"));
@@ -112,11 +112,11 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 	public void listFeatures(String projectName){
 		contentBox.clear();
-		
+
 		verifyLogin(false);
-		
+
 		ListFeaturesWidget features = new ListFeaturesWidget(projectName);
-		
+
 		//RootPanel.get().setTitle(projectName);
 		updateMenu(projectName);
 		features.update();
@@ -129,7 +129,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 		if(!verifyLogin(true))
 			return;
-		
+
 		updateMenu(projectName);
 		contentBox.add(new CreateFeatureWidget(projectName));
 
@@ -137,10 +137,10 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 	public void viewFeature(String projectName, String featureName){
 		contentBox.clear();
-		
+
 		verifyLogin(false);
-			
-				
+
+
 		//RootPanel.get().setTitle(featureName);
 		updateMenu(projectName);
 		contentBox.add(new DisplayFeatureDetailedWidget(projectName, featureName));
@@ -148,11 +148,11 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 	public void viewListProjects(){
 		contentBox.clear();
-		
+
 		verifyLogin(false);
-		
+
 		ListProjectsWidget projects = new ListProjectsWidget();
-		
+
 		//RootPanel.get().setTitle("Projectos");
 		updateMenu("");
 		projects.update();	
@@ -161,9 +161,9 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 	public void viewLogin(){
 		contentBox.clear();
-		
+
 		verifyLogin(false);
-			
+
 		LoginWidget login = new LoginWidget(this);
 		updateMenu("");
 		contentBox.add(login);		
@@ -176,24 +176,24 @@ public class Fears implements EntryPoint, HistoryListener  {
 		updateUsername(userName);		
 		validCookie=true;
 	}
-	
-	
+
+
 	protected boolean verifyLogin(boolean tryToLogin){
-		
+
 		if(validCookie){
 			return true;
 		}	
-		
+
 		String sessionID = Cookies.getCookie("fears");
 		if(sessionID == null){
 			if(tryToLogin)
 				viewLogin();
 			return false;
 		}
-		
-		_com.validateSessionID(sessionID, new ValidateSession(this));
+
+		_com.validateSessionID(sessionID, new ValidateSession(this, tryToLogin));
 		return false;
-		
+
 	}
 
 	public void onHistoryChanged(String historyToken) {
@@ -207,11 +207,11 @@ public class Fears implements EntryPoint, HistoryListener  {
 	public static void parseURL(String url, Fears f){
 		// This method is called whenever the application's history changes. Set
 		// the label to reflect the current history token.
-		
+
 		if(url.length()==0){
 			f.viewListProjects();
 		}
-		
+
 		if(url.startsWith("listProjects")){
 			f.viewListProjects();
 		}else if(url.startsWith("login")){
@@ -256,9 +256,11 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 	protected class ValidateSession implements AsyncCallback{
 		Fears _f;
+		boolean _trytoLogin;
 
-		public ValidateSession(Fears f){
+		public ValidateSession(Fears f, boolean trytoLogin){
 			_f=f;
+			_trytoLogin=trytoLogin;
 		}
 
 		public void onSuccess(Object result){
@@ -274,8 +276,9 @@ public class Fears implements EntryPoint, HistoryListener  {
 			} catch (Throwable e) {
 
 			}
-			//viewLogin();
-			//O que fazer se a sessao estiver invalida?
+			if(_trytoLogin)
+				viewLogin();
+
 		}
 	};
 

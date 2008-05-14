@@ -16,7 +16,7 @@ public class ViewVoter implements Serializable {
 	private String _user;
 	
 	/**
-	   * This field is a List that must always contain ViewComment.
+	   * This field is a List that must always contain ViewFeatureResume.
 	   * 
 	   * @gwt.typeArgs <eu.ist.fears.client.views.ViewFeatureResume>
 	   */

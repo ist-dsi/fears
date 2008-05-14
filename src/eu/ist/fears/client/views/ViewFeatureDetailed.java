@@ -11,9 +11,15 @@ public class ViewFeatureDetailed implements Serializable{
 	private static final long serialVersionUID = -9130167518653434831L;
 	
 	
-	String _name;
+	private String _name;
 	private String _description;
-	private int _votes;
+	
+	/**
+	   * This field is a List that must always contain ViewVoter.
+	   * 
+	   * @gwt.typeArgs <eu.ist.fears.client.views.ViewVoter>
+	   */
+	private List _voters;
 	
 	/**
 	   * This field is a List that must always contain ViewComment.
@@ -21,30 +27,42 @@ public class ViewFeatureDetailed implements Serializable{
 	   * @gwt.typeArgs <eu.ist.fears.client.views.ViewComment>
 	   */
 	private List _comments;
+	private String _author;
 	
 	public ViewFeatureDetailed(){
 		
 	}
 	
-	public  ViewFeatureDetailed(String name, String description, int votes, List comments ) {
+	public  ViewFeatureDetailed(String name, String description, String author,  List voters, List comments) {
 		_name= name;
 		_description=description;
-		_votes=votes;
 		_comments= comments;
+		_voters=voters;
+		_author = author;
 	}
 	
 	public String getName() {
 		return _name;
 	}
+	
 	public String getDescription() {
 		return _description;
 	}
-	public int getVotes() {
-		return _votes;
+	
+	public String getAuthor() {
+		return _author;
 	}
+	
+	public int getVotes() {
+		return _voters.size();
+	}
+	
 	public List getComments() {
 		return _comments;
 	}
 	
+	public List getVoters() {
+		return _voters;
+	}
 
 }
