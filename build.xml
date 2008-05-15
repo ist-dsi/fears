@@ -5,6 +5,16 @@
     if you want to distribute it.  This isn't needed for normal operation.
   </description>
 
+  <property name="src.dir" location="src"/>
+  <property name="java.src.dir" location="${src.dir}/java"/>
+  <property name="webapp.src.dir" location="${src.dir}/webapp"/>
+  <property name="build.dir" location="bin"/>
+  <property name="lib.dir" location="lib"/>
+  <property name="deploy.lib.dir" location="deploy-lib"/>
+  <property name="build.webapp.dir" location="webapp"/>
+  <property name="www.dir" location="www"/>
+
+
   <!-- set classpath -->
   <path id="project.class.path">
     <pathelement path="${java.class.path}/"/>
@@ -13,39 +23,54 @@
   </path>
 
   <target name="compile" description="Compile src to bin">
-    <mkdir dir="bin"/>
-    <javac srcdir="src:test" destdir="bin" includes="**" debug="on" debuglevel="lines,vars,source">
-      <classpath refid="project.class.path"/>
+    <mkdir dir="${build.dir}"/>
+    <javac srcdir="${java.src.dir}" destdir="${build.dir}" extdirs="${lib.dir}" includes="**" debug="on" debuglevel="lines,vars,source">
     </javac>
-  </target>
-
-  <target name="package" depends="compile" description="Package up the project as a jar">
-    <jar destfile="Fears.jar">
-      <fileset dir="bin">
-        <include name="**/*.class"/>
-      </fileset>
-      <!-- Get everything; source, modules, html files -->
-      <fileset dir="src">
-        <include name="**"/>
-      </fileset>
-      <fileset dir="test">
-        <include name="**"/>
-      </fileset>
-    </jar>
   </target>
 
   <target name="clean">
     <!-- Delete the bin directory tree -->
-    <delete file="Fears.jar"/>
-    <delete>
-      <fileset dir="bin" includes="**/*.class"/>
-    </delete>
+    <delete dir="${build.dir}"/>
+    <delete dir="${build.webapp.dir}"/>
+    <delete dir="${www.dir}"/>
   </target>
 	
-<target name="run linux" depends="compile">
-	<exec executable="Fears-shell-linux.sh"/> 
-</target>
-	
-  <target name="all" depends="package"/>
+  <target name="run linux" depends="compile">
+    <exec executable="Fears-shell-linux.sh"/> 
+  </target>
 
+  <target name="compile-javascript" depends="compile">
+    <java classname="com.google.gwt.dev.GWTCompiler" fork="true">
+      <classpath>
+        <pathelement path="${java.src.dir}"/>
+        <pathelement path="${build.dir}"/>
+        <fileset dir="${lib.dir}"/>
+      </classpath>
+      <arg value="-style"/>
+      <arg value="DETAILED"/>
+      <arg value="-out"/>
+      <arg value="${www.dir}"/>
+      <arg value="eu.ist.fears.Fears"/>
+    </java>
+  </target>
+
+  <target name="build-webapp" depends="compile-javascript">
+    <mkdir dir="${build.webapp.dir}"/>
+    <mkdir dir="${build.webapp.dir}/WEB-INF"/>
+    <mkdir dir="${build.webapp.dir}/WEB-INF/lib"/>
+    <mkdir dir="${build.webapp.dir}/WEB-INF/classes"/>
+    <copy todir="${build.webapp.dir}/WEB-INF">
+      <fileset dir="${webapp.src.dir}" />
+    </copy>
+    <copy todir="${build.webapp.dir}/WEB-INF/lib">
+      <fileset dir="${deploy.lib.dir}" />
+    </copy>
+    <copy todir="${build.webapp.dir}/WEB-INF/classes">
+      <fileset dir="${build.dir}" />
+    </copy>
+    <copy todir="${build.webapp.dir}">
+      <fileset dir="${www.dir}/eu.ist.fears.Fears" />
+    </copy>
+  </target>
+	
 </project>
