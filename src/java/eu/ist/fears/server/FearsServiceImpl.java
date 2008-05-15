@@ -3,6 +3,7 @@ package eu.ist.fears.server;
 
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +14,8 @@ import eu.ist.fears.client.views.ViewFeatureResume;
 import eu.ist.fears.client.views.ViewProject;
 import eu.ist.fears.client.views.ViewVoter;
 
+import pt.ist.fenixframework.Config;
+import pt.ist.fenixframework.FenixFramework;
 
 
 public class FearsServiceImpl extends RemoteServiceServlet implements FearsService {
@@ -22,6 +25,18 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	 */	
 	private static final long serialVersionUID = -9186875057311859285L;
 	private static final Boolean True = null;
+
+    @Override
+    public void init() throws ServletException {
+        Config config = new Config() {{ 
+            domainModelPath = "fears.dml";
+            dbAlias = "//localhost:3306/fears"; 
+            dbUsername = "root";
+            dbPassword = "";
+        }};
+        FenixFramework.initialize(config);
+    }
+
 
 	public void vote(String projectName, String name, String sessionID){
 		Project p =FearsApp.getFears().getProject(projectName);

@@ -6,13 +6,19 @@
   </description>
 
   <property name="src.dir" location="src"/>
+  <property name="src.gen.dir" location="src_gen"/>
   <property name="java.src.dir" location="${src.dir}/java"/>
+  <property name="dml.src.dir" location="${src.dir}/dml"/>
   <property name="webapp.src.dir" location="${src.dir}/webapp"/>
   <property name="build.dir" location="bin"/>
   <property name="lib.dir" location="lib"/>
+  <property name="config.dir" location="config"/>
   <property name="deploy.lib.dir" location="deploy-lib"/>
   <property name="build.webapp.dir" location="webapp"/>
   <property name="www.dir" location="www"/>
+  <property name="fears.dml" location="${dml.src.dir}/fears.dml"/>
+  <property name="dml.fenix.sqltypes" value="${config.dir}/dataTypesJDBCTypes.properties"/>
+  <property name="dml.fenix.typeconverters" value="${config.dir}/dataTypeConversors.properties"/>
 
 
   <!-- set classpath -->
@@ -22,10 +28,49 @@
     <!-- Additional dependencies (such as junit) go here -->
   </path>
 
-  <target name="compile" description="Compile src to bin">
+
+  <target name="generate-domain" description="Generates the domain classes">
+    <mkdir dir="${src.gen.dir}"/>
+    <java classname="dml.DmlCompiler" fork="true">
+      <jvmarg value="-Ddml.fenix.sqltypes=${dml.fenix.sqltypes}"/>
+      <jvmarg value="-Ddml.fenix.typeconverters=${dml.fenix.typeconverters}"/>
+      <arg value="-f"/>
+      <arg value="-d"/>
+      <arg value="${java.src.dir}"/>
+      <arg value="-db"/>
+      <arg value="${src.gen.dir}"/>
+      <!-- <arg value="-gf"/> -->
+      <arg value="-generator"/>
+      <arg value="dml.FenixCodeGeneratorReadFromRs"/>
+      <arg value="${fears.dml}"/>
+      <classpath>
+        <fileset dir="${deploy.lib.dir}">
+          <include name="dml.jar"/>
+          <include name="antlr.jar"/>
+        </fileset>
+      </classpath>
+    </java>
+  </target>
+
+
+  <target name="compile" depends="generate-domain" description="Compile src to bin">
     <mkdir dir="${build.dir}"/>
-    <javac srcdir="${java.src.dir}" destdir="${build.dir}" extdirs="${lib.dir}" includes="**" debug="on" debuglevel="lines,vars,source">
+    <javac destdir="${build.dir}" extdirs="${lib.dir}:${deploy.lib.dir}" debug="on" debuglevel="lines,vars,source">
+      <src path="${java.src.dir}"/>
+      <src path="${src.gen.dir}"/>
     </javac>
+
+    <java classname="pt.ist.fenixframework.pstm.PostProcessDomainClasses" 
+          dir="${build.dir}"
+          fork="true">
+      <classpath>
+        <pathelement path="${build.dir}"/>
+        <fileset dir="${lib.dir}"/>
+        <fileset dir="${deploy.lib.dir}"/>
+      </classpath>
+      <arg value="-d"/>
+      <arg value="${fears.dml}"/>
+    </java>
   </target>
 
   <target name="clean">
@@ -33,6 +78,7 @@
     <delete dir="${build.dir}"/>
     <delete dir="${build.webapp.dir}"/>
     <delete dir="${www.dir}"/>
+    <delete dir="${src.gen.dir}"/>
   </target>
 	
   <target name="run linux" depends="compile">
@@ -67,6 +113,7 @@
     </copy>
     <copy todir="${build.webapp.dir}/WEB-INF/classes">
       <fileset dir="${build.dir}" />
+      <fileset dir="${dml.src.dir}" />
     </copy>
     <copy todir="${build.webapp.dir}">
       <fileset dir="${www.dir}/eu.ist.fears.Fears" />
