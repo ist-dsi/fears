@@ -114,6 +114,7 @@
     <copy todir="${build.webapp.dir}/WEB-INF/classes">
       <fileset dir="${build.dir}" />
       <fileset dir="${dml.src.dir}" />
+      <fileset dir="${config.dir}" />
     </copy>
     <copy todir="${build.webapp.dir}">
       <fileset dir="${www.dir}/eu.ist.fears.Fears" />

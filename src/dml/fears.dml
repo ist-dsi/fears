@@ -1,77 +1,79 @@
 
-class eu.ist.fears.server.domain.FearsApp;
+package eu.ist.fears.server.domain;
 
-class eu.ist.fears.server.domain.Project {
+class FearsApp;
+
+class Project {
     String name;
     String description;
 }
 
 relation FearsAppHasProjects {
-    eu.ist.fears.server.domain.FearsApp playsRole fearsApp;
-    eu.ist.fears.server.domain.Project playsRole project {
+    FearsApp playsRole fearsApp;
+    Project playsRole project {
         multiplicity *;
     }
 }
 
 
-class eu.ist.fears.server.domain.Voter {
+class Voter {
     String user;
 }
 
 relation FearsAppHasVoters {
-    eu.ist.fears.server.domain.FearsApp playsRole fearsApp;
-    eu.ist.fears.server.domain.Voter playsRole voter {
+    FearsApp playsRole fearsApp;
+    Voter playsRole voter {
         multiplicity *;
     }
 }
 
 relation ProjectAuthor {
-    eu.ist.fears.server.domain.Project playsRole projectAuthored;
-    eu.ist.fears.server.domain.Voter playsRole author {
+    Project playsRole projectAuthored;
+    Voter playsRole author {
         multiplicity 1..1;
     }
 }
 
 
-class eu.ist.fears.server.domain.FeatureRequest {
+class FeatureRequest {
     String name;
     String description;
 }
 
 relation ProjectFeatureRequests {
-    eu.ist.fears.server.domain.Project playsRole project;
-    eu.ist.fears.server.domain.FeatureRequest playsRole featureRequest {
+    Project playsRole project;
+    FeatureRequest playsRole featureRequest {
         multiplicity *;
     }
 }
 
-class eu.ist.fears.server.domain.Comment {	
+class Comment {	
     String comment;
 }
 
 relation FeatureRequestComments {
-    eu.ist.fears.server.domain.FeatureRequest playsRole featureRequest;
-    eu.ist.fears.server.domain.Comment playsRole comment {
+    FeatureRequest playsRole featureRequest;
+    Comment playsRole comment {
         multiplicity *;
     }
 }
 
 relation FeatureRequestVoters {
-    eu.ist.fears.server.domain.FeatureRequest playsRole featuresVoted {
+    FeatureRequest playsRole featuresVoted {
         multiplicity *;
     }
 
-    eu.ist.fears.server.domain.Voter playsRole voter {
+    Voter playsRole voter {
         multiplicity *;
     }
 }
     
 relation FeatureRequestAuthor {
-    eu.ist.fears.server.domain.FeatureRequest playsRole featuresCreated {
+    FeatureRequest playsRole featuresCreated {
         multiplicity *;
     }
 
-    eu.ist.fears.server.domain.Voter playsRole author {
+    Voter playsRole author {
         multiplicity 1..1;
     }
 }
