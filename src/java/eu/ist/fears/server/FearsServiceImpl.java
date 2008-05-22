@@ -13,6 +13,7 @@ import eu.ist.fears.client.views.ViewFeatureDetailed;
 import eu.ist.fears.client.views.ViewFeatureResume;
 import eu.ist.fears.client.views.ViewProject;
 import eu.ist.fears.client.views.ViewVoter;
+import eu.ist.fears.server.domain.*;;
 
 import pt.ist.fenixframework.Config;
 import pt.ist.fenixframework.FenixFramework;
@@ -54,7 +55,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 	public void addFeature(String projectName, String name,
 			String description, String sessionID){
-		Project p =FearsApp.getFears().getProject(projectName);
+		Project p = FearsApp.getFears().getProject(projectName);
 
 		if(p==null)
 			throw new RuntimeException("Nao existe esse projecto: " + projectName);

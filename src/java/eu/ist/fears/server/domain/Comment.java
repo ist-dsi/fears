@@ -9,6 +9,10 @@ public class Comment extends Comment_Base {
         setComment(c);
     }
 
+    public String getComment(){
+		return getComment();
+	}
+    
     public ViewComment getView(){
         return new ViewComment(getComment());
     }

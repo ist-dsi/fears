@@ -65,7 +65,7 @@
           fork="true">
       <classpath>
         <pathelement path="${build.dir}"/>
-        <fileset dir="${lib.dir}"/>
+       <!-- Tirei a dir lib, o windows nao gostava de tantos argumentos... -->
         <fileset dir="${deploy.lib.dir}"/>
       </classpath>
       <arg value="-d"/>
@@ -89,11 +89,11 @@
     <java classname="com.google.gwt.dev.GWTCompiler" fork="true">
       <classpath>
         <pathelement path="${java.src.dir}"/>
-        <pathelement path="${build.dir}"/>
-        <fileset dir="${lib.dir}"/>
+         <pathelement path="${build.dir}"/>
+      	<!-- Tirei dir, o windows nao gostava de muitos parametros -->
+      	<fileset file="${lib.dir}/gwt-linux/gwt-dev-linux.jar"/>
+      	<fileset file="${lib.dir}/gwt-linux/gwt-user.jar"/>
       </classpath>
-      <arg value="-style"/>
-      <arg value="DETAILED"/>
       <arg value="-out"/>
       <arg value="${www.dir}"/>
       <arg value="eu.ist.fears.Fears"/>
