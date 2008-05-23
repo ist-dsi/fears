@@ -28,15 +28,6 @@ public class FeatureRequest extends FeatureRequest_Base {
 	
 
 	
-	public String getName(){
-		return getName();
-	}
-	
-	public String getDescription(){
-		return getDescription();
-		
-	}
-	
 	public int getNComments(){
 		return  getCommentCount();
 		
