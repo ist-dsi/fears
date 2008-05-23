@@ -26,7 +26,7 @@ public class DomainModelSQLGen {
 	}
 
 	System.out.println("Generation Complete.");
-	System.exit(0);
+	
     }
 
     private static void generate(final String destinationFilename) throws IOException {
