@@ -13,7 +13,7 @@ import eu.ist.fears.client.views.ViewFeatureDetailed;
 import eu.ist.fears.client.views.ViewFeatureResume;
 import eu.ist.fears.client.views.ViewProject;
 import eu.ist.fears.client.views.ViewVoter;
-import eu.ist.fears.server.domain.*;;
+import eu.ist.fears.server.domain.*;
 
 import pt.ist.fenixframework.Config;
 import pt.ist.fenixframework.FenixFramework;
