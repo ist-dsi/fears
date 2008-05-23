@@ -120,5 +120,16 @@
       <fileset dir="${www.dir}/eu.ist.fears.Fears" />
     </copy>
   </target>
+
+  <target name="generate-sql" depends="build-webapp">
+    <java classname="tmp.DomainModelSQLGen">
+      <arg value="${fears.dml}"/>
+      <arg value="/tmp/fears.sql"/>
+      <classpath>
+        <pathelement path="${build.webapp.dir}/WEB-INF/classes"/>
+        <fileset dir="${deploy.lib.dir}"/>
+      </classpath>      
+    </java>
+  </target>
 	
 </project>
