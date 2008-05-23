@@ -3,17 +3,7 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="src" path="src_gen"/>
 	<classpathentry kind="src" path="src/java"/>
-	<classpathentry exported="true" kind="lib" path="C:/Program Files/gwt-windows-1.4.61/gwt-user.jar"/>
 	<classpathentry kind="var" path="JUNIT_HOME/junit.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/eclipse/jre/jre/lib/charsets.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/eclipse/jre/jre/lib/deploy.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/eclipse/jre/jre/lib/javaws.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/eclipse/jre/jre/lib/jce.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/eclipse/jre/jre/lib/jsse.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/eclipse/jre/jre/lib/management-agent.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/eclipse/jre/jre/lib/plugin.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/eclipse/jre/jre/lib/resources.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/eclipse/jre/jre/lib/rt.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/antlr.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/asm-2.0.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/asm-commons-2.0.jar"/>
@@ -25,11 +15,12 @@
 	<classpathentry kind="lib" path="deploy-lib/dml.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/fenix-framework.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/gwt-servlet.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/jfreechart.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/joda-time-1.4.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/jvstm.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/log4j-1.2.8.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/mysql-connector-java-5.1.5-bin.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="lib/gwt-user.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/gwt-windows-1.4.62/gwt-dev-windows.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
