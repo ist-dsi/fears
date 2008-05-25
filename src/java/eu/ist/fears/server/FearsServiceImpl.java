@@ -30,7 +30,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
     @Override
     public void init() throws ServletException {
         Config config = new Config() {{ 
-            domainModelPath = "/fears.dml";
+            domainModelPath = "fears.dml";
             dbAlias = "//localhost:3306/fears"; 
             dbUsername = "root";
             dbPassword = "";

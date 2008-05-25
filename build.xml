@@ -124,7 +124,7 @@
   <target name="generate-sql" depends="build-webapp">
     <java classname="tmp.DomainModelSQLGen">
       <arg value="${fears.dml}"/>
-      <arg value="fears.sql"/>
+      <arg value="${build.dir}/fears.sql"/>
       <classpath>
         <pathelement path="${build.webapp.dir}/WEB-INF/classes"/>
         <fileset dir="${deploy.lib.dir}"/>
