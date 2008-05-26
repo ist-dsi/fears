@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.google.gwt.user.client.rpc.SerializationException;
 import eu.ist.fears.client.communication.FearsService;
 import eu.ist.fears.client.views.ViewFeatureDetailed;
 import eu.ist.fears.client.views.ViewFeatureResume;
@@ -15,8 +16,11 @@ import eu.ist.fears.client.views.ViewProject;
 import eu.ist.fears.client.views.ViewVoter;
 import eu.ist.fears.server.domain.*;
 
+import jvstm.TransactionalCommand;
+
 import pt.ist.fenixframework.Config;
 import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.pstm.Transaction;
 
 
 public class FearsServiceImpl extends RemoteServiceServlet implements FearsService {
@@ -30,7 +34,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
     @Override
     public void init() throws ServletException {
         Config config = new Config() {{ 
-            domainModelPath = "fears.dml";
+            domainModelPath = "/fears.dml";
             dbAlias = "//localhost:3306/fears"; 
             dbUsername = "root";
             dbPassword = "";
@@ -38,6 +42,27 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
         FenixFramework.initialize(config);
     }
 
+    @Override
+    public String processCall(final String payload) throws SerializationException {
+        // process the RPC call within a transaction
+        while (true) {
+            Transaction.begin();
+            boolean txFinished = false;
+            try {
+                String result = super.processCall(payload);
+                Transaction.commit();
+                txFinished = true;
+                return result;
+            } catch (jvstm.CommitException ce) {
+                Transaction.abort();
+                txFinished = true;
+            } finally {
+                if (! txFinished) {
+                    Transaction.abort();
+                }
+            }
+        }
+    }
 
 	public void vote(String projectName, String name, String sessionID){
 		Project p =FearsApp.getFears().getProject(projectName);
@@ -121,7 +146,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		//Fingir que esta tudo bem.
 		
 		Voter temp = FearsApp.getFears().getVoter(username);
-		ViewVoter ret =  new ViewVoter(temp.getName(), temp.getFeaturesCreated(), session.getId());
+		ViewVoter ret =  new ViewVoter(temp.getName(), temp.getViewFeaturesCreated(), session.getId());
 		session.setAttribute("fears_voter", ret);
 		return ret;
 		
