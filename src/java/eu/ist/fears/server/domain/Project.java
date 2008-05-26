@@ -7,6 +7,8 @@ import java.util.Set;
 
 public class Project extends Project_Base {
     
+	
+	
     public Project(String name, String description, Voter voter){
         setName(name);
         setDescription(description);
