@@ -55,7 +55,7 @@
 
   <target name="compile" depends="generate-domain" description="Compile src to bin">
     <mkdir dir="${build.dir}"/>
-    <javac destdir="${build.dir}" extdirs="${lib.dir}:${deploy.lib.dir}" debug="on" debuglevel="lines,vars,source">
+    <javac destdir="${build.dir}" extdirs="${lib.dir}:${deploy.lib.dir}" debug="on" debuglevel="lines,vars,source" target="1.5">
       <src path="${java.src.dir}"/>
       <src path="${src.gen.dir}"/>
     </javac>
