@@ -64,7 +64,7 @@ public class FeatureRequest extends FeatureRequest_Base {
 		
 		List<ViewVoter> voters = new ArrayList<ViewVoter>();
 		for(Voter v : getVoterSet() ){
-			voters.add(new ViewVoter(v.getUser(), v.getViewFeaturesCreated(), null ));
+			voters.add(new ViewVoter(v.getUser(), null, null ));
 		}
 		
 		return new ViewFeatureDetailed(getName(),  getDescription(), getAuthorName(), voters , comments );
