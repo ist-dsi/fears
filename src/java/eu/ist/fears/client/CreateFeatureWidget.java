@@ -1,13 +1,18 @@
 package eu.ist.fears.client;
 
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 
@@ -24,7 +29,6 @@ public class CreateFeatureWidget extends Composite {
 	private VerticalPanel _sugPanel;
 	private TextBox _name; 
 	private TextArea _description; 
-	private Button _sendButton;
 	private String _projectName;
 
 	public CreateFeatureWidget(String projectName){
@@ -32,21 +36,34 @@ public class CreateFeatureWidget extends Composite {
 		_sugPanel = new VerticalPanel();
 		_projectName = projectName;
 		initWidget(_sugPanel);
-		_sugPanel.setStyleName("createFeature");
-		_sugPanel.add( new HTML("<h1>Criar Sugestao</h1><br>"));
 		_name = new TextBox();
 		_description= new TextArea();
-		_sendButton = new Button("Enviar");
 		
-		
-		_sugPanel.add(new Label("Nome da Sugestão:"));
-		_sugPanel.add(_name);
-		_sugPanel.add(new Label("Descrição da Sugestão:"));
 		_description.setVisibleLines(7);
 		_description.setCharacterWidth(40);
-		_sugPanel.add(_description);
-		_sugPanel.add(_sendButton);
-
+		
+		RootPanel newSugTemplate = RootPanel.get("newSug");
+		
+		RootPanel pName = RootPanel.get("rNewSug:Project");
+		pName.clear();
+		pName.add(new Hyperlink(projectName,"Project"+projectName));
+		
+		RootPanel titleTextBox =  RootPanel.get("rNewSug:Title");
+		titleTextBox.clear();
+		titleTextBox.add(_name);
+		_name.setStyleName("titleTextBox");
+		
+		
+		RootPanel descriptionTextBox =  RootPanel.get("rNewSug:Description");
+		descriptionTextBox.clear();
+		descriptionTextBox.add(_description);
+		_description.setStyleName("descriptionTextBox");
+		
+		
+		RootPanel buttons =  RootPanel.get("rNewSug:newFeatureButtons");
+		buttons.clear();
+		PushButton _sendButton = new PushButton(new Image("button04.gif",0,0,105,32), new Image("button04.gif",-2,-2,105,32) );
+		buttons.setStyleName("button");
 		_sendButton.addClickListener(new ClickListener(){
 			public void onClick(Widget sender) {
 				_com.addFeature(_projectName, _name.getText(),
@@ -54,19 +71,32 @@ public class CreateFeatureWidget extends Composite {
 				
 			}
 		});
+		
+		PushButton _cancelButton = new PushButton(new Image("button05.gif",0,0,92,32),new Image("button05.gif",-2,-2,92,32));
+		_cancelButton.addClickListener(new ClickListener(){
+			public void onClick(Widget sender) {
+				History.newItem("Project" + _projectName );
+			}
+		});
+		_cancelButton.setStyleName("pleft5");
+		
+		buttons.add(_sendButton);
+		buttons.add(_cancelButton);
+
+		newSugTemplate.setStyleName("umkk");
 	}
 
+	
+	
 	AsyncCallback addSugestaoCB = new AsyncCallback() {
 		public void onSuccess(Object result){ 
 			// do some UI stuff to show success
-			
 			History.newItem("Project" + _projectName );
-			//Fears.listFeatures(_projectName);
 			
 		}
 
 		public void onFailure(Throwable caught) {
-			RootPanel.get().add(new Label("Isto não correu nada bem"),0,30);
+			RootPanel.get().add(new Label("Erro ao criar sugestao:\n" + caught.getMessage()));
 		}
 	};
 

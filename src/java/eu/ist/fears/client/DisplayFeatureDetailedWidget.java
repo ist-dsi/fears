@@ -8,7 +8,10 @@ import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -26,15 +29,12 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 	private Label _name;
 	private Label _description;
 	private Label _votes;
-	private Label _alert;
-	private HorizontalPanel _info;
 	private Button _voteButton;
-	private VerticalPanel _comments;
 	private TextArea _commentTextArea;
-	private Button _commentButton;
+	private PushButton _commentButton;
 	private Label _voters;
 	private Label _author;
-
+	private Label _ncomments;
 
 	public DisplayFeatureDetailedWidget(String projectName, String featureName){
 
@@ -43,73 +43,106 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 
 		_name = new Label(featureName);
 		_description= new Label();
-		_votes = new Label();
+		_votes = new Label("votes");
 		_feature = new VerticalPanel();
-		_alert = new Label();
 		_voteButton = new Button("Votar");
 		_voteButton.addClickListener(new VoteButton());
 		_author = new Label("");
-		_info=new HorizontalPanel();
 		_voters= new Label("");
-		_comments = new VerticalPanel();
+		_ncomments = new Label("");
 		_commentTextArea= new TextArea();
-		_commentButton = new Button("Adicionar Comentario");
+		_commentButton = new PushButton(new Image("button03.gif",0,0,105,32), new Image("button03.gif",-2,-2,105,32));
 		_commentButton.addClickListener(new CommentButton());
-
+		_commentTextArea.setVisibleLines(5);
+		_commentTextArea.setCharacterWidth(50);
+		RootPanel featureTemplate = RootPanel.get("featureDisplay");
+		
+		RootPanel pName = RootPanel.get("rFeatDisplay:Project");
+		pName.clear();
+		pName.add(new Hyperlink(projectName,"Project"+projectName));
+		
+		RootPanel fName = RootPanel.get("rFeatDisplay:FeatureName");
+		fName.clear();
+		fName.add(new Hyperlink(featureName,"Project"+projectName+"?"+"viewFeature"+featureName));
+		
+		RootPanel back = RootPanel.get("rFeatDisplay:Back");
+		back.clear();
+		back.add(new Hyperlink("<< Back","Project"+projectName));
+		
+		RootPanel votesT = RootPanel.get("rFeatDisplay:NVotes");
+		votesT.clear();
+		votesT.add(_votes);
+		
+		RootPanel actionVote = RootPanel.get("rFeatDisplay:ActionVote");
+		actionVote.clear();
+		actionVote.add(new Label("Action Vote"));
+		
+		RootPanel title = RootPanel.get("rFeatDisplay:Title");
+		title.clear();
+		title.add(new Hyperlink(featureName,"Project"+projectName+"?"+"viewFeature"+featureName));
+		
+		RootPanel number = RootPanel.get("rFeatDisplay:Number");
+		number.clear();
+		number.add(new Label("#1"));
+		
+		RootPanel author = RootPanel.get("rFeatDisplay:Author");
+		author.clear();
+		author.add(_author);
+		
+		RootPanel nComments = RootPanel.get("rFeatDisplay:NComments");
+		nComments.clear();
+		nComments.add(_ncomments);
+		
+		RootPanel description = RootPanel.get("rFeatDisplay:Description");
+		description.clear();
+		description.add(_description);
+		
+		if(Fears.isLogedIn()){
+		RootPanel newComment = RootPanel.get("rFeatDisplay:comment");
+		newComment.clear();
+		newComment.add(_commentTextArea);
+		
+		RootPanel commentButton = RootPanel.get("rFeatDisplay:commentButton");
+		commentButton.clear();
+		commentButton.add(_commentButton);
+		}
+		
 		_com.getFeature(projectName, featureName , Cookies.getCookie("fears"), getFeatureCB);
 
-		_feature.setStyleName("featureDetailed");
-		_feature.add(new HTML("<h2>"+_name.getText()+ "</h2>")); 
-		_feature.add(_description);
-		_feature.add(new HTML("<br>")); //Line Break
-		_feature.add(_info);
-
-
-		_info.add(new Label("Autor: "));
-		_info.add(_author);
-		_info.add(new Label("  | N de Votos:  "));
-		_info.add(_votes);	
-		_feature.add(_voteButton);
-		_feature.add(_alert);	
-
-		_feature.add(new HTML("<br>")); //Line Break
-		HorizontalPanel row =  new HorizontalPanel();
-		_feature.add(row);
-		row.add(new Label("Quem votou nesta ideia:"));
-		row.add(_voters);
-
-
-		_feature.add(new HTML("<br>")); //Line Break
-		_feature.add(_comments);
-		_feature.add(new HTML("<br>")); //Line Break
-		_commentTextArea.setVisibleLines(7);
-		_commentTextArea.setCharacterWidth(40);
-		_feature.add(_commentTextArea);
-		_feature.add(_commentButton);
 		initWidget(_feature);
 
+		featureTemplate.setStyleName("kkcoisa");
 	}
 
 	private void updateFeature(ViewFeatureDetailed f){
 		_description.setText(f.getDescription());
 		_votes.setText(new Integer(f.getVotes()).toString());
 		_author.setText(f.getAuthor());
-		_comments.clear();
 		_voters.setText("");
 
-		if(f.getVoters().size()>0)
+		/*if(f.getVoters().size()>0)
 			for(int i=0; i<f.getVoters().size();i++){
 				if(i!=0)_voters.setText(_voters.getText() + ", "); 
 				_voters.setText(_voters.getText() + ((ViewVoter)f.getVoters().get(i)).getName()); 
-			}
+			} */
 
-		_comments.add(new Label(f.getComments().size() + " Comentarios:"));
+		_ncomments.setText(new Integer(f.getComments().size()).toString());
+		RootPanel comments = RootPanel.get("rFeatDisplay:Comments");
+		comments.clear();
+		Label comment;
+		Label header;
 		if(f.getComments().size()>0)
 			for(int i=0; i<f.getComments().size();i++){
-				_comments.add(new HTML("<br>")); //Line Break
-				_comments.add(new Label(((ViewComment)f.getComments().get(i)).getComment()));
-			}
-		_alert.setText("");
+				comment = new Label();
+				comment.setStyleName("comment");
+				header = new Label("header");
+				header.setStyleName("metaComment");
+				comment = new HTML("<div class=\"comment\">" + header.getElement().toString() + "</div>" );
+				Label commentText = new Label(((ViewComment)f.getComments().get(i)).getComment());
+				commentText.setStyleName("commentText");
+				comment = new HTML(comment.getElement().toString() + commentText );
+				comments.add(comment);
+			} 
 	}
 
 	private void update(){
@@ -120,7 +153,7 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 	private class VoteButton implements ClickListener{
 
 		public void onClick(Widget sender) {
-			_alert.setText("O teu voto em " + _name.getText() + " foi contabilizado.");
+			//_alert.setText("O teu voto em " + _name.getText() + " foi contabilizado.");
 			_com.vote(_projectName, _name.getText(), Cookies.getCookie("fears"), voteCB);
 		}
 
@@ -129,7 +162,7 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 	private class CommentButton implements ClickListener{
 
 		public void onClick(Widget sender) {
-			_alert.setText("O teu comentario foi inserido.");
+			//_alert.setText("O teu comentario foi inserido.");
 			_com.addComment(_projectName, _name.getText(),
 					_commentTextArea.getText(), Cookies.getCookie("fears"), getFeatureCB);
 			_commentTextArea.setText("");

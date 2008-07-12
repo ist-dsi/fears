@@ -57,6 +57,7 @@ public class AdminListProjectsWidget extends Composite{
 		_newProjectDescription.setVisibleLines(7);
 		_newProjectDescription.setCharacterWidth(40);
 		_projPanel.add(_newProjectDescription);
+		_createProjectButton = new Button("Adicionar Projecto");
 		_projPanel.add(_createProjectButton);
 
 		_createProjectButton.addClickListener(new ClickListener(){

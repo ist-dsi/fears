@@ -11,9 +11,11 @@ import com.google.gwt.user.client.HistoryListener;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import eu.ist.fears.client.admin.*;
@@ -29,14 +31,14 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 
 
-	protected DockPanel main;
+	protected VerticalPanel main;
 	protected VerticalPanel contentBox; 
 	protected VerticalPanel menu;
 	protected HorizontalPanel topBox; 
 	protected Admin admin;
 	protected Communication _com;
 	protected Label userName;
-	protected boolean validCookie;
+	protected static boolean validCookie;
 
 
 	/**
@@ -48,46 +50,36 @@ public class Fears implements EntryPoint, HistoryListener  {
 			return;			
 		}
 
-
 		_com = new Communication("service");
-		RootPanel.get().setStyleName("body");
 
-		main= new DockPanel();
+		main= new VerticalPanel();
 		contentBox = new VerticalPanel();
-		VerticalPanel menuBox = new VerticalPanel();
-		topBox = new HorizontalPanel();
-
 		menu = new VerticalPanel();
+		userName = new Label("guest");
+		if (RootPanel.get("rUsername") != null){
+			RootPanel.get("rUsername").add(userName);
+		}
+		
 
 		RootPanel.get().add(main);
-		main.add(topBox, DockPanel.NORTH);
-		main.add(contentBox, DockPanel.CENTER);
-		main.add(menuBox,DockPanel.WEST);
+		main.setStyleName("centered");
+		
+		main.add(contentBox); 
+		main.add(menu);
 
-		main.setStyleName("main");
-		topBox.setStyleName("top");
-		contentBox.setStyleName("content");
-		menuBox.setStyleName("menuBox");
-
-		topBox.add(new Label("Username: "));
-		userName = new Label("...");
-		topBox.add(userName);
-		topBox.add(new Label("Nº de Votos Restante: ..."));
-
-		menuBox.add(menu);
-		menu.setStyleName("menu");
 		updateMenu("");
-
+		
 		History.addHistoryListener(this);
 
 		onHistoryChanged(History.getToken());
-
+		
 	}	
 
 
 	protected void updateUsername(String user){
 		userName.setText(user);
 	}
+	
 
 	public void updateMenu(String project){
 		menu.clear();
@@ -117,7 +109,6 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 		ListFeaturesWidget features = new ListFeaturesWidget(projectName);
 
-		//RootPanel.get().setTitle(projectName);
 		updateMenu(projectName);
 		features.update();
 		contentBox.add(features);
@@ -125,7 +116,6 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 	public void addFeature(String projectName){
 		contentBox.clear();
-		//RootPanel.get().setTitle("Adicionar Sugestao a "+  projectName);
 
 		if(!verifyLogin(true))
 			return;
@@ -141,7 +131,6 @@ public class Fears implements EntryPoint, HistoryListener  {
 		verifyLogin(false);
 
 
-		//RootPanel.get().setTitle(featureName);
 		updateMenu(projectName);
 		contentBox.add(new DisplayFeatureDetailedWidget(projectName, featureName));
 	}
@@ -153,7 +142,6 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 		ListProjectsWidget projects = new ListProjectsWidget();
 
-		//RootPanel.get().setTitle("Projectos");
 		updateMenu("");
 		projects.update();	
 		contentBox.add(projects);
@@ -169,6 +157,10 @@ public class Fears implements EntryPoint, HistoryListener  {
 		contentBox.add(login);		
 	}
 
+	public static boolean isLogedIn(){
+		return validCookie;
+	}
+	
 	public void setCookie(String value, String userName){
 		final long DURATION = 1000 * 60 * 60 * 1; //duration remembering login, 1 hour
 		Date expires = new Date(System.currentTimeMillis() + DURATION);
@@ -200,10 +192,24 @@ public class Fears implements EntryPoint, HistoryListener  {
 		if (RootPanel.get("Admin") != null){
 			return;			
 		}
+		
+		hideAll();
 
 		parseURL(historyToken, this);
 	}
 
+	public void hideAll(){
+		RootPanel newSug = RootPanel.get("newSug");
+		newSug.setStyleName("hidden");
+		
+		RootPanel featureTemplate = RootPanel.get("featureDisplay");
+		featureTemplate.setStyleName("hidden");
+		
+		RootPanel featureListTemplate = RootPanel.get("ProjectlistFeatures");
+		featureListTemplate.setStyleName("hidden");
+		
+	}
+	
 	public static void parseURL(String url, Fears f){
 		// This method is called whenever the application's history changes. Set
 		// the label to reflect the current history token.

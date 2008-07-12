@@ -11,7 +11,11 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.PushButton;
+import com.google.gwt.user.client.ui.TextBox;
 
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -26,6 +30,8 @@ public class ListFeaturesWidget extends Composite {
 	private Communication _com;
 	private VerticalPanel _sugPanel;
 	private String _projectName;
+	private RootPanel _features = RootPanel.get("rlistFeatures:Features");
+	
 
 	public ListFeaturesWidget(String projectName){
 		_com= new Communication("service");
@@ -38,61 +44,101 @@ public class ListFeaturesWidget extends Composite {
 	
 	private void init(){
 		_sugPanel.clear();
-		_sugPanel.add( new HTML("<h1>Sugestoes " + _projectName+"</h1>"));
-
 		
+		RootPanel featureListTemplate = RootPanel.get("ProjectlistFeatures");
+		
+		
+		RootPanel pName = RootPanel.get("rlistFeatures:Project");
+		pName.clear();
+		pName.add(new Hyperlink(_projectName,"Project"+_projectName));
+
+		RootPanel searchBox = RootPanel.get("rlistFeatures:searchBox");
+		searchBox.clear();
+		TextBox sBox = new TextBox();
+		sBox.setVisibleLength(50);
+		searchBox.add(sBox);
+		
+		RootPanel buttons = RootPanel.get("rlistFeatures:searchButton");
+		buttons.clear();
+		PushButton searchButton = new PushButton(new Image("button01.gif",0,0,105,32),new Image("button01.gif",-2,-2,105,32));
+		buttons.add(searchButton);
+		
+		RootPanel buttons2 = RootPanel.get("rlistFeatures:createButton");
+		buttons2.clear();
+		PushButton addButton = new PushButton(new Image("button02.gif",0,0,135,32),new Image("button02.gif",-2,-2,135,32)); 
+		buttons2.add(addButton);
+		
+	    
+	    RootPanel sort = RootPanel.get("rlistFeatures:Sort");
+	    sort.clear();
+	    ListBox lb = new ListBox();
+	    lb.addItem("Ordenar por Votos");
+	    lb.addItem("Ordenar por Data");
+	    lb.setVisibleItemCount(1);
+	    sort.add(lb);
+	    
+		featureListTemplate.setStyleName("kkcoisa");
 	}
 
 	public class FeatureResumeWidget extends Composite{
 
-		VerticalPanel _feature; 
 		VerticalPanel _featureContainer; 
 		Label _name;
 		Label _description;
 		Label _votes;
 		Label _nComments;
-		Label _alert;
 		Label _author;
-		HorizontalPanel _info;
-		Button _voteButton;
 
 
-		FeatureResumeWidget(ViewFeatureResume f){
+		FeatureResumeWidget(ViewFeatureResume f, String projectName){
 
 			_name = new Label(f.getName());
 			_description= new Label(f.getDescription());
 			_votes = new Label(new Integer(f.getVotes()).toString());
 			_nComments = new Label(new Integer(f.getNComments()).toString());
 			_author = new Label(f.getAuthor());
-			
-			_alert = new Label();
-			_voteButton = new Button("Votar");
-			_voteButton.addClickListener(new VoteButton());
-			_info=new HorizontalPanel();
 
-			_feature = new VerticalPanel();
 			_featureContainer = new VerticalPanel();
-			_featureContainer.add(_feature);
-			_featureContainer.setStyleName("featureResume");
 			
-			_feature.add(new Hyperlink("<b>"+_name.getText()+ "</b>",true, "Project" + _projectName + "?" +"viewFeature" + _name.getText() )); 
-			_feature.add(_description);
-			_feature.add(new HTML("<br>")); //Line Break
-			_feature.add(_info);
-			_feature.add(new HTML("<br>")); //Line Break
-			_feature.add(_voteButton);
-			_feature.add(_alert);
+			_featureContainer.add(new Hyperlink("<b>"+_name.getText()+ "</b>",true, "Project" + _projectName + "?" +"viewFeature" + _name.getText() )); 
+		
+			RootPanel featureTemplate = RootPanel.get("rlistFeatures:featureHidden");
+			featureTemplate.clear();
 			
-			HorizontalPanel row = new HorizontalPanel();
-			_info.add(row);
-			row.add(new Label("Autor:  "));
-			row.add(_author);
-			row.add(new Label(" | N de Votos:  "));
-			row.add(_votes);
+			RootPanel votes = RootPanel.get("rlistFeatures:votes");
+			votes.clear();
+			votes.add(_votes);
 			
-			_info.add(new Label("  |  N de Comentarios:  "));
-			_info.add(_nComments);
+			RootPanel actionVote = RootPanel.get("rlistFeatures:actionvote");
+			actionVote.clear();
+			actionVote.add(new Label("Action Vote"));
 
+			RootPanel fName = RootPanel.get("rlistFeatures:fname");
+			fName.clear();
+			fName.add(new Hyperlink(_name.getText(),"Project"+projectName+"?"+"viewFeature"+_name.getText()));
+			
+			RootPanel fNumber = RootPanel.get("rlistFeatures:number");
+			fNumber.clear();
+			fNumber.add(new Label("#1"));
+			
+			RootPanel fAuthor = RootPanel.get("rlistFeatures:author");
+			fAuthor.clear();
+			fAuthor.add(_author);
+			
+			RootPanel nComments = RootPanel.get("rlistFeatures:comments");
+			nComments.clear();
+			nComments.add(_nComments);
+						
+			RootPanel description = RootPanel.get("rlistFeatures:description");
+			description.clear();
+			description.add(_description);
+			
+			RootPanel features = RootPanel.get("rlistFeatures:Features");
+			
+			String feature = featureTemplate.toString();
+			feature = feature.replaceAll("hiddenFeatureClass1", "notHidden");
+			features.add(new HTML(feature));
+			
 			initWidget(_featureContainer);
 		}
 
@@ -110,7 +156,7 @@ public class ListFeaturesWidget extends Composite {
 		private class VoteButton implements ClickListener{
 
 			public void onClick(Widget sender) {
-				_alert.setText("O teu voto em " + _name.getText() + " foi contabilizado.");
+				//_alert.setText("O teu voto em " + _name.getText() + " foi contabilizado.");
 				_com.vote(_projectName, _name.getText(),  Cookies.getCookie("fears"), voteCB);
 			}
 
@@ -132,8 +178,9 @@ public class ListFeaturesWidget extends Composite {
 			return;
 		}
 			
+		 RootPanel.get("rlistFeatures:Features").clear();
 		for(int i=0;i< features.size();i++){
-			_sugPanel.add(new FeatureResumeWidget((ViewFeatureResume)features.get(i)));
+			new FeatureResumeWidget((ViewFeatureResume)features.get(i), _projectName );
 		}
 		
 		

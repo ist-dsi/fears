@@ -1,0 +1,8 @@
+TODO:
+-> Verifcaçoes de segurança no serviço.
+-> Login CAS
+-> Interface das páginas: Página de Utiilizador, Lista dos projectos.
+-> Datas
+-> Funcionalida de Procura
+-> Funcionalidade de Filtros e Ordenação.
+-> + Info na classe Comentario 

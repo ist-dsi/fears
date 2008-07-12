@@ -1,9 +1,7 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 	<head>
 	
-		<!--                                           -->
-		<!-- Any title is fine                         -->
-		<!--                                           -->
 		<title>Admin</title>
 
 		<!--                                           -->
@@ -13,16 +11,110 @@
 		<!--                                           -->
 		<script language='javascript' src='eu.ist.fears.Fears.nocache.js'></script>
 	</head>
-
-	<!--                                           -->
-	<!-- The body can have arbitrary html, or      -->
-	<!-- you can leave the body empty if you want  -->
-	<!-- to create a completely dynamic ui         -->
-	<!--                                           -->
 	<body>
-		<!-- OPTIONAL: include this if you want history support -->
+	<!-- OPTIONAL: include this if you want history support -->
 		<iframe src="javascript:''" id="__gwt_historyFrame" style="width:0;height:0;border:0"></iframe>
 		<span id=Admin>
 			
+			
+	<div id="header">
+	<h1>fears | feature request system</h1>
+	
+	<ul id="support">
+		<li>Bem-vindo <span id="rUsername"></span>&nbsp;|</li>
+
+		<li><span id="rSession"></span></li>
+	</ul>
+	<div class="clear"></div>
+</div>
+
+<div id="newSug" class="hidden">
+<div id="content">
+	<h2><a href="#listProjects">Projects</a> <span>/</span> <span id="rNewSug:Project"></span>&nbsp;<span>/</span> Nova Sugestão</h2>
+
+	<table class="form">
+		<tr>
+			<th>Título:</th>
+			<td>
+			<span id="rNewSug:Title"> 
+			<!-- <input type="text" size="50" class="inputtext"> -->
+			</span>
+			</td>
+		</tr>
+		<tr>
+			<th>Descrição:</th>
+			<td>
+			<span id="rNewSug:Description"> 
+			<!--   <textarea class="new"></textarea> -->
+			</span>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>Contexto:</th>
+			<td>
+				<select>
+					<option></option>
+					<option>Geral</option>
+
+					<option>Portal Comunicação</option>
+					<option>Área Pessoal</option>
+					<option>Portal do Estudante</option>
+				</select>
+			</td>
+		</tr>
+		
+	</table>
+
+	<div id="rNewSug:newFeatureButtons" class="button">
+	</div>
+		
+</div>
+</div>
+
+<div id="featureDisplay" class="hidden">
+<div id="content">
+
+	<table class="title">
+		<tr>
+			<td><h2><a href="#listProjects">Projects</a> <span>/</span>  <span id="rFeatDisplay:Project"></span>&nbsp;<span>/</span> <span id="rFeatDisplay:FeatureName"></span></h2></td>
+
+			<td class="aright"> <span id="rFeatDisplay:Back"></span>  <!--  <a href="" class="back">« Back</a>  --></td>
+		</tr>
+	</table>
+	
+	
+	<table class="request">
+		<tr>
+			<td class="tdvotes">
+				<div class="vote">
+					<div id="rFeatDisplay:NVotes" class="votes"></div>
+
+					<div class="actionvote" id="rFeatDisplay:ActionVote"></div>
+				</div>
+			</td>
+			<td class="tdbody">
+				<h3><span id="rFeatDisplay:Title"> </span>&nbsp;<span class="status completed">Novo</span></h3>
+				<p class="meta"><span id="rFeatDisplay:Number"></span>&nbsp;| Por <span id="rFeatDisplay:Author"></span>&nbsp;em 10/10/2008 | <span id="rFeatDisplay:NComments"></span>&nbsp;comentários</p>
+
+				<p> <span id="rFeatDisplay:Description"> </span></p>
+			</td>
+		</tr>
+	</table>
+
+ <div id="rFeatDisplay:Comments">
+	
+	</div>
+	<div class="comment_form">
+	<span id="rFeatDisplay:comment"></span>
+	<p><span id="rFeatDisplay:commentButton"></span></p> 
+		
+	</div>
+	
+	
+</div>
+</div>
+
+
 	</body>
 </html>

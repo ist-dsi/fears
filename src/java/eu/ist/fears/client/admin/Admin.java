@@ -35,34 +35,26 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 		if (RootPanel.get("Admin")== null){
 			return;			
 		}
-
+		
 		_com = new Communication("service");
 		RootPanel.get().setStyleName("body");
 
-		main= new DockPanel();
+		main= new VerticalPanel();
 		contentBox = new VerticalPanel();
-		VerticalPanel menuBox = new VerticalPanel();
-		topBox = new HorizontalPanel();
 		
 		menu = new VerticalPanel();
 
 		RootPanel.get().add(main);
-		main.add(topBox, DockPanel.NORTH);
-		main.add(contentBox, DockPanel.CENTER);
-		main.add(menuBox,DockPanel.WEST);
+		main.setStyleName("centered");
+		
+		main.add(contentBox);
+		main.add(menu);
 
-		main.setStyleName("main");
-		topBox.setStyleName("top");
-		contentBox.setStyleName("content");
-		menuBox.setStyleName("menuBox");
-
-		topBox.add(new Label("Username: "));
-		userName = new Label("...");
-		topBox.add(userName);
-		topBox.add(new Label("PAGINA DE ADMINISTRACAO"));
-
-		menuBox.add(menu);
-		menu.setStyleName("menu");
+		userName = new Label("guest");
+		if (RootPanel.get("rUsername") != null){
+			RootPanel.get("rUsername").add(userName);	
+		}
+		
 		updateMenu("");
 
 		History.addHistoryListener(this);
@@ -110,6 +102,8 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 		if (RootPanel.get("Admin")== null){
 			return;			
 		}
+		
+		hideAll();
 		
 		Fears.parseURL(historyToken, this);
 
