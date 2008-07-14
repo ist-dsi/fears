@@ -56,9 +56,9 @@ public class Fears implements EntryPoint, HistoryListener  {
 		contentBox = new VerticalPanel();
 		menu = new VerticalPanel();
 		userName = new Label("guest");
-		if (RootPanel.get("rUsername") != null){
-			RootPanel.get("rUsername").add(userName);
-		}
+		RootPanel.get("rUsername").clear();
+		RootPanel.get("rUsername").add(userName);
+		
 		
 
 		RootPanel.get().add(main);
@@ -67,7 +67,6 @@ public class Fears implements EntryPoint, HistoryListener  {
 		main.add(contentBox); 
 		main.add(menu);
 
-		updateMenu("");
 		
 		History.addHistoryListener(this);
 
@@ -81,27 +80,6 @@ public class Fears implements EntryPoint, HistoryListener  {
 	}
 	
 
-	public void updateMenu(String project){
-		menu.clear();
-		if(project==""){
-			menu.add(new Hyperlink("Ver Lista de Projectos", "listProjects"));
-		}else{
-			menu.add(new Hyperlink("Ver Lista de Projectos", "listProjects"));
-			menu.add(new HTML("<br>"));
-			menu.add(new HTML("<b>" + project + "</b>"));
-			menu.add(new Hyperlink("     -  Ver Sugestoes","Project" + project + "?" + "listFeatures"));
-			menu.add(new Hyperlink("     -  Adicionar Sugestao","Project" + project + "?" + "addFeature"));
-
-
-		}
-		menu.add(new HTML("<br>"));
-		menu.add(new HTML("<br>"));
-		menu.add(new HTML("<a href=\"Admin.html\">Administracao</a>"));
-		if(!validCookie){
-			menu.add(new Hyperlink("Login","login"));
-		}
-	}
-
 	public void listFeatures(String projectName){
 		contentBox.clear();
 
@@ -109,7 +87,6 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 		ListFeaturesWidget features = new ListFeaturesWidget(projectName);
 
-		updateMenu(projectName);
 		features.update();
 		contentBox.add(features);
 	}
@@ -120,7 +97,6 @@ public class Fears implements EntryPoint, HistoryListener  {
 		if(!verifyLogin(true))
 			return;
 
-		updateMenu(projectName);
 		contentBox.add(new CreateFeatureWidget(projectName));
 
 	}
@@ -131,7 +107,6 @@ public class Fears implements EntryPoint, HistoryListener  {
 		verifyLogin(false);
 
 
-		updateMenu(projectName);
 		contentBox.add(new DisplayFeatureDetailedWidget(projectName, featureName));
 	}
 
@@ -142,7 +117,6 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 		ListProjectsWidget projects = new ListProjectsWidget();
 
-		updateMenu("");
 		projects.update();	
 		contentBox.add(projects);
 	}
@@ -153,7 +127,6 @@ public class Fears implements EntryPoint, HistoryListener  {
 		verifyLogin(false);
 
 		LoginWidget login = new LoginWidget(this);
-		updateMenu("");
 		contentBox.add(login);		
 	}
 
@@ -194,8 +167,19 @@ public class Fears implements EntryPoint, HistoryListener  {
 		}
 		
 		hideAll();
-
+		updateSessionLink();
+		
 		parseURL(historyToken, this);
+	}
+	
+	public void updateSessionLink(){
+		RootPanel sessionLink = RootPanel.get("rSession");
+		sessionLink.clear();
+		if(!isLogedIn()){
+			sessionLink.add(new Hyperlink("Login","login"));
+		}else{
+			sessionLink.add(new Hyperlink("Logout","logout"));
+		}
 	}
 
 	public void hideAll(){

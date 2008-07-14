@@ -6,3 +6,4 @@ TODO:
 -> Funcionalida de Procura
 -> Funcionalidade de Filtros e Ordenação.
 -> + Info na classe Comentario 
+-> Funcionalidades de Admin

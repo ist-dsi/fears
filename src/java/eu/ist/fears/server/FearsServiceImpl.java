@@ -37,7 +37,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
             domainModelPath = "/fears.dml";
             dbAlias = "//localhost:3306/fears"; 
             dbUsername = "root";
-            dbPassword = "";
+            dbPassword = "fears";
         }};
         FenixFramework.initialize(config);
     }

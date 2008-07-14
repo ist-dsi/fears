@@ -51,33 +51,15 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 		main.add(menu);
 
 		userName = new Label("guest");
-		if (RootPanel.get("rUsername") != null){
-			RootPanel.get("rUsername").add(userName);	
-		}
+		RootPanel.get("rUsername").clear();
+		RootPanel.get("rUsername").add(userName);	
 		
-		updateMenu("");
 
 		History.addHistoryListener(this);
 		
 		onHistoryChanged(History.getToken());
 	}	
 	
-	public void updateMenu(String project){
-		menu.clear();
-		if(project==""){
-			menu.add(new Hyperlink("Ver Lista de Projectos", "listProjects"));
-		}else{
-			menu.add(new Hyperlink("Ver Lista de Projectos", "listProjects"));
-			menu.add(new HTML("<br>"));
-			menu.add(new HTML("<b>" + project + "</b>"));
-			menu.add(new Hyperlink("     -  Ver Sugestoes","Project" + project + "?" + "listFeatures"));
-			menu.add(new Hyperlink("     -  Adicionar Sugestao","Project" + project + "?" + "addFeature"));
-			
-		}
-		menu.add(new HTML("<br>"));
-		menu.add(new HTML("<br>"));
-		
-	}
 
 	
 	public void viewListProjects(){
@@ -88,7 +70,6 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 		
 		AdminListProjectsWidget projects = new AdminListProjectsWidget();
 		//RootPanel.get().setTitle("Projectos");
-		updateMenu("");
 		projects.update();	
 		contentBox.add(projects);
 		

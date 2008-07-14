@@ -4,6 +4,7 @@ package eu.ist.fears.client;
 import java.util.List;
 
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -30,8 +31,6 @@ public class ListFeaturesWidget extends Composite {
 	private Communication _com;
 	private VerticalPanel _sugPanel;
 	private String _projectName;
-	private RootPanel _features = RootPanel.get("rlistFeatures:Features");
-	
 
 	public ListFeaturesWidget(String projectName){
 		_com= new Communication("service");
@@ -67,6 +66,12 @@ public class ListFeaturesWidget extends Composite {
 		buttons2.clear();
 		PushButton addButton = new PushButton(new Image("button02.gif",0,0,135,32),new Image("button02.gif",-2,-2,135,32)); 
 		buttons2.add(addButton);
+		addButton.addClickListener(new ClickListener(){
+			public void onClick(Widget sender) {
+				History.newItem("Project" + _projectName + "?" + "addFeature");
+				
+			}
+		});
 		
 	    
 	    RootPanel sort = RootPanel.get("rlistFeatures:Sort");
@@ -100,8 +105,7 @@ public class ListFeaturesWidget extends Composite {
 
 			_featureContainer = new VerticalPanel();
 			
-			_featureContainer.add(new Hyperlink("<b>"+_name.getText()+ "</b>",true, "Project" + _projectName + "?" +"viewFeature" + _name.getText() )); 
-		
+			
 			RootPanel featureTemplate = RootPanel.get("rlistFeatures:featureHidden");
 			featureTemplate.clear();
 			
