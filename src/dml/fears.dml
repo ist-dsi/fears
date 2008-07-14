@@ -79,3 +79,13 @@ relation FeatureRequestAuthor {
         multiplicity 1..1;
     }
 }
+
+relation CommentAuthor {
+    Comment playsRole comment {
+        multiplicity *;
+    }
+
+    Voter playsRole author {
+        multiplicity 1..1;
+    }
+}

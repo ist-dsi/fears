@@ -6,22 +6,18 @@ import java.util.List;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextBox;
-
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-
 import eu.ist.fears.client.communication.Communication;
 import eu.ist.fears.client.views.ViewFeatureResume;
 
@@ -157,14 +153,14 @@ public class ListFeaturesWidget extends Composite {
 		}
 
 
-		private class VoteButton implements ClickListener{
+	/*	private class VoteButton implements ClickListener{
 
 			public void onClick(Widget sender) {
 				//_alert.setText("O teu voto em " + _name.getText() + " foi contabilizado.");
 				_com.vote(_projectName, _name.getText(),  Cookies.getCookie("fears"), voteCB);
 			}
 
-		}
+		} */
 
 	}
 

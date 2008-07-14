@@ -5,5 +5,7 @@ TODO:
 -> Datas
 -> Funcionalida de Procura
 -> Funcionalidade de Filtros e Ordenação.
--> + Info na classe Comentario 
 -> Funcionalidades de Admin
+
+WebDesigner:
+ -> Na pagina da sugestao falta: ranking, utilizadores que votaram.

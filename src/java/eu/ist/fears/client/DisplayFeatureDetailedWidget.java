@@ -7,7 +7,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -19,7 +18,6 @@ import com.google.gwt.user.client.ui.Widget;
 import eu.ist.fears.client.communication.Communication;
 import eu.ist.fears.client.views.ViewComment;
 import eu.ist.fears.client.views.ViewFeatureDetailed;
-import eu.ist.fears.client.views.ViewVoter;
 
 public class DisplayFeatureDetailedWidget  extends Composite{
 
@@ -135,7 +133,7 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 			for(int i=0; i<f.getComments().size();i++){
 				comment = new Label();
 				comment.setStyleName("comment");
-				header = new Label("header");
+				header = new Label("Por: " + ((ViewComment)f.getComments().get(i)).getAuthor());
 				header.setStyleName("metaComment");
 				comment = new HTML("<div class=\"comment\">" + header.getElement().toString() + "</div>" );
 				Label commentText = new Label(((ViewComment)f.getComments().get(i)).getComment());
