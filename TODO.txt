@@ -1,7 +1,6 @@
 TODO:
 -> Verifcaçoes de segurança no serviço.
 -> Login CAS
--> Interface das páginas: Página de Utiilizador, Lista dos projectos.
 -> Datas
 -> Funcionalida de Procura
 -> Funcionalidade de Filtros e Ordenação.
@@ -9,3 +8,4 @@ TODO:
 
 WebDesigner:
  -> Na pagina da sugestao falta: ranking, utilizadores que votaram.
+ -> Interface das páginas: Falta Página de Utiilizador e página de Lista dos projectos.

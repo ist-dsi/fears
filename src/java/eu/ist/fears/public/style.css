@@ -191,8 +191,9 @@ font-weight: bold;
 color: #588aa7;
 }
 table.request div.actionvote {
-color: #aaa;
+color: #588aa7;
 padding-top: 2px;
+text-decoration: underline;
 }
 table.request a {
 color: #588aa7;

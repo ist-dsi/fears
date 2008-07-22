@@ -4,8 +4,10 @@ package eu.ist.fears.client;
 import java.util.List;
 
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
@@ -83,14 +85,24 @@ public class ListFeaturesWidget extends Composite {
 
 	public class FeatureResumeWidget extends Composite{
 
-		VerticalPanel _featureContainer; 
-		Label _name;
-		Label _description;
-		Label _votes;
-		Label _nComments;
-		Label _author;
+		protected VerticalPanel _featureContainer; 
+		protected Label _name;
+		protected Label _description;
+		protected Label _votes;
+		protected Label _nComments;
+		protected Label _author;
+		protected Hyperlink _vote;
 
+		AsyncCallback voteCB = new AsyncCallback() {
+			public void onSuccess(Object result){ 
+				update();
+			}
 
+			public void onFailure(Throwable caught) {
+				RootPanel.get().add(new Label("Isto não correu nada bem"));
+			}
+		};
+		
 		FeatureResumeWidget(ViewFeatureResume f, String projectName){
 
 			_name = new Label(f.getName());
@@ -98,7 +110,9 @@ public class ListFeaturesWidget extends Composite {
 			_votes = new Label(new Integer(f.getVotes()).toString());
 			_nComments = new Label(new Integer(f.getNComments()).toString());
 			_author = new Label(f.getAuthor());
-
+			_vote = new Hyperlink("Vote","Project"+ projectName +"?" + "voteFeature" + f.getName()); 
+			
+			
 			_featureContainer = new VerticalPanel();
 			
 			
@@ -109,9 +123,15 @@ public class ListFeaturesWidget extends Composite {
 			votes.clear();
 			votes.add(_votes);
 			
+			
+			
 			RootPanel actionVote = RootPanel.get("rlistFeatures:actionvote");
 			actionVote.clear();
-			actionVote.add(new Label("Action Vote"));
+			if(Fears.isLogedIn()){
+				//addVoteListener(_vote, this);
+				actionVote.add(_vote);
+			}
+			
 
 			RootPanel fName = RootPanel.get("rlistFeatures:fname");
 			fName.clear();
@@ -139,6 +159,7 @@ public class ListFeaturesWidget extends Composite {
 			feature = feature.replaceAll("hiddenFeatureClass1", "notHidden");
 			features.add(new HTML(feature));
 			
+			
 			initWidget(_featureContainer);
 		}
 
@@ -151,18 +172,18 @@ public class ListFeaturesWidget extends Composite {
 		public void updateVotos(String votos){
 			_votes.setText(votos);
 		}
-
-
-	/*	private class VoteButton implements ClickListener{
-
-			public void onClick(Widget sender) {
-				//_alert.setText("O teu voto em " + _name.getText() + " foi contabilizado.");
-				_com.vote(_projectName, _name.getText(),  Cookies.getCookie("fears"), voteCB);
-			}
-
-		} */
-
+		
+		public void makeVote(){
+			_com.vote(_projectName, _name.getText(), Cookies.getCookie("fears"), voteCB);	
+		}
+		
 	}
+	
+	 //public static native void addVoteListener(Label vote, FeatureResumeWidget f)/*-{
+	 // $wnd.alert("ola");
+//	vote.onclick= f.@eu.ist.fears.client.ListFeaturesWidget.FeatureResumeWidget::makeVote();
+//}-*/;
+	
 
 	public void update(){
 		_com.getFeatures(_projectName, Cookies.getCookie("fears"), getFeaturesCB);		
@@ -207,14 +228,6 @@ public class ListFeaturesWidget extends Composite {
 	};
 
 
-	AsyncCallback voteCB = new AsyncCallback() {
-		public void onSuccess(Object result){ 
-			update();	
-		}
-
-		public void onFailure(Throwable caught) {
-			RootPanel.get().add(new Label("Isto não correu nada bem"));
-		}
-	};
+	
 
 }

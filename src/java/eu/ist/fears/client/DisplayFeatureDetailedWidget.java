@@ -21,18 +21,18 @@ import eu.ist.fears.client.views.ViewFeatureDetailed;
 
 public class DisplayFeatureDetailedWidget  extends Composite{
 
-	private Communication _com;
-	private VerticalPanel _feature; 
-	private String _projectName;
-	private Label _name;
-	private Label _description;
-	private Label _votes;
-	private Button _voteButton;
-	private TextArea _commentTextArea;
-	private PushButton _commentButton;
-	private Label _voters;
-	private Label _author;
-	private Label _ncomments;
+	protected Communication _com;
+	protected VerticalPanel _feature; 
+	protected String _projectName;
+	protected Label _name;
+	protected Label _description;
+	protected Label _votes;
+	protected PushButton _voteButton;
+	protected TextArea _commentTextArea;
+	protected PushButton _commentButton;
+	protected Label _voters;
+	protected Label _author;
+	protected Label _ncomments;
 
 	public DisplayFeatureDetailedWidget(String projectName, String featureName){
 
@@ -43,7 +43,7 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 		_description= new Label();
 		_votes = new Label("votes");
 		_feature = new VerticalPanel();
-		_voteButton = new Button("Votar");
+		_voteButton = new PushButton("Votar");
 		_voteButton.addClickListener(new VoteButton());
 		_author = new Label("");
 		_voters= new Label("");
@@ -73,7 +73,9 @@ public class DisplayFeatureDetailedWidget  extends Composite{
 		
 		RootPanel actionVote = RootPanel.get("rFeatDisplay:ActionVote");
 		actionVote.clear();
-		actionVote.add(new Label("Action Vote"));
+		if(Fears.isLogedIn()){
+		actionVote.add(_voteButton);
+		}
 		
 		RootPanel title = RootPanel.get("rFeatDisplay:Title");
 		title.clear();

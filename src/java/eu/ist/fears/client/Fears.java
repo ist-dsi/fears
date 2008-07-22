@@ -32,7 +32,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 	protected VerticalPanel menu;
 	protected HorizontalPanel topBox; 
 	protected Admin admin;
-	protected Communication _com;
+	protected static Communication _com;
 	protected Label userName;
 	protected static boolean validCookie;
 
@@ -236,10 +236,30 @@ public class Fears implements EntryPoint, HistoryListener  {
 			f.addFeature(projectName);
 		}else if(parse.startsWith("viewFeature")){
 			f.viewFeature(projectName, parse.substring("viewFeature".length()));
+		}else if(parse.startsWith("voteFeature")){
+			voteFeature(projectName, parse.substring("voteFeature".length()),true);
 		}
 
 	}
 
+	public static void voteFeature(String project, String feature,boolean returnToProject ){
+		_com.vote(project, feature,  Cookies.getCookie("fears"), voteCB);
+		if(returnToProject){
+			History.newItem("Project" + project );
+		}else{
+			History.newItem("Project" + project +"?" +"viewFeature"+feature );
+		}
+	}
+	
+	static AsyncCallback voteCB = new AsyncCallback() {
+		public void onSuccess(Object result){ 
+		}
+
+		public void onFailure(Throwable caught) {
+			RootPanel.get().add(new Label("Isto não correu nada bem"));
+		}
+	};
+	
 	protected class ValidateSession implements AsyncCallback{
 		Fears _f;
 		boolean _trytoLogin;
