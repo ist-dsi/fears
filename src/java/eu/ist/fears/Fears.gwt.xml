@@ -11,6 +11,6 @@
  	<!-- Servlet: -->
   	<servlet path='/service' class='eu.ist.fears.server.FearsServiceImpl'/>
   	
-  	 <stylesheet src="style.css"/>
+  	 <stylesheet src="general.css"/>
   	 	  
 </module>

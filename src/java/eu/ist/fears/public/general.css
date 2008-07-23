@@ -1,26 +1,12 @@
-body {
-font-family: Arial;
-margin: 0 0 60px 0;
-padding: 0;
-font-size: 76%;
-line-height: 1.6em;
-background: #e7e7df;
-}
-
-
 .hidden {
 	display : none;
 }
 
 .hiddenFeatureClass1{
 	display : none;
-	}
-
-.centered {
-	margin: 0 auto;
-    text-align: center;	
 }
-	
+
+
 .gwt-Hyperlink{
 	display: inline;
 }
@@ -31,18 +17,60 @@ background: #e7e7df;
 
 .gwt-PushButton{
 	display: inline;
-	} 
+} 
+
+body {
+font-family: Arial;
+margin: 0 0 60px 0;
+padding: 0;
+font-size: 76%;
+line-height: 1.6em;
+background: #e7e7df;
+}
+
+
+
+.centered {
+text-align: center;
+margin: 0 0 60px 0;
+} 
+
 
 div, table, form, p, table, tr, td, h1, h2, h3, ul, li {
 margin: 0;
 padding: 0;
-}
+} 
 
 table {
 border-collapse: collapse;
 }
 a { color: #588aa7; }
 p { margin: 1em 0; }
+
+.headerBox {
+width: 650px;
+margin: 0 auto;
+color: #fff;
+margin-top: 20px;
+margin-bottom: 20px;
+}
+
+.header {
+
+}
+
+.header a {
+color: #fff;
+
+}
+
+.left {
+margin-right: 240px;
+}
+
+.right {
+}
+
 
 h1 {
 font-size: 1.0em;
@@ -56,32 +84,6 @@ h3 {
 font-size: 1.5em;
 }
 
-div#header {
-width: 700px;
-margin: 0 auto;
-padding: 10px 20px;
-color: #aaa;
-}
-div#header h1 {
-float: left;
-font-weight: normal;
-color: #fff;
-display: inline;
-}
-
-ul#support {
-float: right;
-margin: 10px 0;
-color: #fff;
-}
-
-ul#support li {
-display: inline;
-list-style: none;
-}
-ul#support li a {
-color: #fff;
-}
 div.clear {
 clear: both;
 line-height: 0;
@@ -90,27 +92,32 @@ height: 0;
 }
 
 
-div#content {
+.contentBox {
 border: 4px solid #d5d5ca;
 width: 700px;
-margin: 0 auto;
 background: #fff;
-padding: 20px 30px 40px 30px;
 }
+
+.content {
+margin: 20px 30px 40px 30px;	
+}
+
 div#content h2 {
 color: #888;
 }
+
 div#content h2 a {
 color: #6d9966;
 }
+
 div#content h2 span {
 color: #888;
 }
+
 div#stats {
 color: #888;
 margin: 20px 0;
 }
-
 
 div#box {
 background: #f0f0e9;
@@ -191,9 +198,8 @@ font-weight: bold;
 color: #588aa7;
 }
 table.request div.actionvote {
-color: #588aa7;
+color: #aaa;
 padding-top: 2px;
-text-decoration: underline;
 }
 table.request a {
 color: #588aa7;
@@ -229,34 +235,20 @@ table.request h3 span.planned { background: #588aa7; }
 table.request h3 span.implementation { background: #588aa7; }
 table.request h3 span.completed { background: #588aa7; }
 
-.comment, div.comment_form {
+div.comment, div.comment_form {
 margin: 20px 0 0 0;
 padding: 10px 0 0px 89px;
 border-top: 1px dotted #ccc;
 }
-
-.comment p {
-margin: 20px 20px 20px 20px;
+div.comment p {
+margin: 0;
 }
-
-
-.commentText {
-	padding: 0px 0px 0px 89px;
-}
-
-.metaComment {
+div.comment p.meta {
 margin: 0;
 font-size: 0.9em;
 color: #999;
 }
-
-.meta {
-margin-top: 5px;
-font-size: 0.9em;
-color: #999;
-}
-
-.comment p.meta a {
+div.comment p.meta a {
 color: #999 !important;
 text-decoration: none;
 border-bottom: 1px solid #ddc;
@@ -293,16 +285,15 @@ div.button {
 margin-top: 20px;
 text-align: right;
 }
-
-.button input {
+div.button input {
 }
 
-.titleTextBox {
+input.inputtext {
 padding: 4px;
-background:  #fafafa;
+background: #fafafa;
 border: 1px solid #bbb;
 }
-.descriptionTextBox {
+textarea.new {
 width: 600px;
 height: 80px;
 padding: 4px;
@@ -311,7 +302,7 @@ border: 1px solid #bbb;
 }
 .aleft { text-align: left; }
 .aright { text-align: right; }
-.pleft5 { padding-left: 7px; display: inline; }
+.pleft5 { padding-left: 7px; }
 
 
 

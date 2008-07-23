@@ -32,16 +32,11 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 		_com = new Communication("service");
 		RootPanel.get().setStyleName("body");
 
-		main= new VerticalPanel();
-		contentBox = new VerticalPanel();
-		
-		menu = new VerticalPanel();
+		content = new VerticalPanel();
 
-		RootPanel.get().add(main);
-		main.setStyleName("centered");
 		
-		main.add(contentBox);
-		main.add(menu);
+		RootPanel.get().add(content);
+		
 
 		userName = new Label("guest");
 		RootPanel.get("rUsername").clear();
@@ -57,14 +52,14 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 	
 	public void viewListProjects(){
 		
-		contentBox.clear();
+		content.clear();
 		if(!verifyLogin(true))
 			return;
 		
 		AdminListProjectsWidget projects = new AdminListProjectsWidget();
 		//RootPanel.get().setTitle("Projectos");
 		projects.update();	
-		contentBox.add(projects);
+		content.add(projects);
 		
 	}
 
