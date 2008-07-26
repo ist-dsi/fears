@@ -71,7 +71,7 @@ public class FearsApp extends FearsApp_Base {
 
 
 		for(FeatureRequest f : features ){
-			res.add(new ViewFeatureResume(f.getName(), f.getDescription(),
+			res.add(new ViewFeatureResume(f.getProject().getName(), f.getName(), f.getDescription(),
 					f.getVotes(), f.getNComments(), f.getAuthor().getUser() ));
 		}
 

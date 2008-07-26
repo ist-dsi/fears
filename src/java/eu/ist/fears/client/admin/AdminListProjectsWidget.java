@@ -14,6 +14,8 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+
+import eu.ist.fears.client.Fears;
 import eu.ist.fears.client.communication.Communication;
 import eu.ist.fears.client.views.ViewProject;
 
@@ -34,6 +36,8 @@ public class AdminListProjectsWidget extends Composite{
 		_newProjectDescription= new TextArea();
 		_createProjectButton = new Button("Adicionar Projecto");
 
+		Fears.setPath(null, null, false);
+		
 		init();
 		initWidget(_projPanel);
 
@@ -41,7 +45,7 @@ public class AdminListProjectsWidget extends Composite{
 
 	private void init(){
 		_projPanel.clear();
-		_projPanel.add( new HTML("<h1>Projectos</h1>"));
+
 	}
 
 	private void displayCreateProject(){

@@ -64,7 +64,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
         }
     }
 
-	public void vote(String projectName, String name, String sessionID){
+	public ViewFeatureDetailed vote(String projectName, String name, String sessionID){
 		Project p =FearsApp.getFears().getProject(projectName);
 
 		if(p==null)
@@ -76,6 +76,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 			throw new RuntimeException("Nao existe essa sugestao: " + name);
 
 		f.vote(getVoterFromSession(sessionID));
+		return  f.getDetailedView();
 	}
 
 	public void addFeature(String projectName, String name,

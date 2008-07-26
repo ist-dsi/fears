@@ -28,53 +28,40 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 		if (RootPanel.get("Admin")== null){
 			return;			
 		}
-		
-		_com = new Communication("service");
-		RootPanel.get().setStyleName("body");
 
-		content = new VerticalPanel();
+		init();
 
-		
-		RootPanel.get().add(content);
-		
-
-		userName = new Label("guest");
-		RootPanel.get("rUsername").clear();
-		RootPanel.get("rUsername").add(userName);	
-		
 
 		History.addHistoryListener(this);
-		
+
 		onHistoryChanged(History.getToken());
 	}	
-	
 
-	
+
+
 	public void viewListProjects(){
-		
+
 		content.clear();
 		if(!verifyLogin(true))
 			return;
-		
+
 		AdminListProjectsWidget projects = new AdminListProjectsWidget();
 		//RootPanel.get().setTitle("Projectos");
 		projects.update();	
 		content.add(projects);
-		
+
 	}
 
 
 	public void onHistoryChanged(String historyToken) {
 		// This method is called whenever the application's history changes. Set
 		// the label to reflect the current history token.
-		
+
 		if (RootPanel.get("Admin")== null){
 			return;			
 		}
-		
-		hideAll();
-		updateSessionLink();
-		
+
+		header.update();
 		Fears.parseURL(historyToken, this);
 
 	}

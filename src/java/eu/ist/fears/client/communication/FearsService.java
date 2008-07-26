@@ -12,7 +12,7 @@ import eu.ist.fears.client.views.ViewVoter;
 
 public interface FearsService extends RemoteService  {
 	
-	public void vote(String projectName, String feature, String sessionID);
+	public ViewFeatureDetailed vote(String projectName, String feature, String sessionID);
 	public void addFeature(String projectName, String name, String description,  String sessionID);
 	public List getFeatures(String projectName, String sessionID);
 	public ViewFeatureDetailed getFeature(String projectName, String featuremName, String sessionID);

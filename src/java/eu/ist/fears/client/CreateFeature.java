@@ -5,6 +5,10 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -19,47 +23,49 @@ import com.google.gwt.user.client.ui.Widget;
 import eu.ist.fears.client.communication.Communication;
 
 
-public class CreateFeatureWidget extends Composite {
+public class CreateFeature extends Composite {
 
-	private Communication _com;
-	private VerticalPanel _sugPanel;
-	private TextBox _name; 
-	private TextArea _description; 
-	private String _projectName;
+	protected Communication _com;
+	protected VerticalPanel _sugPanel;
+	protected TextBox _name; 
+	protected TextArea _description; 
+	protected String _projectName;
+	protected HorizontalPanel _projectTitle;
 
-	public CreateFeatureWidget(String projectName){
+	public CreateFeature(String projectName){
 		_com= new Communication("service");
 		_sugPanel = new VerticalPanel();
+		Grid createFeatureTable = new Grid(2, 2);
 		_projectName = projectName;
+		_projectTitle = new HorizontalPanel();
+		
 		initWidget(_sugPanel);
+		createFeatureTable.getCellFormatter().setStyleName(0, 0, "CreateFeatureCell");
+		createFeatureTable.getCellFormatter().setStyleName(0, 1, "CreateFeatureCell");
+		createFeatureTable.getCellFormatter().setStyleName(1, 0, "CreateFeatureCell");
+		createFeatureTable.getCellFormatter().setStyleName(1, 1, "CreateFeatureCell");
+		
+		Fears.setPath(projectName, "Nova Sugest&atilde;o", false);
+		
+		_sugPanel.add(createFeatureTable);
+		
 		_name = new TextBox();
-		_description= new TextArea();
-		
-		_description.setVisibleLines(7);
-		_description.setCharacterWidth(40);
-		
-		RootPanel newSugTemplate = RootPanel.get("newSug");
-		
-		RootPanel pName = RootPanel.get("rNewSug:Project");
-		pName.clear();
-		pName.add(new Hyperlink(projectName,"Project"+projectName));
-		
-		RootPanel titleTextBox =  RootPanel.get("rNewSug:Title");
-		titleTextBox.clear();
-		titleTextBox.add(_name);
+		_name.setVisibleLength(50);
 		_name.setStyleName("titleTextBox");
+		createFeatureTable.setWidget(0, 0,new HTML("T&iacute;tulo:"));
+		createFeatureTable.setWidget(0, 1,(_name));
 		
-		
-		RootPanel descriptionTextBox =  RootPanel.get("rNewSug:Description");
-		descriptionTextBox.clear();
-		descriptionTextBox.add(_description);
+	
+		_description= new TextArea();
 		_description.setStyleName("descriptionTextBox");
+		createFeatureTable.setWidget(1, 0, new HTML("Descri&ccedil;&atilde;o:&nbsp;"));
+		createFeatureTable.setWidget(1, 1, _description);
+		
+		HorizontalPanel buttons = new HorizontalPanel();
+		buttons.setStyleName("createButtons");
 		
 		
-		RootPanel buttons =  RootPanel.get("rNewSug:newFeatureButtons");
-		buttons.clear();
 		PushButton _sendButton = new PushButton(new Image("button04.gif",0,0,105,32), new Image("button04.gif",-2,-2,105,32) );
-		buttons.setStyleName("button");
 		_sendButton.addClickListener(new ClickListener(){
 			public void onClick(Widget sender) {
 				_com.addFeature(_projectName, _name.getText(),
@@ -74,12 +80,13 @@ public class CreateFeatureWidget extends Composite {
 				History.newItem("Project" + _projectName );
 			}
 		});
-		_cancelButton.setStyleName("pleft5");
+		_sendButton.setStyleName("pright5");
 		
+		_sugPanel.setHorizontalAlignment(HorizontalPanel.ALIGN_RIGHT);
 		buttons.add(_sendButton);
 		buttons.add(_cancelButton);
-
-		newSugTemplate.setStyleName("umkk");
+		_sugPanel.add(buttons);
+		
 	}
 
 	

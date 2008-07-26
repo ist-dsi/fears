@@ -5,22 +5,21 @@ import java.util.Date;
 
 import com.google.gwt.core.client.EntryPoint;
 
+
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentConstant;
-
-import eu.ist.fears.client.admin.*;
 import eu.ist.fears.client.communication.Communication;
+import eu.ist.fears.client.interfaceweb.Header;
+import eu.ist.fears.client.interfaceweb.Path;
 import eu.ist.fears.client.views.ViewVoter;
 
 
@@ -31,10 +30,12 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 
 	protected static Communication _com;
-	protected VerticalPanel content; 
-	protected VerticalPanel contentBox;
-	protected HorizontalPanel headerBox; 
-	protected Label userName;
+	protected VerticalPanel frameBox;
+	protected VerticalPanel frame;
+	protected VerticalPanel content;
+	protected Header header; 
+	protected static Path path;
+	protected static Label userName;
 	protected static boolean validCookie;
 	protected Hyperlink sessionLink;  
 
@@ -48,62 +49,49 @@ public class Fears implements EntryPoint, HistoryListener  {
 			return;			
 		}
 
-		_com = new Communication("service");
+		init();
 
-		contentBox =  new VerticalPanel();
-		content = new VerticalPanel();
-		headerBox = new HorizontalPanel();
-		headerBox.setStyleName("headerBox");
-		
-		userName = new Label("guest");
-		sessionLink = new Hyperlink("Login","login");
-
-		RootPanel.get().setStyleName("centered");
-		
-		RootPanel.get().add(headerBox);
-		createHeader();
-		contentBox.setStyleName("contentBox");
-		content.setStyleName("content");
-		RootPanel.get().add(contentBox); 
-		contentBox.add(content);
-		
 		History.addHistoryListener(this);
-
 		onHistoryChanged(History.getToken());
-		
+
 	}	
 
-	protected void createHeader(){
-		
-		HorizontalPanel left = new HorizontalPanel();
-		HorizontalPanel right = new HorizontalPanel();
-		HorizontalPanel header = new HorizontalPanel();
-		header.setStyleName("header");
-		headerBox.add(header);
-		header.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-		header.add(left);
-		header.add(right);
-		left.setStyleName("left");
-		left.add(new Label("fears | feature request system |"));
-		left.add(new HTML("&nbsp;<a href=\"Admin.html\">Admin</a>"));
-		right.setStyleName("right");
-		right.add(new HTML("Bem-vindo&nbsp;"));
-		right.add(userName);
-		right.add(new HTML("&nbsp;|&nbsp;"));
-		right.add(sessionLink);
+	public void init(){
+		_com = new Communication("service");
+
+		frameBox =  new VerticalPanel();
+		frame = new VerticalPanel();
+		content = new VerticalPanel();
+		content.setStyleName("width100");
+		path = new Path();
+		userName = new Label("guest");
+		header = new Header(userName.getText(),validCookie);
+		RootPanel.get().setStyleName("centered");
+		RootPanel.get().add(header);
+		frameBox.setStyleName("frameBox");
+		frame.setStyleName("frame");
+		RootPanel.get().add(frameBox); 
+		frameBox.add(frame);
+		frame.add(path);
+		frame.add(content);
+
 	}
+
 
 	protected void updateUsername(String user){
 		userName.setText(user);
 	}
-	
+
+	public static void setPath(String project, String actual, boolean back){
+		path.update(project, actual, back);
+	}
 
 	public void listFeatures(String projectName){
 		content.clear();
 
 		verifyLogin(false);
 
-		ListFeaturesWidget features = new ListFeaturesWidget(projectName);
+		ListFeatures features = new ListFeatures(projectName);
 
 		features.update();
 		content.add(features);
@@ -115,7 +103,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 		if(!verifyLogin(true))
 			return;
 
-		content.add(new CreateFeatureWidget(projectName));
+		content.add(new CreateFeature(projectName));
 
 	}
 
@@ -125,7 +113,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 		verifyLogin(false);
 
 
-		content.add(new DisplayFeatureDetailedWidget(projectName, featureName));
+		content.add(new DisplayFeatureDetailed(projectName, featureName));
 	}
 
 	public void viewListProjects(){
@@ -133,7 +121,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 		verifyLogin(false);
 
-		ListProjectsWidget projects = new ListProjectsWidget();
+		ListProjects projects = new ListProjects();
 
 		projects.update();	
 		content.add(projects);
@@ -144,14 +132,18 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 		verifyLogin(false);
 
-		LoginWidget login = new LoginWidget(this);
+		Login login = new Login(this);
 		content.add(login);		
 	}
 
 	public static boolean isLogedIn(){
 		return validCookie;
 	}
-	
+
+	public static String getUsername(){
+		return userName.getText();
+	}
+
 	public void setCookie(String value, String userName){
 		final long DURATION = 1000 * 60 * 60 * 1; //duration remembering login, 1 hour
 		Date expires = new Date(System.currentTimeMillis() + DURATION);
@@ -183,35 +175,12 @@ public class Fears implements EntryPoint, HistoryListener  {
 		if (RootPanel.get("Admin") != null){
 			return;			
 		}
-		
-		hideAll();
-		updateSessionLink();
-		
+
+		header.update();
 		parseURL(historyToken, this);
 	}
-	
-	public void updateSessionLink(){
-		if(!isLogedIn()){
-			sessionLink.setText("Login");
-			sessionLink.setTargetHistoryToken("login");
-		}else{
-			sessionLink.setText("Logout");
-			sessionLink.setTargetHistoryToken("logout");
-		}
-	}
 
-	public void hideAll(){
-		RootPanel newSug = RootPanel.get("newSug");
-		newSug.setStyleName("hidden");
-		
-		RootPanel featureTemplate = RootPanel.get("featureDisplay");
-		featureTemplate.setStyleName("hidden");
-		
-		RootPanel featureListTemplate = RootPanel.get("ProjectlistFeatures");
-		featureListTemplate.setStyleName("hidden");
-		
-	}
-	
+
 	public static void parseURL(String url, Fears f){
 		// This method is called whenever the application's history changes. Set
 		// the label to reflect the current history token.
@@ -258,30 +227,10 @@ public class Fears implements EntryPoint, HistoryListener  {
 			f.addFeature(projectName);
 		}else if(parse.startsWith("viewFeature")){
 			f.viewFeature(projectName, parse.substring("viewFeature".length()));
-		}else if(parse.startsWith("voteFeature")){
-			voteFeature(projectName, parse.substring("voteFeature".length()),true);
 		}
 
 	}
 
-	public static void voteFeature(String project, String feature,boolean returnToProject ){
-		_com.vote(project, feature,  Cookies.getCookie("fears"), voteCB);
-		if(returnToProject){
-			History.newItem("Project" + project );
-		}else{
-			History.newItem("Project" + project +"?" +"viewFeature"+feature );
-		}
-	}
-	
-	static AsyncCallback voteCB = new AsyncCallback() {
-		public void onSuccess(Object result){ 
-		}
-
-		public void onFailure(Throwable caught) {
-			RootPanel.get().add(new Label("Isto não correu nada bem"));
-		}
-	};
-	
 	protected class ValidateSession implements AsyncCallback{
 		Fears _f;
 		boolean _trytoLogin;

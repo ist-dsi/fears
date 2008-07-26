@@ -22,7 +22,7 @@ import eu.ist.fears.client.communication.Communication;
 import eu.ist.fears.client.views.ViewFeatureDetailed;
 import eu.ist.fears.client.views.ViewVoter;
 
-public class LoginWidget extends Composite {
+public class Login extends Composite {
 
 	private Communication _com;
 	private VerticalPanel _main;
@@ -31,13 +31,14 @@ public class LoginWidget extends Composite {
 	private Label _alert;
 
 
-	public LoginWidget(Fears f){
+	public Login(Fears f){
 
 		_com= new Communication("service");
 		_main = new VerticalPanel();
 		initWidget(_main);
 		_main.setStyleName("login");
-		_main.add( new HTML("<h1>Login</h1><br>"));
+		
+		Fears.setPath(null, "Login", false);
 
 		HorizontalPanel row = new HorizontalPanel();
 		row.add(new Label("Username:  "));

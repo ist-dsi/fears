@@ -1,11 +1,3 @@
-.hidden {
-	display : none;
-}
-
-.hiddenFeatureClass1{
-	display : none;
-}
-
 
 .gwt-Hyperlink{
 	display: inline;
@@ -48,29 +40,20 @@ a { color: #588aa7; }
 p { margin: 1em 0; }
 
 .headerBox {
-width: 650px;
+width: 699px;
 margin: 0 auto;
 color: #fff;
 margin-top: 20px;
-margin-bottom: 20px;
+margin-bottom: 21px;
 }
 
 .header {
-
+width: 699px;
 }
 
 .header a {
 color: #fff;
-
 }
-
-.left {
-margin-right: 240px;
-}
-
-.right {
-}
-
 
 h1 {
 font-size: 1.0em;
@@ -92,39 +75,54 @@ height: 0;
 }
 
 
-.contentBox {
+.frameBox {
 border: 4px solid #d5d5ca;
-width: 700px;
+width: 764px;
 background: #fff;
+margin: 0 auto;
 }
 
-.content {
+.frame {
+width: 694px;	
 margin: 20px 30px 40px 30px;	
 }
 
-div#content h2 {
+.Path{
+font-size:  1.75em;
+margin: 10px 0;
 color: #888;
+font-weight: bold;
+height: 20px;
+margin-bottom: 15px;
 }
 
-div#content h2 a {
+.Path a {
 color: #6d9966;
 }
 
-div#content h2 span {
-color: #888;
+.width100{
+width: 100%;
 }
 
-div#stats {
+.stats {
 color: #888;
-margin: 20px 0;
+margin-bottom: 20px;
+margin-top: 0px;
 }
 
-div#box {
+.searchBox {
 background: #f0f0e9;
 border: 0px solid #eeeee5;
-padding: 15px 20px;
-margin: 10px 0 0 0;
+width: 100%;
+height: 65px;
 }
+
+.search {
+width: 84%;
+margin-top: 15px;
+margin-left: 25px;
+}
+
 div#box table {
 }
 div#box table tr td {
@@ -138,72 +136,87 @@ margin: 0 5px 0 0;
 div#box table tr td.search {
 padding-top: 2px;
 }
-div#box table tr td.search input {
-padding: 4px;
+
+.searchTextBox {
 border: 1px solid #bbb;
 }
 
 
-table#filter {
+.filterBox {
 /*border: 2px solid #eeeee5;*/
 background: #f8f8f3;
 width: 100%;
-margin: 20px 0 0 0;
+height: 40px;
+margin-top: 20px;
 }
-table#filter tr td {
-padding: 10px 20px;
-}
-table#filter tr td span {
-letter-spacing: 3px;
-color: #554;
-}
-table#filter tr td a {
-color: #554;
-border-bottom: 1px solid #bba;
-text-decoration: none;
-letter-spacing: 0;
-}
-table#filter tr td a.selected {
-font-weight: bold;
-padding: 1px 2px;
-text-decoration: none;
-letter-spacing: auto;
-border: none;
+
+.filter{
+margin-left: 20px;
+width: 94%;
 }
 
 
-div#requests {
-margin-bottom: 10px;
+.featuresList{
+margin-top: 30px;
 }
-table.request {
+
+.feature {
 border-collapse: collapse;
-margin: 30px 0 0 0;
+margin-bottom: 45px;
 }
-table.request tr td {
-vertical-align: top;
-padding: 0;
-margin: 0;
-}
-table.request div.vote {
+
+
+
+.voteBox {
 background: #fafaf5;
 border: 4px solid #eeeee5;
-padding: 10px;
-text-align: center;
-width: 40px;
-height: 45px;
+width: 65px;
+height: 70px;
 }
-table.request div.votes {
+
+.vote{
+width: 100%;
+}
+
+.NumberVotes {
 font-size: 1.6em;
 font-weight: bold;
+margin-top: 10px;
 color: #588aa7;
 }
-table.request div.actionvote {
-color: #aaa;
-padding-top: 2px;
+
+.ActionVotes { 	
+color: #588aa7;
+text-decoration: underline;
 }
+
+.ActionVotes:hover { 	
+cursor: pointer;
+}
+
+.mainBox{
+margin-left: 20px;
+width: 615px;
+}
+
+.mainBox a{
+font-size: 1.5em;
+font-weight: bold;
+text-decoration: none;
+}
+
+.featureTitle{
+border-bottom: 2px solid #d5e2e9;
+}
+
+.featureDetailed{
+margin-top: 20px;
+}
+
 table.request a {
 color: #588aa7;
 }
+
 table.request h3 a {
 text-decoration: none;
 border-bottom: 2px solid #d5e2e9;
@@ -220,12 +233,12 @@ padding-left: 20px;
 table.request td.tdbody p {
 margin: 0;
 }
-table.request td.tdbody p.meta {
+.meta {
 margin: 4px 0 2px 0;
 font-size: 0.9em;
 color: #999;
 }
-table.request td.tdbody p.meta a {
+.meta a {
 color: #999 !important;
 text-decoration: none;
 border-bottom: 1px solid #ddc;
@@ -235,11 +248,28 @@ table.request h3 span.planned { background: #588aa7; }
 table.request h3 span.implementation { background: #588aa7; }
 table.request h3 span.completed { background: #588aa7; }
 
-div.comment, div.comment_form {
+.comment{
 margin: 20px 0 0 0;
 padding: 10px 0 0px 89px;
 border-top: 1px dotted #ccc;
 }
+
+.newComment {
+width: 100%;
+border-top: 1px dotted #ccc;
+}
+
+.commentTextArea{
+margin-top: 10px;
+margin-left: 89px;	
+}
+
+.commentButton{
+margin-top: 10px;
+margin-left: 89px;	
+}
+	
+
 div.comment p {
 margin: 0;
 }
@@ -255,55 +285,49 @@ border-bottom: 1px solid #ddc;
 }
 
 
-table.form {
-width: 100%;
-margin-top: 25px;
-border-collapse: collapse;
-}
-table.form th {
-font-weight: normal;
-vertical-align: top;
-text-align: left;
-border-top: 1px solid #ddd;
-border-bottom: 1px solid #ddd;
-padding: 15px 10px 0 0;
-}
-table.form td {
-border-top: 1px solid #ddd;
-border-bottom: 1px solid #ddd;
-padding: 15px 0;
-}
 p.label {
 margin: 10px 0 3px 0;
 padding: 0;
 }
+
 p.input {
 margin: 0;
 padding: 0;
 }
-div.button {
-margin-top: 20px;
-text-align: right;
-}
-div.button input {
-}
 
-input.inputtext {
+.titleTextBox {
 padding: 4px;
 background: #fafafa;
 border: 1px solid #bbb;
 }
-textarea.new {
+
+.descriptionTextBox {
 width: 600px;
 height: 80px;
 padding: 4px;
 background: #fafafa;
 border: 1px solid #bbb;
 }
+
+.CreateFeatureCell{
+font-weight: normal;
+vertical-align: top;
+text-align: left;
+border-top: 1px solid #ddd;
+border-bottom: 1px solid #ddd;
+padding: 15px 10px 15px 0;
+}
+
+.createButtons{
+margin-top: 20px;
+}
+
+.pright5{
+margin-right: 7px;	
+}
+
 .aleft { text-align: left; }
 .aright { text-align: right; }
-.pleft5 { padding-left: 7px; }
-
 
 
 table.title {
@@ -311,6 +335,7 @@ border-collapse: collapse;
 width: 100%;
 margin:0;
 }
+
 a.back {
 display: block;
 /*

@@ -67,7 +67,7 @@ public class FeatureRequest extends FeatureRequest_Base {
 			voters.add(new ViewVoter(v.getUser(), null, null ));
 		}
 		
-		return new ViewFeatureDetailed(getName(),  getDescription(), getAuthorName(), voters , comments );
+		return new ViewFeatureDetailed(getProject().getName(), getName(),  getDescription(), getAuthorName(), voters , comments );
 	}
 
     

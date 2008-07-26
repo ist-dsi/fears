@@ -13,24 +13,25 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import eu.ist.fears.client.communication.Communication;
 import eu.ist.fears.client.views.ViewProject;
 
-public class ListProjectsWidget extends Composite{
+public class ListProjects extends Composite{
 
 	private Communication _com;
 	private VerticalPanel _projPanel;
 
-	public ListProjectsWidget(){
+	public ListProjects(){
 
 		_com= new Communication("service");
 		_projPanel = new VerticalPanel();
 		_projPanel.setStyleName("projectsList");
 
+		Fears.setPath(null, null, false);
+		
 		init();
 		initWidget(_projPanel);
 	}
 
 	private void init(){
 		_projPanel.clear();
-		_projPanel.add( new HTML("<h1>Projectos</h1>"));
 	}
 
 	public class ProjectWidget extends Composite{
