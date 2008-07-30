@@ -1,3 +1,9 @@
+/* *************
+
+CSS geral:
+
+************* */
+
 table {
 border-collapse: collapse;
 }
@@ -64,6 +70,14 @@ color: #6d9966;
 width: 100%;
 }
 
+
+/* *************
+
+CSS da pagina de Projecto:
+
+************* */
+   
+   
 .stats {
 color: #888;
 margin-bottom: 20px;
@@ -106,6 +120,14 @@ width: 94%;
 margin-top: 30px;
 }
 
+
+/* *************
+
+CSS das Sugestoes (usado na pag. do proj. e pag da sugestao:
+
+************* */
+
+
 .feature {
 border-collapse: collapse;
 margin-bottom: 45px;
@@ -131,7 +153,11 @@ color: #588aa7;
 
 .ActionVotes { 	
 color: #588aa7;
+font-size: 0.9em;
 text-decoration: underline;
+background: transparent;
+width: 46px;
+border: 0;
 }
 
 .ActionVotes:hover { 	
@@ -168,15 +194,32 @@ text-decoration: none;
 border-bottom: 1px solid #ddc;
 }
 
+/* *************
+
+CSS da pagina dos Comentarios (pagina de Sugestao):
+
+************* */
+
+.commentTitle {
+font-size:  1.5em;
+margin-top: 20px;
+margin-bottom: 5px;
+margin-left: 89px;
+color: #888;
+font-weight: bold;
+}
+
 .comment{
-margin: 20px 0 0 0;
-padding: 10px 0 0px 89px;
+margin-top: 5px;
+margin-bottom: 15px;
+padding: 0px 0 0px 89px;
 border-top: 1px dotted #ccc;
 }
 
 .newComment {
 width: 100%;
 border-top: 1px dotted #ccc;
+margin-top: 5px;
 }
 
 .commentTextArea{
@@ -188,6 +231,12 @@ margin-left: 89px;
 margin-top: 10px;
 margin-left: 89px;	
 }
+	
+/* *************
+
+CSS da pagina Adicionar Sugestao:
+
+************* */	
 	
 p.label {
 margin: 10px 0 3px 0;

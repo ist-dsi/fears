@@ -24,14 +24,14 @@ public class Path extends Composite{
 		initWidget(_pathBox);
 	}
 
-	public void update(String project, String actual, boolean back){
+	public void update(String project, int projectID, String actual, boolean back){
 		_path.clear();
 
 
 		_path.add(new Hyperlink("Projectos","listProjects"));
 		if(project!=null){
 			_path.add(new HTML("&nbsp;/&nbsp;"));
-			_path.add(new Hyperlink(project,"Project"+project));
+			_path.add(new Hyperlink(project,"Project"+projectID));
 		}
 
 		if(actual!=null){

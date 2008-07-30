@@ -4,14 +4,9 @@ package eu.ist.fears.client.admin;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
-
-
-
 import eu.ist.fears.client.Fears;
-import eu.ist.fears.client.communication.Communication;
+
 
 
 /**

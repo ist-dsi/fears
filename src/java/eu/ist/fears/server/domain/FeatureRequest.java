@@ -56,18 +56,21 @@ public class FeatureRequest extends FeatureRequest_Base {
 	
 	
 
-	public ViewFeatureDetailed getDetailedView() {
+	public ViewFeatureDetailed getDetailedView(Voter user) {
 		List<ViewComment> comments = new ArrayList<ViewComment>();
 		for(Comment c : getCommentSet() ){
 			comments.add(c.getView());
 		}
 		
+		boolean userhasvoted=false;
+		
 		List<ViewVoter> voters = new ArrayList<ViewVoter>();
 		for(Voter v : getVoterSet() ){
 			voters.add(new ViewVoter(v.getUser(), null, null ));
+			if(v.equals(user))
+				userhasvoted=true;
 		}
-		
-		return new ViewFeatureDetailed(getProject().getName(), getName(),  getDescription(), getAuthorName(), voters , comments );
+		return new ViewFeatureDetailed(getProject().getName(), getProject().getWebID(), getName(), userhasvoted ,  getDescription(), getAuthorName(), voters , comments );
 	}
 
     

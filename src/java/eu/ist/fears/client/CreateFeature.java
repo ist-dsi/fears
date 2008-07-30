@@ -7,9 +7,7 @@ import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PushButton;
@@ -29,14 +27,14 @@ public class CreateFeature extends Composite {
 	protected VerticalPanel _sugPanel;
 	protected TextBox _name; 
 	protected TextArea _description; 
-	protected String _projectName;
+	protected String _projectID;
 	protected HorizontalPanel _projectTitle;
 
-	public CreateFeature(String projectName){
+	public CreateFeature(String projectID){
 		_com= new Communication("service");
 		_sugPanel = new VerticalPanel();
 		Grid createFeatureTable = new Grid(2, 2);
-		_projectName = projectName;
+		_projectID = projectID;
 		_projectTitle = new HorizontalPanel();
 		
 		initWidget(_sugPanel);
@@ -45,7 +43,7 @@ public class CreateFeature extends Composite {
 		createFeatureTable.getCellFormatter().setStyleName(1, 0, "CreateFeatureCell");
 		createFeatureTable.getCellFormatter().setStyleName(1, 1, "CreateFeatureCell");
 		
-		Fears.setPath(projectName, "Nova Sugest&atilde;o", false);
+		Fears.setPath("", new Integer(_projectID).intValue(), "Nova Sugest&atilde;o", false);
 		
 		_sugPanel.add(createFeatureTable);
 		
@@ -68,7 +66,7 @@ public class CreateFeature extends Composite {
 		PushButton _sendButton = new PushButton(new Image("button04.gif",0,0,105,32), new Image("button04.gif",-2,-2,105,32) );
 		_sendButton.addClickListener(new ClickListener(){
 			public void onClick(Widget sender) {
-				_com.addFeature(_projectName, _name.getText(),
+				_com.addFeature(_projectID, _name.getText(),
 						_description.getText(),  Cookies.getCookie("fears"), addSugestaoCB);
 				
 			}
@@ -77,7 +75,7 @@ public class CreateFeature extends Composite {
 		PushButton _cancelButton = new PushButton(new Image("button05.gif",0,0,92,32),new Image("button05.gif",-2,-2,92,32));
 		_cancelButton.addClickListener(new ClickListener(){
 			public void onClick(Widget sender) {
-				History.newItem("Project" + _projectName );
+				History.newItem("Project" + _projectID );
 			}
 		});
 		_sendButton.setStyleName("pright5");
@@ -94,7 +92,7 @@ public class CreateFeature extends Composite {
 	AsyncCallback addSugestaoCB = new AsyncCallback() {
 		public void onSuccess(Object result){ 
 			// do some UI stuff to show success
-			History.newItem("Project" + _projectName );
+			History.newItem("Project" + _projectID );
 			
 		}
 

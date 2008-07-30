@@ -36,7 +36,7 @@ public class AdminListProjectsWidget extends Composite{
 		_newProjectDescription= new TextArea();
 		_createProjectButton = new Button("Adicionar Projecto");
 
-		Fears.setPath(null, null, false);
+		Fears.setPath(null, 0 ,null, false);
 		
 		init();
 		initWidget(_projPanel);
@@ -76,6 +76,7 @@ public class AdminListProjectsWidget extends Composite{
 		VerticalPanel _project; 
 		VerticalPanel _projectContainer;
 		Label _name;
+		Label _projectID;
 		Label _description;
 		Label _nFeatures;
 		Label _alert;
@@ -85,6 +86,7 @@ public class AdminListProjectsWidget extends Composite{
 
 		ProjectWidget(ViewProject p){
 			_name = new Label(p.getName());
+			_projectID = new Label(new Integer(p.getwebID()).toString());
 			_description= new Label(p.getDescription());
 			_nFeatures = new Label(new Integer(p.getNFeatures()).toString());
 			_author = new Label(p.getAuthor());
@@ -100,7 +102,7 @@ public class AdminListProjectsWidget extends Composite{
 			_projectContainer.add(_project);
 			_projectContainer.setStyleName("project");
 
-			_project.add(new Hyperlink("<b>"+_name.getText() + "</b>", true, "Project" + _name.getText())); 
+			_project.add(new Hyperlink("<b>"+_name.getText() + "</b>", true, "Project" + p.getwebID() )); 
 			_project.add(_description);
 			_project.add(new HTML("<br>")); //Line Break
 			_project.add(_info);
@@ -109,9 +111,11 @@ public class AdminListProjectsWidget extends Composite{
 			
 			HorizontalPanel row = new HorizontalPanel();
 			_info.add(row);
-			row.add(new Label("Autor:  "));
+			row.add(new Label("#"));
+			row.add(_projectID);
+			row.add(new Label("  | Autor:  "));
 			row.add(_author);
-			row.add(new Label(" |  N de Feature Requests:  "));
+			row.add(new Label("  | N de Feature Requests:  "));
 			row.add(_nFeatures);
 			
 			initWidget(_projectContainer);

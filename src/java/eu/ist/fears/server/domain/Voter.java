@@ -21,12 +21,12 @@ public class Voter extends Voter_Base {
             addFeaturesVoted(f);
     }
 
-    public List<ViewFeatureResume> getViewFeaturesCreated(){
-        return FearsApp.getViewFeaturesResumes(getFeaturesCreatedSet());
+    public List<ViewFeatureResume> getViewFeaturesCreated(Voter user){
+        return FearsApp.getViewFeaturesResumes(getFeaturesCreatedSet(), user);
     }
     
-    public  List<ViewFeatureResume> getViewFeaturesVoted(){
-        return FearsApp.getViewFeaturesResumes(getFeaturesVotedSet());
+    public  List<ViewFeatureResume> getViewFeaturesVoted(Voter user){
+        return FearsApp.getViewFeaturesResumes(getFeaturesVotedSet(), user);
     }
     
     public String getName(){

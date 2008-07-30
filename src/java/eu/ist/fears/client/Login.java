@@ -1,9 +1,6 @@
 package eu.ist.fears.client;
 
 
-import java.util.Date;
-
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -19,7 +16,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import eu.ist.fears.client.communication.Communication;
-import eu.ist.fears.client.views.ViewFeatureDetailed;
 import eu.ist.fears.client.views.ViewVoter;
 
 public class Login extends Composite {
@@ -38,7 +34,7 @@ public class Login extends Composite {
 		initWidget(_main);
 		_main.setStyleName("login");
 		
-		Fears.setPath(null, "Login", false);
+		Fears.setPath(null, 0, "Login", false);
 
 		HorizontalPanel row = new HorizontalPanel();
 		row.add(new Label("Username:  "));

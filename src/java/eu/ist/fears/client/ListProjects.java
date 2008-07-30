@@ -24,7 +24,7 @@ public class ListProjects extends Composite{
 		_projPanel = new VerticalPanel();
 		_projPanel.setStyleName("projectsList");
 
-		Fears.setPath(null, null, false);
+		Fears.setPath(null, 0, null, false);
 		
 		init();
 		initWidget(_projPanel);
@@ -61,7 +61,7 @@ public class ListProjects extends Composite{
 			_projectContainer.add(_project);
 			_projectContainer.setStyleName("project");
 
-			_project.add(new Hyperlink("<b>"+_name.getText() + "</b>", true, "Project" + _name.getText())); 
+			_project.add(new Hyperlink("<b>"+_name.getText() + "</b>", true, "Project" + p.getwebID())); 
 			_project.add(_description);
 			_project.add(new HTML("<br>")); //Line Break
 			_project.add(_info);

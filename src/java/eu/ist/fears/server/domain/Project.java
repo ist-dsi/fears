@@ -1,16 +1,15 @@
 package eu.ist.fears.server.domain;
 
 import java.util.Collection;
-import java.util.Hashtable;
-import java.util.Set;
 
 
 public class Project extends Project_Base {
     
 	
 	
-    public Project(String name, String description, Voter voter){
+    public Project(String name, int projNumber, String description, Voter voter){
         setName(name);
+        setWebID(projNumber);
         setDescription(description);
         setAuthor(voter);
     }

@@ -2,9 +2,6 @@ package eu.ist.fears.client.views;
 
 import java.io.Serializable;
 
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
-
 
 public class ViewFeatureResume implements Serializable{
 	
@@ -14,7 +11,9 @@ public class ViewFeatureResume implements Serializable{
 	private static final long serialVersionUID = 4220452812727161930L;
 	
 	protected String _projectName;
+	protected int _projectID;
 	protected String _name;
+	protected boolean _userHasVoted;
 	protected String _description;
 	protected int _votes;
 	protected int _nComments;
@@ -24,10 +23,12 @@ public class ViewFeatureResume implements Serializable{
 		
 	}
 	
-	public  ViewFeatureResume(String projectName, String name, String description,
+	public  ViewFeatureResume(String projectName, int projectID, String name, boolean userHasvoted, String description,
 			int votes, int nComments, String author){
 		_projectName = projectName;
+		_projectID = projectID;
 		_name= name;
+		_userHasVoted = userHasvoted;
 		_description=description;
 		_votes=votes;
 		_nComments= nComments;
@@ -36,6 +37,11 @@ public class ViewFeatureResume implements Serializable{
 	
 	public String getProjectName(){
 		return _projectName;
+		
+	}
+	
+	public int getProjectID(){
+		return _projectID;
 		
 	}
 	
@@ -58,6 +64,10 @@ public class ViewFeatureResume implements Serializable{
 	
 	public String getAuthor() {
 		return _author;
+	}
+	
+	public boolean userHasVoted(){
+		return _userHasVoted;
 	}
 	
 	

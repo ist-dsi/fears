@@ -5,6 +5,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public interface FearsServiceAsync {
 	
 	public void vote(String projectName, String featureName, String sessionID, AsyncCallback callback);
+	public void removeVote(String projectName, String featureName, String sessionID, AsyncCallback callback);
 	public void addFeature(String projectName, String featureName, String description, String sessionID,  AsyncCallback callback);
 	public void getFeatures(String projectName, String sessionID, AsyncCallback callback);
 	public void getFeature(String projectName, String featureName, String sessionID, AsyncCallback callback);

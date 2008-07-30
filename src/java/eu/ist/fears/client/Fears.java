@@ -10,11 +10,8 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
-
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import eu.ist.fears.client.communication.Communication;
@@ -82,8 +79,8 @@ public class Fears implements EntryPoint, HistoryListener  {
 		userName.setText(user);
 	}
 
-	public static void setPath(String project, String actual, boolean back){
-		path.update(project, actual, back);
+	public static void setPath(String project, int projectID, String actual, boolean back){
+		path.update(project, projectID, actual, back);
 	}
 
 	public void listFeatures(String projectName){

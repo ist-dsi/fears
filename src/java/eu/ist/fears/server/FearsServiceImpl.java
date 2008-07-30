@@ -4,7 +4,6 @@ package eu.ist.fears.server;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -15,9 +14,6 @@ import eu.ist.fears.client.views.ViewFeatureResume;
 import eu.ist.fears.client.views.ViewProject;
 import eu.ist.fears.client.views.ViewVoter;
 import eu.ist.fears.server.domain.*;
-
-import jvstm.TransactionalCommand;
-
 import pt.ist.fenixframework.Config;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.pstm.Transaction;
@@ -29,7 +25,6 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	 * 
 	 */	
 	private static final long serialVersionUID = -9186875057311859285L;
-	private static final Boolean True = null;
 
     @Override
     public void init() throws ServletException {
@@ -64,11 +59,12 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
         }
     }
 
-	public ViewFeatureDetailed vote(String projectName, String name, String sessionID){
-		Project p =FearsApp.getFears().getProject(projectName);
+	public ViewFeatureDetailed vote(String projectID, String name, String sessionID){
+		
+		Project p =FearsApp.getFears().getProject(projectID);
 
 		if(p==null)
-			throw new RuntimeException("Nao existe esse projecto: " + projectName);
+			throw new RuntimeException("Nao existe esse projecto: " + projectID);
 
 		FeatureRequest f= p.getFeature(name);
 
@@ -76,60 +72,61 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 			throw new RuntimeException("Nao existe essa sugestao: " + name);
 
 		f.vote(getVoterFromSession(sessionID));
-		return  f.getDetailedView();
+		return  f.getDetailedView(getVoterFromSession(sessionID));
 	}
 
-	public void addFeature(String projectName, String name,
+	public void addFeature(String projectID, String name,
 			String description, String sessionID){
-		Project p = FearsApp.getFears().getProject(projectName);
+		
+		Project p = FearsApp.getFears().getProject(projectID);
 
 		if(p==null)
-			throw new RuntimeException("Nao existe esse projecto: " + projectName);
+			throw new RuntimeException("Nao existe esse projecto: " + projectID);
 
 		p.addFeature(new FeatureRequest(name, description, getVoterFromSession(sessionID)));
 	}
 
-	public List<ViewFeatureResume> getFeatures(String projectName, String sessionID){
-		Project p =FearsApp.getFears().getProject(projectName);
+	public List<ViewFeatureResume> getFeatures(String projectID, String sessionID){
+		Project p =FearsApp.getFears().getProject(projectID);
 
 		if(p==null)
-			throw new RuntimeException("Nao existe esse projecto: " + projectName);
+			throw new RuntimeException("Nao existe esse projecto: " + projectID);
 
-		return FearsApp.getViewFeaturesResumes(p.getFeatures());
-		
+		return FearsApp.getViewFeaturesResumes(p.getFeatures(), getVoterFromSession(sessionID));
 	}
 
-	public ViewFeatureDetailed getFeature(String projectName,
+	public ViewFeatureDetailed getFeature(String projectID,
 			String name, String sessionID){
-		Project p =FearsApp.getFears().getProject(projectName);
+		Project p =FearsApp.getFears().getProject(projectID);
 
 		if(p==null)
-			throw new RuntimeException("Nao existe esse projecto: " + projectName);
+			throw new RuntimeException("Nao existe esse projecto: " + projectID);
 
 		if(p.getFeature(name)==null)
 			throw new RuntimeException("Nao existe essa sugestao: " + name);
 
-		return p.getFeature(name).getDetailedView();
+		return p.getFeature(name).getDetailedView(getVoterFromSession(sessionID));
 
 	}
 
-	public ViewFeatureDetailed addComment(String projectName,
+	public ViewFeatureDetailed addComment(String projectID,
 			String featureName, String comment, String sessionID) {
-		Project p =FearsApp.getFears().getProject(projectName);
+		Project p =FearsApp.getFears().getProject(projectID);
 
 		if(p==null)
-			throw new RuntimeException("Nao existe esse projecto: " + projectName);
+			throw new RuntimeException("Nao existe esse projecto: " + projectID);
 
 
 		if(p.getFeature(featureName)==null)
 			throw new RuntimeException("Nao existe essa sugestao: " + featureName);
 
 		p.getFeature(featureName).addComment(comment, getVoterFromSession(sessionID));
-		return p.getFeature(featureName).getDetailedView();
+		return p.getFeature(featureName).getDetailedView(getVoterFromSession(sessionID));
 	}
 
 	public void addProject(String name, String description, String sessionID) {
-		FearsApp.getFears().addProject(new Project(name, description, getVoterFromSession(sessionID)), getVoterFromSession(sessionID));
+		
+		FearsApp.getFears().addProject(new Project(name, FearsApp.getFears().getProjectCount()+1 , description, getVoterFromSession(sessionID)), getVoterFromSession(sessionID));
 	}
 
 	public ViewProject[] getProjects(String sessionID) {
@@ -146,7 +143,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		//Fingir que esta tudo bem.
 		
 		Voter temp = FearsApp.getFears().getVoter(username);
-		ViewVoter ret =  new ViewVoter(temp.getName(), temp.getViewFeaturesCreated(), session.getId());
+		ViewVoter ret =  new ViewVoter(temp.getName(), temp.getViewFeaturesCreated(getVoterFromSession(session.getId())), session.getId());
 		session.setAttribute("fears_voter", ret);
 		return ret;
 		
@@ -161,10 +158,28 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		return temp;
 	}
 	
-	private Voter getVoterFromSession(String sessionID){
+	public Voter getVoterFromSession(String sessionID){
 		HttpSession session = this.getThreadLocalRequest().getSession();
 		ViewVoter temp = (ViewVoter)session.getAttribute("fears_voter");
+		if(temp==null)
+			return null;
 		return FearsApp.getFears().getVoter(temp.getName());
+	}
+
+	public ViewFeatureDetailed removeVote(String projectID, String feature,
+			String sessionID) {
+		Project p =FearsApp.getFears().getProject(projectID);
+
+		if(p==null)
+			throw new RuntimeException("Nao existe esse projecto: " + projectID);
+
+		FeatureRequest f= p.getFeature(feature);
+
+		if(f==null)
+			throw new RuntimeException("Nao existe essa sugestao: " + feature);
+
+		f.removeVote(getVoterFromSession(sessionID));
+		return  f.getDetailedView(getVoterFromSession(sessionID));
 	}
 	
 

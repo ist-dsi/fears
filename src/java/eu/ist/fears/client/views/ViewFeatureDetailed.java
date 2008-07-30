@@ -28,9 +28,11 @@ public class ViewFeatureDetailed extends ViewFeatureResume implements Serializab
 		
 	}
 	
-	public  ViewFeatureDetailed(String projectName, String name, String description, String author,  List voters, List comments) {
+	public  ViewFeatureDetailed(String projectName, int projectID,  String name, boolean userHasvoted, String description, String author,  List voters, List comments) {
 		_projectName = projectName;
+		_projectID = projectID;
 		_name= name;
+		_userHasVoted = userHasvoted;
 		_description=description;
 		_votes = voters.size();
 		_nComments = comments.size();

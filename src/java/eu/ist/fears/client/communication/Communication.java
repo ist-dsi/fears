@@ -44,6 +44,13 @@ public class Communication implements FearsServiceAsync{
 		_service.vote(projectName, feature, sessionID, callback);
 
 	}
+	
+	
+	public  void removeVote(String projectName, String feature,
+			 String sessionID, AsyncCallback callback) {
+		_service.removeVote(projectName, feature, sessionID, callback);
+
+	}
 
 	public void addComment(String projectName, String featureName,
 			String comment, String sessionID, AsyncCallback callback) {
