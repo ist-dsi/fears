@@ -2,6 +2,8 @@ package eu.ist.fears.client.communication;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import eu.ist.fears.client.views.ViewAdmins;
+
 public interface FearsServiceAsync {
 	
 	public void vote(String projectName, String featureName, String sessionID, AsyncCallback callback);
@@ -17,5 +19,9 @@ public interface FearsServiceAsync {
 	
 	public void validateSessionID(String sessionID, AsyncCallback callback);
 	public void login(String user, String password, AsyncCallback callback);
+	
+	public void getAdmins(String sessionID, AsyncCallback callback);
+	public void addAdmin(String userName, String sessionID, AsyncCallback callback);
+	public void removeAdmin(String userName, String sessionID, AsyncCallback callback);
 		
 }

@@ -19,7 +19,7 @@ import eu.ist.fears.client.Fears;
 import eu.ist.fears.client.communication.Communication;
 import eu.ist.fears.client.views.ViewProject;
 
-public class AdminListProjectsWidget extends Composite{
+public class ListProjectsWidget extends Composite{
 
 	private Communication _com;
 	private VerticalPanel _projPanel;
@@ -27,7 +27,7 @@ public class AdminListProjectsWidget extends Composite{
 	private TextArea _newProjectDescription; 
 	private Button _createProjectButton;
 
-	public AdminListProjectsWidget(){
+	public ListProjectsWidget(){
 
 		_com= new Communication("service");
 		_projPanel = new VerticalPanel();
@@ -36,8 +36,8 @@ public class AdminListProjectsWidget extends Composite{
 		_newProjectDescription= new TextArea();
 		_createProjectButton = new Button("Adicionar Projecto");
 
-		Fears.setPath(null, 0 ,null, false);
-		
+		Fears.getPath().update(null, 0 ,null, false);
+
 		init();
 		initWidget(_projPanel);
 
@@ -108,7 +108,7 @@ public class AdminListProjectsWidget extends Composite{
 			_project.add(_info);
 			_project.add(_removeButton);
 			_project.add(_alert);
-			
+
 			HorizontalPanel row = new HorizontalPanel();
 			_info.add(row);
 			row.add(new Label("#"));
@@ -117,7 +117,7 @@ public class AdminListProjectsWidget extends Composite{
 			row.add(_author);
 			row.add(new Label("  | N de Feature Requests:  "));
 			row.add(_nFeatures);
-			
+
 			initWidget(_projectContainer);
 		}
 
@@ -144,12 +144,11 @@ public class AdminListProjectsWidget extends Composite{
 
 		if(projects==null || projects.length ==0){
 			_projPanel.add(new Label("Nao ha Projectos"));
-		}
-
-
-		for(int i=0;i< projects.length;i++){
-			_projPanel.add(new ProjectWidget(projects[i]));
-			_projPanel.add(new HTML("<br>")); //Line Break
+		}else {
+			for(int i=0;i< projects.length;i++){
+				_projPanel.add(new ProjectWidget(projects[i]));
+				_projPanel.add(new HTML("<br>")); //Line Break
+			}
 		}
 
 		displayCreateProject();

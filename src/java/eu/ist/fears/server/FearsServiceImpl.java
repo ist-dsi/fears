@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.gwt.user.client.rpc.SerializationException;
 import eu.ist.fears.client.communication.FearsService;
+import eu.ist.fears.client.views.ViewAdmins;
 import eu.ist.fears.client.views.ViewFeatureDetailed;
 import eu.ist.fears.client.views.ViewFeatureResume;
 import eu.ist.fears.client.views.ViewProject;
@@ -26,41 +27,41 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	 */	
 	private static final long serialVersionUID = -9186875057311859285L;
 
-    @Override
-    public void init() throws ServletException {
-        Config config = new Config() {{ 
-            domainModelPath = "/fears.dml";
-            dbAlias = "//localhost:3306/fears"; 
-            dbUsername = "root";
-            dbPassword = "fears";
-        }};
-        FenixFramework.initialize(config);
-    }
+	@Override
+	public void init() throws ServletException {
+		Config config = new Config() {{ 
+			domainModelPath = "/fears.dml";
+			dbAlias = "//localhost:3306/fears"; 
+			dbUsername = "root";
+			dbPassword = "fears";
+		}};
+		FenixFramework.initialize(config);
+	}
 
-    @Override
-    public String processCall(final String payload) throws SerializationException {
-        // process the RPC call within a transaction
-        while (true) {
-            Transaction.begin();
-            boolean txFinished = false;
-            try {
-                String result = super.processCall(payload);
-                Transaction.commit();
-                txFinished = true;
-                return result;
-            } catch (jvstm.CommitException ce) {
-                Transaction.abort();
-                txFinished = true;
-            } finally {
-                if (! txFinished) {
-                    Transaction.abort();
-                }
-            }
-        }
-    }
+	@Override
+	public String processCall(final String payload) throws SerializationException {
+		// process the RPC call within a transaction
+		while (true) {
+			Transaction.begin();
+			boolean txFinished = false;
+			try {
+				String result = super.processCall(payload);
+				Transaction.commit();
+				txFinished = true;
+				return result;
+			} catch (jvstm.CommitException ce) {
+				Transaction.abort();
+				txFinished = true;
+			} finally {
+				if (! txFinished) {
+					Transaction.abort();
+				}
+			}
+		}
+	}
 
 	public ViewFeatureDetailed vote(String projectID, String name, String sessionID){
-		
+
 		Project p =FearsApp.getFears().getProject(projectID);
 
 		if(p==null)
@@ -77,7 +78,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 	public void addFeature(String projectID, String name,
 			String description, String sessionID){
-		
+
 		Project p = FearsApp.getFears().getProject(projectID);
 
 		if(p==null)
@@ -125,7 +126,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	}
 
 	public void addProject(String name, String description, String sessionID) {
-		
+
 		FearsApp.getFears().addProject(new Project(name, FearsApp.getFears().getProjectCount()+1 , description, getVoterFromSession(sessionID)), getVoterFromSession(sessionID));
 	}
 
@@ -136,17 +137,17 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	public void deleteProject(String name, String sessionID){
 		FearsApp.getFears().deleteProject(name);
 	}
-	
+
 	public ViewVoter login(String username, String password ){
 		HttpSession session = this.getThreadLocalRequest().getSession();
-		
+
 		//Fingir que esta tudo bem.
-		
+
 		Voter temp = FearsApp.getFears().getVoter(username);
 		ViewVoter ret =  new ViewVoter(temp.getName(), temp.getViewFeaturesCreated(getVoterFromSession(session.getId())), session.getId());
 		session.setAttribute("fears_voter", ret);
 		return ret;
-		
+
 	}
 
 	public ViewVoter validateSessionID(String sessionID) {
@@ -157,7 +158,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		}
 		return temp;
 	}
-	
+
 	public Voter getVoterFromSession(String sessionID){
 		HttpSession session = this.getThreadLocalRequest().getSession();
 		ViewVoter temp = (ViewVoter)session.getAttribute("fears_voter");
@@ -181,7 +182,23 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		f.removeVote(getVoterFromSession(sessionID));
 		return  f.getDetailedView(getVoterFromSession(sessionID));
 	}
-	
+
+	public ViewAdmins getAdmins(String sessionID) {
+		return FearsApp.getFears().getViewAdmins();
+	}
+
+
+	public ViewAdmins addAdmin(String userName, String sessionID) {
+		FearsApp.getFears().addAdmin(FearsApp.getFears().getVoter(userName));
+		return FearsApp.getFears().getViewAdmins();
+	}
+
+
+	public ViewAdmins removeAdmin(String userName, String sessionID) {
+		FearsApp.getFears().removeAdmin(FearsApp.getFears().getVoter(userName));
+		return FearsApp.getFears().getViewAdmins();
+	}
+
 
 
 }

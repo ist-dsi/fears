@@ -84,5 +84,17 @@ public class Communication implements FearsServiceAsync{
 		
 	}
 
+	public void getAdmins(String sessionID, AsyncCallback callback){
+		_service.getAdmins(sessionID, callback);
+	}
+	
+	public void addAdmin(String userName, String sessionID, AsyncCallback callback){
+		_service.addAdmin(userName, sessionID,  callback);
+	}
+	
+	public void removeAdmin(String userName, String sessionID, AsyncCallback callback){
+		_service.removeAdmin(userName, sessionID,  callback);
+	}
+	
 
 }

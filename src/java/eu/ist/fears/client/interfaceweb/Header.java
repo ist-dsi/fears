@@ -14,10 +14,14 @@ public class Header extends Composite {
 	protected Hyperlink sessionLink; 
 	protected Label userName;
 	protected HorizontalPanel _headerBox; 
+	protected HTML _adminLink;
+	protected Hyperlink _adminAdministrators;
 	
-	public Header(String username,boolean loggedIn ){
+	public Header(String username,boolean loggedIn, boolean admin){
 		_headerBox = new HorizontalPanel();
 		_headerBox.setStyleName("headerBox");
+		_adminLink = new HTML("&nbsp;<a href=\"Admin.html\">Admin</a>");
+		_adminAdministrators = new Hyperlink("","");
 		
 		HorizontalPanel left = new HorizontalPanel();
 		HorizontalPanel right = new HorizontalPanel();
@@ -32,7 +36,10 @@ public class Header extends Composite {
 		header.add(right);
 		left.setStyleName("left");
 		left.add(new Label("fears | feature request system |"));
-		left.add(new HTML("&nbsp;<a href=\"Admin.html\">Admin</a>"));
+		
+		left.add(_adminLink);
+		left.add(new HTML("&nbsp;|&nbsp;"));
+		left.add(_adminAdministrators);
 		right.setStyleName("right");
 		right.add(new HTML("Bem-vindo&nbsp;"));
 		right.add(userName);
@@ -41,10 +48,10 @@ public class Header extends Composite {
 		
 		
 		initWidget(_headerBox);
-		update();
+		update(admin);
 	}
 	
-	public void update(){
+	public void update(boolean admin){
 		userName.setText(Fears.getUsername());	
 		if(!Fears.isLogedIn()){
 			sessionLink.setText("Login");
@@ -53,6 +60,16 @@ public class Header extends Composite {
 			sessionLink.setText("Logout");
 			sessionLink.setTargetHistoryToken("logout");
 		}
+		
+		if(admin){
+			_adminLink.setHTML("&nbsp;<a href=\"Fears.html\">Fears</a>");
+			_adminAdministrators.setText("Administradores");
+			_adminAdministrators.setTargetHistoryToken("admins");
+		}else {
+			_adminLink.setHTML("&nbsp;<a href=\"Admin.html\">Admin</a>");
+			_adminAdministrators.setText("");
+		}
+		
 	}
 	
 	

@@ -48,4 +48,12 @@ public class Path extends Composite{
 
 	}
 
+	public void setAdmins(){
+		_path.clear();
+		_path.add(new Hyperlink("Administradores","admin"));
+		
+		
+	}
+	                        
+	
 }

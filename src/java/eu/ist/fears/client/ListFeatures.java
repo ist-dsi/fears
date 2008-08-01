@@ -64,7 +64,7 @@ public class ListFeatures extends Composite {
 	}
 
 	private void init(){
-		Fears.setPath("",new Integer(_projectID).intValue(), null, false);
+		Fears.getPath().update("",new Integer(_projectID).intValue(), null, false);
 
 		_search.clear();
 

@@ -22,7 +22,7 @@ public class DisplayFeatureDetailed extends Composite {
 
 		_projectID = projectID;
 		_featureName = featureName;
-		Fears.setPath("",new Integer(projectID).intValue(), "Sugest&atilde;o", true);
+		Fears.getPath().update("",new Integer(projectID).intValue(), "Sugest&atilde;o", true);
 		_com = new Communication("service");
 		_content= new VerticalPanel();
 		initWidget(_content);

@@ -3,6 +3,10 @@ package eu.ist.fears.server.domain;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import org.apache.tools.ant.taskdefs.FixCRLF.AddAsisRemove;
+
+import eu.ist.fears.client.views.ViewAdmins;
 import eu.ist.fears.client.views.ViewFeatureResume;
 import eu.ist.fears.client.views.ViewProject;
 import pt.ist.fenixframework.pstm.Transaction;
@@ -13,6 +17,7 @@ public class FearsApp extends FearsApp_Base {
 	public static FearsApp getFears(){
 		return (FearsApp)Transaction.getDomainObject(FearsApp.class.getName(), 1);
 	}
+	
 
 	public Project getProject(String projectID){
 		int projID;
@@ -57,6 +62,21 @@ public class FearsApp extends FearsApp_Base {
 	
 	}
 
+	public Collection<Voter> getAdmins(){
+		return super.getAdminSet();
+	}
+	
+	public void addAdmin(Voter v){
+		super.addAdmin(v);
+	}
+	
+	public void removeAdmin(Voter v){
+		super.removeAdmin(v);
+	} 
+	
+	public boolean isAdmin(Voter v){
+		return getAdmins().contains(v);
+	}
 
 	public ViewProject[] getProjects() {
 		ViewProject[] res = new ViewProject[getProjectCount()];
@@ -91,5 +111,14 @@ public class FearsApp extends FearsApp_Base {
 		return res;
 	}
 
+	public ViewAdmins getViewAdmins(){
+		List<String >admins = new ArrayList<String>();
+		
+		for(Voter v : getFears().getAdmins()){
+			admins.add(v.getName());
+		}
+		
+		return new ViewAdmins(admins);	
+	}
 
 }

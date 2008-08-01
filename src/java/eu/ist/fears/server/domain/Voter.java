@@ -32,4 +32,12 @@ public class Voter extends Voter_Base {
     public String getName(){
         return getUser();
     }
+    
+    public boolean hasRole(Role r){
+    	if(r.getRole().equals("admin")){
+    		return FearsApp.getFears().isAdmin(this);
+    	}else return false;
+    			
+    }
+    
 }

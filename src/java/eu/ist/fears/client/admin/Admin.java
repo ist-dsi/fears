@@ -40,11 +40,21 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 		if(!verifyLogin(true))
 			return;
 
-		AdminListProjectsWidget projects = new AdminListProjectsWidget();
-		//RootPanel.get().setTitle("Projectos");
+		ListProjectsWidget projects = new ListProjectsWidget();
 		projects.update();	
 		content.add(projects);
 
+	}
+	
+	public void viewChangeAdmins(){
+		content.clear();
+		if(!verifyLogin(true))
+			return;
+		
+		ListAdmins admins = new ListAdmins();
+		admins.update();
+		content.add(admins);
+		
 	}
 
 
@@ -56,7 +66,7 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 			return;			
 		}
 
-		header.update();
+		header.update(true);
 		Fears.parseURL(historyToken, this);
 
 	}

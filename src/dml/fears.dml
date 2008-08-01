@@ -21,12 +21,28 @@ class Voter {
     String user;
 }
 
+
 relation FearsAppHasVoters {
-    FearsApp playsRole fearsApp;
+    FearsApp playsRole fearsApp{
+        multiplicity 1..1;
+    }
+    
     Voter playsRole voter {
         multiplicity *;
     }
 }
+
+relation FearsAppHasAdmin {
+    FearsApp playsRole fearsA{
+        multiplicity 0..1;
+    }
+    
+    Voter playsRole admin {
+        multiplicity *;
+    }
+}
+
+
 
 relation ProjectAuthor {
     Project playsRole projectAuthored {

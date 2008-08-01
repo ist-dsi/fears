@@ -2,6 +2,8 @@ package eu.ist.fears.client.communication;
 
 import java.util.List;
 import com.google.gwt.user.client.rpc.RemoteService; 
+
+import eu.ist.fears.client.views.ViewAdmins;
 import eu.ist.fears.client.views.ViewFeatureDetailed;
 import eu.ist.fears.client.views.ViewProject;
 import eu.ist.fears.client.views.ViewVoter;
@@ -21,5 +23,10 @@ public interface FearsService extends RemoteService  {
 	
 	public ViewVoter validateSessionID(String sessionID);
 	public ViewVoter login(String user, String password);
+	
+	public ViewAdmins getAdmins(String sessionID);
+	public ViewAdmins addAdmin(String userName, String sessionID);
+	public ViewAdmins removeAdmin(String userName, String sessionID);
+	
 		
 }

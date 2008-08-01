@@ -14,6 +14,8 @@ import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
+
+import eu.ist.fears.client.admin.Admin;
 import eu.ist.fears.client.communication.Communication;
 import eu.ist.fears.client.interfaceweb.Header;
 import eu.ist.fears.client.interfaceweb.Path;
@@ -34,7 +36,6 @@ public class Fears implements EntryPoint, HistoryListener  {
 	protected static Path path;
 	protected static Label userName;
 	protected static boolean validCookie;
-	protected Hyperlink sessionLink;  
 
 
 	/**
@@ -62,7 +63,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 		content.setStyleName("width100");
 		path = new Path();
 		userName = new Label("guest");
-		header = new Header(userName.getText(),validCookie);
+		header = new Header(userName.getText(),validCookie, false);
 		RootPanel.get().setStyleName("centered");
 		RootPanel.get().add(header);
 		frameBox.setStyleName("frameBox");
@@ -78,9 +79,9 @@ public class Fears implements EntryPoint, HistoryListener  {
 	protected void updateUsername(String user){
 		userName.setText(user);
 	}
-
-	public static void setPath(String project, int projectID, String actual, boolean back){
-		path.update(project, projectID, actual, back);
+	
+	public static Path getPath(){
+		return path;
 	}
 
 	public void listFeatures(String projectName){
@@ -132,6 +133,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 		Login login = new Login(this);
 		content.add(login);		
 	}
+	
 
 	public static boolean isLogedIn(){
 		return validCookie;
@@ -173,7 +175,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 			return;			
 		}
 
-		header.update();
+		header.update(false);
 		parseURL(historyToken, this);
 	}
 
@@ -192,6 +194,9 @@ public class Fears implements EntryPoint, HistoryListener  {
 			f.viewLogin();
 		}else if(url.startsWith("Project")){
 			projectParse(url.substring("Project".length()), f);	
+		}if(url.startsWith("admins")){
+			if(f instanceof Admin)
+			((Admin)f).viewChangeAdmins();
 		}
 
 	}

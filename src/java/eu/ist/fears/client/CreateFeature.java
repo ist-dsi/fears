@@ -43,7 +43,7 @@ public class CreateFeature extends Composite {
 		createFeatureTable.getCellFormatter().setStyleName(1, 0, "CreateFeatureCell");
 		createFeatureTable.getCellFormatter().setStyleName(1, 1, "CreateFeatureCell");
 		
-		Fears.setPath("", new Integer(_projectID).intValue(), "Nova Sugest&atilde;o", false);
+		Fears.getPath().update("", new Integer(_projectID).intValue(), "Nova Sugest&atilde;o", false);
 		
 		_sugPanel.add(createFeatureTable);
 		
