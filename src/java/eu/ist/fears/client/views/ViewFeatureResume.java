@@ -13,6 +13,7 @@ public class ViewFeatureResume implements Serializable{
 	protected String _projectName;
 	protected int _projectID;
 	protected String _name;
+	protected int _featureID;
 	protected boolean _userHasVoted;
 	protected String _description;
 	protected int _votes;
@@ -23,11 +24,12 @@ public class ViewFeatureResume implements Serializable{
 		
 	}
 	
-	public  ViewFeatureResume(String projectName, int projectID, String name, boolean userHasvoted, String description,
+	public  ViewFeatureResume(String projectName, int projectID, String name, int featureID, boolean userHasvoted, String description,
 			int votes, int nComments, String author){
 		_projectName = projectName;
 		_projectID = projectID;
 		_name= name;
+		_featureID=featureID;
 		_userHasVoted = userHasvoted;
 		_description=description;
 		_votes=votes;
@@ -47,6 +49,10 @@ public class ViewFeatureResume implements Serializable{
 	
 	public String getName() {
 		return _name;
+	}
+	
+	public int getFeatureID(){
+		return _featureID;
 	}
 	
 	public String getDescription() {
@@ -69,6 +75,8 @@ public class ViewFeatureResume implements Serializable{
 	public boolean userHasVoted(){
 		return _userHasVoted;
 	}
+	
+	
 	
 	
 }

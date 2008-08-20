@@ -26,9 +26,9 @@ public class Communication implements FearsServiceAsync{
 	}
 
 
-	public  void getFeature(String projectName, String name,
+	public  void getFeature(String projectName, String id,
 			 String sessionID, AsyncCallback callback) {
-		_service.getFeature(projectName, name, sessionID, callback);
+		_service.getFeature(projectName, id, sessionID, callback);
 
 	}
 
@@ -39,9 +39,9 @@ public class Communication implements FearsServiceAsync{
 	}
 
 
-	public  void vote(String projectName, String feature,
+	public  void vote(String projectName, String id,
 			 String sessionID, AsyncCallback callback) {
-		_service.vote(projectName, feature, sessionID, callback);
+		_service.vote(projectName, id, sessionID, callback);
 
 	}
 	
@@ -52,9 +52,9 @@ public class Communication implements FearsServiceAsync{
 
 	}
 
-	public void addComment(String projectName, String featureName,
+	public void addComment(String projectName, String featureID,
 			String comment, String sessionID, AsyncCallback callback) {
-		_service.addComment(projectName, featureName, comment, sessionID, callback);
+		_service.addComment(projectName, featureID, comment, sessionID, callback);
 
 	}
 

@@ -26,6 +26,7 @@ public class FeatureResumeWidget  extends Composite{
 	protected VerticalPanel _mainBox;
 	protected String _projectName;
 	protected String _projectID;
+	protected String _featureID;
 	protected Label _name;
 	protected Label _author;
 	protected Label _description;
@@ -48,6 +49,7 @@ public class FeatureResumeWidget  extends Composite{
 		VerticalPanel voteBox = new VerticalPanel();
 		VerticalPanel vote = new VerticalPanel();
 		HorizontalPanel info = new HorizontalPanel();
+		_featureID= new String(new Integer(f.getFeatureID()).toString());
 		_ncomments = new Label(new Integer(f.getNComments()).toString());
 		_mainBox = new VerticalPanel();
 		_name = new Label(f.getName());
@@ -89,7 +91,7 @@ public class FeatureResumeWidget  extends Composite{
 		
 		HorizontalPanel title = new HorizontalPanel();
 		title.setStyleName("featureTitle");
-		title.add(new Hyperlink(f.getName(),"Project"+_projectID+"?"+"viewFeature"+f.getName()));
+		title.add(new Hyperlink(f.getName(),"Project"+_projectID+"?"+"viewFeature"+f.getFeatureID()));
 		_mainBox.add(title);
 		
 		
@@ -97,7 +99,7 @@ public class FeatureResumeWidget  extends Composite{
 		_mainBox.add(info);
 		
 		
-		info.add(new HTML("#1 | Por:&nbsp;"));
+		info.add(new HTML("#"+_featureID+" | Por:&nbsp;"));
 		info.add(_author);
 		info.add(new HTML("&nbsp;|&nbsp;"));
 		info.add(_ncomments);
@@ -108,6 +110,10 @@ public class FeatureResumeWidget  extends Composite{
 
 	}
 
+	public String getWebID(){
+		return _featureID;
+	}
+	
 	public void update(ViewFeatureResume f, boolean updateDescription){
 		_voteButton.removeClickListener(_removeVote);
 		_voteButton.removeClickListener(_vote);
@@ -142,8 +148,7 @@ public class FeatureResumeWidget  extends Composite{
 	protected class VoteButton implements ClickListener{
 
 		public void onClick(Widget sender) {
-			//_alert.setText("O teu voto em " + _name.getText() + " foi contabilizado.");
-			_com.vote(_projectID, _name.getText(), Cookies.getCookie("fears"), _cb);
+			_com.vote(_projectID, _featureID, Cookies.getCookie("fears"), _cb);
 		}
 
 	}
@@ -151,8 +156,7 @@ public class FeatureResumeWidget  extends Composite{
 	protected class RemoveVoteButton implements ClickListener{
 
 		public void onClick(Widget sender) {
-			//_alert.setText("O teu voto em " + _name.getText() + " foi contabilizado.");
-			_com.removeVote(_projectID, _name.getText(), Cookies.getCookie("fears"), _cb);
+			_com.removeVote(_projectID, _featureID, Cookies.getCookie("fears"), _cb);
 		}
 
 	}

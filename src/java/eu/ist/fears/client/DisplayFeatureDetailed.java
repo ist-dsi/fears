@@ -14,14 +14,14 @@ public class DisplayFeatureDetailed extends Composite {
 	protected VerticalPanel _content;
 	protected String _projectID;
 	protected String _projectName;
-	protected String _featureName;
+	protected String _featureID;
 	protected Communication _com;
 	protected FeatureDetailedWidget _feature;
 
-	public DisplayFeatureDetailed(String projectID, String featureName){
+	public DisplayFeatureDetailed(String projectID, String featureID){
 
 		_projectID = projectID;
-		_featureName = featureName;
+		_featureID= featureID;
 		Fears.getPath().update("",new Integer(projectID).intValue(), "Sugest&atilde;o", true);
 		_com = new Communication("service");
 		_content= new VerticalPanel();
@@ -30,7 +30,7 @@ public class DisplayFeatureDetailed extends Composite {
 	}
 
 	protected void update(){
-		_com.getFeature(_projectID, _featureName, Cookies.getCookie("fears"), new FeatureCB(this));
+		_com.getFeature(_projectID, _featureID , Cookies.getCookie("fears"), new FeatureCB(this));
 	}
 	
 	public void updateFeature(ViewFeatureDetailed view){
@@ -40,6 +40,8 @@ public class DisplayFeatureDetailed extends Composite {
 			_content.add(_feature);
 		}
 		else _feature.update(view);
+		
+		Fears.getPath().update(view.getProjectName(),new Integer(view.getProjectID()).intValue(), "Sugest&atilde;o", true);
 	}
 
 	protected class FeatureCB implements AsyncCallback{
@@ -63,7 +65,7 @@ public class DisplayFeatureDetailed extends Composite {
 	
 	public void onFailure(Throwable caught) {
 			_content.clear();
-			_content.add((new Label("A Sugestao " + _featureName + " nao foi encontrada.")));
+			_content.add((new Label("A Sugestao " + _featureID + " nao foi encontrada.")));
 			try {
 				throw caught;
 			} catch(RuntimeException e){

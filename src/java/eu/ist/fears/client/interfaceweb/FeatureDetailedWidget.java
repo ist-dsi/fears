@@ -88,7 +88,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 
 		public void onClick(Widget sender) {
 			//_alert.setText("O teu comentario foi inserido.");
-			_com.addComment(_projectID, _name.getText(),
+			_com.addComment(_projectID, _featureID,
 					_commentTextArea.getText(), Cookies.getCookie("fears"), _cb);
 			_commentTextArea.setText("");
 		}

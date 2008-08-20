@@ -70,7 +70,7 @@ public class FeatureRequest extends FeatureRequest_Base {
 			if(v.equals(user))
 				userhasvoted=true;
 		}
-		return new ViewFeatureDetailed(getProject().getName(), getProject().getWebID(), getName(), userhasvoted ,  getDescription(), getAuthorName(), voters , comments );
+		return new ViewFeatureDetailed(getProject().getName(), getProject().getWebID(), getName(), getWebID(), userhasvoted ,  getDescription(), getAuthorName(), voters , comments );
 	}
 
     

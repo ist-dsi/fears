@@ -87,7 +87,7 @@ margin-top: 0px;
 .searchBox {
 background: #f0f0e9;
 border: 0px solid #eeeee5;
-width: 100%;
+width: 695px;
 height: 65px;
 }
 
@@ -105,7 +105,7 @@ border: 1px solid #bbb;
 .filterBox {
 /*border: 2px solid #eeeee5;*/
 background: #f8f8f3;
-width: 100%;
+width: 695px;
 height: 40px;
 margin-top: 20px;
 }
@@ -166,7 +166,7 @@ cursor: pointer;
 
 .mainBox{
 margin-left: 20px;
-width: 615px;
+width: 610px;
 }
 
 .mainBox a{

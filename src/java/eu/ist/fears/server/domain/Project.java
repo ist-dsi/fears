@@ -12,6 +12,7 @@ public class Project extends Project_Base {
         setWebID(projNumber);
         setDescription(description);
         setAuthor(voter);
+        setFeaturesIncrementID(0);
     }
 
 
@@ -19,9 +20,17 @@ public class Project extends Project_Base {
         return getAuthor().getUser();
     }
 
-    public FeatureRequest getFeature(String nome){
+    public FeatureRequest getFeature(String featureID){
+    	int featID;
+		try{
+			featID= new Integer(featureID).intValue();
+		}catch(Throwable t){
+			System.out.println("ID:" + featureID);
+			throw new RuntimeException("Nao existe esse projecto: " + featureID);
+		}
+    	
         for(FeatureRequest f : getFeatureRequestSet()){
-            if(f.getName().equals(nome))	
+            if(f.getWebID()==featID)	
                 return f;
         }
         return null;
@@ -36,7 +45,9 @@ public class Project extends Project_Base {
     }
     
     
-    public  void addFeature(FeatureRequest s){
-        addFeatureRequest(s);
+    public  void addFeature(FeatureRequest f){
+        addFeatureRequest(f);
+        setFeaturesIncrementID(getFeaturesIncrementID()+1);
+        f.setWebID(getFeaturesIncrementID());
     }
 }

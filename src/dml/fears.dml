@@ -7,6 +7,7 @@ class Project {
     String name;
     String description;
     int webID;
+    int featuresIncrementID;
 }
 
 relation FearsAppHasProjects {
@@ -57,6 +58,7 @@ relation ProjectAuthor {
 class FeatureRequest {
     String name;
     String description;
+    int webID;
 }
 
 relation ProjectFeatureRequests {
