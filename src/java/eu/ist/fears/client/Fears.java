@@ -253,7 +253,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 			try {
 				throw caught;
 			} catch (Throwable e) {
-
+				RootPanel.get().add(new Label("Nao foi possivel contactar o servidor."));
 			}
 			if(_trytoLogin)
 				viewLogin();

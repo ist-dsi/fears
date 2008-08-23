@@ -41,7 +41,7 @@ public class Path extends Composite{
 
 		if(back){
 			_back.clear();
-			_back.add(new Hyperlink("&laquo; Back",true,"Project"+project));
+			_back.add(new Hyperlink("&laquo; Back",true,"Project"+projectID));
 		}else{
 			_back.clear();
 		}

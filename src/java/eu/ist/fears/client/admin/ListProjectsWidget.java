@@ -162,7 +162,7 @@ public class ListProjectsWidget extends Composite{
 		}
 
 		public void onFailure(Throwable caught) {
-			RootPanel.get().add(new Label("Não correu bem"));
+			RootPanel.get().add(new Label("Nao foi possivel contactar o servidor."));
 		}
 	};
 
@@ -172,7 +172,7 @@ public class ListProjectsWidget extends Composite{
 		}
 
 		public void onFailure(Throwable caught) {
-			RootPanel.get().add(new Label("Isto não correu nada bem"));
+			RootPanel.get().add(new Label("Nao foi possivel contactar o servidor."));
 		}
 	};
 

@@ -1,5 +1,7 @@
 package eu.ist.fears.client;
 
+import java.util.List;
+
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -85,8 +87,16 @@ public class CreateFeature extends Composite {
 		buttons.add(_cancelButton);
 		_sugPanel.add(buttons);
 		
+		updateProjectName();
 	}
 
+	public void updateProjectName(){
+		_com.getProjectName(_projectID, getProjectName);
+	}
+	
+	protected void updateProjectName(String name){
+		Fears.getPath().update(name, new Integer(_projectID).intValue(), "Nova Sugest&atilde;o", false);
+	}
 	
 	
 	AsyncCallback addSugestaoCB = new AsyncCallback() {
@@ -97,10 +107,20 @@ public class CreateFeature extends Composite {
 		}
 
 		public void onFailure(Throwable caught) {
-			RootPanel.get().add(new Label("Erro ao criar sugestao:\n" + caught.getMessage()));
+			RootPanel.get().add(new Label("Nao foi possivel contactar o servidor."));
 		}
 	};
 
+	AsyncCallback getProjectName = new AsyncCallback() {
+		public void onSuccess(Object result){ 
+			updateProjectName((String)result);
+		}
+
+		public void onFailure(Throwable caught) {
+			RootPanel.get().add(new Label("Nao foi possivel contactar o servidor."));
+		}
+	};
+	
 }
 
 

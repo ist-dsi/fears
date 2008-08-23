@@ -83,7 +83,7 @@ public class Login extends Composite {
 		}
 
 		public void onFailure(Throwable caught) {
-			RootPanel.get().add(new Label("login failure"));
+			RootPanel.get().add(new Label("Erro no login."));
 		}
 	};
 

@@ -81,9 +81,10 @@ public class FearsApp extends FearsApp_Base {
 	public ViewProject[] getProjects() {
 		ViewProject[] res = new ViewProject[getProjectCount()];
 
+		
 		int i=0;
 		for(Project p : getProjectSet()){
-			res[i] = new ViewProject(p.getName(), p.getWebID(),  p.getDescription(), p.getNFeatures(), p.getAuthor().getUser() );
+			res[i]=new ViewProject(p.getName(), p.getWebID(),  p.getDescription(), p.getNFeatures(), p.getAuthor().getUser(), 5);
 			i++;
 		}
 

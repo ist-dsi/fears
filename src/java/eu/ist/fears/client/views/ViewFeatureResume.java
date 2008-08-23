@@ -31,7 +31,11 @@ public class ViewFeatureResume implements Serializable{
 		_name= name;
 		_featureID=featureID;
 		_userHasVoted = userHasvoted;
-		_description=description;
+		int length= description.length();
+		if(length>200){
+			_description= description.substring(0, 200) + "(...)";
+		}else _description= description;
+		
 		_votes=votes;
 		_nComments= nComments;
 		_author = author;

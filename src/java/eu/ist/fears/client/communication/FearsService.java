@@ -1,6 +1,8 @@
 package eu.ist.fears.client.communication;
 
 import java.util.List;
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService; 
 
 import eu.ist.fears.client.views.ViewAdmins;
@@ -20,6 +22,7 @@ public interface FearsService extends RemoteService  {
 	public void addProject(String name, String description, String sessionID);
 	public ViewProject[] getProjects(String sessionID);
 	public void deleteProject(String name, String sessionID);
+	public String getProjectName(String projectID);
 	
 	public ViewVoter validateSessionID(String sessionID);
 	public ViewVoter login(String user, String password);
@@ -28,5 +31,7 @@ public interface FearsService extends RemoteService  {
 	public ViewAdmins addAdmin(String userName, String sessionID);
 	public ViewAdmins removeAdmin(String userName, String sessionID);
 	
+	public List search(String projectID, String search, String sort, int page, String sessionID);
 		
+	
 }

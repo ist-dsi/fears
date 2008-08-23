@@ -16,6 +16,7 @@ public interface FearsServiceAsync {
 	public void addProject(String name, String description, String sessionID,  AsyncCallback callback);
 	public void getProjects(String sessionID, AsyncCallback callback);
 	public void deleteProject(String name, String sessionID, AsyncCallback callback);
+	public void getProjectName(String projectID, AsyncCallback callback);
 	
 	public void validateSessionID(String sessionID, AsyncCallback callback);
 	public void login(String user, String password, AsyncCallback callback);
@@ -24,4 +25,7 @@ public interface FearsServiceAsync {
 	public void addAdmin(String userName, String sessionID, AsyncCallback callback);
 	public void removeAdmin(String userName, String sessionID, AsyncCallback callback);
 		
+	public void search(String projectID, String search, String sort, int page, String sessionID, AsyncCallback callback );
+		
+	
 }

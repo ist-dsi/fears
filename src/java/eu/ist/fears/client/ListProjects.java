@@ -1,5 +1,7 @@
 package eu.ist.fears.client;
 
+import java.util.List;
+
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -50,7 +52,7 @@ public class ListProjects extends Composite{
 			_name = new Label(p.getName());
 			_description= new Label(p.getDescription());
 			_nFeatures = new Label(new Integer(p.getNFeatures()).toString());
-			 _author= new Label(p.getAuthor());
+			_author= new Label(p.getAuthor());
 
 			_alert = new Label();
 			_info=new HorizontalPanel();
@@ -106,7 +108,7 @@ public class ListProjects extends Composite{
 		}
 
 		public void onFailure(Throwable caught) {
-			RootPanel.get().add(new Label("Não correu bem"));
+			RootPanel.get().add(new Label("Nao foi possivel contactar o servidor."));
 		}
 	};
 
@@ -116,7 +118,7 @@ public class ListProjects extends Composite{
 		}
 
 		public void onFailure(Throwable caught) {
-			RootPanel.get().add(new Label("Isto não correu nada bem"));
+			RootPanel.get().add(new Label("Nao foi possivel contactar o servidor."));
 		}
 	};
 

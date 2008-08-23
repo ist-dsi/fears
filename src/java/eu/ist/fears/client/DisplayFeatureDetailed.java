@@ -72,7 +72,7 @@ public class DisplayFeatureDetailed extends Composite {
 				_content.add(new Label("Erro:"+e.getMessage()));
 
 			} catch (Throwable e) {
-				_content.add(new Label(e.getMessage()));
+				_content.add(new Label("Nao foi possivel contactar o servidor."));
 			}
 
 		}

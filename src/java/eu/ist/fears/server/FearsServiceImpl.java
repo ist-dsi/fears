@@ -199,6 +199,26 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		return FearsApp.getFears().getViewAdmins();
 	}
 
+	
+	public List<ViewFeatureResume> search(String projectID, String search, String sort, int page, String sessionID){
+		Project p =FearsApp.getFears().getProject(projectID);
+
+		if(p==null)
+			throw new RuntimeException("Nao existe esse projecto: " + projectID);
+
+		return p.search(search, sort, page, getVoterFromSession(sessionID));
+		
+	}
+
+	public String getProjectName(String projectID) {
+		Project p =FearsApp.getFears().getProject(projectID);
+
+		if(p==null)
+			throw new RuntimeException("Nao existe esse projecto: " + projectID);
+		
+		return p.getName();
+	}
+
 
 
 }
