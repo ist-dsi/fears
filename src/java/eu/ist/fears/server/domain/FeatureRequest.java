@@ -5,6 +5,7 @@ import java.util.List;
 
 import eu.ist.fears.client.views.ViewComment;
 import eu.ist.fears.client.views.ViewFeatureDetailed;
+import eu.ist.fears.client.views.ViewFeatureResume;
 import eu.ist.fears.client.views.ViewVoter;
 
 
@@ -71,6 +72,20 @@ public class FeatureRequest extends FeatureRequest_Base {
 				userhasvoted=true;
 		}
 		return new ViewFeatureDetailed(getProject().getName(), getProject().getWebID(), getName(), getWebID(), userhasvoted ,  getDescription(), getAuthorName(), voters , comments );
+	}
+	
+	public ViewFeatureResume getResumeView(Voter user) {
+		
+		
+		boolean userhasvoted=false;
+		
+		List<ViewVoter> voters = new ArrayList<ViewVoter>();
+		for(Voter v : getVoterSet() ){
+			voters.add(new ViewVoter(v.getUser(), null, null ));
+			if(v.equals(user))
+				userhasvoted=true;
+		}
+		return new ViewFeatureResume(getProject().getName(), getProject().getWebID(), getName(), getWebID(), userhasvoted ,  getDescription(), getVoterCount(), getCommentCount(), getAuthorName());
 	}
 
     

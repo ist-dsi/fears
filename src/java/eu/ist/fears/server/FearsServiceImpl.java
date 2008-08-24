@@ -87,14 +87,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		p.addFeature(new FeatureRequest(name, description, getVoterFromSession(sessionID)));
 	}
 
-	public List<ViewFeatureResume> getFeatures(String projectID, String sessionID){
-		Project p =FearsApp.getFears().getProject(projectID);
-
-		if(p==null)
-			throw new RuntimeException("Nao existe esse projecto: " + projectID);
-
-		return FearsApp.getViewFeaturesResumes(p.getFeatures(), getVoterFromSession(sessionID));
-	}
+	
 
 	public ViewFeatureDetailed getFeature(String projectID,
 			String name, String sessionID){

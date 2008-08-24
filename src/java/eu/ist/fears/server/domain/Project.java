@@ -67,7 +67,7 @@ public class Project extends Project_Base {
 			String first = s.nextToken();
 			for(FeatureRequest f : getFeatureRequestSet()){
 				if(f.getDescription().contains(first) || f.getName().contains(first))
-					ret.add(f.getDetailedView(v));
+					ret.add( f.getResumeView(v));
 			}
 		}else {//Return All
 			ret.addAll( FearsApp.getViewFeaturesResumes(getFeatures(), v));

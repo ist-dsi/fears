@@ -33,10 +33,7 @@ public class Communication implements FearsServiceAsync{
 	}
 
 
-	public  void getFeatures(String projectName, String sessionID, AsyncCallback callback) {
-		_service.getFeatures(projectName, sessionID, callback);
-
-	}
+	
 
 
 	public  void vote(String projectName, String id,
