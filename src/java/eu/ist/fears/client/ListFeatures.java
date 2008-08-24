@@ -6,6 +6,7 @@ import java.lang.Character;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -122,12 +123,18 @@ public class ListFeatures extends Composite {
 		lb.addItem("Ordenar por Votos");
 		lb.addItem("Ordenar por Data");
 		lb.setVisibleItemCount(1);
+		lb.addChangeListener(new ChangeListener(){
+			public void onChange(Widget arg0) {
+				_com.search(_projectID, sBox.getText(), lb.getItemText(lb.getSelectedIndex()), 0, Cookies.getCookie("Fears"), getFeaturesCB);
+			}
+			
+		});
 		_filter.add(lb);
 
 	}
 
 	public void update(){
-		_com.getFeatures(_projectID, Cookies.getCookie("fears"), getFeaturesCB);
+		_com.search(_projectID, "", lb.getItemText(lb.getSelectedIndex()), 0, Cookies.getCookie("Fears"), getFeaturesCB);
 		_com.getProjectName(_projectID, getProjectName);
 	}
 	

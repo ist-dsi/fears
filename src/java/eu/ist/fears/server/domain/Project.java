@@ -2,6 +2,7 @@ package eu.ist.fears.server.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -68,8 +69,11 @@ public class Project extends Project_Base {
 				if(f.getDescription().contains(first) || f.getName().contains(first))
 					ret.add(f.getDetailedView(v));
 			}
-		}else return FearsApp.getViewFeaturesResumes(getFeatures(),v); //Return All
-
+		}else {//Return All
+			ret.addAll( FearsApp.getViewFeaturesResumes(getFeatures(), v));
+				return sortAndPage(ret , sort, page); 
+		}
+				
 		//Remove from the list the features that don't have the other tokens.
 		while(s.hasMoreTokens()){
 			String token = s.nextToken();
@@ -91,20 +95,32 @@ public class Project extends Project_Base {
 	private List<ViewFeatureResume> sortAndPage(List<ViewFeatureResume> ret,
 			String sort, int page) {
 	
-		//Sort:
 		
-		//Sort For Votes:
+		
+		//Sort For Date:
+		if("Ordenar por Data".equals(sort)){
+			Collections.sort(ret, new DateComparator());
+		}else Collections.sort(ret, new VoteComparator()); //Sort For Votes:
 		
 		//Page:
+		
+		
 		return ret;
 	}
 
 	
 	
-	protected class VoteComparator implements Comparator<Integer>{
+	protected class VoteComparator implements Comparator<ViewFeatureResume>{
 
-		public int compare(Integer o1, Integer o2){
-			return o1-o2;
+		public int compare(ViewFeatureResume o1, ViewFeatureResume o2) {
+			return o2.getVotes()-o1.getVotes();
+		}
+	}
+	
+	protected class DateComparator implements Comparator<ViewFeatureResume>{
+
+		public int compare(ViewFeatureResume o1, ViewFeatureResume o2) {
+			return o2.getFeatureID()-o1.getFeatureID();
 		}
 	}
 	

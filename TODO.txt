@@ -2,8 +2,7 @@ TODO:
 -> Verifcaçoes de segurança no serviço. (Usar TFC do G. Dumiense)
 -> Login CAS. (Deixar para o fim).
 -> Datas. (Esperar por Fenix Framework).
--> Funcionalida de Procura (Feito).
--> Funcionalidade de Filtros e Ordenação.
+-> Funcionalidade de Filtros (É necessário implementar Estado das sugestoes 1º).
 -> Funcionalidades de Admin (Ja se pode acrescentar e remover admins).
 
 WebDesigner:
