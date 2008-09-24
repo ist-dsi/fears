@@ -11,6 +11,6 @@ public class Comment extends Comment_Base {
     }
 
     public ViewComment getView(){
-        return new ViewComment(getComment(), getAuthor().getName());
+        return new ViewComment(getComment(), getAuthor().getUser().getName());
     }
 }

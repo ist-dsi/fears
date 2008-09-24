@@ -6,7 +6,6 @@ class FearsApp;
 class Project {
     String name;
     String description;
-    int webID;
     int featuresIncrementID;
 }
 
@@ -17,14 +16,26 @@ relation FearsAppHasProjects {
     }
 }
 
+class User {
+    String username;
+}
 
 class Voter {
-    String user;
 }
 
 
-relation FearsAppHasVoters {
+relation FearsAppHasUsers {
     FearsApp playsRole fearsApp{
+        multiplicity 1..1;
+    }
+    
+    User playsRole user {
+        multiplicity *;
+    }
+}
+
+relation UserHasVoters {
+    User playsRole user{
         multiplicity 1..1;
     }
     
@@ -33,21 +44,30 @@ relation FearsAppHasVoters {
     }
 }
 
+
 relation FearsAppHasAdmin {
-    FearsApp playsRole fearsA{
+    FearsApp playsRole fears{
         multiplicity 0..1;
     }
     
-    Voter playsRole admin {
+    User playsRole admin {
         multiplicity *;
     }
 }
 
-
+relation ProjectHasVoters {
+    Project playsRole project{
+        multiplicity 1..1;
+    }
+    
+    Voter playsRole voter {
+        multiplicity *;
+    }
+}
 
 relation ProjectAuthor {
     Project playsRole projectAuthored {
-    	multiplicity *;
+    	multiplicity 0..1;
     }
     Voter playsRole author {
         multiplicity 1..1;

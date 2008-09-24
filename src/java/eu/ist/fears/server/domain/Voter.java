@@ -11,7 +11,7 @@ import eu.ist.fears.client.views.ViewFeatureResume;
 
 public class Voter extends Voter_Base implements AccessControlUser {
     
-    public Voter(String user){
+    public Voter(User user){
         setUser(user);
     }
 
@@ -33,14 +33,14 @@ public class Voter extends Voter_Base implements AccessControlUser {
         return FearsApp.getViewFeaturesResumes(getFeaturesVotedSet(), user);
     }
     
-    public String getName(){
-        return getUser();
+    public User getUser(){
+    	return super.getUser();
     }
     
     public boolean hasRole(Role r){
     	System.out.println("Role foi chamado...");
     	if(r.getRole().equals("admin")){
-    		return FearsApp.getFears().isAdmin(this);
+    		return FearsApp.getFears().isAdmin(this.getUser());
     	}else return false;
     			
     }
@@ -49,11 +49,11 @@ public class Voter extends Voter_Base implements AccessControlUser {
 		return hasRole(arg0);
 	}
 	
-	public class UserFind implements UserFinder {
+	/*public class UserFind implements UserFinder {
 
 		public AccessControlUser getUserByUserId(String arg0) {
-			return FearsApp.getFears().getVoter(arg0);
+			return FearsApp.getFears().getUser(arg0);
 		}
-	}
+	}*/
 	
 }

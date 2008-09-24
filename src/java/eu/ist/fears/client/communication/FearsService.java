@@ -7,8 +7,9 @@ import com.google.gwt.user.client.rpc.RemoteService;
 
 import eu.ist.fears.client.views.ViewAdmins;
 import eu.ist.fears.client.views.ViewFeatureDetailed;
+import eu.ist.fears.client.views.ViewFeatureResume;
 import eu.ist.fears.client.views.ViewProject;
-import eu.ist.fears.client.views.ViewVoter;
+import eu.ist.fears.client.views.ViewUser;
 
 public interface FearsService extends RemoteService  {
 	
@@ -23,14 +24,14 @@ public interface FearsService extends RemoteService  {
 	public void deleteProject(String name, String sessionID);
 	public String getProjectName(String projectID);
 	
-	public ViewVoter validateSessionID(String sessionID);
-	public ViewVoter login(String user, String password);
+	public ViewUser validateSessionID(String sessionID);
+	public ViewUser login(String user, String password);
 	
 	public ViewAdmins getAdmins(String sessionID);
 	public ViewAdmins addAdmin(String userName, String sessionID);
 	public ViewAdmins removeAdmin(String userName, String sessionID);
 	
-	public List search(String projectID, String search, String sort, int page, String sessionID);
+	public List<ViewFeatureResume> search(String projectID, String search, String sort, int page, String sessionID);
 		
 	
 }

@@ -29,7 +29,7 @@ public class FearsApp extends FearsApp_Base {
 		}
 		
 		for(Project p :  getProjectSet()){
-			if(p.getWebID()==(projID))
+			if(p.getIdInternal()==(projID))
 				return p;
 		}
 
@@ -37,7 +37,7 @@ public class FearsApp extends FearsApp_Base {
 	}
 
 
-	public void addProject(Project p, Voter voter){
+	public void addProject(Project p, User u){
 		addProject(p);
 	}
 
@@ -50,32 +50,32 @@ public class FearsApp extends FearsApp_Base {
 	}		
 
 
-	public Voter getVoter(String name){
-		for(Voter v : getVoterSet()){
-			if(v.getName().equals(name))
-				return v;					
+	public User getUser(String name){
+		for(User u : getUserSet()){
+			if(u.getName().equals(name))
+				return u;					
 		}
 		
-		Voter temp = new Voter(name);
-		addVoter(temp);
+		User temp = new User(name);
+		addUser(temp);
 		return temp;
 	
 	}
 
-	public Collection<Voter> getAdmins(){
+	public Collection<User> getAdmins(){
 		return super.getAdminSet();
 	}
 	
-	public void addAdmin(Voter v){
-		super.addAdmin(v);
+	public void addAdmin(User u){
+		super.addAdmin(u);
 	}
 	
-	public void removeAdmin(Voter v){
-		super.removeAdmin(v);
+	public void removeAdmin(User u){
+		super.removeAdmin(u);
 	} 
 	
-	public boolean isAdmin(Voter v){
-		return getAdmins().contains(v);
+	public boolean isAdmin(User u){
+		return getAdmins().contains(u);
 	}
 
 	public ViewProject[] getProjects() {
@@ -84,7 +84,7 @@ public class FearsApp extends FearsApp_Base {
 		
 		int i=0;
 		for(Project p : getProjectSet()){
-			res[i]=new ViewProject(p.getName(), p.getWebID(),  p.getDescription(), p.getNFeatures(), p.getAuthor().getUser(), 5);
+			res[i]=new ViewProject(p.getName(), p.getIdInternal(),  p.getDescription(), p.getNFeatures(), p.getAuthor().getUser().getName(), 5);
 			i++;
 		}
 
@@ -105,8 +105,8 @@ public class FearsApp extends FearsApp_Base {
 				if(v.equals(user))
 					userHasvoted=true;
 			}
-			res.add(new ViewFeatureResume(f.getProject().getName(), f.getProject().getWebID(), f.getName(), f.getWebID() ,userHasvoted , f.getDescription(),
-					f.getVotes(), f.getNComments(), f.getAuthor().getUser() ));
+			res.add(new ViewFeatureResume(f.getProject().getName(), f.getProject().getIdInternal(), f.getName(), f.getWebID() ,userHasvoted , f.getDescription(),
+					f.getVotes(), f.getNComments(), f.getAuthor().getUser().getName() ));
 		}
 
 		return res;
@@ -115,8 +115,8 @@ public class FearsApp extends FearsApp_Base {
 	public ViewAdmins getViewAdmins(){
 		List<String >admins = new ArrayList<String>();
 		
-		for(Voter v : getFears().getAdmins()){
-			admins.add(v.getName());
+		for(User u : getFears().getAdmins()){
+			admins.add(u.getUsername());
 		}
 		
 		return new ViewAdmins(admins);	

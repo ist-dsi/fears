@@ -14,16 +14,16 @@
 	<classpathentry kind="lib" path="deploy-lib/db-ojb-1.0.0.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/dml.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/fenix-framework.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/gwt-servlet.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/jvstm.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/log4j-1.2.8.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/mysql-connector-java-5.1.5-bin.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/xercesImpl.jar"/>
-	<classpathentry kind="lib" path="lib/gwt-user.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/gwt-windows-1.4.62/gwt-dev-windows.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="config"/>
 	<classpathentry kind="lib" path="src/dml"/>
 	<classpathentry kind="lib" path="deploy-lib/DMAPL.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/gwt-windows-1.5.2/gwt-dev-windows.jar"/>
+	<classpathentry kind="lib" path="lib/gwt-user.jar"/>
+	<classpathentry kind="lib" path="deploy-lib/gwt-servlet.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

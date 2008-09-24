@@ -10,20 +10,16 @@ public class ViewAdmins implements Serializable{
 	 */
 	private static final long serialVersionUID = 3812674061992808340L;
 	
-	/**
-	   * This field is a List that must always contain String.
-	   * 
-	   * @gwt.typeArgs <java.lang.String>
-	   */
-	protected List _admins;
+	
+	protected List<java.lang.String> _admins;
 	
 	public ViewAdmins(){}
 	
-	public ViewAdmins(List admins){
+	public ViewAdmins(List<java.lang.String> admins){
 		_admins=admins;
 	}
 	
-	public List getAdmins(){
+	public List<java.lang.String> getAdmins(){
 		return _admins;
 	}
 

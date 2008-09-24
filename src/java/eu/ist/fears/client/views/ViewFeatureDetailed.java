@@ -10,25 +10,17 @@ public class ViewFeatureDetailed extends ViewFeatureResume implements Serializab
 	 */
 	private static final long serialVersionUID = -9130167518653434831L;
 	
-	/**
-	   * This field is a List that must always contain ViewVoter.
-	   * 
-	   * @gwt.typeArgs <eu.ist.fears.client.views.ViewVoter>
-	   */
-	private List _voters;
 	
-	/**
-	   * This field is a List that must always contain ViewComment.
-	   * 
-	   * @gwt.typeArgs <eu.ist.fears.client.views.ViewComment>
-	   */
-	private List _comments;
+	private List<eu.ist.fears.client.views.ViewUser> _voters;
+	
+	
+	private List<eu.ist.fears.client.views.ViewComment> _comments;
 	
 	public ViewFeatureDetailed(){
 		
 	}
 	
-	public  ViewFeatureDetailed(String projectName, int projectID,  String name, int featureID, boolean userHasvoted, String description, String author,  List voters, List comments) {
+	public  ViewFeatureDetailed(String projectName, int projectID,  String name, int featureID, boolean userHasvoted, String description, String author,  List<eu.ist.fears.client.views.ViewUser> voters, List<eu.ist.fears.client.views.ViewComment> comments) {
 		_projectName = projectName;
 		_projectID = projectID;
 		_name= name;
@@ -43,11 +35,11 @@ public class ViewFeatureDetailed extends ViewFeatureResume implements Serializab
 		
 	}	
 	
-	public List getComments() {
+	public List<eu.ist.fears.client.views.ViewComment> getComments() {
 		return _comments;
 	}
 	
-	public List getVoters() {
+	public List<eu.ist.fears.client.views.ViewUser> getVoters() {
 		return _voters;
 	}
 

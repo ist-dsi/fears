@@ -2,14 +2,18 @@ package eu.ist.fears.client.views;
 
 import java.io.Serializable;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class ViewFeatureResume implements Serializable{
+
+public class ViewFeatureResume implements IsSerializable{
+	
+	
+	
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 4220452812727161930L;
-	
+	private static final long serialVersionUID = -4452593206230245849L;
 	protected String _projectName;
 	protected int _projectID;
 	protected String _name;

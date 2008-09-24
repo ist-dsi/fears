@@ -6,7 +6,7 @@ import java.util.List;
 import eu.ist.fears.client.views.ViewComment;
 import eu.ist.fears.client.views.ViewFeatureDetailed;
 import eu.ist.fears.client.views.ViewFeatureResume;
-import eu.ist.fears.client.views.ViewVoter;
+import eu.ist.fears.client.views.ViewUser;
 
 
 public class FeatureRequest extends FeatureRequest_Base {
@@ -52,7 +52,7 @@ public class FeatureRequest extends FeatureRequest_Base {
 	}
 
 	public String getAuthorName(){
-		return getAuthor().getUser();
+		return getAuthor().getUser().getName();
 	}
 	
 	
@@ -65,13 +65,13 @@ public class FeatureRequest extends FeatureRequest_Base {
 		
 		boolean userhasvoted=false;
 		
-		List<ViewVoter> voters = new ArrayList<ViewVoter>();
+		List<ViewUser> voters = new ArrayList<ViewUser>();
 		for(Voter v : getVoterSet() ){
-			voters.add(new ViewVoter(v.getUser(), null, null ));
+			voters.add(new ViewUser(v.getUser().getName(),  null ));
 			if(v.equals(user))
 				userhasvoted=true;
 		}
-		return new ViewFeatureDetailed(getProject().getName(), getProject().getWebID(), getName(), getWebID(), userhasvoted ,  getDescription(), getAuthorName(), voters , comments );
+		return new ViewFeatureDetailed(getProject().getName(), getProject().getIdInternal(), getName(), getWebID(), userhasvoted ,  getDescription(), getAuthorName(), voters , comments );
 	}
 	
 	public ViewFeatureResume getResumeView(Voter user) {
@@ -79,13 +79,13 @@ public class FeatureRequest extends FeatureRequest_Base {
 		
 		boolean userhasvoted=false;
 		
-		List<ViewVoter> voters = new ArrayList<ViewVoter>();
+		List<ViewUser> voters = new ArrayList<ViewUser>();
 		for(Voter v : getVoterSet() ){
-			voters.add(new ViewVoter(v.getUser(), null, null ));
+			voters.add(new ViewUser(v.getUser().getName(),  null ));
 			if(v.equals(user))
 				userhasvoted=true;
 		}
-		return new ViewFeatureResume(getProject().getName(), getProject().getWebID(), getName(), getWebID(), userhasvoted ,  getDescription(), getVoterCount(), getCommentCount(), getAuthorName());
+		return new ViewFeatureResume(getProject().getName(), getProject().getIdInternal(), getName(), getWebID(), userhasvoted ,  getDescription(), getVoterCount(), getCommentCount(), getAuthorName());
 	}
 
     

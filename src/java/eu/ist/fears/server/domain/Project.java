@@ -13,17 +13,18 @@ public class Project extends Project_Base {
 
 
 
-	public Project(String name, int projNumber, String description, Voter voter){
+	public Project(String name, String description, User user){
 		setName(name);
-		setWebID(projNumber);
+		Voter v =new Voter(user);
 		setDescription(description);
-		setAuthor(voter);
+		setAuthor(v);
 		setFeaturesIncrementID(0);
+		addVoter(v);
 	}
 
 
 	public String getAuthorName() {
-		return getAuthor().getUser();
+		return getAuthor().getUser().getName();
 	}
 
 	public FeatureRequest getFeature(String featureID){

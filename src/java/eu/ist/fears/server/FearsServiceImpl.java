@@ -13,7 +13,7 @@ import eu.ist.fears.client.views.ViewAdmins;
 import eu.ist.fears.client.views.ViewFeatureDetailed;
 import eu.ist.fears.client.views.ViewFeatureResume;
 import eu.ist.fears.client.views.ViewProject;
-import eu.ist.fears.client.views.ViewVoter;
+import eu.ist.fears.client.views.ViewUser;
 import eu.ist.fears.server.domain.*;
 import pt.ist.fenixframework.Config;
 import pt.ist.fenixframework.FenixFramework;
@@ -44,7 +44,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		// process the RPC call within a transaction
 		while (true) {
 			Transaction.begin();
-			AccessControlSession.beginAccessControl(getVoterFromSession("..."));
+			//AccessControlSession.beginAccessControl(getUserFromSession("..."));
 			boolean txFinished = false;
 			try {
 				String result = super.processCall(payload);
@@ -75,8 +75,8 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		if(f==null)
 			throw new RuntimeException("Nao existe essa sugestao: " + name);
 
-		f.vote(getVoterFromSession(sessionID));
-		return  f.getDetailedView(getVoterFromSession(sessionID));
+		f.vote(getUserFromSession(sessionID).getVoter(p));
+		return  f.getDetailedView(getUserFromSession(sessionID).getVoter(p));
 	}
 
 	public void addFeature(String projectID, String name,
@@ -87,7 +87,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		if(p==null)
 			throw new RuntimeException("Nao existe esse projecto: " + projectID);
 
-		p.addFeature(new FeatureRequest(name, description, getVoterFromSession(sessionID)));
+		p.addFeature(new FeatureRequest(name, description, getUserFromSession(sessionID).getVoter(p) ));
 	}
 
 	
@@ -102,7 +102,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		if(p.getFeature(name)==null)
 			throw new RuntimeException("Nao existe essa sugestao: " + name);
 
-		return p.getFeature(name).getDetailedView(getVoterFromSession(sessionID));
+		return p.getFeature(name).getDetailedView(getUserFromSession(sessionID).getVoter(p));
 
 	}
 
@@ -117,13 +117,13 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		if(p.getFeature(featureName)==null)
 			throw new RuntimeException("Nao existe essa sugestao: " + featureName);
 
-		p.getFeature(featureName).addComment(comment, getVoterFromSession(sessionID));
-		return p.getFeature(featureName).getDetailedView(getVoterFromSession(sessionID));
+		p.getFeature(featureName).addComment(comment, getUserFromSession(sessionID).getVoter(p));
+		return p.getFeature(featureName).getDetailedView(getUserFromSession(sessionID).getVoter(p));
 	}
 
 	public void addProject(String name, String description, String sessionID) {
 
-		FearsApp.getFears().addProject(new Project(name, FearsApp.getFears().getProjectCount()+1 , description, getVoterFromSession(sessionID)), getVoterFromSession(sessionID));
+		FearsApp.getFears().addProject(new Project(name, description, getUserFromSession(sessionID)), getUserFromSession(sessionID));
 	}
 
 	public ViewProject[] getProjects(String sessionID) {
@@ -134,33 +134,33 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		FearsApp.getFears().deleteProject(name);
 	}
 
-	public ViewVoter login(String username, String password ){
+	public ViewUser login(String username, String password ){
 		HttpSession session = this.getThreadLocalRequest().getSession();
 
 		//Fingir que esta tudo bem.
 
-		Voter temp = FearsApp.getFears().getVoter(username);
-		ViewVoter ret =  new ViewVoter(temp.getName(), temp.getViewFeaturesCreated(getVoterFromSession(session.getId())), session.getId());
+		User temp = FearsApp.getFears().getUser(username);
+		ViewUser ret =  new ViewUser(temp.getName(),  session.getId());
 		session.setAttribute("fears_voter", ret);
 		return ret;
 
 	}
 
-	public ViewVoter validateSessionID(String sessionID) {
+	public ViewUser validateSessionID(String sessionID) {
 		HttpSession session = this.getThreadLocalRequest().getSession();
-		ViewVoter temp = (ViewVoter)session.getAttribute("fears_voter");
+		ViewUser temp = (ViewUser)session.getAttribute("fears_voter");
 		if(temp==null){
 			throw new RuntimeException("Sessao invalida");
 		}
 		return temp;
 	}
 
-	public Voter getVoterFromSession(String sessionID){
+	public User getUserFromSession(String sessionID){
 		HttpSession session = this.getThreadLocalRequest().getSession();
-		ViewVoter temp = (ViewVoter)session.getAttribute("fears_voter");
+		ViewUser temp = (ViewUser)session.getAttribute("fears_voter");
 		if(temp==null)
 			return null;
-		return FearsApp.getFears().getVoter(temp.getName());
+		return FearsApp.getFears().getUser(temp.getName());
 	}
 
 	public ViewFeatureDetailed removeVote(String projectID, String feature,
@@ -175,8 +175,8 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		if(f==null)
 			throw new RuntimeException("Nao existe essa sugestao: " + feature);
 
-		f.removeVote(getVoterFromSession(sessionID));
-		return  f.getDetailedView(getVoterFromSession(sessionID));
+		f.removeVote(getUserFromSession(sessionID).getVoter(p));
+		return  f.getDetailedView(getUserFromSession(sessionID).getVoter(p));
 	}
 
 	public ViewAdmins getAdmins(String sessionID) {
@@ -185,13 +185,13 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 
 	public ViewAdmins addAdmin(String userName, String sessionID) {
-		FearsApp.getFears().addAdmin(FearsApp.getFears().getVoter(userName));
+		FearsApp.getFears().addAdmin(FearsApp.getFears().getUser(userName));
 		return FearsApp.getFears().getViewAdmins();
 	}
 
 
 	public ViewAdmins removeAdmin(String userName, String sessionID) {
-		FearsApp.getFears().removeAdmin(FearsApp.getFears().getVoter(userName));
+		FearsApp.getFears().removeAdmin(FearsApp.getFears().getUser(userName));
 		return FearsApp.getFears().getViewAdmins();
 	}
 
@@ -201,8 +201,12 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 		if(p==null)
 			throw new RuntimeException("Nao existe esse projecto: " + projectID);
+		
+		if(getUserFromSession(sessionID)==null)
+			return p.search(search, sort, page,null);		
+		
 
-		return p.search(search, sort, page, getVoterFromSession(sessionID));
+		return p.search(search, sort, page, getUserFromSession(sessionID).getVoter(p));
 		
 	}
 
