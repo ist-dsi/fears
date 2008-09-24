@@ -102,6 +102,9 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		if(p.getFeature(name)==null)
 			throw new RuntimeException("Nao existe essa sugestao: " + name);
 
+		if(getUserFromSession(sessionID)==null)
+			return p.getFeature(name).getDetailedView(null);
+		
 		return p.getFeature(name).getDetailedView(getUserFromSession(sessionID).getVoter(p));
 
 	}

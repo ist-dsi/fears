@@ -22,7 +22,7 @@ public class DisplayFeatureDetailed extends Composite {
 
 		_projectID = projectID;
 		_featureID= featureID;
-		Fears.getPath().update("",new Integer(projectID).intValue(), "Sugest&atilde;o", true);
+		Fears.getPath().setFeature("", projectID, "Sugest&atilde;o");
 		_com = new Communication("service");
 		_content= new VerticalPanel();
 		initWidget(_content);
@@ -41,7 +41,7 @@ public class DisplayFeatureDetailed extends Composite {
 		}
 		else _feature.update(view);
 		
-		Fears.getPath().update(view.getProjectName(),new Integer(view.getProjectID()).intValue(), "Sugest&atilde;o", true);
+		Fears.getPath().setFeature(view.getProjectName(), new String(new Integer(view.getProjectID()).toString()), "Sugest&atilde;o");
 	}
 
 	protected class FeatureCB implements AsyncCallback{

@@ -4,6 +4,7 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PushButton;
@@ -56,7 +57,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 	}
 
 	public void updateComments(ViewFeatureDetailed f){
-		Label comment;
+		VerticalPanel comment;
 		Label header;
 
 		_comments.clear();
@@ -70,7 +71,10 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 				header.setStyleName("meta");
 				Label commentText = new Label(((ViewComment)f.getComments().get(i)).getComment());
 				commentText.setStyleName("commentText");
-				comment = new HTML(header.getElement().toString() + commentText );
+				comment = new VerticalPanel();
+				comment.setWidth("100%");
+				comment.add(header);
+				comment.add(commentText);
 				comment.setStyleName("comment");
 				_comments.add(comment);
 			} 

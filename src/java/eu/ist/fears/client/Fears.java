@@ -50,8 +50,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 		init();
 
 		History.addHistoryListener(this);
-		onHistoryChanged(History.getToken());
-
+		History.fireCurrentHistoryState();
 	}	
 
 	public void init(){
@@ -113,6 +112,12 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 		content.add(new DisplayFeatureDetailed(projectName, featureID));
 	}
+	
+	public void viewVoter(String projectID, String voterName){
+		content.clear();
+		verifyLogin(false);
+		content.add(new DisplayVoter(projectID, voterName));
+	}
 
 	public void viewListProjects(){
 		content.clear();
@@ -170,6 +175,8 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 	}
 
+	
+	
 	public void onHistoryChanged(String historyToken) {
 		if (RootPanel.get("Admin") != null){
 			return;			
@@ -229,6 +236,8 @@ public class Fears implements EntryPoint, HistoryListener  {
 			f.addFeature(projectName);
 		}else if(parse.startsWith("viewFeature")){
 			f.viewFeature(projectName, parse.substring("viewFeature".length()));
+		}else if(parse.startsWith("viewUser")){
+			f.viewVoter(projectName, parse.substring("viewUser".length()));
 		}
 
 	}

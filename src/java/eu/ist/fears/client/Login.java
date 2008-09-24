@@ -34,7 +34,7 @@ public class Login extends Composite {
 		initWidget(_main);
 		_main.setStyleName("login");
 		
-		Fears.getPath().update(null, 0, "Login", false);
+		Fears.getPath().setString("Login");
 
 		HorizontalPanel row = new HorizontalPanel();
 		row.add(new Label("Username:  "));

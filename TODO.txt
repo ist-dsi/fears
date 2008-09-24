@@ -1,13 +1,10 @@
 TODO:
 -> Verifcaçoes de segurança no serviço. (Usar TFC do G. Dumiense)
--> Login CAS. (Deixar para o fim).
+-> Login CAS. (Pagina de Login +  Guardar Estado).
 -> Datas. (Esperar por Fenix Framework).
 -> Funcionalidade de Filtros (É necessário implementar Estado das sugestoes 1º).
 -> Funcionalidades de Admin (Ja se pode acrescentar e remover admins).
--> Refazer dominio (Voter + Person).
 -> Estado das Sugestões.
--> CAS (Pagina de Login +  Guardar Estado).
 
 WebDesigner:
  -> Na pagina da sugestao falta: ranking, utilizadores que votaram.
- -> Interface das páginas: Falta Página de Utiilizador e página de Lista dos projectos.

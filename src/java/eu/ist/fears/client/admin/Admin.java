@@ -29,7 +29,7 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 
 		History.addHistoryListener(this);
 
-		onHistoryChanged(History.getToken());
+		History.fireCurrentHistoryState();
 	}	
 
 

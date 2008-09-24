@@ -62,7 +62,9 @@ public class Project extends Project_Base {
 		StringTokenizer s = new StringTokenizer(search," ");
 		List<ViewFeatureResume> ret = new ArrayList<ViewFeatureResume>();
 
-		
+		if(this.getFeatureRequestCount()==0)
+			return ret;
+				
 		//Make the list with the features that have the first token
 		if(s.countTokens()>0){
 			String first = s.nextToken();

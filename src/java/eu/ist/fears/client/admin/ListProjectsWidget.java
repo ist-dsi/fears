@@ -36,7 +36,7 @@ public class ListProjectsWidget extends Composite{
 		_newProjectDescription= new TextArea();
 		_createProjectButton = new Button("Adicionar Projecto");
 
-		Fears.getPath().update(null, 0 ,null, false);
+		Fears.getPath().setFears();		
 
 		init();
 		initWidget(_projPanel);

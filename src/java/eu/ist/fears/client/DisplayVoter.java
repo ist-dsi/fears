@@ -12,12 +12,19 @@ public class DisplayVoter extends Composite {
 	private VerticalPanel _sugPanel;
 	private Label _voterName;
 	
-	public DisplayVoter(String voterName){
+	public DisplayVoter(String projectId, String voterName){
+		
 		
 		_com = new Communication("service");
 		_voterName = new Label(voterName);
 		_sugPanel = new VerticalPanel();
+		_sugPanel.add(_voterName);		
 		
+		Fears.getPath().setVoter("", projectId, voterName);
+		
+		
+		
+		initWidget(_sugPanel);		
 	}
 
 }

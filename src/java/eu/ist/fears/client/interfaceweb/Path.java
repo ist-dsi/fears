@@ -23,8 +23,87 @@ public class Path extends Composite{
 		_pathBox.add(_back);
 		initWidget(_pathBox);
 	}
+	
+	public void setFears(){
+		_path.clear();
 
-	public void update(String project, int projectID, String actual, boolean back){
+		_path.add(new Hyperlink("Projectos","listProjects"));
+
+		_back.clear();
+	}
+	
+	public void setProject(String project, String projectID){
+		_path.clear();
+		
+		_path.add(new Hyperlink("Projectos","listProjects"));
+
+		_path.add(new HTML("&nbsp;/&nbsp;"));
+		_path.add(new Hyperlink(project,"Project"+projectID));
+
+		_back.clear();
+	}
+	
+	public void setProjectChange(String displayOnPath){
+		_path.clear();
+		
+		_path.add(new Hyperlink("Projectos","listProjects"));
+		_path.add(new HTML("&nbsp;/ " + displayOnPath));
+
+		_back.clear();
+	}
+
+	public void setFeature(String project, String projectID, String displayOnPath  ){
+		_path.clear();
+
+		_path.add(new Hyperlink("Projectos","listProjects"));
+
+		_path.add(new HTML("&nbsp;/&nbsp;"));
+		_path.add(new Hyperlink(project,"Project"+projectID));
+
+		_path.add(new HTML("&nbsp;/ " + displayOnPath));
+		
+		_back.clear();
+		_back.add(new Hyperlink("&laquo; Back",true,"Project"+projectID));
+	}
+
+	public void setFeatureChange(String project, String projectID, String displayOnPath){
+		_path.clear();
+
+		_path.add(new Hyperlink("Projectos","listProjects"));
+		
+		_path.add(new HTML("&nbsp;/&nbsp;"));
+		_path.add(new Hyperlink(project,"Project"+projectID));
+		
+		_path.add(new HTML("&nbsp;/ " + displayOnPath));
+		
+		_back.clear();
+	}
+	
+	public void setVoter(String project, String projectID, String voter ){
+		_path.clear();
+		
+		_path.add(new Hyperlink("Projectos","listProjects"));
+		
+		_path.add(new HTML("&nbsp;/&nbsp;"));
+		_path.add(new Hyperlink(project,"Project"+projectID));
+		
+		_path.add(new HTML("&nbsp;/ Voters"));
+		
+		
+		_path.add(new HTML("&nbsp;/ " + voter));
+		
+		_back.clear();
+	}
+	
+	public void setString(String display){
+		_path.clear();
+		
+		_path.add(new HTML(display));	
+		
+		_back.clear();
+	}
+
+	/*public void update(String project, int projectID, String actual, boolean back){
 		_path.clear();
 
 
@@ -46,14 +125,14 @@ public class Path extends Composite{
 			_back.clear();
 		}
 
-	}
+	}*/
 
 	public void setAdmins(){
 		_path.clear();
 		_path.add(new Hyperlink("Administradores","admin"));
-		
-		
+
+
 	}
-	                        
-	
+
+
 }

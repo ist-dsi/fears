@@ -26,7 +26,7 @@ public class ListProjects extends Composite{
 		_projPanel = new VerticalPanel();
 		_projPanel.setStyleName("projectsList");
 
-		Fears.getPath().update(null, 0, null, false);
+		Fears.getPath().setFears();
 		
 		init();
 		initWidget(_projPanel);

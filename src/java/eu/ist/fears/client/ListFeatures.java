@@ -30,7 +30,6 @@ public class ListFeatures extends Composite {
 	protected VerticalPanel _sugPanel;
 	protected String _projectName;
 	protected String _projectID;
-	protected Label _stats;
 	protected HorizontalPanel _search;
 	protected HorizontalPanel _filter;
 	protected VerticalPanel _featuresList;
@@ -40,7 +39,6 @@ public class ListFeatures extends Composite {
 	public ListFeatures(String projectID){
 		_com= new Communication("service");
 		_sugPanel = new VerticalPanel();
-		_stats= new Label("Stats....");
 		_search = new HorizontalPanel();
 		_filter = new HorizontalPanel();
 		_featuresList = new VerticalPanel();
@@ -48,8 +46,6 @@ public class ListFeatures extends Composite {
 		_sugPanel.setStyleName("listMain");
 
 		initWidget(_sugPanel);
-		_stats.setStyleName("stats");
-		_sugPanel.add(_stats);
 
 		HorizontalPanel _searchBox = new HorizontalPanel();
 		_searchBox.setStyleName("searchBox");
@@ -72,7 +68,8 @@ public class ListFeatures extends Composite {
 		lb = new ListBox();
 		sBox = new TextBox();
 		
-		Fears.getPath().update("",new Integer(_projectID).intValue(), null, false);
+		Fears.getPath().setProject("", _projectID);
+		
 		
 		_search.clear();
 
@@ -139,7 +136,7 @@ public class ListFeatures extends Composite {
 	}
 	
 	protected void updateProjectName(String name){
-		Fears.getPath().update(name,new Integer(_projectID).intValue(), null, false);
+		Fears.getPath().setProject(name, _projectID);
 	}
 
 
