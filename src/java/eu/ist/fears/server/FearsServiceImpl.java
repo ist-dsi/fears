@@ -18,7 +18,8 @@ import eu.ist.fears.server.domain.*;
 import pt.ist.fenixframework.Config;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.pstm.Transaction;
-
+import pt.ist.dmapl.*;
+import pt.ist.dmapl.enforcement.AccessControlSession;
 
 public class FearsServiceImpl extends RemoteServiceServlet implements FearsService {
 
@@ -43,6 +44,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		// process the RPC call within a transaction
 		while (true) {
 			Transaction.begin();
+			AccessControlSession.beginAccessControl(getVoterFromSession("..."));
 			boolean txFinished = false;
 			try {
 				String result = super.processCall(payload);
@@ -53,6 +55,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 				Transaction.abort();
 				txFinished = true;
 			} finally {
+				AccessControlSession.endAccessControl();
 				if (! txFinished) {
 					Transaction.abort();
 				}

@@ -24,5 +24,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="config"/>
 	<classpathentry kind="lib" path="src/dml"/>
+	<classpathentry kind="lib" path="deploy-lib/DMAPL.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
