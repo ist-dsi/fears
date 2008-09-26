@@ -20,11 +20,12 @@ public class ViewFeatureDetailed extends ViewFeatureResume implements Serializab
 		
 	}
 	
-	public  ViewFeatureDetailed(String projectName, int projectID,  String name, int featureID, boolean userHasvoted, String description, String author,  List<eu.ist.fears.client.views.ViewUserResume> voters, List<eu.ist.fears.client.views.ViewComment> comments) {
+	public  ViewFeatureDetailed(String projectName, int projectID,  String name, int featureID, String state, boolean userHasvoted, String description, String author,  List<eu.ist.fears.client.views.ViewUserResume> voters, List<eu.ist.fears.client.views.ViewComment> comments) {
 		_projectName = projectName;
 		_projectID = projectID;
 		_name= name;
 		_featureID= featureID;
+		_state=state;
 		_userHasVoted = userHasvoted;
 		_description=description;
 		_votes = voters.size();

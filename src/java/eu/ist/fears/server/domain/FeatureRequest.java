@@ -20,6 +20,7 @@ public class FeatureRequest extends FeatureRequest_Base {
     	setDescription(description);
     	addVoter(voter);
     	setAuthor(voter);
+    	setState(ViewFeatureResume.StateNew);
 	}
 	
 	
@@ -71,7 +72,7 @@ public class FeatureRequest extends FeatureRequest_Base {
 			if(v.equals(user))
 				userhasvoted=true;
 		}
-		return new ViewFeatureDetailed(getProject().getName(), getProject().getIdInternal(), getName(), getWebID(), userhasvoted ,  getDescription(), getAuthorName(), voters , comments );
+		return new ViewFeatureDetailed(getProject().getName(), getProject().getIdInternal(), getName(), getWebID(), getState() ,userhasvoted ,  getDescription(), getAuthorName(), voters , comments );
 	}
 	
 	public ViewFeatureResume getResumeView(Voter user) {
@@ -85,7 +86,7 @@ public class FeatureRequest extends FeatureRequest_Base {
 			if(v.equals(user))
 				userhasvoted=true;
 		}
-		return new ViewFeatureResume(getProject().getName(), getProject().getIdInternal(), getName(), getWebID(), userhasvoted ,  getDescription(), getVoterCount(), getCommentCount(), getAuthorName());
+		return new ViewFeatureResume(getProject().getName(), getProject().getIdInternal(), getName(), getWebID(), getState(), userhasvoted ,  getDescription(), getVoterCount(), getCommentCount(), getAuthorName());
 	}
 
     

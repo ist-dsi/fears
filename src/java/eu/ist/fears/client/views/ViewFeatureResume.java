@@ -18,22 +18,30 @@ public class ViewFeatureResume implements IsSerializable{
 	protected int _projectID;
 	protected String _name;
 	protected int _featureID;
+	protected String _state;
 	protected boolean _userHasVoted;
 	protected String _description;
 	protected int _votes;
 	protected int _nComments;
 	protected String _author;
 	
+	static public String StateNew = "Novo";
+	static public String StatePlanned = "Planeado";
+	static public String StateImplement = "Em implementa&ccedil;&atilde;o";
+	static public String StateFinish = "Completo";
+	
+	
 	public  ViewFeatureResume(){
 		
 	}
 	
-	public  ViewFeatureResume(String projectName, int projectID, String name, int featureID, boolean userHasvoted, String description,
+	public  ViewFeatureResume(String projectName, int projectID, String name, int featureID, String state, boolean userHasvoted, String description,
 			int votes, int nComments, String author){
 		_projectName = projectName;
 		_projectID = projectID;
 		_name= name;
 		_featureID=featureID;
+		_state=state;
 		_userHasVoted = userHasvoted;
 		int length= description.length();
 		if(length>200){

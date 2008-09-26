@@ -3,6 +3,7 @@ package eu.ist.fears.client.interfaceweb;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
@@ -15,9 +16,11 @@ import com.google.gwt.user.client.ui.Widget;
 import eu.ist.fears.client.Fears;
 import eu.ist.fears.client.views.ViewComment;
 import eu.ist.fears.client.views.ViewFeatureDetailed;
+import eu.ist.fears.client.views.ViewUserResume;
 
 public class FeatureDetailedWidget extends FeatureResumeWidget {
 
+	protected VerticalPanel _votesAndVoters;
 	protected VerticalPanel _comments;
 	protected TextArea _commentTextArea;
 	protected PushButton _commentButton;
@@ -29,6 +32,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 		super(f, cb);
 
 		_voters= new Label("");
+		_votesAndVoters = new VerticalPanel();
 		_comments = new VerticalPanel();
 		_newCommentBox = new VerticalPanel();
 		_commentTextArea= new TextArea();
@@ -36,6 +40,8 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 		_commentButton = new PushButton(new Image("button03.gif",0,0,105,32), new Image("button03.gif",-2,-2,105,32));
 		_commentButton.setStyleName("commentButton");
 		_comments.setStyleName("width100");
+		_votesAndVoters.setStyleName("votesAndVoters");
+		_feature.add(_votesAndVoters);
 		_feature.add(_comments);
 
 		_newCommentBox.setStyleName("newComment");
@@ -49,12 +55,43 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 		_commentTextArea.setVisibleLines(5);
 		_commentTextArea.setCharacterWidth(50);
 
+		updateVoters(f);
 		updateComments(f);
 	}
 
 	public void update(ViewFeatureDetailed f){
 		super.update(f,true);
+		updateVoters(f);
 		updateComments(f);
+	}
+
+	public void updateVoters(ViewFeatureDetailed f){
+		_votesAndVoters.clear();
+		if(Fears.isLogedIn()){
+			Label votes =  new Label("Tem 5 votos disponiveis.");
+			votes.setStyleName("votersMeta");
+			_votesAndVoters.add(votes);
+		}
+		
+		if(f.getVoters()!=null && f.getVoters().size()>0){
+			DisclosurePanel voters = new DisclosurePanel();
+			voters.setHeader(new HTML("Ver "+f.getVoters().size() + " votantes &raquo;" ));
+			voters.getHeader().setStyleName("votersMeta");
+			HorizontalPanel votersExpanded = new HorizontalPanel();
+			int i=0;
+			for(ViewUserResume v :  f.getVoters()){
+				votersExpanded.add(new Hyperlink(v.getName(),"Project"+_projectID+"?"+"viewUser"+v.getName()));
+				if(i!= f.getVoters().size()-1)
+					votersExpanded.add(new HTML(",&nbsp;"));
+				i++;
+			}
+			voters.setContent(votersExpanded);
+			voters.getContent().setStyleName("votersMeta");
+			_votesAndVoters.add(voters);
+
+		}else _votesAndVoters.add(new Label ("Nao ha vontantes.")); 
+
+
 	}
 
 	public void updateComments(ViewFeatureDetailed f){
@@ -84,15 +121,15 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 				comment.setStyleName("comment");
 				_comments.add(comment);
 			} 
-			
+
 		}else{
 			HTML info = new HTML("Nao existem coment&aacute;rios.");
 			info.setStyleName("commentTextArea");
 			_comments.add(info);
 		}
-		
+
 		_comments.add(_newCommentBox);
-		}
+	}
 
 	private class CommentButton implements ClickListener{
 

@@ -78,7 +78,9 @@ relation ProjectAuthor {
 class FeatureRequest {
     String name;
     String description;
+    String state;
     int webID;
+    
 }
 
 relation ProjectFeatureRequests {

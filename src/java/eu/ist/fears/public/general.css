@@ -133,6 +133,41 @@ border-collapse: collapse;
 margin-bottom: 45px;
 }
 
+.statusNew { 
+background: #bcbcb1;
+font-weight: normal;
+color: #fff;
+font-size: 12px;
+padding:2px 4px;
+}
+ 
+.statusPlanned {
+ background: #588aa7;
+font-weight: normal;
+color: #fff;
+font-size: 12px;
+padding:2px 4px;
+}
+
+.statusImplementation { 
+background: #d68450;
+ font-weight: normal;
+color: #fff;
+font-size: 12px;
+padding:2px 4px;
+}
+
+
+.statusCompleted {
+background: #6d9966;
+font-weight: normal;
+color: #fff;
+font-size: 12px;
+padding:2px 4px; 
+}
+
+
+
 .voteBox {
 background: #fafaf5;
 border: 4px solid #eeeee5;
@@ -183,18 +218,51 @@ border-bottom: 2px solid #d5e2e9;
 margin-top: 20px;
 }
 
+
+.votersMeta {
+color: #999;
+font-size: 0.9em;
+text-decoration: none;
+}
+
+.votersMeta a {
+color: #999;
+font-size: 0.9em;
+text-decoration: underline;
+/* border-bottom: 1px solid #ddc;*/
+}
+
+.gwt-DisclosurePanel-closed .header{
+color: #999;
+text-decoration: underline;
+
+}
+
+.gwt-DisclosurePanel-open .header{
+color: #999;
+text-decoration: underline;
+}
+
+.gwt-DisclosurePanel-open .content {
+color: #999;
+text-decoration: underline;
+}
+
+
 .meta {
 margin: 4px 0 2px 0;
 font-size: 0.9em;
 color: #999;
 }
+
+
 .meta a {
 margin: 4px 0 2px 0;
 color: #999;
 font-size: 0.9em;
 font-weight: normal;
-text-decoration: none;
-border-bottom: 1px solid #ddc;
+text-decoration: underline;
+/* border-bottom: 1px solid #ddc; */
 }
 
 
@@ -204,6 +272,13 @@ border-bottom: 1px solid #ddc;
 CSS da pagina dos Comentarios (pagina de Sugestao):
 
 ************* */
+
+.votesAndVoters {
+margin-left: 89px;
+font-size: 0.9em;
+color: #999;
+margin-top: 10px;
+}
 
 .commentTitle {
 font-size:  1.5em;
