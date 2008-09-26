@@ -19,7 +19,7 @@ import eu.ist.fears.client.admin.Admin;
 import eu.ist.fears.client.communication.Communication;
 import eu.ist.fears.client.interfaceweb.Header;
 import eu.ist.fears.client.interfaceweb.Path;
-import eu.ist.fears.client.views.ViewUser;
+import eu.ist.fears.client.views.ViewUserResume;
 
 
 /**
@@ -252,7 +252,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 		}
 
 		public void onSuccess(Object result){
-			ViewUser voter = (ViewUser) result;
+			ViewUserResume voter = (ViewUserResume) result;
 			_f.updateUsername(voter.getName());
 			validCookie= true;
 			_f.onHistoryChanged(History.getToken());

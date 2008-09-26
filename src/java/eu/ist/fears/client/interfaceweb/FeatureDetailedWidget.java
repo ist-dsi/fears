@@ -5,6 +5,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PushButton;
@@ -58,7 +59,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 
 	public void updateComments(ViewFeatureDetailed f){
 		VerticalPanel comment;
-		Label header;
+		HorizontalPanel header;
 
 		_comments.clear();
 		Label commentTitle = new HTML("Coment&aacute;rios:");
@@ -67,10 +68,15 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 
 		if(f.getComments().size()>0){
 			for(int i=0; i<f.getComments().size();i++){
-				header = new Label("Por: " + ((ViewComment)f.getComments().get(i)).getAuthor());
-				header.setStyleName("meta");
+				header= new HorizontalPanel();
+				HorizontalPanel text = new HorizontalPanel();
+				header.add(text);
+				header.setStyleName("commentItem");
+				text.add(new HTML("Por:&nbsp;"));
+				text.add(new Hyperlink(((ViewComment)f.getComments().get(i)).getAuthor(),"Project"+_projectID+"?"+"viewUser"+((ViewComment)f.getComments().get(i)).getAuthor()));
+				text.setStyleName("meta");
 				Label commentText = new Label(((ViewComment)f.getComments().get(i)).getComment());
-				commentText.setStyleName("commentText");
+				commentText.setStyleName("commentItem");
 				comment = new VerticalPanel();
 				comment.setWidth("100%");
 				comment.add(header);

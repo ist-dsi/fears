@@ -4,6 +4,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
+
 public class Communication implements FearsServiceAsync{
 
 	private  FearsServiceAsync _service=null;
@@ -99,6 +100,12 @@ public class Communication implements FearsServiceAsync{
 
 	public void getProjectName(String projectID, AsyncCallback callback) {
 		_service.getProjectName(projectID, callback);	
+	}
+
+	public void getVoter(String projectid, String voterName, String cookie,
+			AsyncCallback callback){
+		_service.getVoter(projectid, voterName, cookie, callback);
+		
 	}
 
 }

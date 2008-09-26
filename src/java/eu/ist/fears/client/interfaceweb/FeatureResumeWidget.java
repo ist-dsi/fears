@@ -28,7 +28,7 @@ public class FeatureResumeWidget  extends Composite{
 	protected String _projectID;
 	protected String _featureID;
 	protected Label _name;
-	protected Label _author;
+	protected String _author;
 	protected Label _description;
 	protected Label _votes;
 	protected Button _voteButton;
@@ -57,7 +57,7 @@ public class FeatureResumeWidget  extends Composite{
 		_votes = new Label(new Integer(f.getVotes()).toString());
 		_featureResume = new HorizontalPanel();
 		_voteButton = new Button();
-		_author = new Label(f.getAuthor());
+		_author = f.getAuthor();
 		_removeVote = new RemoveVoteButton();
 		_vote = new VoteButton();
 		
@@ -97,10 +97,9 @@ public class FeatureResumeWidget  extends Composite{
 		
 		info.setStyleName("meta");
 		_mainBox.add(info);
-		
-		
+				
 		info.add(new HTML("#"+_featureID+" | Por:&nbsp;"));
-		info.add(_author);
+		info.add(new Hyperlink(_author,"Project"+_projectID+"?"+"viewUser"+_author));
 		info.add(new HTML("&nbsp;|&nbsp;"));
 		info.add(_ncomments);
 		info.add(new HTML("&nbsp;coment&aacute;rios"));
@@ -129,7 +128,7 @@ public class FeatureResumeWidget  extends Composite{
 			_description.setText(f.getDescription());
 		
 		_votes.setText(new Integer(f.getVotes()).toString());
-		_author.setText(f.getAuthor());
+		_author=f.getAuthor();
 		//_voters.setText("");
 		
 		

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 
 
-public class ViewUser implements Serializable {
+public class ViewUserResume implements Serializable {
 	
 	
 	
@@ -16,9 +16,9 @@ public class ViewUser implements Serializable {
 	private String _user;
 	private String _sessionID;
 
-	public ViewUser(){}
+	public ViewUserResume(){}
 	
-	public ViewUser(String name, String sessionID){
+	public ViewUserResume(String name, String sessionID){
 		_user=name;
 		_sessionID = sessionID;
 	}

@@ -9,7 +9,8 @@ import eu.ist.fears.client.views.ViewAdmins;
 import eu.ist.fears.client.views.ViewFeatureDetailed;
 import eu.ist.fears.client.views.ViewFeatureResume;
 import eu.ist.fears.client.views.ViewProject;
-import eu.ist.fears.client.views.ViewUser;
+import eu.ist.fears.client.views.ViewUserDetailed;
+import eu.ist.fears.client.views.ViewUserResume;
 
 public interface FearsService extends RemoteService  {
 	
@@ -24,8 +25,8 @@ public interface FearsService extends RemoteService  {
 	public void deleteProject(String name, String sessionID);
 	public String getProjectName(String projectID);
 	
-	public ViewUser validateSessionID(String sessionID);
-	public ViewUser login(String user, String password);
+	public ViewUserResume validateSessionID(String sessionID);
+	public ViewUserResume login(String user, String password);
 	
 	public ViewAdmins getAdmins(String sessionID);
 	public ViewAdmins addAdmin(String userName, String sessionID);
@@ -33,5 +34,6 @@ public interface FearsService extends RemoteService  {
 	
 	public List<ViewFeatureResume> search(String projectID, String search, String sort, int page, String sessionID);
 		
+	public ViewUserDetailed getVoter(String _projectid, String voterName, String cookie);
 	
 }

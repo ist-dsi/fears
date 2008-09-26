@@ -8,6 +8,7 @@ import pt.ist.dmapl.AccessControlUser;
 import pt.ist.dmapl.UserFinder;
 
 import eu.ist.fears.client.views.ViewFeatureResume;
+import eu.ist.fears.client.views.ViewUserDetailed;
 
 public class Voter extends Voter_Base implements AccessControlUser {
     
@@ -25,12 +26,12 @@ public class Voter extends Voter_Base implements AccessControlUser {
             addFeaturesVoted(f);
     }
 
-    public List<ViewFeatureResume> getViewFeaturesCreated(Voter user){
-        return FearsApp.getViewFeaturesResumes(getFeaturesCreatedSet(), user);
+    public List<ViewFeatureResume> getViewFeaturesCreated(){
+        return FearsApp.getViewFeaturesResumes(getFeaturesCreatedSet(), this);
     }
     
-    public  List<ViewFeatureResume> getViewFeaturesVoted(Voter user){
-        return FearsApp.getViewFeaturesResumes(getFeaturesVotedSet(), user);
+    public  List<ViewFeatureResume> getViewFeaturesVoted(){
+        return FearsApp.getViewFeaturesResumes(getFeaturesVotedSet(), this);
     }
     
     public User getUser(){
@@ -55,5 +56,11 @@ public class Voter extends Voter_Base implements AccessControlUser {
 			return FearsApp.getFears().getUser(arg0);
 		}
 	}*/
+	
+	public ViewUserDetailed getView(String sessionID){
+    	return new ViewUserDetailed(getUser().getName(), sessionID, getViewFeaturesCreated(), getViewFeaturesVoted());
+    	
+    	
+    }
 	
 }

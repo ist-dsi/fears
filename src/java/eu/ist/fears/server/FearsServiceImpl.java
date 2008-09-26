@@ -7,13 +7,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.SerializationException;
 import eu.ist.fears.client.communication.FearsService;
 import eu.ist.fears.client.views.ViewAdmins;
 import eu.ist.fears.client.views.ViewFeatureDetailed;
 import eu.ist.fears.client.views.ViewFeatureResume;
 import eu.ist.fears.client.views.ViewProject;
-import eu.ist.fears.client.views.ViewUser;
+import eu.ist.fears.client.views.ViewUserDetailed;
+import eu.ist.fears.client.views.ViewUserResume;
 import eu.ist.fears.server.domain.*;
 import pt.ist.fenixframework.Config;
 import pt.ist.fenixframework.FenixFramework;
@@ -137,21 +139,21 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		FearsApp.getFears().deleteProject(name);
 	}
 
-	public ViewUser login(String username, String password ){
+	public ViewUserResume login(String username, String password ){
 		HttpSession session = this.getThreadLocalRequest().getSession();
 
 		//Fingir que esta tudo bem.
 
 		User temp = FearsApp.getFears().getUser(username);
-		ViewUser ret =  new ViewUser(temp.getName(),  session.getId());
+		ViewUserResume ret =  new ViewUserResume(temp.getName(),  session.getId());
 		session.setAttribute("fears_voter", ret);
 		return ret;
 
 	}
 
-	public ViewUser validateSessionID(String sessionID) {
+	public ViewUserResume validateSessionID(String sessionID) {
 		HttpSession session = this.getThreadLocalRequest().getSession();
-		ViewUser temp = (ViewUser)session.getAttribute("fears_voter");
+		ViewUserResume temp = (ViewUserResume)session.getAttribute("fears_voter");
 		if(temp==null){
 			throw new RuntimeException("Sessao invalida");
 		}
@@ -160,7 +162,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 	public User getUserFromSession(String sessionID){
 		HttpSession session = this.getThreadLocalRequest().getSession();
-		ViewUser temp = (ViewUser)session.getAttribute("fears_voter");
+		ViewUserResume temp = (ViewUserResume)session.getAttribute("fears_voter");
 		if(temp==null)
 			return null;
 		return FearsApp.getFears().getUser(temp.getName());
@@ -222,6 +224,16 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		return p.getName();
 	}
 
+	@Override
+	public ViewUserDetailed getVoter(String projectid, String voterName,
+			String sessionID) {
+		Project p =FearsApp.getFears().getProject(projectid);
 
+		if(p==null)
+			throw new RuntimeException("Nao existe esse projecto: " + projectid);
+		
+				
+		return FearsApp.getFears().getUser(voterName).getVoter(p).getView(sessionID);
+	}
 
 }

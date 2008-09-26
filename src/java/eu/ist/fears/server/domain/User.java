@@ -1,5 +1,7 @@
 package eu.ist.fears.server.domain;
 
+import eu.ist.fears.client.views.ViewUserDetailed;
+
 public class User extends User_Base {
     
     public  User(String name) {
@@ -17,10 +19,12 @@ public class User extends User_Base {
     			return v;
     	}
     	
-    	//User has no voter in this project:
+    	//User has no voter in this project, create:
     	Voter ret = new Voter(this);
     	p.addVoter(ret);
     	return ret;    	
     }
+    
+    
     
 }

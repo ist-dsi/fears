@@ -41,7 +41,7 @@ public class DisplayFeatureDetailed extends Composite {
 		}
 		else _feature.update(view);
 		
-		Fears.getPath().setFeature(view.getProjectName(), new String(new Integer(view.getProjectID()).toString()), "Sugest&atilde;o");
+		Fears.getPath().setFeature(view.getProjectName(),new Integer(view.getProjectID()).toString(), "Sugest&atilde;o");
 	}
 
 	protected class FeatureCB implements AsyncCallback{

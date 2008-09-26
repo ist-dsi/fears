@@ -35,7 +35,7 @@ public class Header extends Composite {
 		header.setHorizontalAlignment(HorizontalPanel.ALIGN_RIGHT);
 		header.add(right);
 		left.setStyleName("left");
-		left.add(new Label("fears | feature request system |"));
+		left.add(new HTML("<a href=\"Fears.html\">fears</a> |"));
 		
 		left.add(_adminLink);
 		left.add(new HTML("&nbsp;|&nbsp;"));
