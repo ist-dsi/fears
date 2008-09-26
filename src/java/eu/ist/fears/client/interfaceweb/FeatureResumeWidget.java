@@ -23,6 +23,7 @@ public class FeatureResumeWidget  extends Composite{
 	protected Communication _com;
 	protected VerticalPanel _feature;
 	protected HorizontalPanel _featureResume; 
+	protected HTML _state;
 	protected VerticalPanel _mainBox;
 	protected String _projectName;
 	protected String _projectID;
@@ -88,9 +89,16 @@ public class FeatureResumeWidget  extends Composite{
 		}
 		
 		HorizontalPanel title = new HorizontalPanel();
-		title.setStyleName("featureTitle");
-		title.add(new Hyperlink(f.getName(),"Project"+_projectID+"?"+"viewFeature"+f.getFeatureID()));
+		Hyperlink link = new Hyperlink(f.getName(),"Project"+_projectID+"?"+"viewFeature"+f.getFeatureID());
+		link.setStyleName("featureTitle");
+		title.add(link);
+		_state = new HTML(f.getState());
+		if(f.getState()==ViewFeatureResume.StateImplement)
+			_state.setStyleName("Implementacao");
+		else _state.setStyleName(f.getState());
+		title.add(_state);
 		_mainBox.add(title);
+		
 		
 		
 		info.setStyleName("meta");
@@ -121,6 +129,12 @@ public class FeatureResumeWidget  extends Composite{
 			_voteButton.setText("Votar");
 			_voteButton.addClickListener(_vote);
 		}
+		
+		
+		_state.setHTML(f.getState());
+		if(f.getState()=="Em implementa&ccedil;&atilde;o")
+			_state.setStyleName("Implementacao");
+		else _state.setStyleName(f.getState());
 		
 		if(updateDescription)
 			_description.setText(f.getDescription());

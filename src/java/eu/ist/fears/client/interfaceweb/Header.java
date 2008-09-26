@@ -62,7 +62,6 @@ public class Header extends Composite {
 		}
 		
 		if(admin){
-			_adminLink.setHTML("&nbsp;<a href=\"Fears.html\">Fears</a>");
 			_adminAdministrators.setText("Administradores");
 			_adminAdministrators.setTargetHistoryToken("admins");
 		}else {

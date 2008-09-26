@@ -133,37 +133,45 @@ border-collapse: collapse;
 margin-bottom: 45px;
 }
 
-.statusNew { 
+.Novo { 
 background: #bcbcb1;
 font-weight: normal;
 color: #fff;
 font-size: 12px;
 padding:2px 4px;
+margin-left:8px;
+margin-bottom: 3px;
 }
  
-.statusPlanned {
- background: #588aa7;
+.Planeado {
+background: #588aa7;
 font-weight: normal;
 color: #fff;
 font-size: 12px;
 padding:2px 4px;
+margin-left:8px;
+margin-bottom: 3px;
 }
 
-.statusImplementation { 
+.Implementacao { 
 background: #d68450;
- font-weight: normal;
+font-weight: normal;
 color: #fff;
 font-size: 12px;
 padding:2px 4px;
+margin-left:8px;
+margin-bottom: 3px;
 }
 
 
-.statusCompleted {
+.Completo {
 background: #6d9966;
 font-weight: normal;
 color: #fff;
 font-size: 12px;
-padding:2px 4px; 
+padding:2px 4px;
+margin-left:8px;
+margin-bottom: 3px;
 }
 
 
@@ -221,32 +229,27 @@ margin-top: 20px;
 
 .votersMeta {
 color: #999;
-font-size: 0.9em;
-text-decoration: none;
+font-size: 1em;
+font-weight: normal;
 }
 
 .votersMeta a {
 color: #999;
-font-size: 0.9em;
-text-decoration: underline;
-/* border-bottom: 1px solid #ddc;*/
+font-size: 1em;
+font-weight: normal;
+text-decoration: none;
+border-bottom: 1px solid #ddc;
 }
 
 .gwt-DisclosurePanel-closed .header{
-color: #999;
 text-decoration: underline;
-
+color: #999;
 }
 
 .gwt-DisclosurePanel-open .header{
-color: #999;
 text-decoration: underline;
-}
-
-.gwt-DisclosurePanel-open .content {
 color: #999;
-text-decoration: underline;
-}
+} 
 
 
 .meta {
@@ -259,10 +262,10 @@ color: #999;
 .meta a {
 margin: 4px 0 2px 0;
 color: #999;
-font-size: 0.9em;
+font-size: 1em;
 font-weight: normal;
-text-decoration: underline;
-/* border-bottom: 1px solid #ddc; */
+text-decoration: none;
+ border-bottom: 1px solid #ddc; 
 }
 
 
@@ -308,6 +311,11 @@ margin-top: 5px;
 .commentTextArea{
 margin-top: 10px;
 margin-left: 89px;	
+}
+
+.commentStateChooser{
+margin-top: 10px;
+margin-left: 9px;	
 }
 
 .commentButton{

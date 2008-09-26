@@ -9,7 +9,7 @@ public interface FearsServiceAsync {
 	public void removeVote(String projectName, String featureName, String sessionID, AsyncCallback callback);
 	public void addFeature(String projectName, String featureName, String description, String sessionID,  AsyncCallback callback);
 	public void getFeature(String projectName, String featureName, String sessionID, AsyncCallback callback);
-	public void addComment(String projectName, String featureName, String comment, String sessionID, AsyncCallback callback);
+	public void addComment(String projectName, String featureName, String comment, String newState, String sessionID, AsyncCallback callback);
 	
 	public void addProject(String name, String description, String sessionID,  AsyncCallback callback);
 	public void getProjects(String sessionID, AsyncCallback callback);

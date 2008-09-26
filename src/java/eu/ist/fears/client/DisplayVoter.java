@@ -45,7 +45,7 @@ public class DisplayVoter extends Composite {
 
 	protected void updateVoter(ViewUserDetailed u){
 		_content.clear();
-		Label votedLabel = new Label("Votou nos Projectos:");
+		Label votedLabel = new HTML("Votou nas Sugest&otilde;es:");
 		votedLabel.setStyleName("UserSubTitle");
 		_content.add(votedLabel);
 
@@ -76,7 +76,7 @@ public class DisplayVoter extends Composite {
 			_content.add(votedFeatureTable);
 		}
 
-		Label createdLabel = new Label("Criou os Projectos:");
+		Label createdLabel = new HTML("Criou as Sugest&otilde;es:");
 		createdLabel.setStyleName("UserSubTitle");
 		_content.add(createdLabel);
 

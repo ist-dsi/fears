@@ -3,8 +3,7 @@ TODO:
 -> Login CAS. (Pagina de Login +  Guardar Estado).
 -> Datas. (Esperar por Fenix Framework).
 -> Funcionalidade de Filtros (É necessário implementar Estado das sugestoes 1º).
--> Funcionalidades de Admin (Ja se pode acrescentar e remover admins).
--> Estado das Sugestões.
+-> Funcionalidades de Admin (Ja se pode acrescentar e remover admins, e alterar estados das sugoestes).
 
 WebDesigner:
- -> Na pagina da sugestao falta: ranking, utilizadores que votaram.
+ -> Na pagina da sugestao falta: ranking.

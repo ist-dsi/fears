@@ -51,8 +51,8 @@ public class Communication implements FearsServiceAsync{
 	}
 
 	public void addComment(String projectName, String featureID,
-			String comment, String sessionID, AsyncCallback callback) {
-		_service.addComment(projectName, featureID, comment, sessionID, callback);
+			String comment,String newState, String sessionID, AsyncCallback callback) {
+		_service.addComment(projectName, featureID, comment, newState, sessionID, callback);
 
 	}
 

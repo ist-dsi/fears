@@ -92,6 +92,10 @@ public class ViewFeatureResume implements IsSerializable{
 		return _userHasVoted;
 	}
 	
+	public String getState(){
+		return _state;
+		
+	}
 	
 	
 	

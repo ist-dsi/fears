@@ -18,7 +18,7 @@ public interface FearsService extends RemoteService  {
 	public ViewFeatureDetailed removeVote(String projectName, String feature, String sessionID);
 	public void addFeature(String projectName, String name, String description,  String sessionID);
 	public ViewFeatureDetailed getFeature(String projectName, String featuremName, String sessionID);
-	public ViewFeatureDetailed addComment(String projectName, String featureName, String comment, String sessionID);
+	public ViewFeatureDetailed addComment(String projectName, String featureName, String comment, String newState, String sessionID);
 	
 	public void addProject(String name, String description, String sessionID);
 	public ViewProject[] getProjects(String sessionID);

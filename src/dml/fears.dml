@@ -92,6 +92,7 @@ relation ProjectFeatureRequests {
 
 class Comment {	
     String comment;
+    String newState;
 }
 
 relation FeatureRequestComments {

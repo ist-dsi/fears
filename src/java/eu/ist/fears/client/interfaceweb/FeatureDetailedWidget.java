@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -16,6 +17,7 @@ import com.google.gwt.user.client.ui.Widget;
 import eu.ist.fears.client.Fears;
 import eu.ist.fears.client.views.ViewComment;
 import eu.ist.fears.client.views.ViewFeatureDetailed;
+import eu.ist.fears.client.views.ViewFeatureResume;
 import eu.ist.fears.client.views.ViewUserResume;
 
 public class FeatureDetailedWidget extends FeatureResumeWidget {
@@ -23,6 +25,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 	protected VerticalPanel _votesAndVoters;
 	protected VerticalPanel _comments;
 	protected TextArea _commentTextArea;
+	protected ListBox _lb;
 	protected PushButton _commentButton;
 	protected Label _voters;
 	protected VerticalPanel _newCommentBox;
@@ -37,6 +40,8 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 		_newCommentBox = new VerticalPanel();
 		_commentTextArea= new TextArea();
 		_commentTextArea.setStyleName("commentTextArea");
+		_lb=new ListBox();
+		
 		_commentButton = new PushButton(new Image("button03.gif",0,0,105,32), new Image("button03.gif",-2,-2,105,32));
 		_commentButton.setStyleName("commentButton");
 		_comments.setStyleName("width100");
@@ -47,8 +52,27 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 		_newCommentBox.setStyleName("newComment");
 
 		if(Fears.isLogedIn()){
+			//TODO: See if it is Admin...
+			HorizontalPanel stateChooser = new HorizontalPanel();
+			Label stateLabel =new Label("Mudar Estado:");
+			stateLabel.setStyleName("commentTextArea");
+			stateChooser.add(stateLabel);
+			_lb.setStyleName("commentStateChooser");
+			
+			stateChooser.add(_lb);
+			
+			_lb.addItem("");
+			_lb.addItem(ViewFeatureResume.StateNew);
+			_lb.addItem(ViewFeatureResume.StatePlanned);
+			_lb.addItem("Em implementação", ViewFeatureResume.StateImplement);
+			_lb.addItem(ViewFeatureResume.StateFinish);
+			
 			_newCommentBox.add(_commentTextArea);
+			_newCommentBox.add(stateChooser);
 			_newCommentBox.add(_commentButton);
+			
+			
+			
 		}
 
 		_commentButton.addClickListener(new CommentButton());
@@ -68,7 +92,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 	public void updateVoters(ViewFeatureDetailed f){
 		_votesAndVoters.clear();
 		if(Fears.isLogedIn()){
-			Label votes =  new Label("Tem 5 votos disponiveis.");
+			HTML votes =  new HTML("Tem 5 votos disponiveis.");
 			votes.setStyleName("votersMeta");
 			_votesAndVoters.add(votes);
 		}
@@ -76,7 +100,6 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 		if(f.getVoters()!=null && f.getVoters().size()>0){
 			DisclosurePanel voters = new DisclosurePanel();
 			voters.setHeader(new HTML("Ver "+f.getVoters().size() + " votantes &raquo;" ));
-			voters.getHeader().setStyleName("votersMeta");
 			HorizontalPanel votersExpanded = new HorizontalPanel();
 			int i=0;
 			for(ViewUserResume v :  f.getVoters()){
@@ -89,7 +112,10 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 			voters.getContent().setStyleName("votersMeta");
 			_votesAndVoters.add(voters);
 
-		}else _votesAndVoters.add(new Label ("Nao ha vontantes.")); 
+		}else { HTML none = new HTML("Nao h&aacute; vontantes.");
+		none.setStyleName("votersMeta");
+			_votesAndVoters.add(none); 
+		}
 
 
 	}
@@ -136,7 +162,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 		public void onClick(Widget sender) {
 			//_alert.setText("O teu comentario foi inserido.");
 			_com.addComment(_projectID, _featureID,
-					_commentTextArea.getText(), Cookies.getCookie("fears"), _cb);
+					_commentTextArea.getText(), _lb.getValue(_lb.getSelectedIndex()), Cookies.getCookie("fears"), _cb);
 			_commentTextArea.setText("");
 		}
 

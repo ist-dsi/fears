@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.tools.ant.taskdefs.FixCRLF.AddAsisRemove;
+//import org.apache.tools.ant.taskdefs.FixCRLF.AddAsisRemove;
 
 import eu.ist.fears.client.views.ViewAdmins;
 import eu.ist.fears.client.views.ViewFeatureResume;
@@ -105,7 +105,7 @@ public class FearsApp extends FearsApp_Base {
 				if(v.equals(user))
 					userHasvoted=true;
 			}
-			res.add(new ViewFeatureResume(f.getProject().getName(), f.getProject().getIdInternal(), f.getName(), f.getWebID() ,userHasvoted , f.getDescription(),
+			res.add(new ViewFeatureResume(f.getProject().getName(), f.getProject().getIdInternal(), f.getName(), f.getWebID() , f.getState(), userHasvoted , f.getDescription(),
 					f.getVotes(), f.getNComments(), f.getAuthor().getUser().getName() ));
 		}
 
