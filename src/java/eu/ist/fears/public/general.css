@@ -19,6 +19,26 @@ line-height: 1.6em;
 background: #e7e7df;
 }
 
+.gwt-DialogBox .Caption {
+background: white;
+padding: 0px 0px 10px 0px;
+cursor: default;
+border-top: 20px solid #d0e4f6;
+}
+
+.gwt-DialogBox{
+border: 2px solid black;
+
+}
+
+.loginWindow{
+background: white;
+padding-left:20px;
+}
+
+.loginButton{
+margin-bottom: 20px;
+}
 
 .centered {
 text-align: center;
@@ -101,6 +121,18 @@ margin-left: 25px;
 border: 1px solid #bbb;
 }
 
+
+.currentFilter a{
+color: #554;
+font-weight: bold;
+text-decoration: none;
+}
+
+.filters a{
+color: #554;
+text-decoration: none;
+border-bottom: 1px solid #bba;
+}
 
 .filterBox {
 /*border: 2px solid #eeeee5;*/

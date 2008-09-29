@@ -115,7 +115,7 @@ public class ListAdmins  extends Composite {
 		}
 
 		public void onFailure(Throwable caught) {
-			RootPanel.get().add(new Label("Nao foi possivel contactar o servidor."));
+			RootPanel.get().add(new Label("Nao foi possivel contactar o servidor."+caught.getLocalizedMessage()));
 		}
 	};
 

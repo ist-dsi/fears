@@ -10,8 +10,11 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -33,6 +36,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 	protected VerticalPanel frame;
 	protected VerticalPanel content;
 	protected Header header; 
+	static public  DialogBox  popup;
 	protected static Path path;
 	protected static Label userName;
 	protected static boolean validCookie;
@@ -74,6 +78,9 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 	}
 
+	public static boolean isAdminPage(){
+			return RootPanel.get("Admin") != null;
+	}
 
 	protected void updateUsername(String user){
 		userName.setText(user);
@@ -83,12 +90,12 @@ public class Fears implements EntryPoint, HistoryListener  {
 		return path;
 	}
 
-	public void listFeatures(String projectName){
+	public void listFeatures(String projectName,String filter){
 		content.clear();
 
 		verifyLogin(false);
 
-		ListFeatures features = new ListFeatures(projectName);
+		ListFeatures features = new ListFeatures(projectName, filter);
 
 		features.update();
 		content.add(features);
@@ -97,8 +104,10 @@ public class Fears implements EntryPoint, HistoryListener  {
 	public void addFeature(String projectName){
 		content.clear();
 
-		if(!verifyLogin(true))
-			return;
+		if(!verifyLogin(true)){
+		content.add(new HTML("Por favor fa&ccedil;a login para continuar"));
+		return;
+		}
 
 		content.add(new CreateFeature(projectName));
 
@@ -131,15 +140,36 @@ public class Fears implements EntryPoint, HistoryListener  {
 	}
 
 	public void viewLogin(){
-		content.clear();
+		//content.clear();
 
 		verifyLogin(false);
 
+	    popup =  new DialogBox(false,false);
+	    VerticalPanel dialogContents = new VerticalPanel();
+	    dialogContents.setSpacing(0);
+	    popup.setWidget(dialogContents);
+	    
 		Login login = new Login(this);
-		content.add(login);		
+		dialogContents.add(login);
+		dialogContents.add(new HTML("<iframe src=\"https://login.ist.utl.pt\" width=\"507px\" height=\"450px\"> <\\iframe>"));
+		login.setStyleName("loginWindow");
+		popup.setSize("400px", "400px");
+		popup.setPopupPosition(500, 50);
+		popup.show();
 	}
 	
-
+	public void viewLogout(){
+		
+		validCookie=false;
+		header.update(isAdminPage());
+		_com.logoff(Cookies.getCookie("fears"), null);
+		userName.setText("guest");
+		Cookies.removeCookie("fears");
+		History.back();
+		
+	}
+	
+	
 	public static boolean isLogedIn(){
 		return validCookie;
 	}
@@ -164,6 +194,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 		}	
 
 		String sessionID = Cookies.getCookie("fears");
+		RootPanel.get().add(new Label(sessionID));
 		if(sessionID == null){
 			if(tryToLogin)
 				viewLogin();
@@ -204,6 +235,8 @@ public class Fears implements EntryPoint, HistoryListener  {
 		}if(url.startsWith("admins")){
 			if(f instanceof Admin)
 			((Admin)f).viewChangeAdmins();
+		}else if(url.startsWith("logout")){
+			f.viewLogout();
 		}
 
 	}
@@ -217,7 +250,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 		//Estamos no Caso: #ProjectXPTO  
 		if(parseAt==-1 && parseB==-1 ){
 			projectName=string;
-			f.listFeatures(projectName);
+			f.listFeatures(projectName,"");
 			return;	
 		}
 
@@ -231,13 +264,16 @@ public class Fears implements EntryPoint, HistoryListener  {
 		}
 
 		if("listFeatures".equals(parse)){
-			f.listFeatures(projectName);	
+			f.listFeatures(projectName,"");	
 		}else if("addFeature".equals(parse)){
 			f.addFeature(projectName);
 		}else if(parse.startsWith("viewFeature")){
 			f.viewFeature(projectName, parse.substring("viewFeature".length()));
 		}else if(parse.startsWith("viewUser")){
 			f.viewVoter(projectName, parse.substring("viewUser".length()));
+		}
+		else if(parse.startsWith("filter")){
+			f.listFeatures(projectName, parse.substring("filter".length()));
 		}
 
 	}
@@ -262,7 +298,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 			try {
 				throw caught;
 			} catch (Throwable e) {
-				RootPanel.get().add(new Label("Nao foi possivel contactar o servidor."));
+				//RootPanel.get().add(new Label("A sessao não é valida."));
 			}
 			if(_trytoLogin)
 				viewLogin();

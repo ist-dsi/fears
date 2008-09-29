@@ -27,12 +27,13 @@ public interface FearsService extends RemoteService  {
 	
 	public ViewUserResume validateSessionID(String sessionID);
 	public ViewUserResume login(String user, String password);
+	public void logoff(String sessionID);
 	
 	public ViewAdmins getAdmins(String sessionID);
 	public ViewAdmins addAdmin(String userName, String sessionID);
 	public ViewAdmins removeAdmin(String userName, String sessionID);
 	
-	public List<ViewFeatureResume> search(String projectID, String search, String sort, int page, String sessionID);
+	public List<ViewFeatureResume> search(String projectID, String search, String sort, int page, String filter, String sessionID);
 		
 	public ViewUserDetailed getVoter(String _projectid, String voterName, String cookie);
 	

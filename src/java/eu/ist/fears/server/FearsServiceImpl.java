@@ -205,17 +205,17 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	}
 
 	
-	public List<ViewFeatureResume> search(String projectID, String search, String sort, int page, String sessionID){
+	public List<ViewFeatureResume> search(String projectID, String search, String sort, int page, String filter, String sessionID){
 		Project p =FearsApp.getFears().getProject(projectID);
 
 		if(p==null)
 			throw new RuntimeException("Nao existe esse projecto: " + projectID);
 		
 		if(getUserFromSession(sessionID)==null)
-			return p.search(search, sort, page,null);		
+			return p.search(search, sort, page, filter, null);		
 		
 
-		return p.search(search, sort, page, getUserFromSession(sessionID).getVoter(p));
+		return p.search(search, sort, page, filter, getUserFromSession(sessionID).getVoter(p));
 		
 	}
 
@@ -238,6 +238,11 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		
 				
 		return FearsApp.getFears().getUser(voterName).getVoter(p).getView(sessionID);
+	}
+
+	public void logoff(String sessionID){
+		HttpSession session = this.getThreadLocalRequest().getSession();
+		session.invalidate();
 	}
 
 }

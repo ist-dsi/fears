@@ -34,19 +34,19 @@ public class Login extends Composite {
 		initWidget(_main);
 		_main.setStyleName("login");
 		
-		Fears.getPath().setString("Login");
+		//Fears.getPath().setString("Login");
 
 		HorizontalPanel row = new HorizontalPanel();
 		row.add(new Label("Username:  "));
 		_username = new TextBox();
 		row.add(_username);
 		_main.add(row);
-		_main.add(new HTML("(Qualquer um e aceite)<br><br>"));
+		_main.add(new HTML("(Qualquer um e aceite)"));
 		_loginButton = new Button("Login");
+		_loginButton.setStyleName("loginButton");
 		_alert = new Label();
 		_main.add(_alert);
 		_main.add(_loginButton);
-
 		_loginButton.addClickListener(new LoginButton(f));
 	}
 
@@ -60,6 +60,7 @@ public class Login extends Composite {
 		public void onClick(Widget sender) {
 			_alert.setText("A fazer Login");
 			_com.login(_username.getText(),  "password", new LoginCB(_f));
+			Fears.popup.hide();
 		}
 
 	}
@@ -77,6 +78,7 @@ public class Login extends Composite {
 			_f.setCookie(voter.getSessionID(), voter.getName());
 			if(History.getToken().equals("login")){
 				History.back();
+				Fears.popup.hide();
 			}else
 			_f.onHistoryChanged(History.getToken());
 			

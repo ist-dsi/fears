@@ -58,12 +58,16 @@ public class Project extends Project_Base {
 		f.setWebID(getFeaturesIncrementID());
 	}
 
-	public List<ViewFeatureResume> search(String search, String sort, int page, Voter v){
+	public List<ViewFeatureResume> search(String search, String sort, int page, String filter, Voter v){
 		StringTokenizer s = new StringTokenizer(search," ");
 		List<ViewFeatureResume> ret = new ArrayList<ViewFeatureResume>();
 
 		if(this.getFeatureRequestCount()==0)
 			return ret;
+		
+		if(!filter.isEmpty()){
+			return sortAndPage(filter(filter, v), sort, page);
+		}
 				
 		//Make the list with the features that have the first token
 		if(s.countTokens()>0){
@@ -92,6 +96,24 @@ public class Project extends Project_Base {
 		}
 		return sortAndPage(ret,sort,page);
 
+	}
+
+
+	private List<ViewFeatureResume> filter(String filter, Voter v) {
+		List<ViewFeatureResume> ret = new ArrayList<ViewFeatureResume>();
+		
+		if(filter.equals("Implementacao")){
+			for(FeatureRequest f : getFeatureRequestSet()){
+				if(f.getState().equals(ViewFeatureResume.StateImplement))
+					ret.add(f.getResumeView(v));
+			}
+		}else
+		for(FeatureRequest f : getFeatureRequestSet()){
+			if(f.getState().equals(filter))
+				ret.add(f.getResumeView(v));
+		}
+		
+		return ret;
 	}
 
 

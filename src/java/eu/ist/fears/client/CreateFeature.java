@@ -1,6 +1,5 @@
 package eu.ist.fears.client;
 
-import java.util.List;
 
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;

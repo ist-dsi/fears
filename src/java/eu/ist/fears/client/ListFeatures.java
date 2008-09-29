@@ -9,7 +9,9 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
@@ -35,8 +37,10 @@ public class ListFeatures extends Composite {
 	protected VerticalPanel _featuresList;
 	protected ListBox lb;
 	protected TextBox sBox;
+	protected String _actualFilter;
+	protected Hyperlink[] _filterLinks;
 
-	public ListFeatures(String projectID){
+	public ListFeatures(String projectID, String filter){
 		_com= new Communication("service");
 		_sugPanel = new VerticalPanel();
 		_search = new HorizontalPanel();
@@ -44,7 +48,7 @@ public class ListFeatures extends Composite {
 		_featuresList = new VerticalPanel();
 		_projectID = projectID;
 		_sugPanel.setStyleName("listMain");
-
+		_actualFilter = filter;
 		initWidget(_sugPanel);
 
 		HorizontalPanel _searchBox = new HorizontalPanel();
@@ -67,74 +71,119 @@ public class ListFeatures extends Composite {
 	private void init(){
 		lb = new ListBox();
 		sBox = new TextBox();
-		
+
 		Fears.getPath().setProject("", _projectID);
-		
-		
+
+
 		_search.clear();
 
 		_search.setVerticalAlignment(VerticalPanel.ALIGN_MIDDLE);
-		
+
 		sBox.setVisibleLength(50);
 		sBox.setStyleName("searchTextBox");
 		_search.add(sBox);
 		sBox.addKeyboardListener(new KeyboardListener(){
-			
+
 			public void onKeyPress(Widget arg0, char arg1, int arg2){
 				if(arg1==13){
-					_com.search(_projectID, sBox.getText(), lb.getItemText(lb.getSelectedIndex()), 0, Cookies.getCookie("Fears"), getFeaturesCB);
+					for(int i=1;i<_filterLinks.length;i++ )
+						_filterLinks[i].setStyleName("filters");
+					_filterLinks[0].setStyleName("currentFilter");
+					
+					History.newItem("Project"+_projectID, false);
+					_com.search(_projectID, sBox.getText(), lb.getItemText(lb.getSelectedIndex()), 0,"" ,Cookies.getCookie("Fears"), getFeaturesCB);
 				}
 			}
 
 			public void onKeyDown(Widget arg0, char arg1, int arg2){}
 			public void onKeyUp(Widget arg0, char arg1, int arg2){}			
 		});
-		
-		
+
+
 
 
 		PushButton searchButton = new PushButton(new Image("button01.gif",0,0,105,32),new Image("button01.gif",-2,-2,105,32));
 		_search.add(searchButton);
 		searchButton.addClickListener(new ClickListener(){
 			public void onClick(Widget sender) {
-				_com.search(_projectID, sBox.getText(), lb.getItemText(lb.getSelectedIndex()), 0, Cookies.getCookie("Fears"), getFeaturesCB);
+				for(int i=1;i<_filterLinks.length;i++ )
+					_filterLinks[i].setStyleName("filters");
+				_filterLinks[0].setStyleName("currentFilter");
+				
+				History.newItem("Project"+_projectID, false);
+				_com.search(_projectID, sBox.getText(), lb.getItemText(lb.getSelectedIndex()), 0, "",  Cookies.getCookie("Fears"), getFeaturesCB);
 			}
 		});
-		
+
 
 		PushButton addButton = new PushButton(new Image("button02.gif",0,0,135,32),new Image("button02.gif",-2,-2,135,32)); 
 		_search.add(addButton);
 		addButton.addClickListener(new ClickListener(){
 			public void onClick(Widget sender) {
 				History.newItem("Project" + _projectID + "?" + "addFeature");
-
 			}
 		});
 
 		_filter.clear();
 		_filter.setHorizontalAlignment(HorizontalPanel.ALIGN_LEFT);
-		_filter.add(new Label ("(Varios Filtros ...)"));
+		HorizontalPanel filtersTab = new HorizontalPanel();
+		_filterLinks = new Hyperlink[5];
 
+		_filterLinks[0] = new Hyperlink("Todos","Project"+_projectID);
+		if(_actualFilter.equals(""))
+			_filterLinks[0] .setStyleName("currentFilter");
+		else _filterLinks[0] .setStyleName("filters");
+		filtersTab.add(_filterLinks[0]);
+		filtersTab.add(new HTML("&nbsp;&nbsp;|&nbsp;&nbsp;"));
+
+		_filterLinks[1]  = new Hyperlink(ViewFeatureResume.StateNew+"s","Project"+_projectID+"?filter"+ViewFeatureResume.StateNew);
+		if(_actualFilter.equals("Novo"))
+			_filterLinks[1] .setStyleName("currentFilter");
+		else _filterLinks[1] .setStyleName("filters");
+		filtersTab.add(_filterLinks[1] );
+		filtersTab.add(new HTML("&nbsp;&nbsp;|&nbsp;&nbsp;"));
+
+		_filterLinks[2] = new Hyperlink(ViewFeatureResume.StatePlanned+"s","Project"+_projectID+"?filter"+ViewFeatureResume.StatePlanned);
+		if(_actualFilter.equals(ViewFeatureResume.StatePlanned))
+			_filterLinks[2].setStyleName("currentFilter");
+		else _filterLinks[2].setStyleName("filters");
+		filtersTab.add(_filterLinks[2]);
+		filtersTab.add(new HTML("&nbsp;&nbsp;|&nbsp;&nbsp;"));
+
+		_filterLinks[3]  = new Hyperlink(ViewFeatureResume.StateImplement,true,"Project"+_projectID+"?filter"+"Implementacao");
+		if(_actualFilter.equals("Implementacao"))
+			_filterLinks[3].setStyleName("currentFilter");
+		else _filterLinks[3].setStyleName("filters");
+		filtersTab.add(_filterLinks[3]);
+		filtersTab.add(new HTML("&nbsp;&nbsp;|&nbsp;&nbsp;"));
+
+		_filterLinks[4]  = new Hyperlink(ViewFeatureResume.StateFinish+"s","Project"+_projectID+"?filter"+ViewFeatureResume.StateFinish);
+		if(_actualFilter.equals(ViewFeatureResume.StateFinish))
+			_filterLinks[4] .setStyleName("currentFilter");
+		else _filterLinks[4] .setStyleName("filters");
+		filtersTab.add(_filterLinks[4]);
+
+		_filter.add(filtersTab);
 		_filter.setHorizontalAlignment(HorizontalPanel.ALIGN_RIGHT);
-		
+
 		lb.addItem("Ordenar por Votos");
 		lb.addItem("Ordenar por Data");
 		lb.setVisibleItemCount(1);
 		lb.addChangeListener(new ChangeListener(){
 			public void onChange(Widget arg0) {
-				_com.search(_projectID, sBox.getText(), lb.getItemText(lb.getSelectedIndex()), 0, Cookies.getCookie("Fears"), getFeaturesCB);
+				_com.search(_projectID, sBox.getText(), lb.getItemText(lb.getSelectedIndex()), 0,_actualFilter ,Cookies.getCookie("Fears"), getFeaturesCB);
 			}
-			
+
 		});
 		_filter.add(lb);
 
 	}
 
 	public void update(){
-		_com.search(_projectID, "", lb.getItemText(lb.getSelectedIndex()), 0, Cookies.getCookie("Fears"), getFeaturesCB);
+		_com.search(_projectID, "", lb.getItemText(lb.getSelectedIndex()), 0,_actualFilter, Cookies.getCookie("Fears"), getFeaturesCB);
 		_com.getProjectName(_projectID, getProjectName);
 	}
-	
+
 	protected void updateProjectName(String name){
 		Fears.getPath().setProject(name, _projectID);
 	}
@@ -174,5 +223,5 @@ public class ListFeatures extends Composite {
 			RootPanel.get().add(new Label("Nao foi possivel contactar o servidor."));
 		}
 	};
-	
+
 }

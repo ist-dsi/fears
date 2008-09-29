@@ -18,12 +18,13 @@ public interface FearsServiceAsync {
 	
 	public void validateSessionID(String sessionID, AsyncCallback callback);
 	public void login(String user, String password, AsyncCallback callback);
+	public void logoff(String sessionID, AsyncCallback callback);
 	
 	public void getAdmins(String sessionID, AsyncCallback callback);
 	public void addAdmin(String userName, String sessionID, AsyncCallback callback);
 	public void removeAdmin(String userName, String sessionID, AsyncCallback callback);
 		
-	public void search(String projectID, String search, String sort, int page, String sessionID, AsyncCallback callback );
+	public void search(String projectID, String search, String sort, int page, String filter, String sessionID, AsyncCallback callback );
 	public void getVoter(String _projectid, String voterName, String cookie,
 			AsyncCallback callback);
 		
