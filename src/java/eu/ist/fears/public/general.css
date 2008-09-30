@@ -90,10 +90,58 @@ color: #6d9966;
 width: 100%;
 }
 
+/* *************
+
+CSS da pagina de Listar Projectos:
+
+************* */
+
+.project{
+margin-top:4px;
+}
+
+.projectTitle{
+font-size: 1.5em;
+font-weight: bold;
+text-decoration: none;
+border-bottom: 2px solid #d5e2e9;
+margin-bottom: 0.1em;
+}
+
+.projectTitle a{
+text-decoration: none;
+}
+
+.removeMeta {
+font-size: 0.95em;
+font-weight: normal;
+color: #999;
+text-decoration: none;
+margi-top:1px;
+}
+
+.removeMeta a{
+font-size: 1em;
+text-decoration: underline;
+font-weight: normal;
+color: #999;
+}
+
+.removeConfirm{
+background: #f4f4ec;
+font-size: 1.1em;
+font-weight: normal;
+color: #717166;
+padding: 0.3em;
+}
+
+
+
+
 
 /* *************
 
-CSS da pagina de Projecto:
+CSS da pagina de Listar Sugestoes:
 
 ************* */
    
@@ -273,10 +321,12 @@ text-decoration: none;
 border-bottom: 1px solid #ddc;
 }
 
+
 .gwt-DisclosurePanel-closed .header{
 text-decoration: underline;
 color: #999;
-}
+} 
+
 
 .gwt-DisclosurePanel-open .header{
 text-decoration: underline;
@@ -285,8 +335,9 @@ color: #999;
 
 
 .meta {
-margin: 4px 0 2px 0;
+margin: 0px 0 2px 0;
 font-size: 0.9em;
+font-weight: normal;
 color: #999;
 }
 

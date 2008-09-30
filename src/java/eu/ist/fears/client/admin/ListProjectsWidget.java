@@ -5,6 +5,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
@@ -17,6 +18,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 import eu.ist.fears.client.Fears;
 import eu.ist.fears.client.communication.Communication;
+import eu.ist.fears.client.interfaceweb.ProjectWidget;
 import eu.ist.fears.client.views.ViewProject;
 
 public class ListProjectsWidget extends Composite{
@@ -40,17 +42,15 @@ public class ListProjectsWidget extends Composite{
 
 		init();
 		initWidget(_projPanel);
+		
 
 	}
 
 	private void init(){
 		_projPanel.clear();
-
 	}
 
 	private void displayCreateProject(){
-
-
 		_projPanel.add(new HTML("<br><br><h2>Criar Projecto</h2>"));
 		_projPanel.add(new Label("Nome do Projecto:"));
 		_newProjectName.setText("");
@@ -71,104 +71,96 @@ public class ListProjectsWidget extends Composite{
 		}); 
 	}
 
-	private class ProjectWidget extends Composite{
-
-		VerticalPanel _project; 
-		VerticalPanel _projectContainer;
-		Label _name;
-		Label _projectID;
-		Label _description;
-		Label _nFeatures;
-		Label _alert;
-		HorizontalPanel _info;
-		Button _removeButton;
-		Label _author;
-
-		ProjectWidget(ViewProject p){
-			_name = new Label(p.getName());
-			_projectID = new Label(new Integer(p.getwebID()).toString());
-			_description= new Label(p.getDescription());
-			_nFeatures = new Label(new Integer(p.getNFeatures()).toString());
-			_author = new Label(p.getAuthor());
-
-			_alert = new Label();
-			_removeButton = new Button("Remover Projecto");
-			_removeButton.addClickListener(new RemoveButton());
-			_info=new HorizontalPanel();
-
-			_project = new VerticalPanel();
-			_projectContainer = new VerticalPanel();
-
-			_projectContainer.add(_project);
-			_projectContainer.setStyleName("project");
-
-			_project.add(new Hyperlink("<b>"+_name.getText() + "</b>", true, "Project" + p.getwebID() )); 
-			_project.add(_description);
-			_project.add(new HTML("<br>")); //Line Break
-			_project.add(_info);
-			_project.add(_removeButton);
-			_project.add(_alert);
-
-			HorizontalPanel row = new HorizontalPanel();
-			_info.add(row);
-			row.add(new Label("#"));
-			row.add(_projectID);
-			row.add(new Label("  | Autor:  "));
-			row.add(_author);
-			row.add(new Label("  | N de Feature Requests:  "));
-			row.add(_nFeatures);
-
-			initWidget(_projectContainer);
-		}
-
-
-		private class RemoveButton implements ClickListener{
-
-			public void onClick(Widget sender) {
-				_alert.setText("O Projecto " + _name.getText() + " foi removido.");
-				_com.deleteProject(_name.getText(), Cookies.getCookie("fears"), updateCB);
-			}
-
-		}
-
-	}
-
-
 	public void update(){
 		_com.getProjects(Cookies.getCookie("fears"), getProjectsCB);	
 	}
-
+	
 	protected void updateProjects(ViewProject[] projects) {
 
 		init();
 
 		if(projects==null || projects.length ==0){
 			_projPanel.add(new Label("Nao ha Projectos"));
-		}else {
-			for(int i=0;i< projects.length;i++){
-				_projPanel.add(new ProjectWidget(projects[i]));
-				_projPanel.add(new HTML("<br>")); //Line Break
-			}
 		}
 
+
+		for(int i=0;i< projects.length;i++){
+			_projPanel.add(new ProjectWidgetAdmin(projects[i]));
+			_projPanel.add(new HTML("<br>")); //Line Break
+		}
+		
 		displayCreateProject();
 
 	}
+	
+	public class ProjectWidgetAdmin extends ProjectWidget{
+
+		Button _removeButton;
+		Label _author;
+		DisclosurePanel _removePanel;
+
+		
+		ProjectWidgetAdmin(ViewProject p){
+			super(p);
+			_admin = new HorizontalPanel();
+			_project.add(_admin);
+			_admin.setStyleName("removeMeta");
+			_author = new Label(p.getAuthor());
+			_removeButton = new Button("Sim");
+			_removeButton.addClickListener(new RemoveButton());
+			
+			_admin.add(_author);
+			_admin.add(new HTML("&nbsp;|&nbsp;"));
+			_admin.add(new Hyperlink("Editar","Editar"));
+			_admin.add(new HTML("&nbsp;|&nbsp;"));
+			
+			
+			_removePanel = new DisclosurePanel();
+			_admin.add(_removePanel);
+			_removePanel.setHeader(new Label("Remover"));
+			HorizontalPanel removeExpanded = new HorizontalPanel();
+			removeExpanded.setVerticalAlignment(HorizontalPanel.ALIGN_MIDDLE);
+			removeExpanded.setStyleName("removeConfirm");
+			removeExpanded.add(new Label("Deseja mesmo apagar este projecto?"));
+			removeExpanded.add(_removeButton);
+			Button _noButton = new Button("N&atilde;o");
+			_noButton.addClickListener(new CloseButton());
+			removeExpanded.add(_noButton);
+			_removePanel.setContent(removeExpanded);
+			_admin.add(_removePanel);
+		}
 
 
-	AsyncCallback getProjectsCB = new AsyncCallback() {
+		private class RemoveButton implements ClickListener{
+
+			public void onClick(Widget sender) {
+				_com.deleteProject(_name.getText(), Cookies.getCookie("fears"), updateCB);
+			}
+
+		}
+		
+		private class CloseButton implements ClickListener{
+			public void onClick(Widget sender) {
+				_removePanel.setOpen(false);
+			}
+
+		}
+
+	}
+	
+	AsyncCallback updateCB = new AsyncCallback() {
 		public void onSuccess(Object result){ 
-			updateProjects((ViewProject[]) result);
+			update();	
 		}
 
 		public void onFailure(Throwable caught) {
 			RootPanel.get().add(new Label("Nao foi possivel contactar o servidor."));
 		}
 	};
-
-	AsyncCallback updateCB = new AsyncCallback() {
+	
+	AsyncCallback getProjectsCB = new AsyncCallback() {
 		public void onSuccess(Object result){ 
-			update();	
+			updateProjects((ViewProject[]) result);
 		}
 
 		public void onFailure(Throwable caught) {

@@ -194,7 +194,6 @@ public class Fears implements EntryPoint, HistoryListener  {
 		}	
 
 		String sessionID = Cookies.getCookie("fears");
-		RootPanel.get().add(new Label(sessionID));
 		if(sessionID == null){
 			if(tryToLogin)
 				viewLogin();
