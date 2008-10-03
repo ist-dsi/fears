@@ -15,7 +15,7 @@ import eu.ist.fears.client.DisplayFeatureDetailed.FeatureCB;
 import eu.ist.fears.client.communication.Communication;
 import eu.ist.fears.client.views.ViewFeatureDetailed;
 import eu.ist.fears.client.views.ViewFeatureResume;
-import eu.ist.fears.client.views.ViewUserDetailed;
+import eu.ist.fears.client.views.ViewVoterDetailed;
 
 public class DisplayVoter extends Composite {
 
@@ -43,7 +43,7 @@ public class DisplayVoter extends Composite {
 		_com.getVoter(_projectID, _voterName.getText() , Cookies.getCookie("fears"), new VoterCB());
 	}
 
-	protected void updateVoter(ViewUserDetailed u){
+	protected void updateVoter(ViewVoterDetailed u){
 		_content.clear();
 		Label votedLabel = new HTML("Votou nas Sugest&otilde;es:");
 		votedLabel.setStyleName("UserSubTitle");
@@ -138,7 +138,7 @@ public class DisplayVoter extends Composite {
 
 		public void onSuccess(Object result){ 
 
-			ViewUserDetailed userView = (ViewUserDetailed) result;
+			ViewVoterDetailed userView = (ViewVoterDetailed) result;
 			if(userView==null){
 				_content.clear();
 				_content.add(new Label("O user nao existe."));	

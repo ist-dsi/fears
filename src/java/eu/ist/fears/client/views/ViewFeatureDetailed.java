@@ -11,7 +11,7 @@ public class ViewFeatureDetailed extends ViewFeatureResume implements Serializab
 	private static final long serialVersionUID = -9130167518653434831L;
 	
 	
-	private List<eu.ist.fears.client.views.ViewUserResume> _voters;
+	private List<eu.ist.fears.client.views.ViewVoterResume> _voters;
 	
 	
 	private List<eu.ist.fears.client.views.ViewComment> _comments;
@@ -20,7 +20,7 @@ public class ViewFeatureDetailed extends ViewFeatureResume implements Serializab
 		
 	}
 	
-	public  ViewFeatureDetailed(String projectName, int projectID,  String name, int featureID, String state, boolean userHasvoted, String description, String author,  List<eu.ist.fears.client.views.ViewUserResume> voters, List<eu.ist.fears.client.views.ViewComment> comments) {
+	public  ViewFeatureDetailed(String projectName, int projectID,  String name, int featureID, String state, boolean userHasvoted, String description, String author,  List<eu.ist.fears.client.views.ViewVoterResume> voters, List<eu.ist.fears.client.views.ViewComment> comments) {
 		_projectName = projectName;
 		_projectID = projectID;
 		_name= name;
@@ -40,7 +40,7 @@ public class ViewFeatureDetailed extends ViewFeatureResume implements Serializab
 		return _comments;
 	}
 	
-	public List<eu.ist.fears.client.views.ViewUserResume> getVoters() {
+	public List<eu.ist.fears.client.views.ViewVoterResume> getVoters() {
 		return _voters;
 	}
 

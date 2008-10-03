@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import eu.ist.fears.client.communication.Communication;
-import eu.ist.fears.client.views.ViewUserResume;
+import eu.ist.fears.client.views.ViewVoterResume;
 
 public class Login extends Composite {
 
@@ -74,7 +74,7 @@ public class Login extends Composite {
 		}
 
 		public void onSuccess(Object result){ 
-			ViewUserResume voter = (ViewUserResume) result;
+			ViewVoterResume voter = (ViewVoterResume) result;
 			_f.setCookie(voter.getSessionID(), voter.getName());
 			if(History.getToken().equals("login")){
 				History.back();

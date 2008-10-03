@@ -8,7 +8,8 @@ import pt.ist.dmapl.AccessControlUser;
 import pt.ist.dmapl.UserFinder;
 
 import eu.ist.fears.client.views.ViewFeatureResume;
-import eu.ist.fears.client.views.ViewUserDetailed;
+import eu.ist.fears.client.views.ViewVoterDetailed;
+import eu.ist.fears.client.views.ViewVoterResume;
 
 public class Voter extends Voter_Base implements AccessControlUser {
     
@@ -17,13 +18,17 @@ public class Voter extends Voter_Base implements AccessControlUser {
     }
 
     public void addCreatedFeature(FeatureRequest f){
-        if(! getFeaturesCreated().contains(f))
+        if(!getFeaturesCreated().contains(f)){
             addFeaturesCreated(f);
+            setVotesLeft(getVotesLeft()-1);
+        }
     }
 
     public void addVotedFeature(FeatureRequest f){
-        if(!getFeaturesVoted().contains(f))
+        if(!getFeaturesVoted().contains(f)){
             addFeaturesVoted(f);
+            setVotesLeft(getVotesLeft()-1);
+        }
     }
 
     public List<ViewFeatureResume> getViewFeaturesCreated(){
@@ -57,10 +62,15 @@ public class Voter extends Voter_Base implements AccessControlUser {
 		}
 	}*/
 	
-	public ViewUserDetailed getView(String sessionID){
-    	return new ViewUserDetailed(getUser().getName(), sessionID, getViewFeaturesCreated(), getViewFeaturesVoted());
-    	
+	public ViewVoterDetailed getView(String sessionID){
+    	return new ViewVoterDetailed(getUser().getName(), sessionID, getViewFeaturesCreated(), getViewFeaturesVoted());
     	
     }
 	
+	public ViewVoterResume getCurrentVoterView(String sessionID){
+		return new ViewVoterResume(getUser().getUsername(),sessionID,getVotesLeft(), FearsApp.getFears().isAdmin(getUser()));
+		
+	}
+	
+
 }

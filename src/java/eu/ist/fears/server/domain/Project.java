@@ -19,7 +19,9 @@ public class Project extends Project_Base {
 		setDescription(description);
 		setAuthor(v);
 		setFeaturesIncrementID(0);
+		setInitialVotes(10);
 		addVoter(v);
+		
 	}
 
 
@@ -133,7 +135,10 @@ public class Project extends Project_Base {
 		return ret;
 	}
 
-	
+	public void addVoter(Voter v){
+		v.setVotesLeft(getInitialVotes());
+		super.addVoter(v);
+	}
 	
 	protected class VoteComparator implements Comparator<ViewFeatureResume>{
 

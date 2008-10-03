@@ -4,6 +4,8 @@
     Fears build file.  This is used to package up your project as a jar,
     if you want to distribute it.  This isn't needed for normal operation.
   </description>
+	
+	
 
   <property name="src.dir" location="src"/>
   <property name="src.gen.dir" location="src_gen"/>
@@ -20,6 +22,7 @@
   <property name="dml.fenix.sqltypes" value="${config.dir}/dataTypesJDBCTypes.properties"/>
   <property name="dml.fenix.typeconverters" value="${config.dir}/dataTypeConversors.properties"/>
 
+	<import file="dml-generate.xml"/>
 
   <!-- set classpath -->
   <path id="project.class.path">
@@ -28,31 +31,18 @@
     <!-- Additional dependencies (such as junit) go here -->
   </path>
 
+	
+	<target name="generate-domain" description="Generates the domain classes">
+	   <dml-compile dml="${fears.dml}" java-sources="${java.src.dir}" java-gen="${src.gen.dir}">
+	   	<classpath>
+	   	        <fileset dir="${deploy.lib.dir}">
+	   	        </fileset>
+	   	      </classpath>
+	    <!-- <classpath refid="project.class.path"/> -->
+	   </dml-compile>
+	 </target>
 
-  <target name="generate-domain" description="Generates the domain classes">
-    <mkdir dir="${src.gen.dir}"/>
-    <java classname="dml.DmlCompiler" fork="true">
-      <jvmarg value="-Ddml.fenix.sqltypes=${dml.fenix.sqltypes}"/>
-      <jvmarg value="-Ddml.fenix.typeconverters=${dml.fenix.typeconverters}"/>
-      <arg value="-f"/>
-      <arg value="-d"/>
-      <arg value="${java.src.dir}"/>
-      <arg value="-db"/>
-      <arg value="${src.gen.dir}"/>
-      <!-- <arg value="-gf"/> -->
-      <arg value="-generator"/>
-      <arg value="dml.FenixCodeGeneratorReadFromRs"/>
-      <arg value="${fears.dml}"/>
-      <classpath>
-        <fileset dir="${deploy.lib.dir}">
-          <include name="dml.jar"/>
-          <include name="antlr.jar"/>
-        </fileset>
-      </classpath>
-    </java>
-  </target>
-
-
+  
   <target name="compile" depends="generate-domain" description="Compile src to bin">
     <mkdir dir="${build.dir}"/>
     <javac destdir="${build.dir}" extdirs="${lib.dir}:${deploy.lib.dir}" debug="on" debuglevel="lines,vars,source" target="1.5">

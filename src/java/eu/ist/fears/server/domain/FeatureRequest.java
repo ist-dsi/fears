@@ -6,7 +6,7 @@ import java.util.List;
 import eu.ist.fears.client.views.ViewComment;
 import eu.ist.fears.client.views.ViewFeatureDetailed;
 import eu.ist.fears.client.views.ViewFeatureResume;
-import eu.ist.fears.client.views.ViewUserResume;
+import eu.ist.fears.client.views.ViewVoterResume;
 
 
 public class FeatureRequest extends FeatureRequest_Base {
@@ -66,9 +66,9 @@ public class FeatureRequest extends FeatureRequest_Base {
 		
 		boolean userhasvoted=false;
 		
-		List<ViewUserResume> voters = new ArrayList<ViewUserResume>();
+		List<ViewVoterResume> voters = new ArrayList<ViewVoterResume>();
 		for(Voter v : getVoterSet() ){
-			voters.add(new ViewUserResume(v.getUser().getName(),  null ));
+			voters.add(new ViewVoterResume(v.getUser().getName(),  null ));
 			if(v.equals(user))
 				userhasvoted=true;
 		}
@@ -80,9 +80,9 @@ public class FeatureRequest extends FeatureRequest_Base {
 		
 		boolean userhasvoted=false;
 		
-		List<ViewUserResume> voters = new ArrayList<ViewUserResume>();
+		List<ViewVoterResume> voters = new ArrayList<ViewVoterResume>();
 		for(Voter v : getVoterSet() ){
-			voters.add(new ViewUserResume(v.getUser().getName(),  null ));
+			voters.add(new ViewVoterResume(v.getUser().getName(),  null ));
 			if(v.equals(user))
 				userhasvoted=true;
 		}

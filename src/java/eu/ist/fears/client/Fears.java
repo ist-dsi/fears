@@ -12,9 +12,6 @@ import com.google.gwt.user.client.HistoryListener;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Hyperlink;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -22,7 +19,7 @@ import eu.ist.fears.client.admin.Admin;
 import eu.ist.fears.client.communication.Communication;
 import eu.ist.fears.client.interfaceweb.Header;
 import eu.ist.fears.client.interfaceweb.Path;
-import eu.ist.fears.client.views.ViewUserResume;
+import eu.ist.fears.client.views.ViewVoterResume;
 
 
 /**
@@ -35,11 +32,11 @@ public class Fears implements EntryPoint, HistoryListener  {
 	protected VerticalPanel frameBox;
 	protected VerticalPanel frame;
 	protected VerticalPanel content;
-	protected Header header; 
-	static public  DialogBox  popup;
+	protected static Header header; 
+	protected static DialogBox  popup;
 	protected static Path path;
-	protected static Label userName;
-	protected static boolean validCookie;
+	protected static ViewVoterResume _curretUser;
+	public static boolean validCookie;
 
 
 	/**
@@ -65,8 +62,8 @@ public class Fears implements EntryPoint, HistoryListener  {
 		content = new VerticalPanel();
 		content.setStyleName("width100");
 		path = new Path();
-		userName = new Label("guest");
-		header = new Header(userName.getText(),validCookie, false);
+		_curretUser=new ViewVoterResume("guest","");
+		header = new Header("guest",validCookie, false);
 		RootPanel.get().setStyleName("centered");
 		RootPanel.get().add(header);
 		frameBox.setStyleName("frameBox");
@@ -82,12 +79,29 @@ public class Fears implements EntryPoint, HistoryListener  {
 			return RootPanel.get("Admin") != null;
 	}
 
-	protected void updateUsername(String user){
-		userName.setText(user);
-	}
 	
 	public static Path getPath(){
 		return path;
+	}
+	
+	public static Header getHeader(){
+		return header;
+	}
+	
+	public static void setCurrentUser(ViewVoterResume v){
+		_curretUser=v;
+	}
+	
+	public static boolean isLogedIn(){
+		return validCookie;
+	}
+
+	public static String getUsername(){
+		return _curretUser.getName();
+	}
+	
+	public static int getVotesLeft(){
+		return _curretUser.getVotesLeft();
 	}
 
 	public void listFeatures(String projectName,String filter){
@@ -163,26 +177,20 @@ public class Fears implements EntryPoint, HistoryListener  {
 		validCookie=false;
 		header.update(isAdminPage());
 		_com.logoff(Cookies.getCookie("fears"), null);
-		userName.setText("guest");
+		_curretUser.setName("guest");
 		Cookies.removeCookie("fears");
 		History.back();
 		
 	}
 	
 	
-	public static boolean isLogedIn(){
-		return validCookie;
-	}
-
-	public static String getUsername(){
-		return userName.getText();
-	}
+	
 
 	public void setCookie(String value, String userName){
 		final long DURATION = 1000 * 60 * 60 * 1; //duration remembering login, 1 hour
 		Date expires = new Date(System.currentTimeMillis() + DURATION);
 		Cookies.setCookie("fears", value, expires, null, "/", false);
-		updateUsername(userName);		
+		_curretUser.setName(userName);	
 		validCookie=true;
 	}
 
@@ -243,36 +251,42 @@ public class Fears implements EntryPoint, HistoryListener  {
 	private static void projectParse(String string, Fears f){
 		int parseAt =  string.indexOf('?');
 		int parseB =  string.indexOf("%3F");
-		String projectName;
+		String projectID;
 		String parse;
 
 		//Estamos no Caso: #ProjectXPTO  
 		if(parseAt==-1 && parseB==-1 ){
-			projectName=string;
-			f.listFeatures(projectName,"");
+			projectID=string;
+			/* getCurrentUser, to update Votes*/ 
+			header.update(projectID);
+			f.listFeatures(projectID,"");
 			return;	
 		}
 
+		
 		if(parseAt!=-1){
-			projectName = string.substring(0,parseAt);
+			projectID = string.substring(0,parseAt);
 			parse = string.substring(parseAt+1);
 
 		}else{
-			projectName = string.substring(0,parseB);
+			projectID = string.substring(0,parseB);
 			parse = string.substring(parseB+3);
 		}
 
+		/* getCurrentUser, to update Votes*/ 
+		header.update(projectID);
+		
 		if("listFeatures".equals(parse)){
-			f.listFeatures(projectName,"");	
+			f.listFeatures(projectID,"");	
 		}else if("addFeature".equals(parse)){
-			f.addFeature(projectName);
+			f.addFeature(projectID);
 		}else if(parse.startsWith("viewFeature")){
-			f.viewFeature(projectName, parse.substring("viewFeature".length()));
+			f.viewFeature(projectID, parse.substring("viewFeature".length()));
 		}else if(parse.startsWith("viewUser")){
-			f.viewVoter(projectName, parse.substring("viewUser".length()));
+			f.viewVoter(projectID, parse.substring("viewUser".length()));
 		}
 		else if(parse.startsWith("filter")){
-			f.listFeatures(projectName, parse.substring("filter".length()));
+			f.listFeatures(projectID, parse.substring("filter".length()));
 		}
 
 	}
@@ -287,8 +301,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 		}
 
 		public void onSuccess(Object result){
-			ViewUserResume voter = (ViewUserResume) result;
-			_f.updateUsername(voter.getName());
+			ViewVoterResume voter = (ViewVoterResume) result;
 			validCookie= true;
 			_f.onHistoryChanged(History.getToken());
 		}
@@ -304,5 +317,6 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 		}
 	};
+	
 
 }

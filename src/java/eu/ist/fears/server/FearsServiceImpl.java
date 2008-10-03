@@ -14,8 +14,8 @@ import eu.ist.fears.client.views.ViewAdmins;
 import eu.ist.fears.client.views.ViewFeatureDetailed;
 import eu.ist.fears.client.views.ViewFeatureResume;
 import eu.ist.fears.client.views.ViewProject;
-import eu.ist.fears.client.views.ViewUserDetailed;
-import eu.ist.fears.client.views.ViewUserResume;
+import eu.ist.fears.client.views.ViewVoterDetailed;
+import eu.ist.fears.client.views.ViewVoterResume;
 import eu.ist.fears.server.domain.*;
 import pt.ist.fenixframework.Config;
 import pt.ist.fenixframework.FenixFramework;
@@ -143,21 +143,21 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		FearsApp.getFears().deleteProject(name);
 	}
 
-	public ViewUserResume login(String username, String password ){
+	public ViewVoterResume login(String username, String password ){
 		HttpSession session = this.getThreadLocalRequest().getSession();
 
 		//Fingir que esta tudo bem.
 
 		User temp = FearsApp.getFears().getUser(username);
-		ViewUserResume ret =  new ViewUserResume(temp.getName(),  session.getId());
+		ViewVoterResume ret =  new ViewVoterResume(temp.getName(),  session.getId());
 		session.setAttribute("fears_voter", ret);
 		return ret;
 
 	}
 
-	public ViewUserResume validateSessionID(String sessionID) {
+	public ViewVoterResume validateSessionID(String sessionID) {
 		HttpSession session = this.getThreadLocalRequest().getSession();
-		ViewUserResume temp = (ViewUserResume)session.getAttribute("fears_voter");
+		ViewVoterResume temp = (ViewVoterResume)session.getAttribute("fears_voter");
 		if(temp==null){
 			throw new RuntimeException("Sessao invalida");
 		}
@@ -166,7 +166,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 	public User getUserFromSession(String sessionID){
 		HttpSession session = this.getThreadLocalRequest().getSession();
-		ViewUserResume temp = (ViewUserResume)session.getAttribute("fears_voter");
+		ViewVoterResume temp = (ViewVoterResume)session.getAttribute("fears_voter");
 		if(temp==null)
 			return null;
 		return FearsApp.getFears().getUser(temp.getName());
@@ -229,7 +229,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	}
 
 	@Override
-	public ViewUserDetailed getVoter(String projectid, String voterName,
+	public ViewVoterDetailed getVoter(String projectid, String voterName,
 			String sessionID) {
 		Project p =FearsApp.getFears().getProject(projectid);
 
@@ -243,6 +243,16 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	public void logoff(String sessionID){
 		HttpSession session = this.getThreadLocalRequest().getSession();
 		session.invalidate();
+	}
+
+	
+	public ViewVoterResume getCurrentVoter(String _projectid, String cookie) {
+		Project p =FearsApp.getFears().getProject(_projectid);
+		
+		if(p==null)
+			throw new RuntimeException("Nao existe esse projecto: " + _projectid);
+		
+		return getUserFromSession(cookie).getVoter(p).getCurrentVoterView(cookie);
 	}
 
 }

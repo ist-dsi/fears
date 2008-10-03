@@ -5,7 +5,7 @@ import java.util.List;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 
-public class ViewUserDetailed extends ViewUserResume implements IsSerializable {
+public class ViewVoterDetailed extends ViewVoterResume implements IsSerializable {
 
 
 	
@@ -16,11 +16,11 @@ public class ViewUserDetailed extends ViewUserResume implements IsSerializable {
 	List<ViewFeatureResume> _created;
 	List<ViewFeatureResume> _voted;
 	
-	private ViewUserDetailed(){
+	private ViewVoterDetailed(){
 		
 	}
 	
-	public ViewUserDetailed(String name, String sessionID, List<ViewFeatureResume> created, List<ViewFeatureResume> voted){
+	public ViewVoterDetailed(String name, String sessionID, List<ViewFeatureResume> created, List<ViewFeatureResume> voted){
 		super(name, sessionID);
 		_created=created;
 		_voted=voted;

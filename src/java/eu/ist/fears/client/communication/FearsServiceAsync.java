@@ -27,6 +27,9 @@ public interface FearsServiceAsync {
 	public void search(String projectID, String search, String sort, int page, String filter, String sessionID, AsyncCallback callback );
 	public void getVoter(String _projectid, String voterName, String cookie,
 			AsyncCallback callback);
+	
+	public void getCurrentVoter(String _projectid, String cookie,
+			AsyncCallback callback);
 		
 	
 }

@@ -18,7 +18,7 @@ import eu.ist.fears.client.Fears;
 import eu.ist.fears.client.views.ViewComment;
 import eu.ist.fears.client.views.ViewFeatureDetailed;
 import eu.ist.fears.client.views.ViewFeatureResume;
-import eu.ist.fears.client.views.ViewUserResume;
+import eu.ist.fears.client.views.ViewVoterResume;
 
 public class FeatureDetailedWidget extends FeatureResumeWidget {
 
@@ -102,7 +102,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 			voters.setHeader(new HTML("Ver "+f.getVoters().size() + " votantes &raquo;" ));
 			HorizontalPanel votersExpanded = new HorizontalPanel();
 			int i=0;
-			for(ViewUserResume v :  f.getVoters()){
+			for(ViewVoterResume v :  f.getVoters()){
 				votersExpanded.add(new Hyperlink(v.getName(),"Project"+_projectID+"?"+"viewUser"+v.getName()));
 				if(i!= f.getVoters().size()-1)
 					votersExpanded.add(new HTML(",&nbsp;"));
