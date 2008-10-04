@@ -81,11 +81,16 @@ public class FeatureResumeWidget  extends Composite{
 			if(f.userHasVoted()){
 				_voteButton.setText("Tirar Voto");
 				_voteButton.addClickListener(_removeVote);
+				vote.add(_voteButton);
 			}else {
+				if(Fears.getVotesLeft()<=0);
+				else {
 				_voteButton.setText("Votar");
 				_voteButton.addClickListener(_vote);
+				vote.add(_voteButton);
+				}
 			}
-			vote.add(_voteButton);
+			
 		}
 		
 		HorizontalPanel title = new HorizontalPanel();
@@ -177,6 +182,7 @@ public class FeatureResumeWidget  extends Composite{
 				//Erro
 			} else {
 			FeatureResumeWidget.this.update(feature, false);
+			Fears.getHeader().update(_projectID);
 			}
 		}
 		

@@ -17,19 +17,19 @@ public class Voter extends Voter_Base implements AccessControlUser {
         setUser(user);
     }
 
-    public void addCreatedFeature(FeatureRequest f){
+   /* public void addCreatedFeature(FeatureRequest f){
         if(!getFeaturesCreated().contains(f)){
             addFeaturesCreated(f);
             setVotesLeft(getVotesLeft()-1);
         }
-    }
+    } */
 
-    public void addVotedFeature(FeatureRequest f){
+   /* public void addVotedFeature(FeatureRequest f){
         if(!getFeaturesVoted().contains(f)){
             addFeaturesVoted(f);
             setVotesLeft(getVotesLeft()-1);
         }
-    }
+    }*/
 
     public List<ViewFeatureResume> getViewFeaturesCreated(){
         return FearsApp.getViewFeaturesResumes(getFeaturesCreatedSet(), this);

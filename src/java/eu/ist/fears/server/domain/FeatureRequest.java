@@ -21,6 +21,7 @@ public class FeatureRequest extends FeatureRequest_Base {
     	addVoter(voter);
     	setAuthor(voter);
     	setState(ViewFeatureResume.StateNew);
+    	voter.setVotesLeft(voter.getVotesLeft()-1);
 	}
 	
 	
@@ -39,10 +40,15 @@ public class FeatureRequest extends FeatureRequest_Base {
 		if( hasVoter(voter))
 			return;
 		
+		voter.setVotesLeft(voter.getVotesLeft()-1);
 		addVoter(voter);
 	}
 	
 	public void removeVote(Voter voter){
+		if(!hasVoter(voter))
+			return;
+		
+		voter.setVotesLeft(voter.getVotesLeft()+1);
 		removeVoter(voter);
 	}
 	

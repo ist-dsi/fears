@@ -92,7 +92,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 	public void updateVoters(ViewFeatureDetailed f){
 		_votesAndVoters.clear();
 		if(Fears.isLogedIn()){
-			HTML votes =  new HTML("Tem 5 votos disponiveis.");
+			HTML votes =  new HTML("Tem " + Fears.getVotesLeft() + " votos disponiveis.");
 			votes.setStyleName("votersMeta");
 			_votesAndVoters.add(votes);
 		}

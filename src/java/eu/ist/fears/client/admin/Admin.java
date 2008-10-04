@@ -66,7 +66,7 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 			return;			
 		}
 
-		header.update(true);
+		header.update(false, true);
 		Fears.parseURL(historyToken, this);
 
 	}

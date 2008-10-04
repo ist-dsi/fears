@@ -59,6 +59,7 @@ public class DisplayFeatureDetailed extends Composite {
 				_content.add(new Label("A sugestao nao existe."));	
 			}else {
 				_f.updateFeature(featureView);
+				Fears.getHeader().update(_projectID);
 			}
 
 		}

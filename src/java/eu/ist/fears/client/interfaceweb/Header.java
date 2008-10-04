@@ -15,23 +15,23 @@ import eu.ist.fears.client.communication.Communication;
 import eu.ist.fears.client.views.ViewVoterResume;
 
 public class Header extends Composite {
-	
+
 	protected Hyperlink sessionLink; 
 	protected Label userName;
 	protected HorizontalPanel _headerBox; 
 	protected HTML _adminLink;
 	protected Hyperlink _adminAdministrators;
 	protected Communication _com;
-	protected Label _votes;
-	
+	protected HTML _votes;
+
 	public Header(String username,boolean loggedIn, boolean admin){
 		_com=new Communication("service");
-		_votes= new Label();
+		_votes= new HTML();
 		_headerBox = new HorizontalPanel();
 		_headerBox.setStyleName("headerBox");
 		_adminLink = new HTML("&nbsp;<a href=\"Admin.html\">Admin</a>");
 		_adminAdministrators = new Hyperlink("","");
-		
+
 		HorizontalPanel left = new HorizontalPanel();
 		HorizontalPanel right = new HorizontalPanel();
 		HorizontalPanel header = new HorizontalPanel();
@@ -45,7 +45,7 @@ public class Header extends Composite {
 		header.add(right);
 		left.setStyleName("left");
 		left.add(new HTML("<a href=\"Fears.html\">fears</a> |"));
-		
+
 		left.add(_adminLink);
 		left.add(new HTML("&nbsp;|&nbsp;"));
 		left.add(_adminAdministrators);
@@ -55,25 +55,28 @@ public class Header extends Composite {
 		right.add(userName);
 		right.add(new HTML("&nbsp;|&nbsp;"));
 		right.add(sessionLink);
-		
-		
+
+
 		initWidget(_headerBox);
-		update(admin);
+		update(false, admin);
 	}
-	
-	public void update(boolean adminPage){
-			
+
+	public void update(boolean inProjectPage, boolean adminPage){
+
 		userName.setText(Fears.getUsername());	
+
 		if(!Fears.isLogedIn()){
 			_votes.setText("");
 			sessionLink.setText("Login");
 			sessionLink.setTargetHistoryToken("login");
 		}else{
-			_votes.setText("Tem " + Fears.getVotesLeft() + " votos. | ");
+			if(inProjectPage)
+				_votes.setHTML("Tem " + Fears.getVotesLeft() + " votos. |&nbsp;");
+			else _votes.setText("");
 			sessionLink.setText("Logout");
 			sessionLink.setTargetHistoryToken("logout");
 		}
-		
+
 		if(adminPage){
 			_adminAdministrators.setText("Administradores");
 			_adminAdministrators.setTargetHistoryToken("admins");
@@ -81,13 +84,13 @@ public class Header extends Composite {
 			_adminLink.setHTML("&nbsp;<a href=\"Admin.html\">Admin</a>");
 			_adminAdministrators.setText("");
 		}
-		
+
 	}
-	
+
 	public void update(String projectID){
 		_com.getCurrentVoter(projectID, Cookies.getCookie("fears"), new GetCurrentVoter());
 	}
-	
+
 	protected class GetCurrentVoter implements AsyncCallback{
 
 		public GetCurrentVoter(){
@@ -95,9 +98,16 @@ public class Header extends Composite {
 
 		public void onSuccess(Object result){
 			ViewVoterResume voter = (ViewVoterResume) result;
-			Fears.validCookie= true;
-			Fears.setCurrentUser(voter);
-			Header.this.update(Fears.isAdminPage());
+			if(voter!=null){
+				Fears.validCookie= true;
+				Fears.setCurrentUser(voter);
+				Header.this.update(true, Fears.isAdminPage());
+			}
+			else {
+				Fears.validCookie= false;
+				Fears.setCurrentUser(new ViewVoterResume("guest",""));
+				Header.this.update(false, Fears.isAdminPage());
+			}
 		}
 
 		public void onFailure(Throwable caught) {
@@ -108,6 +118,6 @@ public class Header extends Composite {
 			}
 		}
 	};
-	
-	
+
+
 }

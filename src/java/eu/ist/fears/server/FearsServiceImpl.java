@@ -228,7 +228,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		return p.getName();
 	}
 
-	@Override
+
 	public ViewVoterDetailed getVoter(String projectid, String voterName,
 			String sessionID) {
 		Project p =FearsApp.getFears().getProject(projectid);
@@ -252,7 +252,12 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		if(p==null)
 			throw new RuntimeException("Nao existe esse projecto: " + _projectid);
 		
-		return getUserFromSession(cookie).getVoter(p).getCurrentVoterView(cookie);
+		User u = getUserFromSession(cookie);
+		
+		if(u==null)
+			return null;
+		
+		return u.getVoter(p).getCurrentVoterView(cookie);
 	}
 
 }

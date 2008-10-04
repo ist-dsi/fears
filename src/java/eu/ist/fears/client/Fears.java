@@ -76,7 +76,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 	}
 
 	public static boolean isAdminPage(){
-			return RootPanel.get("Admin") != null;
+			return RootPanel.get("Admin")!= null;
 	}
 
 	
@@ -175,7 +175,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 	public void viewLogout(){
 		
 		validCookie=false;
-		header.update(isAdminPage());
+		header.update(false, isAdminPage());
 		_com.logoff(Cookies.getCookie("fears"), null);
 		_curretUser.setName("guest");
 		Cookies.removeCookie("fears");
@@ -220,7 +220,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 			return;			
 		}
 
-		header.update(false);
+		header.update(false,false);
 		parseURL(historyToken, this);
 	}
 
