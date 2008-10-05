@@ -2,6 +2,8 @@ package eu.ist.fears.client.common.views;
 
 import java.io.Serializable;
 
+import eu.ist.fears.client.common.State;
+
 public class ViewComment implements Serializable {
 
 	/**
@@ -11,13 +13,13 @@ public class ViewComment implements Serializable {
 
 	protected String _comment;
 	protected String _author;
-	protected String _newState;
+	protected State _newState;
 	
 	public ViewComment(){
 		
 	}
 	
-	public ViewComment(String c,String a, String newState ){
+	public ViewComment(String c,String a, State newState ){
 		_comment=c;
 		_author=a;
 		_newState=newState;
@@ -32,7 +34,7 @@ public class ViewComment implements Serializable {
 		
 	}
 	
-	public String getNewState(){
+	public State getNewState(){
 		return _newState;
 		
 	}

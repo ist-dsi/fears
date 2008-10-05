@@ -98,10 +98,8 @@ public class FeatureResumeWidget  extends Composite{
 		Hyperlink link = new Hyperlink(f.getName(),"Project"+_projectID+"?"+"viewFeature"+f.getFeatureID());
 		link.setStyleName("featureTitle");
 		title.add(link);
-		_state = new HTML(f.getState());
-		if(f.getState()==ViewFeatureResume.StateImplement)
-			_state.setStyleName("Implementacao");
-		else _state.setStyleName(f.getState());
+		_state = new HTML(f.getState().getHTML());
+		_state.setStyleName(f.getState().toString());
 		title.add(_state);
 		_mainBox.add(title);
 		
@@ -137,10 +135,8 @@ public class FeatureResumeWidget  extends Composite{
 		}
 		
 		
-		_state.setHTML(f.getState());
-		if(f.getState()=="Em implementa&ccedil;&atilde;o")
-			_state.setStyleName("Implementacao");
-		else _state.setStyleName(f.getState());
+		_state.setHTML(f.getState().getHTML());
+		_state.setStyleName(f.getState().toString());
 		
 		if(updateDescription)
 			_description.setText(f.getDescription());

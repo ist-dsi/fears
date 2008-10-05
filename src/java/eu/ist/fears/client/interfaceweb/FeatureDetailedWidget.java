@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import eu.ist.fears.client.Fears;
+import eu.ist.fears.client.common.State;
 import eu.ist.fears.client.common.views.ViewComment;
 import eu.ist.fears.client.common.views.ViewFeatureDetailed;
 import eu.ist.fears.client.common.views.ViewFeatureResume;
@@ -63,10 +64,10 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 			stateChooser.add(_lb);
 			
 			_lb.addItem("");
-			_lb.addItem(ViewFeatureResume.StateNew);
-			_lb.addItem(ViewFeatureResume.StatePlanned);
-			_lb.addItem("Em implementação", ViewFeatureResume.StateImplement);
-			_lb.addItem(ViewFeatureResume.StateFinish);
+			_lb.addItem(State.Novo.getHTML(), State.Novo.toString());
+			_lb.addItem(State.Planeado.getHTML(), State.Planeado.toString() );
+			_lb.addItem(State.Implementacao.toString(), State.Implementacao.toString());
+			_lb.addItem(State.Completo.getHTML(), State.Completo.toString());
 			
 			_newCommentBox.add(_commentTextArea);
 			_newCommentBox.add(stateChooser);
@@ -162,8 +163,15 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 
 		public void onClick(Widget sender) {
 			//_alert.setText("O teu comentario foi inserido.");
+			//Verify wich State the user has choosen
+			 State state=null;
+			 for(State s : State.values()){
+				 if(s.toString().equals(_lb.getValue(_lb.getSelectedIndex())))
+					 state=s;	 
+			 }
+			
 			_com.addComment(_projectID, _featureID,
-					_commentTextArea.getText(), _lb.getValue(_lb.getSelectedIndex()), Cookies.getCookie("fears"), _cb);
+				_commentTextArea.getText(), state, Cookies.getCookie("fears"), _cb);
 			_commentTextArea.setText("");
 		}
 

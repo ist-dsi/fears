@@ -1,6 +1,8 @@
 
 package eu.ist.fears.server.domain;
 
+enum eu.ist.fears.client.common.State as State;
+
 class FearsApp;
 
 class Project {
@@ -87,10 +89,11 @@ relation ProjectAuthor {
 }
 
 
+
 class FeatureRequest {
     String name;
     String description;
-    String state;
+    State state;
     int webID;
     
 }
@@ -104,7 +107,8 @@ relation ProjectFeatureRequests {
 
 class Comment {	
     String comment;
-    String newState;
+    State newState;
+    State oldState;
 }
 
 relation FeatureRequestComments {

@@ -22,6 +22,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import eu.ist.fears.client.common.State;
 import eu.ist.fears.client.common.communication.Communication;
 import eu.ist.fears.client.common.views.ViewFeatureResume;
 import eu.ist.fears.client.interfaceweb.FeatureResumeWidget;
@@ -137,29 +138,29 @@ public class ListFeatures extends Composite {
 		filtersTab.add(_filterLinks[0]);
 		filtersTab.add(new HTML("&nbsp;&nbsp;|&nbsp;&nbsp;"));
 
-		_filterLinks[1]  = new Hyperlink(ViewFeatureResume.StateNew+"s","Project"+_projectID+"?filter"+ViewFeatureResume.StateNew);
-		if(_actualFilter.equals("Novo"))
+		_filterLinks[1]  = new Hyperlink(State.Novo.getHTML()+"s","Project"+_projectID+"?filter"+State.Novo.toString());
+		if(_actualFilter.equals(State.Novo.toString()))
 			_filterLinks[1] .setStyleName("currentFilter");
 		else _filterLinks[1] .setStyleName("filters");
 		filtersTab.add(_filterLinks[1] );
 		filtersTab.add(new HTML("&nbsp;&nbsp;|&nbsp;&nbsp;"));
 
-		_filterLinks[2] = new Hyperlink(ViewFeatureResume.StatePlanned+"s","Project"+_projectID+"?filter"+ViewFeatureResume.StatePlanned);
-		if(_actualFilter.equals(ViewFeatureResume.StatePlanned))
+		_filterLinks[2] = new Hyperlink(State.Planeado.getHTML()+"s","Project"+_projectID+"?filter"+State.Planeado.toString());
+		if(_actualFilter.equals(State.Planeado.toString()))
 			_filterLinks[2].setStyleName("currentFilter");
 		else _filterLinks[2].setStyleName("filters");
 		filtersTab.add(_filterLinks[2]);
 		filtersTab.add(new HTML("&nbsp;&nbsp;|&nbsp;&nbsp;"));
 
-		_filterLinks[3]  = new Hyperlink(ViewFeatureResume.StateImplement,true,"Project"+_projectID+"?filter"+"Implementacao");
-		if(_actualFilter.equals("Implementacao"))
+		_filterLinks[3]  = new Hyperlink(State.Implementacao.getHTML(),true,"Project"+_projectID+"?filter"+State.Implementacao.toString());
+		if(_actualFilter.equals(State.Implementacao.toString()))
 			_filterLinks[3].setStyleName("currentFilter");
 		else _filterLinks[3].setStyleName("filters");
 		filtersTab.add(_filterLinks[3]);
 		filtersTab.add(new HTML("&nbsp;&nbsp;|&nbsp;&nbsp;"));
 
-		_filterLinks[4]  = new Hyperlink(ViewFeatureResume.StateFinish+"s","Project"+_projectID+"?filter"+ViewFeatureResume.StateFinish);
-		if(_actualFilter.equals(ViewFeatureResume.StateFinish))
+		_filterLinks[4]  = new Hyperlink(State.Completo.getHTML()+"s","Project"+_projectID+"?filter"+State.Completo.toString());
+		if(_actualFilter.equals(State.Completo.toString()))
 			_filterLinks[4] .setStyleName("currentFilter");
 		else _filterLinks[4] .setStyleName("filters");
 		filtersTab.add(_filterLinks[4]);

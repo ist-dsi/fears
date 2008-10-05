@@ -4,6 +4,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
+import eu.ist.fears.client.common.State;
+
 
 public class Communication implements FearsServiceAsync{
 
@@ -41,7 +43,7 @@ public class Communication implements FearsServiceAsync{
 	}
 
 	public void addComment(String projectName, String featureID,
-			String comment,String newState, String sessionID, AsyncCallback callback) {
+			String comment,State newState, String sessionID, AsyncCallback callback) {
 		_service.addComment(projectName, featureID, comment, newState, sessionID, callback);
 	}
 

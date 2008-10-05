@@ -3,6 +3,7 @@ package eu.ist.fears.server.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import eu.ist.fears.client.common.State;
 import eu.ist.fears.client.common.views.ViewComment;
 import eu.ist.fears.client.common.views.ViewFeatureDetailed;
 import eu.ist.fears.client.common.views.ViewFeatureResume;
@@ -20,7 +21,7 @@ public class FeatureRequest extends FeatureRequest_Base {
     	setDescription(description);
     	addVoter(voter);
     	setAuthor(voter);
-    	setState(ViewFeatureResume.StateNew);
+    	setState(State.Novo);
     	voter.setVotesLeft(voter.getVotesLeft()-1);
 	}
 	
@@ -53,7 +54,7 @@ public class FeatureRequest extends FeatureRequest_Base {
 	}
 	
 	
-	public void addComment(String comment, Voter voter, String newState) {
+	public void addComment(String comment, Voter voter, State newState) {
 		addComment(new Comment(comment, voter, newState));
 		
 	}

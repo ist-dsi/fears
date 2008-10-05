@@ -14,6 +14,7 @@ import pt.ist.fenixframework.pstm.Transaction;
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import eu.ist.fears.client.common.State;
 import eu.ist.fears.client.common.communication.FearsService;
 import eu.ist.fears.client.common.views.ViewAdmins;
 import eu.ist.fears.client.common.views.ViewFeatureDetailed;
@@ -115,7 +116,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	}
 
 	public ViewFeatureDetailed addComment(String projectID,
-			String featureName, String comment, String newState, String sessionID) {
+			String featureName, String comment, State newState, String sessionID) {
 		Project p =FearsApp.getFears().getProject(projectID);
 
 		if(p==null)
@@ -125,7 +126,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		if(p.getFeature(featureName)==null)
 			throw new RuntimeException("Nao existe essa sugestao: " + featureName);
 		
-		if(!newState.isEmpty()){
+		if(newState!=null){
 			p.getFeature(featureName).setState(newState);
 		}
 

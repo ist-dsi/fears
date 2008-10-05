@@ -3,6 +3,8 @@ package eu.ist.fears.client.common.views;
 import java.io.Serializable;
 import java.util.List;
 
+import eu.ist.fears.client.common.State;
+
 public class ViewFeatureDetailed extends ViewFeatureResume implements Serializable {
 	
 	/**
@@ -20,7 +22,7 @@ public class ViewFeatureDetailed extends ViewFeatureResume implements Serializab
 		
 	}
 	
-	public  ViewFeatureDetailed(String projectName, int projectID,  String name, int featureID, String state, boolean userHasvoted, String description, String author,  List<ViewVoterResume> voters, List<ViewComment> comments) {
+	public  ViewFeatureDetailed(String projectName, int projectID,  String name, int featureID, State state, boolean userHasvoted, String description, String author,  List<ViewVoterResume> voters, List<ViewComment> comments) {
 		_projectName = projectName;
 		_projectID = projectID;
 		_name= name;

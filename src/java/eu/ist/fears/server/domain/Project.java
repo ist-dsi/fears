@@ -105,12 +105,7 @@ public class Project extends Project_Base {
 	private List<ViewFeatureResume> filter(String filter, Voter v) {
 		List<ViewFeatureResume> ret = new ArrayList<ViewFeatureResume>();
 		
-		if(filter.equals("Implementacao")){
-			for(FeatureRequest f : getFeatureRequestSet()){
-				if(f.getState().equals(ViewFeatureResume.StateImplement))
-					ret.add(f.getResumeView(v));
-			}
-		}else
+		
 		for(FeatureRequest f : getFeatureRequestSet()){
 			if(f.getState().equals(filter))
 				ret.add(f.getResumeView(v));
