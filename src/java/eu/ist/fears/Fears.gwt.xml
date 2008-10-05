@@ -12,5 +12,13 @@
   	<servlet path='/service' class='eu.ist.fears.server.FearsServiceImpl'/>
   	
   	 <stylesheet src="general.css"/>
+  	 
+  	 
+  	 <!-- Add the common dir -->
+  	 <!-- <source path="eu.ist.fears.common" />  -->
+  	 
+  	  
+  	 <!-- Add the common dir -->
+  	  <!-- <source path="eu.ist.fears.client"/> -->
   	 	  
 </module>

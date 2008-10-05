@@ -15,8 +15,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import eu.ist.fears.client.Fears;
-import eu.ist.fears.client.communication.Communication;
-import eu.ist.fears.client.views.ViewAdmins;
+import eu.ist.fears.client.common.communication.Communication;
+import eu.ist.fears.client.common.views.ViewAdmins;
 
 public class ListAdmins  extends Composite {
 	protected Communication _com;

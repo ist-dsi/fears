@@ -5,11 +5,9 @@ import java.util.List;
 
 import pt.ist.dmapl.AccessControlRole;
 import pt.ist.dmapl.AccessControlUser;
-import pt.ist.dmapl.UserFinder;
-
-import eu.ist.fears.client.views.ViewFeatureResume;
-import eu.ist.fears.client.views.ViewVoterDetailed;
-import eu.ist.fears.client.views.ViewVoterResume;
+import eu.ist.fears.client.common.views.ViewFeatureResume;
+import eu.ist.fears.client.common.views.ViewVoterDetailed;
+import eu.ist.fears.client.common.views.ViewVoterResume;
 
 public class Voter extends Voter_Base implements AccessControlUser {
     

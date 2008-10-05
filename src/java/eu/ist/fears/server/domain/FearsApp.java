@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-//import org.apache.tools.ant.taskdefs.FixCRLF.AddAsisRemove;
-
-import eu.ist.fears.client.views.ViewAdmins;
-import eu.ist.fears.client.views.ViewFeatureResume;
-import eu.ist.fears.client.views.ViewProject;
 import pt.ist.fenixframework.pstm.Transaction;
+import eu.ist.fears.client.common.views.ViewAdmins;
+import eu.ist.fears.client.common.views.ViewFeatureResume;
+import eu.ist.fears.client.common.views.ViewProject;
 
 public class FearsApp extends FearsApp_Base {
 

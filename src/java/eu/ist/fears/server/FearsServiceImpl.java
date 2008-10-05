@@ -6,22 +6,25 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.rpc.SerializationException;
-import eu.ist.fears.client.communication.FearsService;
-import eu.ist.fears.client.views.ViewAdmins;
-import eu.ist.fears.client.views.ViewFeatureDetailed;
-import eu.ist.fears.client.views.ViewFeatureResume;
-import eu.ist.fears.client.views.ViewProject;
-import eu.ist.fears.client.views.ViewVoterDetailed;
-import eu.ist.fears.client.views.ViewVoterResume;
-import eu.ist.fears.server.domain.*;
+import pt.ist.dmapl.enforcement.AccessControlSession;
 import pt.ist.fenixframework.Config;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.pstm.Transaction;
-import pt.ist.dmapl.*;
-import pt.ist.dmapl.enforcement.AccessControlSession;
+
+import com.google.gwt.user.client.rpc.SerializationException;
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+import eu.ist.fears.client.common.communication.FearsService;
+import eu.ist.fears.client.common.views.ViewAdmins;
+import eu.ist.fears.client.common.views.ViewFeatureDetailed;
+import eu.ist.fears.client.common.views.ViewFeatureResume;
+import eu.ist.fears.client.common.views.ViewProject;
+import eu.ist.fears.client.common.views.ViewVoterDetailed;
+import eu.ist.fears.client.common.views.ViewVoterResume;
+import eu.ist.fears.server.domain.FearsApp;
+import eu.ist.fears.server.domain.FeatureRequest;
+import eu.ist.fears.server.domain.Project;
+import eu.ist.fears.server.domain.User;
 
 public class FearsServiceImpl extends RemoteServiceServlet implements FearsService {
 

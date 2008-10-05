@@ -4,22 +4,21 @@ package eu.ist.fears.client;
 import java.util.Date;
 
 import com.google.gwt.core.client.EntryPoint;
-
-
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 import eu.ist.fears.client.admin.Admin;
-import eu.ist.fears.client.communication.Communication;
+import eu.ist.fears.client.common.communication.Communication;
+import eu.ist.fears.client.common.views.ViewVoterResume;
 import eu.ist.fears.client.interfaceweb.Header;
 import eu.ist.fears.client.interfaceweb.Path;
-import eu.ist.fears.client.views.ViewVoterResume;
+
 
 
 /**
@@ -310,7 +309,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 			try {
 				throw caught;
 			} catch (Throwable e) {
-				//RootPanel.get().add(new Label("A sessao não é valida."));
+				//RootPanel.get().add(new Label("A sessao nao e valida."));
 			}
 			if(_trytoLogin)
 				viewLogin();

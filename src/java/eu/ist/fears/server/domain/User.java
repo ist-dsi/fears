@@ -1,6 +1,5 @@
 package eu.ist.fears.server.domain;
 
-import eu.ist.fears.client.views.ViewVoterDetailed;
 
 public class User extends User_Base {
     

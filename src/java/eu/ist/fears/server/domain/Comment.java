@@ -1,6 +1,6 @@
 package eu.ist.fears.server.domain;
 
-import eu.ist.fears.client.views.ViewComment;
+import eu.ist.fears.client.common.views.ViewComment;
 
 public class Comment extends Comment_Base {
     

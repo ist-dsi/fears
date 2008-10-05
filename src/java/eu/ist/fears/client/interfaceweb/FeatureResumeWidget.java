@@ -13,10 +13,11 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+
 import eu.ist.fears.client.Fears;
-import eu.ist.fears.client.communication.Communication;
-import eu.ist.fears.client.views.ViewFeatureDetailed;
-import eu.ist.fears.client.views.ViewFeatureResume;
+import eu.ist.fears.client.common.communication.Communication;
+import eu.ist.fears.client.common.views.ViewFeatureDetailed;
+import eu.ist.fears.client.common.views.ViewFeatureResume;
 
 public class FeatureResumeWidget  extends Composite{
 

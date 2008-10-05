@@ -2,7 +2,7 @@ package eu.ist.fears.client;
 
 
 import java.util.List;
-import java.lang.Character;
+
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -17,13 +17,14 @@ import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PushButton;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import eu.ist.fears.client.communication.Communication;
+
+import eu.ist.fears.client.common.communication.Communication;
+import eu.ist.fears.client.common.views.ViewFeatureResume;
 import eu.ist.fears.client.interfaceweb.FeatureResumeWidget;
-import eu.ist.fears.client.views.ViewFeatureResume;
 
 
 public class ListFeatures extends Composite {

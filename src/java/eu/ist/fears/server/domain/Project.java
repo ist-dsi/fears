@@ -6,7 +6,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.StringTokenizer;
-import eu.ist.fears.client.views.ViewFeatureResume;
+
+import eu.ist.fears.client.common.views.ViewFeatureResume;
 
 
 public class Project extends Project_Base {

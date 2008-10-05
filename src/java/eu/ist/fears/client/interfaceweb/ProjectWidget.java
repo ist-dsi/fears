@@ -8,7 +8,8 @@ import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import eu.ist.fears.client.views.ViewProject;
+import eu.ist.fears.client.common.views.ViewProject;
+
 
 public class ProjectWidget extends Composite{
 

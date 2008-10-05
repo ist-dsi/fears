@@ -17,9 +17,9 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import eu.ist.fears.client.Fears;
-import eu.ist.fears.client.communication.Communication;
+import eu.ist.fears.client.common.communication.Communication;
+import eu.ist.fears.client.common.views.ViewProject;
 import eu.ist.fears.client.interfaceweb.ProjectWidget;
-import eu.ist.fears.client.views.ViewProject;
 
 public class ListProjectsWidget extends Composite{
 

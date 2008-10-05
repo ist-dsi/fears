@@ -11,8 +11,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import eu.ist.fears.client.Fears;
-import eu.ist.fears.client.communication.Communication;
-import eu.ist.fears.client.views.ViewVoterResume;
+import eu.ist.fears.client.common.communication.Communication;
+import eu.ist.fears.client.common.views.ViewVoterResume;
 
 public class Header extends Composite {
 
