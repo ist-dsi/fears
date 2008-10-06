@@ -22,7 +22,7 @@ public class ViewFeatureDetailed extends ViewFeatureResume implements Serializab
 		
 	}
 	
-	public  ViewFeatureDetailed(String projectName, int projectID,  String name, int featureID, State state, boolean userHasvoted, String description, String author,  List<ViewVoterResume> voters, List<ViewComment> comments) {
+	public  ViewFeatureDetailed(String projectName, int projectID,  String name, int featureID, State state, boolean userHasvoted, String description, String author, String date,  List<ViewVoterResume> voters, List<ViewComment> comments) {
 		_projectName = projectName;
 		_projectID = projectID;
 		_name= name;
@@ -35,6 +35,7 @@ public class ViewFeatureDetailed extends ViewFeatureResume implements Serializab
 		_comments= comments;
 		_voters=voters;
 		_author = author;
+		_date=date;
 		
 	}	
 	

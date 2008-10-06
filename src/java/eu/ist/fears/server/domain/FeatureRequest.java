@@ -3,6 +3,10 @@ package eu.ist.fears.server.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+
+import eu.ist.fears.client.common.DateFormat;
 import eu.ist.fears.client.common.State;
 import eu.ist.fears.client.common.views.ViewComment;
 import eu.ist.fears.client.common.views.ViewFeatureDetailed;
@@ -23,6 +27,7 @@ public class FeatureRequest extends FeatureRequest_Base {
     	setAuthor(voter);
     	setState(State.Novo);
     	voter.setVotesLeft(voter.getVotesLeft()-1);
+    	setCreatedTime(new DateTime());
 	}
 	
 	
@@ -79,7 +84,7 @@ public class FeatureRequest extends FeatureRequest_Base {
 			if(v.equals(user))
 				userhasvoted=true;
 		}
-		return new ViewFeatureDetailed(getProject().getName(), getProject().getIdInternal(), getName(), getWebID(), getState() ,userhasvoted ,  getDescription(), getAuthorName(), voters , comments );
+		return new ViewFeatureDetailed(getProject().getName(), getProject().getIdInternal(), getName(), getWebID(), getState() ,userhasvoted ,  getDescription(), getAuthorName(), getCreatedTime().toString(DateTimeFormat.forPattern(DateFormat.DEFAULT_FORMAT))  ,voters , comments );
 	}
 	
 	public ViewFeatureResume getResumeView(Voter user) {
@@ -93,7 +98,7 @@ public class FeatureRequest extends FeatureRequest_Base {
 			if(v.equals(user))
 				userhasvoted=true;
 		}
-		return new ViewFeatureResume(getProject().getName(), getProject().getIdInternal(), getName(), getWebID(), getState(), userhasvoted ,  getDescription(), getVoterCount(), getCommentCount(), getAuthorName());
+		return new ViewFeatureResume(getProject().getName(), getProject().getIdInternal(), getName(), getWebID(), getState(), userhasvoted ,  getDescription(), getVoterCount(), getCommentCount(), getAuthorName(), getCreatedTime().toString(DateTimeFormat.forPattern(DateFormat.DEFAULT_FORMAT)) );
 	}
 
     

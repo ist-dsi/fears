@@ -139,6 +139,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 				header.setStyleName("commentItem");
 				text.add(new HTML("Por:&nbsp;"));
 				text.add(new Hyperlink(((ViewComment)f.getComments().get(i)).getAuthor(),"Project"+_projectID+"?"+"viewUser"+((ViewComment)f.getComments().get(i)).getAuthor()));
+				text.add(new HTML("&nbsp; em:&nbsp;" + f.getCreatedDate()));
 				text.setStyleName("meta");
 				Label commentText = new Label(((ViewComment)f.getComments().get(i)).getComment());
 				commentText.setStyleName("commentItem");

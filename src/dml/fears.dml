@@ -95,7 +95,7 @@ class FeatureRequest {
     String description;
     State state;
     int webID;
-    
+    DateTime createdTime;
 }
 
 relation ProjectFeatureRequests {
@@ -109,6 +109,7 @@ class Comment {
     String comment;
     State newState;
     State oldState;
+    DateTime createdTime;
 }
 
 relation FeatureRequestComments {

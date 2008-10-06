@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.joda.time.format.DateTimeFormat;
+
 import pt.ist.fenixframework.pstm.Transaction;
+import eu.ist.fears.client.common.DateFormat;
 import eu.ist.fears.client.common.views.ViewAdmins;
 import eu.ist.fears.client.common.views.ViewFeatureResume;
 import eu.ist.fears.client.common.views.ViewProject;
@@ -104,7 +107,7 @@ public class FearsApp extends FearsApp_Base {
 					userHasvoted=true;
 			}
 			res.add(new ViewFeatureResume(f.getProject().getName(), f.getProject().getIdInternal(), f.getName(), f.getWebID() , f.getState(), userHasvoted , f.getDescription(),
-					f.getVotes(), f.getNComments(), f.getAuthor().getUser().getName() ));
+					f.getVotes(), f.getNComments(), f.getAuthor().getUser().getName(), f.getCreatedTime().toString(DateTimeFormat.forPattern(DateFormat.DEFAULT_FORMAT)) ));
 		}
 
 		return res;
