@@ -107,7 +107,7 @@ public class Project extends Project_Base {
 		
 		
 		for(FeatureRequest f : getFeatureRequestSet()){
-			if(f.getState().equals(filter))
+			if(f.getState().toString().equals(filter))
 				ret.add(f.getResumeView(v));
 		}
 		

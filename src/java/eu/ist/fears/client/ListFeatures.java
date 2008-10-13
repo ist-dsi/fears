@@ -91,7 +91,7 @@ public class ListFeatures extends Composite {
 					for(int i=1;i<_filterLinks.length;i++ )
 						_filterLinks[i].setStyleName("filters");
 					_filterLinks[0].setStyleName("currentFilter");
-					
+
 					History.newItem("Project"+_projectID, false);
 					_com.search(_projectID, sBox.getText(), lb.getItemText(lb.getSelectedIndex()), 0,"" ,Cookies.getCookie("Fears"), getFeaturesCB);
 				}
@@ -111,7 +111,7 @@ public class ListFeatures extends Composite {
 				for(int i=1;i<_filterLinks.length;i++ )
 					_filterLinks[i].setStyleName("filters");
 				_filterLinks[0].setStyleName("currentFilter");
-				
+
 				History.newItem("Project"+_projectID, false);
 				_com.search(_projectID, sBox.getText(), lb.getItemText(lb.getSelectedIndex()), 0, "",  Cookies.getCookie("Fears"), getFeaturesCB);
 			}
@@ -138,33 +138,28 @@ public class ListFeatures extends Composite {
 		filtersTab.add(_filterLinks[0]);
 		filtersTab.add(new HTML("&nbsp;&nbsp;|&nbsp;&nbsp;"));
 
-		_filterLinks[1]  = new Hyperlink(State.Novo.getHTML()+"s","Project"+_projectID+"?filter"+State.Novo.toString());
-		if(_actualFilter.equals(State.Novo.toString()))
-			_filterLinks[1] .setStyleName("currentFilter");
-		else _filterLinks[1] .setStyleName("filters");
-		filtersTab.add(_filterLinks[1] );
-		filtersTab.add(new HTML("&nbsp;&nbsp;|&nbsp;&nbsp;"));
+		int i=1;
+		for(State s: State.values()){
+			if(!s.toString().equals(State.Implementacao.toString())){
+				_filterLinks[i]  = new Hyperlink(s.getHTML()+"s","Project"+_projectID+"?filter"+s.toString());
+				if(_actualFilter.equals(s.toString()))
+					_filterLinks[i] .setStyleName("currentFilter");
+				else _filterLinks[i] .setStyleName("filters");		
+				filtersTab.add(_filterLinks[i]);
+			}else {
+				_filterLinks[i]  = new Hyperlink(State.Implementacao.getHTML(),true,"Project"+_projectID+"?filter"+State.Implementacao.toString());
+				if(_actualFilter.equals(State.Implementacao.toString()))
+					_filterLinks[i].setStyleName("currentFilter");
+				else _filterLinks[i].setStyleName("filters");
+				filtersTab.add(_filterLinks[i]);
+			}
+			
+			if(i!=4)
+				filtersTab.add(new HTML("&nbsp;&nbsp;|&nbsp;&nbsp;"));			
 
-		_filterLinks[2] = new Hyperlink(State.Planeado.getHTML()+"s","Project"+_projectID+"?filter"+State.Planeado.toString());
-		if(_actualFilter.equals(State.Planeado.toString()))
-			_filterLinks[2].setStyleName("currentFilter");
-		else _filterLinks[2].setStyleName("filters");
-		filtersTab.add(_filterLinks[2]);
-		filtersTab.add(new HTML("&nbsp;&nbsp;|&nbsp;&nbsp;"));
-
-		_filterLinks[3]  = new Hyperlink(State.Implementacao.getHTML(),true,"Project"+_projectID+"?filter"+State.Implementacao.toString());
-		if(_actualFilter.equals(State.Implementacao.toString()))
-			_filterLinks[3].setStyleName("currentFilter");
-		else _filterLinks[3].setStyleName("filters");
-		filtersTab.add(_filterLinks[3]);
-		filtersTab.add(new HTML("&nbsp;&nbsp;|&nbsp;&nbsp;"));
-
-		_filterLinks[4]  = new Hyperlink(State.Completo.getHTML()+"s","Project"+_projectID+"?filter"+State.Completo.toString());
-		if(_actualFilter.equals(State.Completo.toString()))
-			_filterLinks[4] .setStyleName("currentFilter");
-		else _filterLinks[4] .setStyleName("filters");
-		filtersTab.add(_filterLinks[4]);
-
+		i++;
+		}
+	
 		_filter.add(filtersTab);
 		_filter.setHorizontalAlignment(HorizontalPanel.ALIGN_RIGHT);
 

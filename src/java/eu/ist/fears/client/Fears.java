@@ -10,6 +10,7 @@ import com.google.gwt.user.client.HistoryListener;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -130,7 +131,6 @@ public class Fears implements EntryPoint, HistoryListener  {
 		content.clear();
 
 		verifyLogin(false);
-
 
 		content.add(new DisplayFeatureDetailed(projectName, featureID));
 	}
@@ -302,6 +302,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 		public void onSuccess(Object result){
 			ViewVoterResume voter = (ViewVoterResume) result;
 			validCookie= true;
+			setCurrentUser(voter); //TODO: Acrescentado recentemente, ver efeitos...
 			_f.onHistoryChanged(History.getToken());
 		}
 

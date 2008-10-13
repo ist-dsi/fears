@@ -1,10 +1,14 @@
 TODO:
 -> Verifcaçoes de segurança no serviço. (Usar TFC do G. Dumiense)
 -> Login CAS. (Pagina de Login +  Guardar Estado).
--> Datas e resto do modelo de dominio. (Esperar por Fenix Framework).
 -> Administrador de Projecto.
--> Funcionalidades de Admin (Ja se pode acrescentar e remover admins, e alterar estados das sugoestes).
--> Verificações de segurança e Erros na Interface.
+-> Verificações de segurança e Erros na Interface. (principalmente de admin).
+-> Paginação na pagina de listar sugestoes.
+-> Editar Projectos.
+
+BUGS:
+-> Bug de quando se faz login, não aparecer link para votar. (informação do voter não é actualizada).
+-> Actualizar estados disponiveis na listbox quando se faz comentario com mudança de estado. 
 
 WebDesigner:
  -> Na pagina da sugestao falta: ranking.

@@ -19,7 +19,6 @@ import eu.ist.fears.client.Fears;
 import eu.ist.fears.client.common.State;
 import eu.ist.fears.client.common.views.ViewComment;
 import eu.ist.fears.client.common.views.ViewFeatureDetailed;
-import eu.ist.fears.client.common.views.ViewFeatureResume;
 import eu.ist.fears.client.common.views.ViewVoterResume;
 
 public class FeatureDetailedWidget extends FeatureResumeWidget {
@@ -64,10 +63,11 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 			stateChooser.add(_lb);
 			
 			_lb.addItem("");
-			_lb.addItem(State.Novo.getHTML(), State.Novo.toString());
-			_lb.addItem(State.Planeado.getHTML(), State.Planeado.toString() );
-			_lb.addItem(State.Implementacao.toString(), State.Implementacao.toString());
-			_lb.addItem(State.Completo.getHTML(), State.Completo.toString());
+			for(State s : State.values()){
+				if(!s.toString().equals(f.getState().toString())){
+					_lb.addItem(s.getListBoxHTML(), s.toString());
+				}
+			}
 			
 			_newCommentBox.add(_commentTextArea);
 			_newCommentBox.add(stateChooser);
@@ -132,16 +132,22 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 		_comments.add(commentTitle);
 
 		if(f.getComments().size()>0){
-			for(int i=0; i<f.getComments().size();i++){
+			ViewComment actual;
+			for(int i=f.getComments().size()-1; i>=0;i--){
+				actual=(ViewComment)f.getComments().get(i);
 				header= new HorizontalPanel();
 				HorizontalPanel text = new HorizontalPanel();
 				header.add(text);
 				header.setStyleName("commentItem");
 				text.add(new HTML("Por:&nbsp;"));
-				text.add(new Hyperlink(((ViewComment)f.getComments().get(i)).getAuthor(),"Project"+_projectID+"?"+"viewUser"+((ViewComment)f.getComments().get(i)).getAuthor()));
-				text.add(new HTML("&nbsp; em:&nbsp;" + f.getCreatedDate()));
+				text.add(new Hyperlink(actual.getAuthor(),"Project"+_projectID+"?"+"viewUser"+((ViewComment)f.getComments().get(i)).getAuthor()));
+				text.add(new HTML("&nbsp; em:&nbsp;" + actual.getCreatedDate()));
+				if(actual.getNewState()!=null){
+					text.add(new HTML("&nbsp;|&nbsp;Estado mudou de&nbsp;"+ actual.getOldState().getHTML()+"&nbsp;para&nbsp;" + actual.getNewState().getHTML()));
+				}
+					
 				text.setStyleName("meta");
-				Label commentText = new Label(((ViewComment)f.getComments().get(i)).getComment());
+				Label commentText = new Label(actual.getComment());
 				commentText.setStyleName("commentItem");
 				comment = new VerticalPanel();
 				comment.setWidth("100%");

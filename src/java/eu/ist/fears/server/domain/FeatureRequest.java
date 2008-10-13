@@ -60,7 +60,7 @@ public class FeatureRequest extends FeatureRequest_Base {
 	
 	
 	public void addComment(String comment, Voter voter, State newState) {
-		addComment(new Comment(comment, voter, newState));
+		addComment(new Comment(comment, voter, newState, getState()));
 		
 	}
 

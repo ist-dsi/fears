@@ -1,6 +1,5 @@
 package eu.ist.fears.client.common.views;
 
-import java.io.Serializable;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 

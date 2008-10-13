@@ -1,9 +1,11 @@
 package eu.ist.fears.client;
 
+
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import eu.ist.fears.client.common.communication.Communication;
@@ -36,11 +38,15 @@ public class DisplayFeatureDetailed extends Composite {
 	
 	public void updateFeature(ViewFeatureDetailed view){
 		if(_feature==null){
+			Fears.getHeader().update(_projectID);
 			_feature= new FeatureDetailedWidget(view, new FeatureCB(DisplayFeatureDetailed.this));
 			_feature.setStylePrimaryName("featureDetailed");
 			_content.add(_feature);
+			
 		}
-		else _feature.update(view);
+		else {
+			_feature.update(view);
+		}
 		
 		Fears.getPath().setFeature(view.getProjectName(),new Integer(view.getProjectID()).toString(), "Sugest&atilde;o");
 	}

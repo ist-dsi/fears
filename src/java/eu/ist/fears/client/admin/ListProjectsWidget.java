@@ -116,16 +116,21 @@ public class ListProjectsWidget extends Composite{
 			
 			
 			_removePanel = new DisclosurePanel();
-			_admin.add(_removePanel);
 			_removePanel.setHeader(new Label("Remover"));
+			
 			HorizontalPanel removeExpanded = new HorizontalPanel();
 			removeExpanded.setVerticalAlignment(HorizontalPanel.ALIGN_MIDDLE);
 			removeExpanded.setStyleName("removeConfirm");
-			removeExpanded.add(new Label("Deseja mesmo apagar este projecto?"));
+			if(p.getNFeatures()==0){
+				removeExpanded.add(new Label("Deseja mesmo apagar este projecto?"));
 			removeExpanded.add(_removeButton);
 			Button _noButton = new Button("N&atilde;o");
 			_noButton.addClickListener(new CloseButton());
 			removeExpanded.add(_noButton);
+			}else {
+				removeExpanded.add(new HTML("N&atilde;o pode apagar projectos com sugest&otilde;es."));
+			}
+			
 			_removePanel.setContent(removeExpanded);
 			_admin.add(_removePanel);
 		}

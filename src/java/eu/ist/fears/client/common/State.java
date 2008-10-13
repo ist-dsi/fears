@@ -17,5 +17,11 @@ public enum State {
     public String getHTML(){
     	return _html;
     }
+    
+    public String getListBoxHTML(){
+    	if(!this.toString().equals(State.Implementacao.toString()))
+    		return _html;
+    	else return State.Implementacao.toString();
+    }
 	
 }
