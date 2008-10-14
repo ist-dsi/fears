@@ -8,7 +8,7 @@ TODO:
 
 BUGS:
 -> Bug de quando se faz login, não aparecer link para votar. (informação do voter não é actualizada).
--> Actualizar estados disponiveis na listbox quando se faz comentario com mudança de estado. 
+
 
 WebDesigner:
  -> Na pagina da sugestao falta: ranking.

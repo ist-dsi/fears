@@ -124,7 +124,7 @@ public class FeatureResumeWidget  extends Composite{
 		return _featureID;
 	}
 
-	public void update(ViewFeatureResume f, boolean updateDescription){
+	public void update(ViewFeatureDetailed f, boolean updateDescription){
 
 		_voteButton.removeClickListener(_removeVote);
 		_voteButton.removeClickListener(_vote);
@@ -145,8 +145,7 @@ public class FeatureResumeWidget  extends Composite{
 
 		_votes.setText(new Integer(f.getVotes()).toString());
 		_author=f.getAuthor();
-
-
+		
 		_ncomments.setText(new Integer(f.getNComments()).toString());
 
 	}

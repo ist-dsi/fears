@@ -18,7 +18,7 @@ public class Project extends Project_Base {
 		setName(name);
 		Voter v =new Voter(user);
 		setDescription(description);
-		setAuthor(v);
+		setAuthor(user);
 		setFeaturesIncrementID(0);
 		setInitialVotes(10);
 		addVoter(v);
@@ -27,7 +27,7 @@ public class Project extends Project_Base {
 
 
 	public String getAuthorName() {
-		return getAuthor().getUser().getName();
+		return getAuthor().getName();
 	}
 
 	public FeatureRequest getFeature(String featureID){

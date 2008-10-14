@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PushButton;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -19,6 +20,7 @@ import eu.ist.fears.client.Fears;
 import eu.ist.fears.client.common.State;
 import eu.ist.fears.client.common.views.ViewComment;
 import eu.ist.fears.client.common.views.ViewFeatureDetailed;
+import eu.ist.fears.client.common.views.ViewFeatureResume;
 import eu.ist.fears.client.common.views.ViewVoterResume;
 
 public class FeatureDetailedWidget extends FeatureResumeWidget {
@@ -42,7 +44,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 		_commentTextArea= new TextArea();
 		_commentTextArea.setStyleName("commentTextArea");
 		_lb=new ListBox();
-		
+
 		_commentButton = new PushButton(new Image("button03.gif",0,0,105,32), new Image("button03.gif",-2,-2,105,32));
 		_commentButton.setStyleName("commentButton");
 		_comments.setStyleName("width100");
@@ -52,30 +54,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 
 		_newCommentBox.setStyleName("newComment");
 
-		if(Fears.isLogedIn()){
-			//TODO: See if it is Admin...
-			HorizontalPanel stateChooser = new HorizontalPanel();
-			Label stateLabel =new Label("Mudar Estado:");
-			stateLabel.setStyleName("commentTextArea");
-			stateChooser.add(stateLabel);
-			_lb.setStyleName("commentStateChooser");
-			
-			stateChooser.add(_lb);
-			
-			_lb.addItem("");
-			for(State s : State.values()){
-				if(!s.toString().equals(f.getState().toString())){
-					_lb.addItem(s.getListBoxHTML(), s.toString());
-				}
-			}
-			
-			_newCommentBox.add(_commentTextArea);
-			_newCommentBox.add(stateChooser);
-			_newCommentBox.add(_commentButton);
-			
-			
-			
-		}
+		updateStateChooser(f);
 
 		_commentButton.addClickListener(new CommentButton());
 		_commentTextArea.setVisibleLines(5);
@@ -87,9 +66,38 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 
 	public void update(ViewFeatureDetailed f){
 		super.update(f,true);
+		updateStateChooser(f);
 		updateVoters(f);
 		updateComments(f);
 	}
+	
+
+	public void updateStateChooser(ViewFeatureDetailed f){
+		_newCommentBox.clear();
+		if(Fears.isLogedIn()){
+			//TODO: See if it is Admin...
+			HorizontalPanel stateChooser = new HorizontalPanel();
+			Label stateLabel =new Label("Mudar Estado:");
+			stateLabel.setStyleName("commentTextArea");
+			stateChooser.add(stateLabel);
+			_lb.setStyleName("commentStateChooser");
+			
+			stateChooser.add(_lb);
+			
+			_lb.clear();
+
+			_lb.addItem("");
+			for(State s : State.values()){
+				if(!s.toString().equals(f.getState().toString())){
+					_lb.addItem(s.getListBoxHTML(), s.toString());
+				}
+			}
+			_newCommentBox.add(_commentTextArea);
+			_newCommentBox.add(stateChooser);
+			_newCommentBox.add(_commentButton);
+		}
+	}
+
 
 	public void updateVoters(ViewFeatureDetailed f){
 		_votesAndVoters.clear();
@@ -98,7 +106,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 			votes.setStyleName("votersMeta");
 			_votesAndVoters.add(votes);
 		}
-		
+
 		if(f.getVoters()!=null && f.getVoters().size()>0){
 			DisclosurePanel voters = new DisclosurePanel();
 			voters.setHeader(new HTML("Ver "+f.getVoters().size() + " votantes &raquo;" ));
@@ -116,7 +124,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 
 		}else { HTML none = new HTML("Nao h&aacute; vontantes.");
 		none.setStyleName("votersMeta");
-			_votesAndVoters.add(none); 
+		_votesAndVoters.add(none); 
 		}
 
 
@@ -145,7 +153,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 				if(actual.getNewState()!=null){
 					text.add(new HTML("&nbsp;|&nbsp;Estado mudou de&nbsp;"+ actual.getOldState().getHTML()+"&nbsp;para&nbsp;" + actual.getNewState().getHTML()));
 				}
-					
+
 				text.setStyleName("meta");
 				Label commentText = new Label(actual.getComment());
 				commentText.setStyleName("commentItem");
@@ -169,16 +177,15 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 	private class CommentButton implements ClickListener{
 
 		public void onClick(Widget sender) {
-			//_alert.setText("O teu comentario foi inserido.");
 			//Verify wich State the user has choosen
-			 State state=null;
-			 for(State s : State.values()){
-				 if(s.toString().equals(_lb.getValue(_lb.getSelectedIndex())))
-					 state=s;	 
-			 }
-			
+			State state=null;
+			for(State s : State.values()){
+				if(s.toString().equals(_lb.getValue(_lb.getSelectedIndex())))
+					state=s;	 
+			}
+
 			_com.addComment(_projectID, _featureID,
-				_commentTextArea.getText(), state, Cookies.getCookie("fears"), _cb);
+					_commentTextArea.getText(), state, Cookies.getCookie("fears"), _cb);
 			_commentTextArea.setText("");
 		}
 

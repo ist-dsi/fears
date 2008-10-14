@@ -85,7 +85,7 @@ public class FearsApp extends FearsApp_Base {
 		
 		int i=0;
 		for(Project p : getProjectSet()){
-			res[i]=new ViewProject(p.getName(), p.getIdInternal(),  p.getDescription(), p.getNFeatures(), p.getAuthor().getUser().getName(), 5);
+			res[i]=new ViewProject(p.getName(), p.getIdInternal(),  p.getDescription(), p.getNFeatures(), p.getAuthor().getName(), 5);
 			i++;
 		}
 
