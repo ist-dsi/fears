@@ -1,12 +1,25 @@
 TODO:
--> Verifcaçoes de segurança no serviço. (Usar TFC do G. Dumiense)
--> Login CAS. (Pagina de Login +  Guardar Estado).
--> Administrador de Projecto.
--> Verificações de segurança e Erros na Interface. (principalmente de admin).
--> Paginação na pagina de listar sugestoes.
--> Editar Projectos.
+-> Verifcaçoes de segurança no serviço. (Usar TFC do G. Dumiense)[ Fazer 1º manual]
 
+-> Verificações de consistencia de dominio, no servidor.
+	- Nº de votos é sempre positivo.
+	- se utilizador nao tiver votos, criar sugestao sem votar.
+	
+-> Login CAS.
+
+-> Administrador de Projecto.
+
+-> Verificações de segurança e Erros na Interface. (principalmente de admin):
+	- Tratar criação de projectos, sugestões e comentários vazios.
+	- Tratar excepções quando nao existe o projecto, user ou sugestao.
+	- Verificar que as interfaces so aparecem a admins.
+	- Mostrar erro se voto nao for contabilizado.
+	
+-> Paginação na pagina de listar sugestoes.
+
+-> Editar Projectos.
 
 
 WebDesigner:
  -> Na pagina da sugestao falta: ranking.
+ -> Login.
