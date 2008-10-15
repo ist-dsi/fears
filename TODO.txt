@@ -6,8 +6,6 @@ TODO:
 -> Paginação na pagina de listar sugestoes.
 -> Editar Projectos.
 
-BUGS:
--> Bug de quando se faz login, não aparecer link para votar. (informação do voter não é actualizada).
 
 
 WebDesigner:

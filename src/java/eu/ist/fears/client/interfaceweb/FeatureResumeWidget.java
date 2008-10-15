@@ -1,6 +1,7 @@
 package eu.ist.fears.client.interfaceweb;
 
 
+
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -31,6 +32,7 @@ public class FeatureResumeWidget  extends Composite{
 	protected String _featureID;
 	protected String _author;
 	protected String _date;
+	protected boolean _userHasVoted;
 	protected Label _description;
 	protected Label _votes;
 	protected Button _voteButton;
@@ -62,6 +64,7 @@ public class FeatureResumeWidget  extends Composite{
 		_author = f.getAuthor();
 		_removeVote = new RemoveVoteButton();
 		_vote = new VoteButton();
+		_userHasVoted=f.userHasVoted();
 
 		_feature.add(_featureResume);
 
@@ -83,17 +86,20 @@ public class FeatureResumeWidget  extends Composite{
 			if(f.userHasVoted()){
 				_voteButton.setText("Tirar Voto");
 				_voteButton.addClickListener(_removeVote);
-				vote.add(_voteButton);
+
 			}else {
 				if(Fears.getVotesLeft()<=0);
 				else {
 					_voteButton.setText("Votar");
 					_voteButton.addClickListener(_vote);
-					vote.add(_voteButton);
 				}
 			}
 
+
+		}else{
+			_voteButton.setVisible(false);
 		}
+		vote.add(_voteButton);
 
 		HorizontalPanel title = new HorizontalPanel();
 		Hyperlink link = new Hyperlink(f.getName(),"Project"+_projectID+"?"+"viewFeature"+f.getFeatureID());
@@ -124,8 +130,24 @@ public class FeatureResumeWidget  extends Composite{
 		return _featureID;
 	}
 
+	public void updateUserInfo(){
+		_voteButton.setVisible(true);
+		_voteButton.removeClickListener(_removeVote);
+		_voteButton.removeClickListener(_vote);
+		if(_userHasVoted){
+			_voteButton.setText("Tirar Voto");
+			_voteButton.addClickListener(_removeVote);
+		}else {
+			_voteButton.setText("Votar");
+			_voteButton.addClickListener(_vote);
+
+		}
+
+	}
+
 	public void update(ViewFeatureDetailed f, boolean updateDescription){
 
+		_voteButton.setVisible(true);
 		_voteButton.removeClickListener(_removeVote);
 		_voteButton.removeClickListener(_vote);
 		if(f.userHasVoted()){
@@ -135,17 +157,19 @@ public class FeatureResumeWidget  extends Composite{
 			_voteButton.setText("Votar");
 			_voteButton.addClickListener(_vote);
 		}
-		
+
 
 		_state.setHTML(f.getState().getHTML());
 		_state.setStyleName(f.getState().toString());
+		_userHasVoted=f.userHasVoted();
+
 
 		if(updateDescription)
 			_description.setText(f.getDescription());
 
 		_votes.setText(new Integer(f.getVotes()).toString());
 		_author=f.getAuthor();
-		
+
 		_ncomments.setText(new Integer(f.getNComments()).toString());
 
 	}
@@ -180,7 +204,7 @@ public class FeatureResumeWidget  extends Composite{
 				//Erro
 			} else {
 				FeatureResumeWidget.this.update(feature, false);
-				Fears.getHeader().update(_projectID);
+				Fears.getHeader().update(_projectID, FeatureResumeWidget.this);
 			}
 		}
 

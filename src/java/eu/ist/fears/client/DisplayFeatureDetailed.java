@@ -36,9 +36,14 @@ public class DisplayFeatureDetailed extends Composite {
 		_com.getFeature(_projectID, _featureID , Cookies.getCookie("fears"), new FeatureCB(this));
 	}
 	
+	public void updateUserInfo(){
+		if(_feature==null)
+			return;
+		_feature.updateUserInfo();
+	}
+	
 	public void updateFeature(ViewFeatureDetailed view){
 		if(_feature==null){
-			Fears.getHeader().update(_projectID);
 			_feature= new FeatureDetailedWidget(view, new FeatureCB(DisplayFeatureDetailed.this));
 			_feature.setStylePrimaryName("featureDetailed");
 			_content.add(_feature);
@@ -66,7 +71,7 @@ public class DisplayFeatureDetailed extends Composite {
 				_content.add(new Label("A sugestao nao existe."));	
 			}else {
 				_f.updateFeature(featureView);
-				Fears.getHeader().update(_projectID);
+				Fears.getHeader().update(_projectID,DisplayFeatureDetailed.this);
 			}
 
 		}

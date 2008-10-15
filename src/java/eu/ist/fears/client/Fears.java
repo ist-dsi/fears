@@ -131,8 +131,8 @@ public class Fears implements EntryPoint, HistoryListener  {
 		content.clear();
 
 		verifyLogin(false);
-
-		content.add(new DisplayFeatureDetailed(projectName, featureID));
+		DisplayFeatureDetailed d =new DisplayFeatureDetailed(projectName, featureID);
+		content.add(d);
 	}
 	
 	public void viewVoter(String projectID, String voterName){

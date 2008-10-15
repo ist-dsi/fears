@@ -25,19 +25,20 @@ import eu.ist.fears.client.common.views.ViewVoterResume;
 
 public class FeatureDetailedWidget extends FeatureResumeWidget {
 
-	protected VerticalPanel _votesAndVoters;
+	
 	protected VerticalPanel _comments;
 	protected TextArea _commentTextArea;
 	protected ListBox _lb;
 	protected PushButton _commentButton;
-	protected Label _voters;
 	protected VerticalPanel _newCommentBox;
-
+	protected VerticalPanel _votesAndVoters;
+	protected HTML _votesLeft;
+	protected DisclosurePanel _voters;
 
 	public FeatureDetailedWidget(ViewFeatureDetailed f, AsyncCallback cb) {
 		super(f, cb);
 
-		_voters= new Label("");
+		_voters= new DisclosurePanel();
 		_votesAndVoters = new VerticalPanel();
 		_comments = new VerticalPanel();
 		_newCommentBox = new VerticalPanel();
@@ -60,6 +61,11 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 		_commentTextArea.setVisibleLines(5);
 		_commentTextArea.setCharacterWidth(50);
 
+		_votesLeft =  new HTML();
+		_votesLeft.setStyleName("votersMeta");
+		_votesAndVoters.add(_votesLeft);
+		_votesAndVoters.add(_voters);
+		
 		updateVoters(f);
 		updateComments(f);
 	}
@@ -71,6 +77,14 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 		updateComments(f);
 	}
 	
+	public void updateUserInfo(){
+		super.updateUserInfo();
+		updateVotesLeft();
+	}
+	
+	public void updateVotesLeft(){
+		
+	}
 
 	public void updateStateChooser(ViewFeatureDetailed f){
 		_newCommentBox.clear();
@@ -100,16 +114,17 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 
 
 	public void updateVoters(ViewFeatureDetailed f){
-		_votesAndVoters.clear();
+		_votesLeft.setHTML("");
+		_voters.setHeader(new Label(""));
+		_voters.setContent(new Label(""));
+		
 		if(Fears.isLogedIn()){
-			HTML votes =  new HTML("Tem " + Fears.getVotesLeft() + " votos disponiveis.");
-			votes.setStyleName("votersMeta");
-			_votesAndVoters.add(votes);
+			_votesLeft.setHTML("Tem " + Fears.getVotesLeft() + " votos disponiveis.");
+			
 		}
 
 		if(f.getVoters()!=null && f.getVoters().size()>0){
-			DisclosurePanel voters = new DisclosurePanel();
-			voters.setHeader(new HTML("Ver "+f.getVoters().size() + " votantes &raquo;" ));
+			_voters.setHeader(new HTML("Ver "+f.getVoters().size() + " votantes &raquo;" ));
 			HorizontalPanel votersExpanded = new HorizontalPanel();
 			int i=0;
 			for(ViewVoterResume v :  f.getVoters()){
@@ -118,13 +133,11 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 					votersExpanded.add(new HTML(",&nbsp;"));
 				i++;
 			}
-			voters.setContent(votersExpanded);
-			voters.getContent().setStyleName("votersMeta");
-			_votesAndVoters.add(voters);
+			_voters.setContent(votersExpanded);
+			_voters.getContent().setStyleName("votersMeta");
 
-		}else { HTML none = new HTML("Nao h&aacute; vontantes.");
-		none.setStyleName("votersMeta");
-		_votesAndVoters.add(none); 
+		}else { _voters.setContent(new HTML("Nao h&aacute; vontantes."));
+		_voters.setOpen(true);
 		}
 
 

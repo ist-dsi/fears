@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 
+import eu.ist.fears.client.DisplayFeatureDetailed;
 import eu.ist.fears.client.Fears;
 import eu.ist.fears.client.common.communication.Communication;
 import eu.ist.fears.client.common.views.ViewVoterResume;
@@ -87,13 +88,33 @@ public class Header extends Composite {
 
 	}
 
+	public void update(String projectID, DisplayFeatureDetailed d){
+		_com.getCurrentVoter(projectID, Cookies.getCookie("fears"), new GetCurrentVoter(d));
+	}
+	
+	public void update(String projectID, FeatureResumeWidget f){
+		_com.getCurrentVoter(projectID, Cookies.getCookie("fears"), new GetCurrentVoter(f));
+	}
+	
 	public void update(String projectID){
 		_com.getCurrentVoter(projectID, Cookies.getCookie("fears"), new GetCurrentVoter());
 	}
 
+	
 	protected class GetCurrentVoter implements AsyncCallback{
-
+		DisplayFeatureDetailed _d;
+		FeatureResumeWidget _f;
+		
 		public GetCurrentVoter(){
+		}
+		
+		public GetCurrentVoter(DisplayFeatureDetailed d){
+			_d=d;
+		}
+		
+		public GetCurrentVoter(FeatureResumeWidget f){
+			RootPanel.get().add(new Label("A actualizar votos da Feature Detailed"));
+			_f=f;
 		}
 
 		public void onSuccess(Object result){
@@ -102,6 +123,13 @@ public class Header extends Composite {
 				Fears.validCookie= true;
 				Fears.setCurrentUser(voter);
 				Header.this.update(true, Fears.isAdminPage());
+				if(_d!=null){
+					_d.updateUserInfo();
+				}
+				if(_f!=null){
+					//_f.updateUserInfo();
+					RootPanel.get().add(new Label("actualizado Feature Detailed"));	
+				}
 			}
 			else {
 				Fears.validCookie= false;
