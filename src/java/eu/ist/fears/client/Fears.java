@@ -81,29 +81,29 @@ public class Fears implements EntryPoint, HistoryListener  {
 		content.clear();
 		content.add(w);
 	}
-	
+
 	public static void setError(Widget w){
 		w.setStyleName("error");
 		setContet(w);
 	}
-	
+
 	public static boolean isAdminPage(){
-			return RootPanel.get("Admin")!= null;
+		return RootPanel.get("Admin")!= null;
 	}
 
-	
+
 	public static Path getPath(){
 		return path;
 	}
-	
+
 	public static Header getHeader(){
 		return header;
 	}
-	
+
 	public static void setCurrentUser(ViewVoterResume v){
 		_curretUser=v;
 	}
-	
+
 	public static boolean isLogedIn(){
 		return validCookie;
 	}
@@ -111,7 +111,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 	public static String getUsername(){
 		return _curretUser.getName();
 	}
-	
+
 	public static int getVotesLeft(){
 		return _curretUser.getVotesLeft();
 	}
@@ -131,8 +131,8 @@ public class Fears implements EntryPoint, HistoryListener  {
 		content.clear();
 
 		if(!verifyLogin(true)){
-		content.add(new HTML("Por favor fa&ccedil;a login para continuar"));
-		return;
+			content.add(new HTML("Por favor fa&ccedil;a login para continuar"));
+			return;
 		}
 
 		content.add(new CreateFeature(projectName));
@@ -146,7 +146,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 		DisplayFeatureDetailed d =new DisplayFeatureDetailed(projectName, featureID);
 		content.add(d);
 	}
-	
+
 	public void viewVoter(String projectID, String voterName){
 		content.clear();
 		verifyLogin(false);
@@ -169,11 +169,11 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 		verifyLogin(false);
 
-	    popup =  new DialogBox(false,false);
-	    VerticalPanel dialogContents = new VerticalPanel();
-	    dialogContents.setSpacing(0);
-	    popup.setWidget(dialogContents);
-	    
+		popup =  new DialogBox(false,false);
+		VerticalPanel dialogContents = new VerticalPanel();
+		dialogContents.setSpacing(0);
+		popup.setWidget(dialogContents);
+
 		Login login = new Login(this);
 		dialogContents.add(login);
 		dialogContents.add(new HTML("<iframe src=\"https://login.ist.utl.pt\" width=\"507px\" height=\"450px\"> <\\iframe>"));
@@ -182,25 +182,25 @@ public class Fears implements EntryPoint, HistoryListener  {
 		popup.setPopupPosition(500, 50);
 		popup.show();
 	}
-	
+
 	public void viewLogout(){
-		
+
 		validCookie=false;
 		header.update(false, isAdminPage());
 		_com.logoff(Cookies.getCookie("fears"), null);
 		_curretUser.setName("guest");
 		Cookies.removeCookie("fears");
 		History.back();
-		
+
 	}
-	
-	
-	
+
+
+
 
 	public void setCookie(String value, String userName){
 		final long DURATION = 1000 * 60 * 60 * 1; //duration remembering login, 1 hour
 		Date expires = new Date(System.currentTimeMillis() + DURATION);
-		Cookies.setCookie("fears", value, expires, null, "/", false);
+		Cookies.setCookie("fears", value, expires);
 		_curretUser.setName(userName);	
 		validCookie=true;
 	}
@@ -224,8 +224,8 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 	}
 
-	
-	
+
+
 	public void onHistoryChanged(String historyToken) {
 		if (RootPanel.get("Admin") != null){
 			return;			
@@ -252,7 +252,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 			projectParse(url.substring("Project".length()), f);	
 		}if(url.startsWith("admins")){
 			if(f instanceof Admin)
-			((Admin)f).viewChangeAdmins();
+				((Admin)f).viewChangeAdmins();
 		}else if(url.startsWith("logout")){
 			f.viewLogout();
 		}
@@ -274,7 +274,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 			return;	
 		}
 
-		
+
 		if(parseAt!=-1){
 			projectID = string.substring(0,parseAt);
 			parse = string.substring(parseAt+1);
@@ -286,7 +286,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 		/* getCurrentUser, to update Votes*/ 
 		header.update(projectID);
-		
+
 		if("listFeatures".equals(parse)){
 			f.listFeatures(projectID,"");	
 		}else if("addFeature".equals(parse)){
@@ -313,12 +313,17 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 		public void onSuccess(Object result){
 			ViewVoterResume voter = (ViewVoterResume) result;
-			validCookie= true;
-			setCurrentUser(voter);
-			_f.onHistoryChanged(History.getToken());
+			if(voter!=null){
+				validCookie= true;
+				setCurrentUser(voter);
+				_f.onHistoryChanged(History.getToken());
+			}else{
+				if(_trytoLogin)
+					viewLogin();
+			}
 		}
 
 	};
-	
+
 
 }

@@ -33,7 +33,7 @@ public class Login extends Composite {
 		_main = new VerticalPanel();
 		initWidget(_main);
 		_main.setStyleName("login");
-		
+
 		//Fears.getPath().setString("Login");
 
 		HorizontalPanel row = new HorizontalPanel();
@@ -77,10 +77,10 @@ public class Login extends Composite {
 			ViewVoterResume voter = (ViewVoterResume) result;
 			_f.setCookie(voter.getSessionID(), voter.getName());
 			if(History.getToken().equals("login")){
-				History.back();
 				Fears.popup.hide();
+				History.back();
 			}else
-			_f.onHistoryChanged(History.getToken());	
+				_f.onHistoryChanged(History.getToken());	
 		}
 	};
 
