@@ -24,6 +24,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 import eu.ist.fears.client.common.State;
 import eu.ist.fears.client.common.communication.Communication;
+import eu.ist.fears.client.common.exceptions.ExceptionsTreatment;
 import eu.ist.fears.client.common.views.ViewFeatureResume;
 import eu.ist.fears.client.interfaceweb.FeatureResumeWidget;
 
@@ -153,13 +154,13 @@ public class ListFeatures extends Composite {
 				else _filterLinks[i].setStyleName("filters");
 				filtersTab.add(_filterLinks[i]);
 			}
-			
+
 			if(i!=4)
 				filtersTab.add(new HTML("&nbsp;&nbsp;|&nbsp;&nbsp;"));			
 
-		i++;
+			i++;
 		}
-	
+
 		_filter.add(filtersTab);
 		_filter.setHorizontalAlignment(HorizontalPanel.ALIGN_RIGHT);
 
@@ -201,23 +202,15 @@ public class ListFeatures extends Composite {
 		}
 	}
 
-	AsyncCallback getFeaturesCB = new AsyncCallback() {
+	AsyncCallback getFeaturesCB = new ExceptionsTreatment() {
 		public void onSuccess(Object result){ 
 			updateFeatures((List)result);
 		}
-
-		public void onFailure(Throwable caught) {
-			RootPanel.get().add(new Label("Nao foi possivel contactar o servidor."));
-		}
 	};
 
-	AsyncCallback getProjectName = new AsyncCallback() {
+	AsyncCallback getProjectName = new ExceptionsTreatment() {
 		public void onSuccess(Object result){ 
 			updateProjectName((String)result);
-		}
-
-		public void onFailure(Throwable caught) {
-			RootPanel.get().add(new Label("Nao foi possivel contactar o servidor."));
 		}
 	};
 

@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import eu.ist.fears.client.DisplayFeatureDetailed;
 import eu.ist.fears.client.Fears;
 import eu.ist.fears.client.common.communication.Communication;
+import eu.ist.fears.client.common.exceptions.ExceptionsTreatment;
 import eu.ist.fears.client.common.views.ViewVoterResume;
 
 public class Header extends Composite {
@@ -101,7 +102,7 @@ public class Header extends Composite {
 	}
 
 	
-	protected class GetCurrentVoter implements AsyncCallback{
+	protected class GetCurrentVoter extends ExceptionsTreatment{
 		DisplayFeatureDetailed _d;
 		FeatureResumeWidget _f;
 		
@@ -138,13 +139,7 @@ public class Header extends Composite {
 			}
 		}
 
-		public void onFailure(Throwable caught) {
-			try {
-				throw caught;
-			} catch (Throwable e) {
-				RootPanel.get().add(new Label("Erro:"+e.getLocalizedMessage()));
-			}
-		}
+		
 	};
 
 

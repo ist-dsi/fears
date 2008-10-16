@@ -90,6 +90,10 @@ color: #6d9966;
 width: 100%;
 }
 
+.error{
+color: red;
+}
+
 /* *************
 
 CSS da pagina de Listar Projectos:

@@ -19,6 +19,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import eu.ist.fears.client.common.communication.Communication;
+import eu.ist.fears.client.common.exceptions.ExceptionsTreatment;
 
 
 public class CreateFeature extends Composite {
@@ -98,26 +99,18 @@ public class CreateFeature extends Composite {
 	}
 	
 	
-	AsyncCallback addSugestaoCB = new AsyncCallback() {
+	AsyncCallback addSugestaoCB = new ExceptionsTreatment() {
 		public void onSuccess(Object result){ 
 			// do some UI stuff to show success
-			History.newItem("Project" + _projectID );
-			
-		}
-
-		public void onFailure(Throwable caught) {
-			RootPanel.get().add(new Label("Nao foi possivel contactar o servidor."));
+			History.newItem("Project" + _projectID );	
 		}
 	};
 
-	AsyncCallback getProjectName = new AsyncCallback() {
+	AsyncCallback getProjectName = new ExceptionsTreatment() {
 		public void onSuccess(Object result){ 
 			updateProjectName((String)result);
 		}
 
-		public void onFailure(Throwable caught) {
-			RootPanel.get().add(new Label("Nao foi possivel contactar o servidor."));
-		}
 	};
 	
 }

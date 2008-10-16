@@ -18,6 +18,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 import eu.ist.fears.client.Fears;
 import eu.ist.fears.client.common.communication.Communication;
+import eu.ist.fears.client.common.exceptions.ExceptionsTreatment;
 import eu.ist.fears.client.common.views.ViewProject;
 import eu.ist.fears.client.interfaceweb.ProjectWidget;
 
@@ -153,24 +154,16 @@ public class ListProjectsWidget extends Composite{
 
 	}
 	
-	AsyncCallback updateCB = new AsyncCallback() {
+	AsyncCallback updateCB = new ExceptionsTreatment() {
 		public void onSuccess(Object result){ 
 			update();	
-		}
-
-		public void onFailure(Throwable caught) {
-			RootPanel.get().add(new Label("Nao foi possivel contactar o servidor."));
-		}
+		}		
 	};
 	
-	AsyncCallback getProjectsCB = new AsyncCallback() {
+	AsyncCallback getProjectsCB = new ExceptionsTreatment() {
 		public void onSuccess(Object result){ 
 			updateProjects((ViewProject[]) result);
-		}
-
-		public void onFailure(Throwable caught) {
-			RootPanel.get().add(new Label("Nao foi possivel contactar o servidor."));
-		}
+		}		
 	};
 
 }

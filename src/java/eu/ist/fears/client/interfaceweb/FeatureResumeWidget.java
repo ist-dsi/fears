@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 import eu.ist.fears.client.Fears;
 import eu.ist.fears.client.common.communication.Communication;
+import eu.ist.fears.client.common.exceptions.ExceptionsTreatment;
 import eu.ist.fears.client.common.views.ViewFeatureDetailed;
 import eu.ist.fears.client.common.views.ViewFeatureResume;
 
@@ -190,13 +191,7 @@ public class FeatureResumeWidget  extends Composite{
 
 	}
 
-	protected AsyncCallback  voteOnListCB = new AsyncCallback(){
-
-
-		public void onFailure(Throwable arg0) {
-			RootPanel.get().add(new Label("O Voto nao correu bem."));
-
-		}
+	protected AsyncCallback  voteOnListCB = new ExceptionsTreatment(){
 
 		public void onSuccess(Object result) {
 			ViewFeatureDetailed feature = (ViewFeatureDetailed) result;

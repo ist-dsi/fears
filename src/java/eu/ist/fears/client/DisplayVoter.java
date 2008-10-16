@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import eu.ist.fears.client.common.communication.Communication;
+import eu.ist.fears.client.common.exceptions.ExceptionsTreatment;
 import eu.ist.fears.client.common.views.ViewFeatureResume;
 import eu.ist.fears.client.common.views.ViewVoterDetailed;
 
@@ -131,17 +132,14 @@ public class DisplayVoter extends Composite {
 		_com.getProjectName(_projectID, getProjectName);
 	}
 
-	AsyncCallback getProjectName = new AsyncCallback() {
+	AsyncCallback getProjectName = new ExceptionsTreatment() {
 		public void onSuccess(Object result){ 
 			updateProjectName((String)result);
 		}
 
-		public void onFailure(Throwable caught) {
-			RootPanel.get().add(new Label("Nao foi possivel contactar o servidor."));
-		}
 	};	
 
-	protected class VoterCB implements AsyncCallback{
+	protected class VoterCB extends ExceptionsTreatment{
 		//DisplayVoter _v;
 
 		public VoterCB() {
@@ -156,20 +154,6 @@ public class DisplayVoter extends Composite {
 				_content.add(new Label("O user nao existe."));	
 			}else {
 				DisplayVoter.this.updateVoter(userView);
-			}
-
-		}
-
-		public void onFailure(Throwable caught) {
-			_content.clear();
-			_content.add((new Label("O User " + _voterName.getText() + " nao foi encontrado neste projecto.")));
-			try {
-				throw caught;
-			} catch(RuntimeException e){
-				_content.add(new Label("Erro:"+e.getMessage()));
-
-			} catch (Throwable e) {
-				_content.add(new Label("Nao foi possivel contactar o servidor."));
 			}
 
 		}

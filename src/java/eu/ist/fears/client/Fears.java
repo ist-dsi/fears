@@ -13,9 +13,11 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 import eu.ist.fears.client.admin.Admin;
 import eu.ist.fears.client.common.communication.Communication;
+import eu.ist.fears.client.common.exceptions.ExceptionsTreatment;
 import eu.ist.fears.client.common.views.ViewVoterResume;
 import eu.ist.fears.client.interfaceweb.Header;
 import eu.ist.fears.client.interfaceweb.Path;
@@ -31,7 +33,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 	protected static Communication _com;
 	protected VerticalPanel frameBox;
 	protected VerticalPanel frame;
-	protected VerticalPanel content;
+	protected static VerticalPanel content;
 	protected static Header header; 
 	protected static DialogBox  popup;
 	protected static Path path;
@@ -75,6 +77,16 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 	}
 
+	public static void setContet(Widget w){
+		content.clear();
+		content.add(w);
+	}
+	
+	public static void setError(Widget w){
+		w.setStyleName("error");
+		setContet(w);
+	}
+	
 	public static boolean isAdminPage(){
 			return RootPanel.get("Admin")!= null;
 	}
@@ -290,7 +302,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 	}
 
-	protected class ValidateSession implements AsyncCallback{
+	protected class ValidateSession extends ExceptionsTreatment{
 		Fears _f;
 		boolean _trytoLogin;
 
@@ -302,20 +314,10 @@ public class Fears implements EntryPoint, HistoryListener  {
 		public void onSuccess(Object result){
 			ViewVoterResume voter = (ViewVoterResume) result;
 			validCookie= true;
-			setCurrentUser(voter); //TODO: Acrescentado recentemente, ver efeitos...
+			setCurrentUser(voter);
 			_f.onHistoryChanged(History.getToken());
 		}
 
-		public void onFailure(Throwable caught) {
-			try {
-				throw caught;
-			} catch (Throwable e) {
-				//RootPanel.get().add(new Label("A sessao nao e valida."));
-			}
-			if(_trytoLogin)
-				viewLogin();
-
-		}
 	};
 	
 

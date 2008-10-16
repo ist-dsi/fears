@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import eu.ist.fears.client.common.communication.Communication;
+import eu.ist.fears.client.common.exceptions.ExceptionsTreatment;
 import eu.ist.fears.client.common.views.ViewVoterResume;
 
 public class Login extends Composite {
@@ -65,7 +66,7 @@ public class Login extends Composite {
 	}
 
 
-	private class LoginCB implements AsyncCallback{
+	private class LoginCB extends ExceptionsTreatment{
 		Fears _f;
 
 		public LoginCB(Fears f){
@@ -79,12 +80,7 @@ public class Login extends Composite {
 				History.back();
 				Fears.popup.hide();
 			}else
-			_f.onHistoryChanged(History.getToken());
-			
-		}
-
-		public void onFailure(Throwable caught) {
-			RootPanel.get().add(new Label("Erro no login."));
+			_f.onHistoryChanged(History.getToken());	
 		}
 	};
 

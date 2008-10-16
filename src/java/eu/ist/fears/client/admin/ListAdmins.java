@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 import eu.ist.fears.client.Fears;
 import eu.ist.fears.client.common.communication.Communication;
+import eu.ist.fears.client.common.exceptions.ExceptionsTreatment;
 import eu.ist.fears.client.common.views.ViewAdmins;
 
 public class ListAdmins  extends Composite {
@@ -109,14 +110,11 @@ public class ListAdmins  extends Composite {
 	}
 
 
-	AsyncCallback getProjectsCB = new AsyncCallback() {
+	AsyncCallback getProjectsCB = new ExceptionsTreatment() {
 		public void onSuccess(Object result){ 
 			updateAdmin((ViewAdmins) result);
 		}
-
-		public void onFailure(Throwable caught) {
-			RootPanel.get().add(new Label("Nao foi possivel contactar o servidor."+caught.getLocalizedMessage()));
-		}
+		
 	};
 
 }

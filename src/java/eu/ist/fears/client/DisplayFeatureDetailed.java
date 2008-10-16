@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import eu.ist.fears.client.common.communication.Communication;
+import eu.ist.fears.client.common.exceptions.ExceptionsTreatment;
 import eu.ist.fears.client.common.views.ViewFeatureDetailed;
 import eu.ist.fears.client.interfaceweb.FeatureDetailedWidget;
 
@@ -56,7 +57,7 @@ public class DisplayFeatureDetailed extends Composite {
 		Fears.getPath().setFeature(view.getProjectName(),new Integer(view.getProjectID()).toString(), "Sugest&atilde;o");
 	}
 
-	protected class FeatureCB implements AsyncCallback{
+	protected class FeatureCB extends ExceptionsTreatment{
 		DisplayFeatureDetailed _f;
 		
 		public FeatureCB(DisplayFeatureDetailed f) {
@@ -75,20 +76,6 @@ public class DisplayFeatureDetailed extends Composite {
 			}
 
 		}
-	
-	public void onFailure(Throwable caught) {
-			_content.clear();
-			_content.add((new Label("A Sugestao " + _featureID + " nao foi encontrada.")));
-			try {
-				throw caught;
-			} catch(RuntimeException e){
-				_content.add(new Label("Erro:"+e.getMessage()));
-
-			} catch (Throwable e) {
-				_content.add(new Label("Nao foi possivel contactar o servidor."));
-			}
-
-		}
-		
+				
 	}
 }
