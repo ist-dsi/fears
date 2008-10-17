@@ -24,10 +24,13 @@ public class ListAdmins  extends Composite {
 	protected VerticalPanel _contentPanel;
 	private TextBox _newAdminName; 
 	private Button _createAdminButton;
+	protected VerticalPanel _errors;
 
 	public ListAdmins(){
 		_com= new Communication("service");
 		_contentPanel = new VerticalPanel();
+		_errors= new VerticalPanel();
+		_errors.setStyleName("error");
 
 		Fears.getPath().setAdmins();
 		_newAdminName = new TextBox();
@@ -53,9 +56,17 @@ public class ListAdmins  extends Composite {
 		_contentPanel.add(_newAdminName);
 		_createAdminButton = new Button("Adicionar Administrador");
 		_contentPanel.add(_createAdminButton);
+		_contentPanel.add(_errors);
 
 		_createAdminButton.addClickListener(new ClickListener(){
 			public void onClick(Widget sender) {
+				_errors.clear();
+				if(_newAdminName.getText().isEmpty()){
+					_errors.add(new HTML("Erro:"));
+					_errors.add(new HTML("Tem de preencher o nome do Administrador."));	
+					return;
+				}
+				
 				_com.addAdmin(_newAdminName.getText(), Cookies.getCookie("fears"), getProjectsCB);
 			}
 		}); 
@@ -93,7 +104,6 @@ public class ListAdmins  extends Composite {
 
 	protected void updateAdmin(ViewAdmins admins){
 		init();
-
 
 		if(admins==null || admins.getAdmins()==null  || admins.getAdmins().size()==0){
 			_contentPanel.add(new Label("Nao ha Administradores"));

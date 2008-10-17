@@ -25,7 +25,7 @@ import eu.ist.fears.client.common.views.ViewVoterResume;
 
 public class FeatureDetailedWidget extends FeatureResumeWidget {
 
-	
+
 	protected VerticalPanel _comments;
 	protected TextArea _commentTextArea;
 	protected ListBox _lb;
@@ -34,6 +34,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 	protected VerticalPanel _votesAndVoters;
 	protected HTML _votesLeft;
 	protected DisclosurePanel _voters;
+	protected VerticalPanel _errors;
 
 	public FeatureDetailedWidget(ViewFeatureDetailed f, AsyncCallback cb) {
 		super(f, cb);
@@ -45,6 +46,9 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 		_commentTextArea= new TextArea();
 		_commentTextArea.setStyleName("commentTextArea");
 		_lb=new ListBox();
+		_errors= new VerticalPanel();
+		_errors.setStyleName("error");
+		_errors.addStyleDependentName("comment");
 
 		_commentButton = new PushButton(new Image("button03.gif",0,0,105,32), new Image("button03.gif",-2,-2,105,32));
 		_commentButton.setStyleName("commentButton");
@@ -65,7 +69,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 		_votesLeft.setStyleName("votersMeta");
 		_votesAndVoters.add(_votesLeft);
 		_votesAndVoters.add(_voters);
-		
+
 		updateVoters(f);
 		updateComments(f);
 	}
@@ -76,14 +80,14 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 		updateVoters(f);
 		updateComments(f);
 	}
-	
+
 	public void updateUserInfo(){
 		super.updateUserInfo();
 		updateVotesLeft();
 	}
-	
+
 	public void updateVotesLeft(){
-		
+
 	}
 
 	public void updateStateChooser(ViewFeatureDetailed f){
@@ -95,9 +99,9 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 			stateLabel.setStyleName("commentTextArea");
 			stateChooser.add(stateLabel);
 			_lb.setStyleName("commentStateChooser");
-			
+
 			stateChooser.add(_lb);
-			
+
 			_lb.clear();
 
 			_lb.addItem("");
@@ -109,6 +113,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 			_newCommentBox.add(_commentTextArea);
 			_newCommentBox.add(stateChooser);
 			_newCommentBox.add(_commentButton);
+			_newCommentBox.add(_errors);
 		}
 	}
 
@@ -117,10 +122,10 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 		_votesLeft.setHTML("");
 		_voters.setHeader(new Label(""));
 		_voters.setContent(new Label(""));
-		
+
 		if(Fears.isLogedIn()){
 			_votesLeft.setHTML("Tem " + Fears.getVotesLeft() + " votos disponiveis.");
-			
+
 		}
 
 		if(f.getVoters()!=null && f.getVoters().size()>0){
@@ -195,6 +200,13 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 			for(State s : State.values()){
 				if(s.toString().equals(_lb.getValue(_lb.getSelectedIndex())))
 					state=s;	 
+			}
+
+			_errors.clear();
+			if(_commentTextArea.getText().isEmpty()){
+				_errors.add(new HTML("Erro:"));
+				_errors.add(new HTML("Tem de preencher o coment&aacute;rio."));			
+				return;
 			}
 
 			_com.addComment(_projectID, _featureID,

@@ -2,18 +2,16 @@ TODO:
 -> Verifcaçoes de segurança no serviço. (Usar TFC do G. Dumiense)[ Fazer 1º manual]
 
 -> Verificações de consistencia de dominio, no servidor.
-	- Nº de votos é sempre positivo.
-	- se utilizador nao tiver votos, criar sugestao sem votar.
 	
 -> Login CAS.
 
 -> Administrador de Projecto.
 
 -> Verificações de segurança e Erros na Interface. (principalmente de admin):
-	- Tratar criação de projectos, sugestões e comentários vazios.
+	- (Tratar criação de projectos, sugestões e comentários vazios) -> Done.
 	- Tratar excepções e erros:
 	 	- (quando nao existe o projecto, user ou sugestao)->Done.
-	 	- Mostrar erro se voto nao for contabilizado.
+	 	- (Mostrar erro se voto nao for contabilizado.) -> DONE
 	 	
 	- Verificar que as interfaces so aparecem a admins.
 	

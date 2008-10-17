@@ -30,6 +30,7 @@ public class CreateFeature extends Composite {
 	protected TextArea _description; 
 	protected String _projectID;
 	protected HorizontalPanel _projectTitle;
+	protected VerticalPanel _errorPanel;
 
 	public CreateFeature(String projectID){
 		_com= new Communication("service");
@@ -37,6 +38,9 @@ public class CreateFeature extends Composite {
 		Grid createFeatureTable = new Grid(2, 2);
 		_projectID = projectID;
 		_projectTitle = new HorizontalPanel();
+		_errorPanel= new VerticalPanel();
+		
+		_errorPanel.setStyleName("error");
 		
 		initWidget(_sugPanel);
 		createFeatureTable.getCellFormatter().setStyleName(0, 0, "CreateFeatureCell");
@@ -68,6 +72,18 @@ public class CreateFeature extends Composite {
 		PushButton _sendButton = new PushButton(new Image("button04.gif",0,0,105,32), new Image("button04.gif",-2,-2,105,32) );
 		_sendButton.addClickListener(new ClickListener(){
 			public void onClick(Widget sender) {
+				_errorPanel.clear();
+
+				if(_name.getText().isEmpty() || _description.getText().isEmpty()){
+					_errorPanel.add(new HTML("Erro:"));
+					if(_name.getText().isEmpty())
+						_errorPanel.add(new HTML("Tem de preencher o nome da sugest&atilde;o."));
+					if(_description.getText().isEmpty())
+						_errorPanel.add(new HTML("Tem de preencher a descri&ccedil;&atilde;o da sugest&atilde;o."));		
+
+
+					return;
+				}
 				_com.addFeature(_projectID, _name.getText(),
 						_description.getText(),  Cookies.getCookie("fears"), addSugestaoCB);
 				
@@ -86,6 +102,7 @@ public class CreateFeature extends Composite {
 		buttons.add(_sendButton);
 		buttons.add(_cancelButton);
 		_sugPanel.add(buttons);
+		_sugPanel.add(_errorPanel);
 		
 		updateProjectName();
 	}
