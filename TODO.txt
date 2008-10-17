@@ -7,14 +7,9 @@ TODO:
 
 -> Administrador de Projecto.
 
--> Verificações de segurança e Erros na Interface. (principalmente de admin):
-	- (Tratar criação de projectos, sugestões e comentários vazios) -> Done.
-	- Tratar excepções e erros:
-	 	- (quando nao existe o projecto, user ou sugestao)->Done.
-	 	- (Mostrar erro se voto nao for contabilizado.) -> DONE
-	 	
+-> Verificações de segurança e Erros na Interface:	 	
 	- Verificar que as interfaces so aparecem a admins.
-	
+	- Actualizar estado de botao Votar, na lista de sugestoes.
 	
 -> Paginação na pagina de listar sugestoes.
 
