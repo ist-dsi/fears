@@ -1,7 +1,7 @@
 TODO:
--> Verifcaçoes de segurança no serviço. (Usar TFC do G. Dumiense)[ Fazer 1º manual]
+-> (Verifcaçoes de segurança no serviço. (Usar TFC do G. Dumiense)[ Fazer 1º manual]) -> DONE.
 
--> Verificações de consistencia de dominio, no servidor.
+-> (Verificações de consistencia de dominio, no servidor.) -> DONE.
 	
 -> Login CAS.
 
