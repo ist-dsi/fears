@@ -153,13 +153,13 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		FearsApp.getFears().deleteProject(name);
 	}
 
-	public ViewVoterResume login(String username, String password ){
+	public ViewVoterResume login(String username, String password) throws FearsException{
 		HttpSession session = this.getThreadLocalRequest().getSession();
 
 		//Fingir que esta tudo bem.
 
 		User temp = FearsApp.getFears().getUser(username);
-		ViewVoterResume ret =  new ViewVoterResume(temp.getName(),  session.getId());
+		ViewVoterResume ret =  new ViewVoterResume(temp.getName(),  session.getId(), FearsApp.getFears().isAdmin(temp));
 		session.setAttribute("fears_voter", ret);
 		return ret;
 

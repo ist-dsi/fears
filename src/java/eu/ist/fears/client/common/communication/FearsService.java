@@ -28,7 +28,7 @@ public interface FearsService extends RemoteService  {
 	public String getProjectName(String projectID) throws NoProjectException, FearsException;
 	
 	public ViewVoterResume validateSessionID(String sessionID);
-	public ViewVoterResume login(String user, String password);
+	public ViewVoterResume login(String user, String password) throws FearsException;
 	public void logoff(String sessionID);
 	
 	public ViewAdmins getAdmins(String sessionID);

@@ -8,7 +8,7 @@ TODO:
 -> Administrador de Projecto.
 
 -> Verificações de segurança e Erros na Interface:	 	
-	- Verificar que as interfaces so aparecem a admins.
+	- (Verificar que as interfaces so aparecem a admins -> paginas de admin, e estado votacoes) -> DONE.
 	- Actualizar estado de botao Votar, na lista de sugestoes.
 	
 -> Paginação na pagina de listar sugestoes.

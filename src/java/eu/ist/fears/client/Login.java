@@ -75,7 +75,7 @@ public class Login extends Composite {
 
 		public void onSuccess(Object result){ 
 			ViewVoterResume voter = (ViewVoterResume) result;
-			_f.setCookie(voter.getSessionID(), voter.getName());
+			_f.setCookie(voter.getSessionID(), voter);
 			if(History.getToken().equals("login")){
 				Fears.popup.hide();
 				History.back();

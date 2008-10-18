@@ -134,7 +134,6 @@ public class Header extends Composite {
 			}
 			else {
 				Fears.validCookie= false;
-				Fears.setCurrentUser(new ViewVoterResume("guest",""));
 				Header.this.update(false, Fears.isAdminPage());
 			}
 		}

@@ -20,16 +20,17 @@ public class ViewVoterResume implements Serializable {
 
 	public ViewVoterResume(){}
 	
-	public ViewVoterResume(String name, String sessionID){
+	public ViewVoterResume(String name, String sessionID, boolean isAdmin){
 		_user=name;
 		_sessionID = sessionID;
+		_isAdmin=isAdmin;
 	}
 	
 	public ViewVoterResume(String name, String sessionID, int votesLeft, boolean isAdmin){
 		_user=name;
 		_sessionID = sessionID;
 		_votesLeft=votesLeft;
-		isAdmin= _isAdmin;
+		_isAdmin= isAdmin;
 	}
 	
 	

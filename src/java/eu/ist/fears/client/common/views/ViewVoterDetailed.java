@@ -21,7 +21,7 @@ public class ViewVoterDetailed extends ViewVoterResume implements IsSerializable
 	}
 	
 	public ViewVoterDetailed(String name, String sessionID, List<ViewFeatureResume> created, List<ViewFeatureResume> voted){
-		super(name, sessionID);
+		super(name, sessionID, false);
 		_created=created;
 		_voted=voted;
 	}

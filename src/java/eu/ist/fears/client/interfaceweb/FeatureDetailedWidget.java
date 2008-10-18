@@ -93,7 +93,6 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 	public void updateStateChooser(ViewFeatureDetailed f){
 		_newCommentBox.clear();
 		if(Fears.isLogedIn()){
-			//TODO: See if it is Admin...
 			HorizontalPanel stateChooser = new HorizontalPanel();
 			Label stateLabel =new Label("Mudar Estado:");
 			stateLabel.setStyleName("commentTextArea");
@@ -111,7 +110,8 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 				}
 			}
 			_newCommentBox.add(_commentTextArea);
-			_newCommentBox.add(stateChooser);
+			if(Fears.isAdminUser())
+				_newCommentBox.add(stateChooser);
 			_newCommentBox.add(_commentButton);
 			_newCommentBox.add(_errors);
 		}

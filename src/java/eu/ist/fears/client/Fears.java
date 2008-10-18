@@ -64,7 +64,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 		content = new VerticalPanel();
 		content.setStyleName("width100");
 		path = new Path();
-		_curretUser=new ViewVoterResume("guest","");
+		_curretUser=new ViewVoterResume("guest","",false);
 		header = new Header("guest",validCookie, false);
 		RootPanel.get().setStyleName("centered");
 		RootPanel.get().add(header);
@@ -106,6 +106,10 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 	public static boolean isLogedIn(){
 		return validCookie;
+	}
+	
+	public static boolean isAdminUser(){
+		return _curretUser.isAdmin();
 	}
 
 	public static String getUsername(){
@@ -197,11 +201,11 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 
 
-	public void setCookie(String value, String userName){
+	public void setCookie(String value, ViewVoterResume user){
 		final long DURATION = 1000 * 60 * 60 * 1; //duration remembering login, 1 hour
 		Date expires = new Date(System.currentTimeMillis() + DURATION);
 		Cookies.setCookie("fears", value, expires);
-		_curretUser.setName(userName);	
+		setCurrentUser(user);	
 		validCookie=true;
 	}
 

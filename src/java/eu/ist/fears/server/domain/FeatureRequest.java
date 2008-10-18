@@ -91,7 +91,7 @@ public class FeatureRequest extends FeatureRequest_Base {
 
 		List<ViewVoterResume> voters = new ArrayList<ViewVoterResume>();
 		for(Voter v : getVoterSet() ){
-			voters.add(new ViewVoterResume(v.getUser().getName(),  null ));
+			voters.add(new ViewVoterResume(v.getUser().getName(),  null, false ));
 			if(v.equals(user))
 				userhasvoted=true;
 		}
@@ -105,7 +105,7 @@ public class FeatureRequest extends FeatureRequest_Base {
 
 		List<ViewVoterResume> voters = new ArrayList<ViewVoterResume>();
 		for(Voter v : getVoterSet() ){
-			voters.add(new ViewVoterResume(v.getUser().getName(),  null ));
+			voters.add(new ViewVoterResume(v.getUser().getName(),  null, false ));
 			if(v.equals(user))
 				userhasvoted=true;
 		}

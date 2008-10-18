@@ -4,6 +4,7 @@ package eu.ist.fears.client.admin;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 import eu.ist.fears.client.Fears;
 
@@ -26,7 +27,6 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 
 		init();
 
-
 		History.addHistoryListener(this);
 
 		History.fireCurrentHistoryState();
@@ -37,24 +37,45 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 	public void viewListProjects(){
 
 		content.clear();
-		if(!verifyLogin(true))
+		if(!verifyLogin(true)){
+			content.clear();
+			content.add(new HTML("Por favor fa&ccedil;a login para continuar"));
+			Fears.getHeader().update(false, false);
 			return;
+		}else{
+			if(!_curretUser.isAdmin()){
+				Fears.setError(new HTML("Esta p&aacute;gina &eacute; exclusiva para Administradores."));
+				Fears.getHeader().update(false, false);
+				return;
+			}
+		}
 
 		ListProjectsWidget projects = new ListProjectsWidget();
 		projects.update();	
 		content.add(projects);
 
 	}
-	
+
 	public void viewChangeAdmins(){
 		content.clear();
-		if(!verifyLogin(true))
+		if(!verifyLogin(true)){
+			content.clear();
+			content.add(new HTML("Por favor fa&ccedil;a login para continuar"));
+			Fears.getHeader().update(false, false);
 			return;
-		
+		}
+		else{
+			if(!_curretUser.isAdmin()){
+				Fears.setError(new HTML("Esta p&aacute;gina &eacute; exclusiva para Administradores."));
+				Fears.getHeader().update(false, false);
+				return;
+			}
+		}
+
 		ListAdmins admins = new ListAdmins();
 		admins.update();
 		content.add(admins);
-		
+
 	}
 
 
