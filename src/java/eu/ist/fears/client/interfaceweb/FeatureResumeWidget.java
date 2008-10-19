@@ -99,7 +99,7 @@ public class FeatureResumeWidget  extends Composite{
 		vote.add(_voteButton);
 
 		HorizontalPanel title = new HorizontalPanel();
-		Hyperlink link = new Hyperlink(f.getName(),"Project"+_projectID+"?"+"viewFeature"+f.getFeatureID());
+		Hyperlink link = new Hyperlink(f.getName(),"Project"+_projectID+"&"+"viewFeature"+f.getFeatureID());
 		link.setStyleName("featureTitle");
 		title.add(link);
 		_state = new HTML(f.getState().getHTML());
@@ -113,7 +113,7 @@ public class FeatureResumeWidget  extends Composite{
 		_mainBox.add(info);
 
 		info.add(new HTML("#"+_featureID+" | Por:&nbsp;"));
-		info.add(new Hyperlink(_author,"Project"+_projectID+"?"+"viewUser"+_author));
+		info.add(new Hyperlink(_author,"Project"+_projectID+"&"+"viewUser"+_author));
 		info.add(new HTML("&nbsp;em:&nbsp;" + _date + "&nbsp;|&nbsp;"));
 		info.add(_ncomments);
 		info.add(new HTML("&nbsp;coment&aacute;rios"));

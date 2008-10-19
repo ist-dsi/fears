@@ -127,7 +127,7 @@ public class ListFeatures extends Composite {
 		_search.add(addButton);
 		addButton.addClickListener(new ClickListener(){
 			public void onClick(Widget sender) {
-				History.newItem("Project" + _projectID + "?" + "addFeature");
+				History.newItem("Project" + _projectID + "&" + "addFeature");
 			}
 		});
 
@@ -146,13 +146,13 @@ public class ListFeatures extends Composite {
 		int i=1;
 		for(State s: State.values()){
 			if(!s.toString().equals(State.Implementacao.toString())){
-				_filterLinks[i]  = new Hyperlink(s.getHTML()+"s","Project"+_projectID+"?filter"+s.toString());
+				_filterLinks[i]  = new Hyperlink(s.getHTML()+"s","Project"+_projectID+"&filter"+s.toString());
 				if(_actualFilter.equals(s.toString()))
 					_filterLinks[i] .setStyleName("currentFilter");
 				else _filterLinks[i] .setStyleName("filters");		
 				filtersTab.add(_filterLinks[i]);
 			}else {
-				_filterLinks[i]  = new Hyperlink(State.Implementacao.getHTML(),true,"Project"+_projectID+"?filter"+State.Implementacao.toString());
+				_filterLinks[i]  = new Hyperlink(State.Implementacao.getHTML(),true,"Project"+_projectID+"&filter"+State.Implementacao.toString());
 				if(_actualFilter.equals(State.Implementacao.toString()))
 					_filterLinks[i].setStyleName("currentFilter");
 				else _filterLinks[i].setStyleName("filters");

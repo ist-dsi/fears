@@ -58,7 +58,7 @@ public class DisplayVoter extends Composite {
 				
 				HorizontalPanel projPanel = new HorizontalPanel();
 				projPanel.add(new HTML("&nbsp;"));
-				Hyperlink project= new Hyperlink(f.getName(),"Project"+_projectID+"?"+"viewFeature"+f.getFeatureID());
+				Hyperlink project= new Hyperlink(f.getName(),"Project"+_projectID+"&"+"viewFeature"+f.getFeatureID());
 				projPanel.add(project);
 				project.setStyleName("UserFeature");
 				votedFeatureTable.setWidget(i,1,projPanel);
@@ -97,7 +97,7 @@ public class DisplayVoter extends Composite {
 				
 				HorizontalPanel projPanel = new HorizontalPanel();
 				projPanel.add(new HTML("&nbsp;"));
-				Hyperlink project= new Hyperlink(f.getName(),"Project"+_projectID+"?"+"viewFeature"+f.getFeatureID());
+				Hyperlink project= new Hyperlink(f.getName(),"Project"+_projectID+"&"+"viewFeature"+f.getFeatureID());
 				projPanel.add(project);
 				project.setStyleName("UserFeature");
 				createdFeatureTable.setWidget(i,1,projPanel);

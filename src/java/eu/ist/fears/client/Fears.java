@@ -180,7 +180,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 		Login login = new Login(this);
 		dialogContents.add(login);
-		dialogContents.add(new HTML("<iframe src=\"https://login.ist.utl.pt\" width=\"507px\" height=\"450px\"> <\\iframe>"));
+		dialogContents.add(new HTML("<iframe src=\"http://localhost:8080/cas\" width=\"507px\" height=\"450px\"> <\\iframe>"));
 		login.setStyleName("loginWindow");
 		popup.setSize("400px", "400px");
 		popup.setPopupPosition(500, 50);
@@ -264,8 +264,8 @@ public class Fears implements EntryPoint, HistoryListener  {
 	}
 
 	private static void projectParse(String string, Fears f){
-		int parseAt =  string.indexOf('?');
-		int parseB =  string.indexOf("%3F");
+		int parseAt =  string.indexOf('&');
+		int parseB =  string.indexOf("%26");
 		String projectID;
 		String parse;
 
