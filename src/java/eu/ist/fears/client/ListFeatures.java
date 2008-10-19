@@ -1,6 +1,7 @@
 package eu.ist.fears.client;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.user.client.Cookies;
@@ -25,6 +26,7 @@ import com.google.gwt.user.client.ui.Widget;
 import eu.ist.fears.client.common.State;
 import eu.ist.fears.client.common.communication.Communication;
 import eu.ist.fears.client.common.exceptions.ExceptionsTreatment;
+import eu.ist.fears.client.common.views.ViewFeatureDetailed;
 import eu.ist.fears.client.common.views.ViewFeatureResume;
 import eu.ist.fears.client.interfaceweb.FeatureResumeWidget;
 
@@ -42,6 +44,7 @@ public class ListFeatures extends Composite {
 	protected TextBox sBox;
 	protected String _actualFilter;
 	protected Hyperlink[] _filterLinks;
+	protected List<FeatureResumeWidget> _featuresViews;
 
 	public ListFeatures(String projectID, String filter){
 		_com= new Communication("service");
@@ -49,6 +52,7 @@ public class ListFeatures extends Composite {
 		_search = new HorizontalPanel();
 		_filter = new HorizontalPanel();
 		_featuresList = new VerticalPanel();
+		_featuresViews = new ArrayList<FeatureResumeWidget>();
 		_projectID = projectID;
 		_sugPanel.setStyleName("listMain");
 		_actualFilter = filter;
@@ -187,8 +191,10 @@ public class ListFeatures extends Composite {
 	}
 
 
-	public void updateFeatures(List features){
+	public void updateFeatures(List<ViewFeatureResume> features){
 		_featuresList.clear();
+		_featuresViews.clear();
+
 
 		if(features==null || features.size() ==0 ){
 			_featuresList.add(new Label("Nao ha Sugestoes."));
@@ -196,15 +202,29 @@ public class ListFeatures extends Composite {
 		}
 
 		for(int i=0;i< features.size();i++){
-			FeatureResumeWidget feature =new FeatureResumeWidget((ViewFeatureResume)features.get(i), null);
+			FeatureResumeWidget feature =new FeatureResumeWidget((ViewFeatureResume)features.get(i), new VoteOnListCB());
 			feature.setStylePrimaryName("feature");
 			_featuresList.add(feature);
+			_featuresViews.add(feature);
 		}
+	}
+
+	public FeatureResumeWidget getFeature(String webID){
+		
+		if(_featuresViews==null || _featuresViews.size() ==0 ){
+			return null;
+		}
+			
+		for(FeatureResumeWidget f: _featuresViews){
+			if(f.getWebID().equals(webID))
+				return f;
+		}
+		return null;
 	}
 
 	AsyncCallback getFeaturesCB = new ExceptionsTreatment() {
 		public void onSuccess(Object result){ 
-			updateFeatures((List)result);
+			updateFeatures((List<ViewFeatureResume>)result);
 		}
 	};
 
@@ -213,5 +233,22 @@ public class ListFeatures extends Composite {
 			updateProjectName((String)result);
 		}
 	};
+
+	protected class VoteOnListCB extends ExceptionsTreatment{
+
+		protected VoteOnListCB(){}
+
+		public void onSuccess(Object result) {
+			ViewFeatureDetailed view = (ViewFeatureDetailed) result;
+			FeatureResumeWidget f = getFeature(new Integer(view.getFeatureID()).toString());
+			if(f!=null){
+				f.update(view, false);
+			}
+			if(_featuresViews!=null && _featuresViews.size()>0){
+				Fears.getHeader().update(_projectID, _featuresViews);
+			}	
+		}
+
+	}
 
 }

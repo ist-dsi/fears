@@ -1,5 +1,7 @@
 package eu.ist.fears.client.interfaceweb;
 
+import java.util.List;
+
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
@@ -92,29 +94,28 @@ public class Header extends Composite {
 	public void update(String projectID, DisplayFeatureDetailed d){
 		_com.getCurrentVoter(projectID, Cookies.getCookie("fears"), new GetCurrentVoter(d));
 	}
-	
-	public void update(String projectID, FeatureResumeWidget f){
+
+	public void update(String projectID, List<FeatureResumeWidget> f){
 		_com.getCurrentVoter(projectID, Cookies.getCookie("fears"), new GetCurrentVoter(f));
 	}
-	
+
 	public void update(String projectID){
 		_com.getCurrentVoter(projectID, Cookies.getCookie("fears"), new GetCurrentVoter());
 	}
 
-	
+
 	protected class GetCurrentVoter extends ExceptionsTreatment{
 		DisplayFeatureDetailed _d;
-		FeatureResumeWidget _f;
-		
+		List<FeatureResumeWidget> _f;
+
 		public GetCurrentVoter(){
 		}
-		
+
 		public GetCurrentVoter(DisplayFeatureDetailed d){
 			_d=d;
 		}
-		
-		public GetCurrentVoter(FeatureResumeWidget f){
-			RootPanel.get().add(new Label("A actualizar votos da Feature Detailed"));
+
+		public GetCurrentVoter(List<FeatureResumeWidget> f){
 			_f=f;
 		}
 
@@ -124,12 +125,16 @@ public class Header extends Composite {
 				Fears.validCookie= true;
 				Fears.setCurrentUser(voter);
 				Header.this.update(true, Fears.isAdminPage());
+
 				if(_d!=null){
 					_d.updateUserInfo();
 				}
-				if(_f!=null){
-					//_f.updateUserInfo();
-					RootPanel.get().add(new Label("actualizado Feature Detailed"));	
+
+				if(_f!=null && _f.size()>0){
+					for(FeatureResumeWidget f : _f ){
+						f.updateUserInfo();
+					}
+
 				}
 			}
 			else {
@@ -138,7 +143,7 @@ public class Header extends Composite {
 			}
 		}
 
-		
+
 	};
 
 

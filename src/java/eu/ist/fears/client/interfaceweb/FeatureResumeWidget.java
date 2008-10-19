@@ -47,9 +47,7 @@ public class FeatureResumeWidget  extends Composite{
 		_com = new Communication("service");
 		_projectName = f.getProjectName();
 		_projectID = new Integer(f.getProjectID()).toString();
-		if(cb==null)
-			_cb=voteOnListCB;
-		else _cb=cb;
+		_cb=cb;
 		_feature = new VerticalPanel();
 		VerticalPanel voteBox = new VerticalPanel();
 		VerticalPanel vote = new VerticalPanel();
@@ -82,7 +80,6 @@ public class FeatureResumeWidget  extends Composite{
 		vote.add(_votes);
 
 		if(Fears.isLogedIn()){
-
 			_voteButton.setStyleName("ActionVotes");
 			if(f.userHasVoted()){
 				_voteButton.setText("Tirar Voto");
@@ -95,7 +92,6 @@ public class FeatureResumeWidget  extends Composite{
 					_voteButton.addClickListener(_vote);
 				}
 			}
-
 
 		}else{
 			_voteButton.setVisible(false);
@@ -132,38 +128,28 @@ public class FeatureResumeWidget  extends Composite{
 	}
 
 	public void updateUserInfo(){
-		_voteButton.setVisible(true);
-		_voteButton.removeClickListener(_removeVote);
-		_voteButton.removeClickListener(_vote);
-		if(_userHasVoted){
-			_voteButton.setText("Tirar Voto");
-			_voteButton.addClickListener(_removeVote);
-		}else {
-			_voteButton.setText("Votar");
-			_voteButton.addClickListener(_vote);
-
-		}
+		if(Fears.isLogedIn()){
+			_voteButton.setVisible(true);
+			_voteButton.removeClickListener(_removeVote);
+			_voteButton.removeClickListener(_vote);
+			if(_userHasVoted){
+				_voteButton.setText("Tirar Voto");
+				_voteButton.addClickListener(_removeVote);
+			}else {
+				if(Fears.getVotesLeft()>0){
+					_voteButton.setText("Votar");
+					_voteButton.addClickListener(_vote);
+				}else { _voteButton.setVisible(false); }
+			}
+		} else  { _voteButton.setVisible(false); }
 
 	}
 
 	public void update(ViewFeatureDetailed f, boolean updateDescription){
 
-		_voteButton.setVisible(true);
-		_voteButton.removeClickListener(_removeVote);
-		_voteButton.removeClickListener(_vote);
-		if(f.userHasVoted()){
-			_voteButton.setText("Tirar Voto");
-			_voteButton.addClickListener(_removeVote);
-		}else {
-			_voteButton.setText("Votar");
-			_voteButton.addClickListener(_vote);
-		}
-
-
 		_state.setHTML(f.getState().getHTML());
 		_state.setStyleName(f.getState().toString());
 		_userHasVoted=f.userHasVoted();
-
 
 		if(updateDescription)
 			_description.setText(f.getDescription());
@@ -172,6 +158,8 @@ public class FeatureResumeWidget  extends Composite{
 		_author=f.getAuthor();
 
 		_ncomments.setText(new Integer(f.getNComments()).toString());
+
+		updateUserInfo();
 
 	}
 
@@ -190,22 +178,6 @@ public class FeatureResumeWidget  extends Composite{
 		}
 
 	}
-
-	protected AsyncCallback  voteOnListCB = new ExceptionsTreatment(){
-
-		public void onSuccess(Object result) {
-			ViewFeatureDetailed feature = (ViewFeatureDetailed) result;
-			if(result==null){
-				//Erro
-			} else {
-				FeatureResumeWidget.this.update(feature, false);
-				Fears.getHeader().update(_projectID, FeatureResumeWidget.this);
-			}
-		}
-
-
-	};
-
 
 }
 

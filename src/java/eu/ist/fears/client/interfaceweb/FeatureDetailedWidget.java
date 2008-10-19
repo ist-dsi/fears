@@ -89,7 +89,9 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 	}
 
 	public void updateVotesLeft(){
-
+		if(Fears.isLogedIn()){
+			_votesLeft.setHTML("Tem " + Fears.getVotesLeft() + " votos disponiveis.");
+		}
 	}
 
 	public void updateStateChooser(ViewFeatureDetailed f){
@@ -127,8 +129,6 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 
 		if(Fears.isLogedIn()){
 			_votesLeft.setHTML("Tem " + Fears.getVotesLeft() + " votos disponiveis.");
-			
-
 		}
 
 		if(f.getVoters()!=null && f.getVoters().size()>0){
