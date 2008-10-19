@@ -15,6 +15,10 @@ TODO:
 
 -> Editar Projectos.
 
+-> Verificar que mudanças de Estado impedem votos.
+
+-> Verificar como tratar erros de accções nao executadas.
+
 
 WebDesigner:
  -> Na pagina da sugestao falta: ranking.

@@ -117,7 +117,7 @@ public class ListProjectsWidget extends Composite{
 			
 			
 			_removePanel = new DisclosurePanel();
-			_removePanel.setHeader(new Label("Remover"));
+			_removePanel.setHeader(new HTML("Remover"));
 			
 			HorizontalPanel removeExpanded = new HorizontalPanel();
 			removeExpanded.setVerticalAlignment(HorizontalPanel.ALIGN_MIDDLE);

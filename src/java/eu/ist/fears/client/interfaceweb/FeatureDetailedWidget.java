@@ -65,7 +65,9 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 		_commentTextArea.setVisibleLines(5);
 		_commentTextArea.setCharacterWidth(50);
 
+		
 		_votesLeft =  new HTML();
+		
 		_votesLeft.setStyleName("votersMeta");
 		_votesAndVoters.add(_votesLeft);
 		_votesAndVoters.add(_voters);
@@ -125,11 +127,13 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 
 		if(Fears.isLogedIn()){
 			_votesLeft.setHTML("Tem " + Fears.getVotesLeft() + " votos disponiveis.");
+			
 
 		}
 
 		if(f.getVoters()!=null && f.getVoters().size()>0){
 			_voters.setHeader(new HTML("Ver "+f.getVoters().size() + " votantes &raquo;" ));
+			_voters.getHeader().setStyleName("showVoters");
 			HorizontalPanel votersExpanded = new HorizontalPanel();
 			int i=0;
 			for(ViewVoterResume v :  f.getVoters()){

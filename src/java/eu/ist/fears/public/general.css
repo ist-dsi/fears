@@ -28,7 +28,6 @@ border-top: 20px solid #d0e4f6;
 
 .gwt-DialogBox{
 border: 2px solid black;
-
 }
 
 .loginWindow{
@@ -330,16 +329,18 @@ border-bottom: 1px solid #ddc;
 }
 
 
-.gwt-DisclosurePanel-closed .header{
+
+.gwt-DisclosurePanel .header{
 text-decoration: underline;
 color: #999;
-} 
+width: 1px;
+}
 
-
-.gwt-DisclosurePanel-open .header{
-text-decoration: underline;
-color: #999;
-} 
+.showVoters{
+width: 87px;
+cursor : hand;
+/* cursr : pointer; */
+}  
 
 
 .meta {

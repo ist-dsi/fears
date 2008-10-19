@@ -295,7 +295,6 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 
 	public ViewVoterResume getCurrentVoter(String projectID, String sessionID) throws FearsException {
-		isLoggedIn(sessionID);
 		
 		Project p =FearsApp.getFears().getProject(projectID);
 
