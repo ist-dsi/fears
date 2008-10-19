@@ -6,7 +6,8 @@
   </description>
 	
 	
-
+	<property name="adminUser" value="ist1XXXXX"/>
+	
   <property name="src.dir" location="src"/>
   <property name="src.gen.dir" location="src_gen"/>
   <property name="java.src.dir" location="${src.dir}/java"/>
@@ -22,6 +23,8 @@
   <property name="dml.fenix.sqltypes" value="${config.dir}/dataTypesJDBCTypes.properties"/>
   <property name="dml.fenix.typeconverters" value="${config.dir}/dataTypeConversors.properties"/>
 
+	
+	
 	<import file="dml-generate.xml"/>
 
   <!-- set classpath -->
@@ -121,5 +124,18 @@
       </classpath>      
     </java>
   </target>
+	
+	<target name="addAdmin" depends="compile">
+	    <java classname="eu.ist.fears.server.AddAdmin" >
+	    	<arg value="${adminUser}"/>
+	    	 <classpath>
+	    	 <pathelement path="${build.dir}"/>
+	    	 <!-- Tirei a dir lib, o windows nao gostava de tantos argumentos... -->
+	    	<fileset dir="${deploy.lib.dir}"/>
+	    	<fileset dir="${lib.dir}"/>
+	    	<pathelement path="${dml.src.dir}/"/>
+	    	</classpath>    
+	    </java>
+	  </target>
 	
 </project>

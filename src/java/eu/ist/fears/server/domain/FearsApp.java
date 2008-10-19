@@ -57,9 +57,11 @@ public class FearsApp extends FearsApp_Base {
 				return u;					
 		}
 		
+		if(name!=null){
 		User temp = new User(name);
 		addUser(temp);
 		return temp;
+		} else return null;
 	
 	}
 

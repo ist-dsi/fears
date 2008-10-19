@@ -1,16 +1,9 @@
 TODO:
--> (Verifcaçoes de segurança no serviço. (Usar TFC do G. Dumiense)[ Fazer 1º manual]) -> DONE.
-
--> (Verificações de consistencia de dominio, no servidor.) -> DONE.
 	
 -> Login CAS.
 
 -> Administrador de Projecto.
 
--> Verificações de segurança e Erros na Interface:	 	
-	- (Verificar que as interfaces so aparecem a admins -> paginas de admin, e estado votacoes) -> DONE.
-	- Actualizar estado de botao Votar, na lista de sugestoes.
-	
 -> Paginação na pagina de listar sugestoes.
 
 -> Editar Projectos.
@@ -23,3 +16,13 @@ TODO:
 WebDesigner:
  -> Na pagina da sugestao falta: ranking.
  -> Login.
+ 
+ 
+DONE (Tudo o que está aqui está feito, verificar se alguma coisa parecida
+ foi esquecida nestes pontos):
+ 
+-> Verifcaçoes de segurança no serviço. (Usar TFC do G. Dumiense)[ Fazer 1º manual])
+
+-> Verificações de segurança e Erros na Interface:	 	
+	- Verificar que as interfaces so aparecem a admins -> paginas de admin, e estado votacoes.
+	- Actualizar estado de botao Votar, na lista de sugestoes.-> DONE.
