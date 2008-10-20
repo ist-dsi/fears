@@ -1,32 +1,13 @@
 package eu.ist.fears.client;
 
 
-import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Frame;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
-
-import eu.ist.fears.client.common.communication.Communication;
-import eu.ist.fears.client.common.exceptions.ExceptionsTreatment;
-import eu.ist.fears.client.common.views.ViewVoterResume;
 
 public class Login extends Composite {
 
-	private Communication _com;
 	private VerticalPanel _main;
-	private TextBox _username; 
-	private Button _loginButton;
-	private Label _alert;
-
 
 	public Login(Fears f){
 
@@ -55,40 +36,15 @@ public class Login extends Composite {
 		iframe.setSize("507px", "450px");
 		_main.add(iframe);
 		
+		/*EventManager.addListener(iframe.getElement(), "load", new EventCallback() {
+            public void execute(EventObject e) {
+            	RootPanel.get().add(new HTML("Evento:" + e.toString()));
+               
+            }
+         }, new ListenerConfig()); */
+		
 	}
+	
 
-	private class LoginButton implements ClickListener{
-		Fears _f;
-
-		public LoginButton(Fears f){
-			_f=f;
-		}
-
-		public void onClick(Widget sender) {
-			_alert.setText("A fazer Login");
-			//_com.login(_username.getText(),  "password", new LoginCB(_f));
-			Fears.popup.hide();
-		}
-
-	}
-
-
-	private class LoginCB extends ExceptionsTreatment{
-		Fears _f;
-
-		public LoginCB(Fears f){
-			_f=f;
-		}
-
-		public void onSuccess(Object result){ 
-			ViewVoterResume voter = (ViewVoterResume) result;
-			_f.setCookie(voter.getSessionID(), voter);
-			if(History.getToken().equals("login")){
-				Fears.popup.hide();
-				History.back();
-			}else
-				_f.onHistoryChanged(History.getToken());	
-		}
-	};
 
 }

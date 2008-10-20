@@ -202,29 +202,6 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	public ViewVoterResume validateSessionID(String sessionID) {
 		HttpSession session = this.getThreadLocalRequest().getSession();
 		ViewVoterResume temp = (ViewVoterResume)session.getAttribute("fears_voter");
-		String username;
-		if(temp==null){
-			//Try the cas
-			ServiceTicketValidator cas = (ServiceTicketValidator)session.getAttribute("fears_CAS");
-			if(cas!=null){
-				System.out.println("We have already authenticad.");
-				if(cas.isAuthenticationSuccesful()) {
-					username = cas.getUser();
-					System.out.println("User is valid.");
-					username= username.toLowerCase();
-					User u = FearsApp.getFears().getUser(username);
-					 temp =  new ViewVoterResume(temp.getName(),  session.getId(), FearsApp.getFears().isAdmin(u));
-					session.setAttribute("fears_voter", temp);
-					return temp;
-				} else {
-					System.out.println( cas.getErrorCode() + cas.getErrorMessage() );
-					return temp;
-					/* handle the error */
-				}
-				
-			}
-			
-		}
 		
 		return temp;
 	}

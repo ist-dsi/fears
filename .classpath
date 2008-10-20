@@ -27,5 +27,6 @@
 	<classpathentry kind="lib" path="deploy-lib/gwt-servlet.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/joda-time-1.5.2.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/casclient-2.1.1.jar"/>
+	<classpathentry kind="lib" path="deploy-lib/gwtext.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

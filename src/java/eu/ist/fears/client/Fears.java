@@ -4,10 +4,16 @@ package eu.ist.fears.client;
 import java.util.Date;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.IFrameElement;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -25,7 +31,7 @@ import eu.ist.fears.client.interfaceweb.Path;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class Fears implements EntryPoint, HistoryListener  {
+public class Fears extends Widget implements EntryPoint, HistoryListener   {
 
 
 	protected static Communication _com;
@@ -37,6 +43,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 	protected static Path path;
 	protected static ViewVoterResume _curretUser;
 	public static boolean validCookie;
+	protected static String lastURL;
 
 
 	/**
@@ -72,15 +79,14 @@ public class Fears implements EntryPoint, HistoryListener  {
 		frameBox.add(frame);
 		frame.add(path);
 		frame.add(content);
-		
+
 
 		String ticket=getTicket();
 		if(ticket!=null && !ticket.isEmpty()){
-			GWT.log("TEnho 1 ticket:" + ticket, null);
 			_com.CASlogin(ticket, null, new WaitForLogin());
 			return;
 		}
-		
+
 		verifyLogin(false);
 		Fears.getHeader().update(false, isAdminPage());
 
@@ -182,6 +188,9 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 		verifyLogin(false);
 
+		if(popup!=null)
+			popup.setVisible(false);
+		
 		popup =  new DialogBox(false,false);
 		VerticalPanel dialogContents = new VerticalPanel();
 		dialogContents.setSpacing(0);
@@ -194,7 +203,9 @@ public class Fears implements EntryPoint, HistoryListener  {
 		login.setStyleName("loginWindow");
 		popup.setSize("400px", "400px");
 		popup.setPopupPosition(500, 50);
+		saveFears(this);
 		popup.show();
+		//popup.getElement().setId("FEARSPOPUP");
 
 	}
 
@@ -202,7 +213,8 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 		validCookie=false;
 		header.update(false, isAdminPage());
-		_com.logoff(Cookies.getCookie("fears"), null);
+		_com.logoff(Cookies.getCookie("fears"), new ExceptionsTreatment(){
+			public void onSuccess(Object result) {}});
 		_curretUser.setName("guest");
 		Cookies.removeCookie("fears");
 		History.back();
@@ -240,6 +252,9 @@ public class Fears implements EntryPoint, HistoryListener  {
 		if (RootPanel.get("Admin") != null){
 			return;			
 		}
+
+		if(!"login".equals(historyToken) && !"logoff".equals(historyToken))
+			lastURL=historyToken;
 
 		header.update(false,false);
 		parseURL(historyToken, this);
@@ -313,11 +328,23 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 	}
 
+	public void loggedIn(){
+		popup.setVisible(false);
+		if(History.getToken().equals("login")){
+			History.newItem(lastURL);
+		}else{
+			History.fireCurrentHistoryState();
+		}
+	}
 
-	public static native void setURL(String url) /*-{
-	$wnd.parent.location=url;
-}-*/;
+	public native void saveFears(Fears f)/*-{
+		$wnd.myfears=f;
+	}-*/;
 
+	public static native void callLoggedIn()/*-{
+	var temp=$wnd.parent.myfears;
+		temp.@eu.ist.fears.client.Fears::loggedIn()();
+	}-*/;
 
 	public static native String getParamString() /*-{
     return $wnd.location.search;
@@ -331,7 +358,6 @@ public class Fears implements EntryPoint, HistoryListener  {
 		int index=string.indexOf('=');
 		if(string.length()>index+1){
 			String ticket = string.substring(index+1);
-			GWT.log("Main:" + Cookies.getCookie("JSESSIONID"), null);
 			return ticket;	
 		}
 		return null;
@@ -362,25 +388,26 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 	};
 
-	protected static class WaitForLogin extends ExceptionsTreatment{
+	protected class WaitForLogin extends ExceptionsTreatment{
 
 		public WaitForLogin(){}
 
 		public void onSuccess(Object result){
 			ViewVoterResume voter = (ViewVoterResume) result;
 			if(voter==null){
-				GWT.log("User nao está logado", null);
 			}
 			else {
 				Fears.setCurrentUser(voter);	
 				content.clear();
 				content.add(new HTML("Utilizador logado, a fechar janela de login..."));
-				setURL(GWT.getHostPageBaseURL()+"Fears.html");
+				Fears.callLoggedIn();
 				return;
 			}
 		}
 
 
 	}
+
+
 
 }

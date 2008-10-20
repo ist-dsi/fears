@@ -81,6 +81,8 @@
 
   <target name="compile-javascript" depends="compile">
     <java classname="com.google.gwt.dev.GWTCompiler" fork="true">
+    	<jvmarg value="-Xmx256M"/>
+    		
       <classpath>
         <pathelement path="${java.src.dir}"/>
          <pathelement path="${build.dir}"/>
