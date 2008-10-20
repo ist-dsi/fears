@@ -5,6 +5,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
 import eu.ist.fears.client.common.State;
+import eu.ist.fears.client.common.exceptions.FearsException;
 
 
 public class Communication implements FearsServiceAsync{
@@ -65,9 +66,9 @@ public class Communication implements FearsServiceAsync{
 		_service.validateSessionID(sessionID, callback);
 	}
 
-	public void login(String user, String password, AsyncCallback callback ) {
-		_service.login(user,password,  callback);
-	}
+	//public void login(String user, String password, AsyncCallback callback ) {
+	//	_service.login(user,password,  callback);
+	//}
 	
 	public void logoff(String sessionID, AsyncCallback callback) {
 		_service.logoff(sessionID, callback);
@@ -103,6 +104,10 @@ public class Communication implements FearsServiceAsync{
 			AsyncCallback callback) {
 		_service.getCurrentVoter(projectid, cookie, callback);
 		
+	}
+
+	public void CASlogin(String ticket, String cookie, AsyncCallback callback){
+		_service.CASlogin(ticket, cookie, callback);
 	}
 
 	

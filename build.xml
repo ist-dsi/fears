@@ -23,6 +23,7 @@
   <property name="dml.fenix.sqltypes" value="${config.dir}/dataTypesJDBCTypes.properties"/>
   <property name="dml.fenix.typeconverters" value="${config.dir}/dataTypeConversors.properties"/>
 
+<property name="tomcat" value="C:\Program Files\Apache Software Foundation\Tomcat 6.0\webapps\webapp\"/>
 	
 	
 	<import file="dml-generate.xml"/>
@@ -90,6 +91,8 @@
       <arg value="-out"/>
       <arg value="${www.dir}"/>
       <arg value="eu.ist.fears.Fears"/>
+    	<arg value="-style"/>
+    	<arg value="DETAILED"/>
     </java>
   </target>
 
@@ -137,5 +140,12 @@
 	    	</classpath>    
 	    </java>
 	  </target>
+	
+	<target name="deploy" depends="build-webapp">
+			<mkdir dir="${tomcat}"/>
+			<copy    todir="${tomcat}">
+			   <fileset dir="${build.webapp.dir}"/>
+			</copy>
+		</target>
 	
 </project>

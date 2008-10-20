@@ -2,15 +2,13 @@ package eu.ist.fears.client;
 
 
 import java.util.Date;
-
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -74,6 +72,17 @@ public class Fears implements EntryPoint, HistoryListener  {
 		frameBox.add(frame);
 		frame.add(path);
 		frame.add(content);
+		
+
+		String ticket=getTicket();
+		if(ticket!=null && !ticket.isEmpty()){
+			GWT.log("TEnho 1 ticket:" + ticket, null);
+			_com.CASlogin(ticket, null, new WaitForLogin());
+			return;
+		}
+		
+		verifyLogin(false);
+		Fears.getHeader().update(false, isAdminPage());
 
 	}
 
@@ -107,7 +116,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 	public static boolean isLogedIn(){
 		return validCookie;
 	}
-	
+
 	public static boolean isAdminUser(){
 		return _curretUser.isAdmin();
 	}
@@ -180,11 +189,13 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 		Login login = new Login(this);
 		dialogContents.add(login);
-		dialogContents.add(new HTML("<iframe src=\"http://localhost:8080/cas\" width=\"507px\" height=\"450px\"> <\\iframe>"));
+		//dialogContents.add(iframe);
+
 		login.setStyleName("loginWindow");
 		popup.setSize("400px", "400px");
 		popup.setPopupPosition(500, 50);
 		popup.show();
+
 	}
 
 	public void viewLogout(){
@@ -217,11 +228,6 @@ public class Fears implements EntryPoint, HistoryListener  {
 		}	
 
 		String sessionID = Cookies.getCookie("fears");
-		if(sessionID == null){
-			if(tryToLogin)
-				viewLogin();
-			return false;
-		}
 
 		_com.validateSessionID(sessionID, new ValidateSession(this, tryToLogin));
 		return false;
@@ -260,6 +266,7 @@ public class Fears implements EntryPoint, HistoryListener  {
 		}else if(url.startsWith("logout")){
 			f.viewLogout();
 		}
+
 
 	}
 
@@ -306,6 +313,32 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 	}
 
+
+	public static native void setURL(String url) /*-{
+	$wnd.parent.location=url;
+}-*/;
+
+
+	public static native String getParamString() /*-{
+    return $wnd.location.search;
+}-*/;
+
+	public static String getTicket(){
+		String string=getParamString();
+		if(!string.startsWith("?ticket="))
+			return null;
+
+		int index=string.indexOf('=');
+		if(string.length()>index+1){
+			String ticket = string.substring(index+1);
+			GWT.log("Main:" + Cookies.getCookie("JSESSIONID"), null);
+			return ticket;	
+		}
+		return null;
+
+	}
+
+
 	protected class ValidateSession extends ExceptionsTreatment{
 		Fears _f;
 		boolean _trytoLogin;
@@ -329,5 +362,25 @@ public class Fears implements EntryPoint, HistoryListener  {
 
 	};
 
+	protected static class WaitForLogin extends ExceptionsTreatment{
+
+		public WaitForLogin(){}
+
+		public void onSuccess(Object result){
+			ViewVoterResume voter = (ViewVoterResume) result;
+			if(voter==null){
+				GWT.log("User nao está logado", null);
+			}
+			else {
+				Fears.setCurrentUser(voter);	
+				content.clear();
+				content.add(new HTML("Utilizador logado, a fechar janela de login..."));
+				setURL(GWT.getHostPageBaseURL()+"Fears.html");
+				return;
+			}
+		}
+
+
+	}
 
 }

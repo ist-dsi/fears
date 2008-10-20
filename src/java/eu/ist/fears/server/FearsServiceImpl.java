@@ -1,11 +1,15 @@
 package eu.ist.fears.server;
 
 
+import java.io.IOException;
 import java.security.acl.NotOwnerException;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import pt.ist.dmapl.enforcement.AccessControlSession;
 import pt.ist.fenixframework.Config;
@@ -16,6 +20,7 @@ import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.gwt.user.server.rpc.UnexpectedException;
 
+import edu.yale.its.tp.cas.client.ServiceTicketValidator;
 import eu.ist.fears.client.common.State;
 import eu.ist.fears.client.common.communication.FearsService;
 import eu.ist.fears.client.common.exceptions.FearsException;
@@ -92,7 +97,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 	public ViewFeatureDetailed vote(String projectID, String name, String sessionID) throws FearsException{
 		isLoggedIn(sessionID);
-		
+
 		Project p =FearsApp.getFears().getProject(projectID);
 
 		if(p==null)
@@ -123,8 +128,8 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 	public ViewFeatureDetailed getFeature(String projectID,
 			String name, String sessionID) throws FearsException{
-		
-		
+
+
 		Project p =FearsApp.getFears().getProject(projectID);
 
 		if(p==null)
@@ -143,7 +148,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	public ViewFeatureDetailed addComment(String projectID,
 			String featureName, String comment, State newState, String sessionID) throws FearsException {
 		isLoggedIn(sessionID);
-		
+
 		Project p =FearsApp.getFears().getProject(projectID);
 
 		if(p==null)
@@ -175,14 +180,14 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 	public void deleteProject(String name, String sessionID) throws FearsException{
 		isAdmin(sessionID);
-		
+
 		if(FearsApp.getFears().getProject(name).getFeatureRequestCount()>=0)
 			throw new FearsException("Projecto n&atilde;o pode ser remoido, porque tem sugest&otilde;oes");
-		
+
 		FearsApp.getFears().deleteProject(name);
 	}
 
-	public ViewVoterResume login(String username, String password) throws FearsException{
+	/*public ViewVoterResume login(String username, String password) throws FearsException{
 		HttpSession session = this.getThreadLocalRequest().getSession();
 
 		//Fingir que esta tudo bem.
@@ -192,12 +197,35 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		session.setAttribute("fears_voter", ret);
 		return ret;
 
-	}
+	} */
 
 	public ViewVoterResume validateSessionID(String sessionID) {
 		HttpSession session = this.getThreadLocalRequest().getSession();
 		ViewVoterResume temp = (ViewVoterResume)session.getAttribute("fears_voter");
-
+		String username;
+		if(temp==null){
+			//Try the cas
+			ServiceTicketValidator cas = (ServiceTicketValidator)session.getAttribute("fears_CAS");
+			if(cas!=null){
+				System.out.println("We have already authenticad.");
+				if(cas.isAuthenticationSuccesful()) {
+					username = cas.getUser();
+					System.out.println("User is valid.");
+					username= username.toLowerCase();
+					User u = FearsApp.getFears().getUser(username);
+					 temp =  new ViewVoterResume(temp.getName(),  session.getId(), FearsApp.getFears().isAdmin(u));
+					session.setAttribute("fears_voter", temp);
+					return temp;
+				} else {
+					System.out.println( cas.getErrorCode() + cas.getErrorMessage() );
+					return temp;
+					/* handle the error */
+				}
+				
+			}
+			
+		}
+		
 		return temp;
 	}
 
@@ -212,7 +240,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	public ViewFeatureDetailed removeVote(String projectID, String feature,
 			String sessionID) throws FearsException {
 		isLoggedIn(sessionID);
-		
+
 		Project p =FearsApp.getFears().getProject(projectID);
 
 		if(p==null)
@@ -229,14 +257,14 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 	public ViewAdmins getAdmins(String sessionID) throws FearsException {
 		isAdmin(sessionID);
-		
+
 		return FearsApp.getFears().getViewAdmins();
 	}
 
 
 	public ViewAdmins addAdmin(String userName, String sessionID) throws FearsException {
 		isAdmin(sessionID);
-		
+
 		FearsApp.getFears().addAdmin(FearsApp.getFears().getUser(userName));
 		return FearsApp.getFears().getViewAdmins();
 	}
@@ -244,7 +272,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 	public ViewAdmins removeAdmin(String userName, String sessionID) throws FearsException {
 		isAdmin(sessionID);
-		
+
 		FearsApp.getFears().removeAdmin(FearsApp.getFears().getUser(userName));
 		return FearsApp.getFears().getViewAdmins();
 	}
@@ -256,6 +284,8 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 		if(p==null)
 			throw new NoProjectException(projectID);
+
+		System.out.println("ID search:"+this.getThreadLocalRequest().getSession().getId());
 
 		if(getUserFromSession(sessionID)==null)
 			return p.search(search, sort, page, filter, null);		
@@ -288,14 +318,14 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 	public void logoff(String sessionID) throws FearsException{
 		isLoggedIn(sessionID);
-		
+
 		HttpSession session = this.getThreadLocalRequest().getSession();
 		session.invalidate();
 	}
 
 
 	public ViewVoterResume getCurrentVoter(String projectID, String sessionID) throws FearsException {
-		
+
 		Project p =FearsApp.getFears().getProject(projectID);
 
 		if(p==null)
@@ -307,6 +337,90 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 			return null;
 
 		return u.getVoter(p).getCurrentVoterView(sessionID);
+	}
+
+
+	public ViewVoterResume CASlogin(String ticket, String sessionID)
+	throws FearsException {
+		HttpSession session = this.getThreadLocalRequest().getSession();
+
+		String username=validateTicket(ticket, sessionID);
+		if(username!=null){
+			username = username.toLowerCase();
+			User temp = FearsApp.getFears().getUser(username);
+			ViewVoterResume ret =  new ViewVoterResume(temp.getName(),  session.getId(), FearsApp.getFears().isAdmin(temp));
+			session.setAttribute("fears_voter", ret);
+			System.out.println("CAS Login: User:" + ret.getName());
+			return ret;
+		}else System.out.println("ERRO NO CAS....");
+		return null;
+
+	}
+
+	public String validateTicket(String ticket, String sessionID){
+		HttpSession session = this.getThreadLocalRequest().getSession();
+
+		String user = null;
+		String errorCode = null;
+		String errorMessage = null;
+
+		ServiceTicketValidator cas = (ServiceTicketValidator)session.getAttribute("fears_CAS");
+		/* instantiate a new ServiceTicketValidator */
+		if(cas==null){
+			cas = new ServiceTicketValidator();
+			/* set its parameters */
+			cas.setCasValidateUrl("https://localhost:8443/cas/serviceValidate");
+			cas.setService("https://localhost:8443/webapp/Fears.html");
+
+
+			System.out.println("Deubg ticket:"+ticket);
+			cas.setServiceTicket(ticket);
+
+			try {
+				cas.validate();
+			} catch (IOException e) {
+				System.out.println("Validate error:"+ e);
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SAXException e) {
+				System.out.println("Validate error:"+ e);
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ParserConfigurationException e) {
+				System.out.println("Validate error:"+ e);
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			if(cas.isAuthenticationSuccesful()) {
+				user = cas.getUser();
+				session.setAttribute("fears_CAS", cas);
+			} else {
+				errorCode = cas.getErrorCode();
+				errorMessage = cas.getErrorMessage();
+				System.out.println(errorCode +errorMessage );
+				/* handle the error */
+			}
+
+			return user;
+		}
+		
+		//We have already authenticaed
+		else{
+			System.out.println("We have already authenticad.");
+			if(cas.isAuthenticationSuccesful()) {
+				user = cas.getUser();
+				System.out.println("User is valid.");
+			} else {
+				errorCode = cas.getErrorCode();
+				errorMessage = cas.getErrorMessage();
+				System.out.println(errorCode +errorMessage );
+				/* handle the error */
+			}
+			return user;
+
+		}
+
 	}
 
 }

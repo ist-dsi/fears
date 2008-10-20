@@ -6,6 +6,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -29,11 +30,12 @@ public class Login extends Composite {
 
 	public Login(Fears f){
 
-		_com= new Communication("service");
+		/*_com= new Communication("service"); */
 		_main = new VerticalPanel();
+		
 		initWidget(_main);
 		_main.setStyleName("login");
-
+		/*
 		//Fears.getPath().setString("Login");
 
 		HorizontalPanel row = new HorizontalPanel();
@@ -47,7 +49,12 @@ public class Login extends Composite {
 		_alert = new Label();
 		_main.add(_alert);
 		_main.add(_loginButton);
-		_loginButton.addClickListener(new LoginButton(f));
+		_loginButton.addClickListener(new LoginButton(f));*/
+		
+		Frame iframe =new Frame("https://localhost:8443/cas/?service=https://localhost:8443/webapp/Fears.html");
+		iframe.setSize("507px", "450px");
+		_main.add(iframe);
+		
 	}
 
 	private class LoginButton implements ClickListener{
@@ -59,7 +66,7 @@ public class Login extends Composite {
 
 		public void onClick(Widget sender) {
 			_alert.setText("A fazer Login");
-			_com.login(_username.getText(),  "password", new LoginCB(_f));
+			//_com.login(_username.getText(),  "password", new LoginCB(_f));
 			Fears.popup.hide();
 		}
 
