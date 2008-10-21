@@ -1,6 +1,6 @@
 TODO:
 	
--> Login CAS.
+
 
 -> Administrador de Projecto.
 
@@ -21,8 +21,10 @@ WebDesigner:
 DONE (Tudo o que está aqui está feito, verificar se alguma coisa parecida
  foi esquecida nestes pontos):
  
--> Verifcaçoes de segurança no serviço. (Usar TFC do G. Dumiense)[ Fazer 1º manual])
+-> Verifcaçoes de segurança no serviço. (Usar TFC do G. Dumiense)[ Fazer 1º manual]) - DONE.
 
 -> Verificações de segurança e Erros na Interface:	 	
-	- Verificar que as interfaces so aparecem a admins -> paginas de admin, e estado votacoes.
+	- Verificar que as interfaces so aparecem a admins -> paginas de admin, e estado votacoes. - DONE.
 	- Actualizar estado de botao Votar, na lista de sugestoes.-> DONE.
+
+-> Login CAS - DONE.
