@@ -1,6 +1,4 @@
 TODO:
-	
-
 
 -> Administrador de Projecto.
 
@@ -8,14 +6,18 @@ TODO:
 
 -> Editar Projectos.
 
--> Verificar que mudanças de Estado impedem votos.
+-> Verificar que mudanças de Estado impedem votos. [Que mudanças de Estado? ]
 
 -> Verificar como tratar erros de accções nao executadas.
+
+-> Acrescentar Estado Rejeitado.
+
+-> Acrescentar modificações de webdesigner, na pesquisa, e nas paginas de admin.
 
 
 WebDesigner:
  -> Na pagina da sugestao falta: ranking.
- -> Login.
+ -> Login. [Janela completa ]
  
  
 DONE (Tudo o que está aqui está feito, verificar se alguma coisa parecida

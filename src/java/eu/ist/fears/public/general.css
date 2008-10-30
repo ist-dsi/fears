@@ -8,7 +8,7 @@ table {
 border-collapse: collapse;
 }
 
-a { color: #588aa7; }
+a { color: #488db7; }
 
 body {
 font-family: Arial;
@@ -16,7 +16,10 @@ margin: 0 0 60px 0;
 padding: 0;
 font-size: 76%;
 line-height: 1.6em;
-background: #e7e7df;
+background: #e8e8de;
+}
+.gwt-Label {
+white-space: pre;
 }
 
 .gwt-DialogBox .Caption {
@@ -47,7 +50,8 @@ margin: 0 0 60px 0;
 .headerBox {
 width: 699px;
 margin: 0 auto;
-color: #fff;
+color: #8a8a7f;
+color: #5a5a4f;
 margin-top: 20px;
 margin-bottom: 21px;
 }
@@ -57,11 +61,13 @@ width: 699px;
 }
 
 .header a {
-color: #fff;
+color: #8a8a7f;
+color: #5a5a4f;
 }
 
 .frameBox {
 border: 4px solid #d5d5ca;
+border: 4px solid #d6d7c7;
 width: 764px;
 background: #fff;
 margin: 0 auto;
@@ -82,7 +88,7 @@ margin-bottom: 15px;
 }
 
 .Path a {
-color: #6d9966;
+color: #67a05c;
 }
 
 .width100{
@@ -111,7 +117,7 @@ margin-top:4px;
 font-size: 1.5em;
 font-weight: bold;
 text-decoration: none;
-border-bottom: 2px solid #d5e2e9;
+border-bottom: 2px solid #d1e3ed;
 margin-bottom: 0.1em;
 }
 
@@ -160,8 +166,8 @@ margin-top: 0px;
 }
 
 .searchBox {
-background: #f0f0e9;
-border: 0px solid #eeeee5;
+background: #f1f1e7;
+border: 0px solid #eff0e2;
 width: 695px;
 height: 65px;
 }
@@ -190,8 +196,8 @@ border-bottom: 1px solid #bba;
 }
 
 .filterBox {
-/*border: 2px solid #eeeee5;*/
-background: #f8f8f3;
+/*border: 2px solid #eff0e2;*/
+background: #f9f9f1;
 width: 695px;
 height: 40px;
 margin-top: 20px;
@@ -221,7 +227,7 @@ margin-bottom: 45px;
 }
 
 .Novo { 
-background: #bcbcb1;
+background: #bfbdae;
 font-weight: normal;
 color: #fff;
 font-size: 12px;
@@ -231,7 +237,7 @@ margin-bottom: 3px;
 }
  
 .Planeado {
-background: #588aa7;
+background: #488db7;
 font-weight: normal;
 color: #fff;
 font-size: 12px;
@@ -241,7 +247,7 @@ margin-bottom: 3px;
 }
 
 .Implementacao { 
-background: #d68450;
+background: #db9b48;
 font-weight: normal;
 color: #fff;
 font-size: 12px;
@@ -252,7 +258,7 @@ margin-bottom: 3px;
 
 
 .Completo {
-background: #6d9966;
+background: #67a05c;
 font-weight: normal;
 color: #fff;
 font-size: 12px;
@@ -261,11 +267,19 @@ margin-left:8px;
 margin-bottom: 3px;
 }
 
-
+.Rejeitado {
+background: #db5d48;
+font-weight: normal;
+color: #fff;
+font-size: 12px;
+padding:2px 4px;
+margin-left:8px;
+margin-bottom: 3px;
+}
 
 .voteBox {
-background: #fafaf5;
-border: 4px solid #eeeee5;
+background: #fbfaf5;
+border: 4px solid #eff0e2;
 width: 65px;
 height: 70px;
 }
@@ -278,11 +292,11 @@ width: 100%;
 font-size: 1.6em;
 font-weight: bold;
 margin-top: 10px;
-color: #588aa7;
+color: #488db7;
 }
 
 .ActionVotes { 	
-color: #588aa7;
+color: #488db7;
 font-size: 0.9em;
 text-decoration: underline;
 background: transparent;
@@ -306,7 +320,7 @@ text-decoration: none;
 }
 
 .featureTitle{
-border-bottom: 2px solid #d5e2e9;
+border-bottom: 2px solid #d1e3ed;
 }
 
 .featureDetailed{
