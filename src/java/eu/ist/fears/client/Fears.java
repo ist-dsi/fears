@@ -217,8 +217,9 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 			public void onSuccess(Object result) {}});
 		_curretUser.setName("guest");
 		Cookies.removeCookie("fears");
+		RootPanel.get().add(new HTML(Cookies.getCookie("fears")));
 		History.back();
-
+		
 	}
 
 
@@ -329,7 +330,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 	}
 
 	public void loggedIn(){
-		popup.setVisible(false);
+		popup.hide();
 		if(History.getToken().equals("login")){
 			History.newItem(lastURL);
 		}else{
@@ -340,6 +341,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 	public native void saveFears(Fears f)/*-{
 		$wnd.myfears=f;
 	}-*/;
+	
 
 	public static native void callLoggedIn()/*-{
 	var temp=$wnd.parent.myfears;
@@ -400,6 +402,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 				Fears.setCurrentUser(voter);	
 				content.clear();
 				content.add(new HTML("Utilizador logado, a fechar janela de login..."));
+				frameBox.setVisible(false);
 				Fears.callLoggedIn();
 				return;
 			}

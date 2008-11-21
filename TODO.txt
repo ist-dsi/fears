@@ -1,19 +1,15 @@
 TODO:
 
 -> Administrador de Projecto.
-
 -> Paginação na pagina de listar sugestoes.
-
 -> Editar Projectos.
-
 -> Verificar que mudanças de Estado impedem votos. [Que mudanças de Estado? ]
-
 -> Verificar como tratar erros de accções nao executadas.
-
 -> Acrescentar Estado Rejeitado.
-
 -> Acrescentar modificações de webdesigner, na pesquisa, e nas paginas de admin.
 
+BUGS:
+ -> No Safari não faz logout.
 
 WebDesigner:
  -> Na pagina da sugestao falta: ranking.
@@ -28,5 +24,3 @@ DONE (Tudo o que está aqui está feito, verificar se alguma coisa parecida
 -> Verificações de segurança e Erros na Interface:	 	
 	- Verificar que as interfaces so aparecem a admins -> paginas de admin, e estado votacoes. - DONE.
 	- Actualizar estado de botao Votar, na lista de sugestoes.-> DONE.
-
--> Login CAS - DONE.
