@@ -11,7 +11,8 @@ public class Comment extends Comment_Base {
     
     public  Comment(String c, Voter v, State newState, State oldState) {
         super();
-        setComment(c);
+    	//Remove all \r inserted by IE browser.
+        setComment(c.replaceAll("\r",""));
         setAuthor(v);
         setNewState(newState);
         setOldState(oldState);
