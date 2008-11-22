@@ -262,8 +262,6 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		if(p==null)
 			throw new NoProjectException(projectID);
 
-		System.out.println("ID search:"+this.getThreadLocalRequest().getSession().getId());
-
 		if(getUserFromSession(sessionID)==null)
 			return p.search(search, sort, page, filter, null);		
 

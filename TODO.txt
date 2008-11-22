@@ -9,7 +9,7 @@ TODO:
 -> Acrescentar modificações de webdesigner, na pesquisa, e nas paginas de admin.
 
 BUGS:
- -> No Safari não faz logout.
+ - -
 
 WebDesigner:
  -> Na pagina da sugestao falta: ranking.

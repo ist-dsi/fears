@@ -24,7 +24,8 @@ public class FeatureRequest extends FeatureRequest_Base {
 
 	public FeatureRequest(String name, String description, Voter voter){
 		setName(name);
-		setDescription(description);
+		//Remove all \r inserted by IE browser.
+		setDescription(description.replaceAll("\r",""));
 
 		setAuthor(voter);
 		setState(State.Novo);

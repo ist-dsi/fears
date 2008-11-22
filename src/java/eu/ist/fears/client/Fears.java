@@ -217,7 +217,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 			public void onSuccess(Object result) {}});
 		_curretUser.setName("guest");
 		Cookies.removeCookie("fears");
-		RootPanel.get().add(new HTML(Cookies.getCookie("fears")));
+		Cookies.removeCookie("JSESSIONID");
 		History.back();
 		
 	}

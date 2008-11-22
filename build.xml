@@ -93,8 +93,8 @@
       <arg value="-out"/>
       <arg value="${www.dir}"/>
       <arg value="eu.ist.fears.Fears"/>
-    	<arg value="-style"/>
-    	<arg value="DETAILED"/>
+    	<!-- <arg value="-style"/>
+    	<arg value="DETAILED"/> -->
     </java>
   </target>
 

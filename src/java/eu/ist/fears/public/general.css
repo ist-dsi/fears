@@ -18,8 +18,10 @@ font-size: 76%;
 line-height: 1.6em;
 background: #e8e8de;
 }
+
 .gwt-Label {
 white-space: pre;
+white-space: pre-line;
 }
 
 .gwt-DialogBox .Caption {

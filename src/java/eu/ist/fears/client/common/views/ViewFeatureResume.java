@@ -45,7 +45,8 @@ public class ViewFeatureResume implements IsSerializable{
 		if(length>200){
 			_description= description.substring(0, 200) + "(...)";
 		}else _description= description;
-		
+		//Remove new lines
+		_description = description.replaceAll("\n", " ");
 		_votes=votes;
 		_nComments= nComments;
 		_author = author;
