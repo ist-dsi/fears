@@ -39,6 +39,7 @@ public class ListFeatures extends Composite {
 	protected String _projectID;
 	protected HorizontalPanel _search;
 	protected HorizontalPanel _filter;
+	protected HorizontalPanel _searchAlertBox;
 	protected VerticalPanel _featuresList;
 	protected ListBox lb;
 	protected TextBox sBox;
@@ -69,6 +70,8 @@ public class ListFeatures extends Composite {
 		_filter.setStyleName("filter");
 		filterBox.add(_filter);
 		_sugPanel.add(filterBox);
+		_searchAlertBox = new HorizontalPanel();
+		_sugPanel.add(_searchAlertBox);
 		_featuresList.setStyleName("featuresList");
 		_sugPanel.add(_featuresList);
 
@@ -159,7 +162,7 @@ public class ListFeatures extends Composite {
 				filtersTab.add(_filterLinks[i]);
 			}
 
-			if(i!=4)
+			if(i!=5)
 				filtersTab.add(new HTML("&nbsp;&nbsp;|&nbsp;&nbsp;"));			
 
 			i++;
@@ -201,6 +204,18 @@ public class ListFeatures extends Composite {
 			return;
 		}
 
+		_searchAlertBox.clear();
+		HTML searchAlert;
+		if(_actualFilter.isEmpty())
+			if(sBox.getText().isEmpty())
+				searchAlert = new HTML("O projecto tem " + features.size() + " sugest&otilde;es" );
+			else searchAlert = new HTML("Foram encontradas " + features.size() + " sugest&otilde;es, sobre a pesquisa: \"" + sBox.getText()+ "\"" );
+		else  searchAlert = new HTML("Foram encontradas " + features.size() + " sugest&otilde;es, com o Estado: " + _actualFilter );
+
+		searchAlert.setStylePrimaryName("searchAlert");
+		_searchAlertBox.add(searchAlert);
+		_searchAlertBox.setStyleName("searchAlertBox");
+
 		for(int i=0;i< features.size();i++){
 			FeatureResumeWidget feature =new FeatureResumeWidget((ViewFeatureResume)features.get(i), new VoteOnListCB());
 			feature.setStylePrimaryName("feature");
@@ -210,11 +225,11 @@ public class ListFeatures extends Composite {
 	}
 
 	public FeatureResumeWidget getFeature(String webID){
-		
+
 		if(_featuresViews==null || _featuresViews.size() ==0 ){
 			return null;
 		}
-			
+
 		for(FeatureResumeWidget f: _featuresViews){
 			if(f.getWebID().equals(webID))
 				return f;

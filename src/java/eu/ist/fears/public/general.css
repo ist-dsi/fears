@@ -215,6 +215,18 @@ width: 94%;
 margin-top: 30px;
 }
 
+.searchAlertBox{
+	margin-top: 12px;
+	width: 695px;
+	background: rgb(233, 243, 231);
+}
+
+.searchAlert{
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 10px;
+	color: rgb(64, 64, 64)
+}
 
 /* *************
 

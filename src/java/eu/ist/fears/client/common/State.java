@@ -5,7 +5,8 @@ public enum State {
 	Novo("Novo"),
     Planeado("Planeado"),
     Implementacao("Em implementa&ccedil;&atilde;o"),
-    Completo("Completo");
+    Completo("Completo"),
+	Rejeitado("Rejeitado");
     
     protected String _html;
     
