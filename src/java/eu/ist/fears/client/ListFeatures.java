@@ -18,7 +18,6 @@ import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PushButton;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -72,6 +71,7 @@ public class ListFeatures extends Composite {
 		_sugPanel.add(filterBox);
 		_searchAlertBox = new HorizontalPanel();
 		_sugPanel.add(_searchAlertBox);
+		_searchAlertBox.setStyleName("searchAlertBox");
 		_featuresList.setStyleName("featuresList");
 		_sugPanel.add(_featuresList);
 
@@ -99,7 +99,7 @@ public class ListFeatures extends Composite {
 					for(int i=1;i<_filterLinks.length;i++ )
 						_filterLinks[i].setStyleName("filters");
 					_filterLinks[0].setStyleName("currentFilter");
-
+					_actualFilter="";
 					History.newItem("Project"+_projectID, false);
 					_com.search(_projectID, sBox.getText(), lb.getItemText(lb.getSelectedIndex()), 0,"" ,Cookies.getCookie("Fears"), getFeaturesCB);
 				}
@@ -119,7 +119,7 @@ public class ListFeatures extends Composite {
 				for(int i=1;i<_filterLinks.length;i++ )
 					_filterLinks[i].setStyleName("filters");
 				_filterLinks[0].setStyleName("currentFilter");
-
+				_actualFilter="";
 				History.newItem("Project"+_projectID, false);
 				_com.search(_projectID, sBox.getText(), lb.getItemText(lb.getSelectedIndex()), 0, "",  Cookies.getCookie("Fears"), getFeaturesCB);
 			}
@@ -197,15 +197,17 @@ public class ListFeatures extends Composite {
 	public void updateFeatures(List<ViewFeatureResume> features){
 		_featuresList.clear();
 		_featuresViews.clear();
-
-
+		_searchAlertBox.clear();
+		
+		HTML searchAlert;
+		
 		if(features==null || features.size() ==0 ){
-			_featuresList.add(new Label("Nao ha Sugestoes."));
+			searchAlert = new HTML("N&atilde;o foram encontradas sugest&otilde;es." );
+			searchAlert.setStylePrimaryName("searchAlert");
+			_searchAlertBox.add(searchAlert);
 			return;
 		}
 
-		_searchAlertBox.clear();
-		HTML searchAlert;
 		if(_actualFilter.isEmpty())
 			if(sBox.getText().isEmpty())
 				searchAlert = new HTML("O projecto tem " + features.size() + " sugest&otilde;es" );
@@ -214,7 +216,6 @@ public class ListFeatures extends Composite {
 
 		searchAlert.setStylePrimaryName("searchAlert");
 		_searchAlertBox.add(searchAlert);
-		_searchAlertBox.setStyleName("searchAlertBox");
 
 		for(int i=0;i< features.size();i++){
 			FeatureResumeWidget feature =new FeatureResumeWidget((ViewFeatureResume)features.get(i), new VoteOnListCB());
