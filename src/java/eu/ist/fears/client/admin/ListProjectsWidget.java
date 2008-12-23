@@ -99,6 +99,7 @@ public class ListProjectsWidget extends Composite{
 		Button _removeButton;
 		Label _author;
 		DisclosurePanel _removePanel;
+		String _id;
 
 		
 		ProjectWidgetAdmin(ViewProject p){
@@ -109,6 +110,7 @@ public class ListProjectsWidget extends Composite{
 			_author = new Label(p.getAuthor());
 			_removeButton = new Button("Sim");
 			_removeButton.addClickListener(new RemoveButton());
+			_id=new String(new Integer(p.getwebID()).toString());
 			
 			_admin.add(_author);
 			_admin.add(new HTML("&nbsp;|&nbsp;"));
@@ -140,7 +142,7 @@ public class ListProjectsWidget extends Composite{
 		private class RemoveButton implements ClickListener{
 
 			public void onClick(Widget sender) {
-				_com.deleteProject(_name.getText(), Cookies.getCookie("fears"), updateCB);
+				_com.deleteProject(_id, Cookies.getCookie("fears"), updateCB);
 			}
 
 		}

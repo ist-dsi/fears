@@ -43,9 +43,16 @@ public class FearsApp extends FearsApp_Base {
 	}
 
 
-	public void deleteProject(String name){
+	public void deleteProject(String projectID){
+		int projID;
+		try{
+			projID= new Integer(projectID).intValue();
+		}catch(Throwable t){
+			System.out.println("ID:" + projectID);
+			throw new RuntimeException("Nao existe esse projecto: " + projectID);
+		}
 		for(Project p : getProjectSet()){
-			if(p.getName().equals(name))
+			if(p.getIdInternal().equals(projID))
 				removeProject(p);			
 		}				
 	}		

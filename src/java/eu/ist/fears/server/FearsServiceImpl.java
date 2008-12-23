@@ -181,7 +181,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	public void deleteProject(String name, String sessionID) throws FearsException{
 		isAdmin(sessionID);
 
-		if(FearsApp.getFears().getProject(name).getFeatureRequestCount()>=0)
+		if(FearsApp.getFears().getProject(name).getFeatureRequestCount()>0)
 			throw new FearsException("Projecto n&atilde;o pode ser remoido, porque tem sugest&otilde;oes");
 
 		FearsApp.getFears().deleteProject(name);
