@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import eu.ist.fears.client.Fears;
+import eu.ist.fears.client.common.State;
 import eu.ist.fears.client.common.communication.Communication;
 import eu.ist.fears.client.common.exceptions.ExceptionsTreatment;
 import eu.ist.fears.client.common.views.ViewFeatureDetailed;
@@ -26,7 +27,8 @@ public class FeatureResumeWidget  extends Composite{
 	protected Communication _com;
 	protected VerticalPanel _feature;
 	protected HorizontalPanel _featureResume; 
-	protected HTML _state;
+	protected State _state;
+	protected HTML _stateLabel;
 	protected VerticalPanel _mainBox;
 	protected String _projectName;
 	protected String _projectID;
@@ -64,6 +66,7 @@ public class FeatureResumeWidget  extends Composite{
 		_removeVote = new RemoveVoteButton();
 		_vote = new VoteButton();
 		_userHasVoted=f.userHasVoted();
+		_state = f.getState();
 
 		_feature.add(_featureResume);
 
@@ -79,7 +82,7 @@ public class FeatureResumeWidget  extends Composite{
 		vote.setHorizontalAlignment(HorizontalPanel.ALIGN_CENTER);
 		vote.add(_votes);
 
-		if(Fears.isLogedIn()){
+		if(Fears.isLogedIn() && _state.equals(State.Novo)){
 			_voteButton.setStyleName("ActionVotes");
 			if(f.userHasVoted()){
 				_voteButton.setText("Tirar Voto");
@@ -102,9 +105,9 @@ public class FeatureResumeWidget  extends Composite{
 		Hyperlink link = new Hyperlink(f.getName(),"Project"+_projectID+"&"+"viewFeature"+f.getFeatureID());
 		link.setStyleName("featureTitle");
 		title.add(link);
-		_state = new HTML(f.getState().getHTML());
-		_state.setStyleName(f.getState().toString());
-		title.add(_state);
+		_stateLabel = new HTML(f.getState().getHTML());
+		_stateLabel.setStyleName(f.getState().toString());
+		title.add(_stateLabel);
 		_mainBox.add(title);
 
 
@@ -128,7 +131,7 @@ public class FeatureResumeWidget  extends Composite{
 	}
 
 	public void updateUserInfo(){
-		if(Fears.isLogedIn()){
+		if(Fears.isLogedIn() && _state.equals(State.Novo) ){
 			_voteButton.setVisible(true);
 			_voteButton.removeClickListener(_removeVote);
 			_voteButton.removeClickListener(_vote);
@@ -147,8 +150,8 @@ public class FeatureResumeWidget  extends Composite{
 
 	public void update(ViewFeatureDetailed f, boolean updateDescription){
 
-		_state.setHTML(f.getState().getHTML());
-		_state.setStyleName(f.getState().toString());
+		_stateLabel.setHTML(f.getState().getHTML());
+		_stateLabel.setStyleName(f.getState().toString());
 		_userHasVoted=f.userHasVoted();
 
 		if(updateDescription)

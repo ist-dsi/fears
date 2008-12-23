@@ -18,7 +18,6 @@ import pt.ist.fenixframework.pstm.Transaction;
 
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.google.gwt.user.server.rpc.UnexpectedException;
 
 import edu.yale.its.tp.cas.client.ServiceTicketValidator;
 import eu.ist.fears.client.common.State;
@@ -37,6 +36,7 @@ import eu.ist.fears.server.domain.FearsApp;
 import eu.ist.fears.server.domain.FeatureRequest;
 import eu.ist.fears.server.domain.Project;
 import eu.ist.fears.server.domain.User;
+import eu.ist.fears.server.domain.Voter;
 
 public class FearsServiceImpl extends RemoteServiceServlet implements FearsService {
 
@@ -107,6 +107,10 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 		if(f==null)
 			throw new NoFeatureException(projectID, name);
+		
+		if(!f.getState().equals(State.Novo)){
+			throw new FearsException("So pode votar em sugestoes com o Estado Novo.");
+		}
 
 		f.vote(getUserFromSession(sessionID).getVoter(p));
 		return  f.getDetailedView(getUserFromSession(sessionID).getVoter(p));
@@ -158,11 +162,33 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		if(p.getFeature(featureName)==null)
 			throw new NoFeatureException(projectID, featureName);
 
-		p.getFeature(featureName).addComment(comment, getUserFromSession(sessionID).getVoter(p), newState);
+		FeatureRequest feature =p.getFeature(featureName);
+		
+		feature.addComment(comment, getUserFromSession(sessionID).getVoter(p), newState);
 
 		if(newState!=null){
 			isAdmin(sessionID);
-			p.getFeature(featureName).setState(newState);
+	
+			//See if the old state is "New", and the new state any other.
+			//Add 1 vote to all voters.
+			if(feature.getState().equals(State.Novo)
+					&& !newState.equals(State.Novo)){
+				for(Voter v: feature.getVoterSet()){
+					v.setVotesLeft(v.getVotesLeft()+1);
+				}
+			}
+			
+			//See if the old state is other than "New", and the new state is "New".
+			//Remove 1 vote to all voters that have votes left.
+			if(!feature.getState().equals(State.Novo)
+					&& newState.equals(State.Novo)){	
+				for(Voter v: feature.getVoterSet()){
+					if(v.getVotesLeft()>0)
+					v.setVotesLeft(v.getVotesLeft()-1);
+				}
+			}
+			
+			feature.setState(newState);
 		}
 
 		return p.getFeature(featureName).getDetailedView(getUserFromSession(sessionID).getVoter(p));
@@ -227,6 +253,10 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 		if(f==null)
 			throw new NoFeatureException(projectID, feature);
+		
+		if(!f.getState().equals(State.Novo)){
+			throw new FearsException("So pode retirar o voto de sugestoes com o Estado Novo.");
+		}
 
 		f.removeVote(getUserFromSession(sessionID).getVoter(p));
 		return  f.getDetailedView(getUserFromSession(sessionID).getVoter(p));
