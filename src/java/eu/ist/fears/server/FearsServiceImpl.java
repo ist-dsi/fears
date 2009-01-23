@@ -375,7 +375,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 			cas = new ServiceTicketValidator();
 			/* set its parameters */
 			cas.setCasValidateUrl("https://localhost:8443/cas/serviceValidate");
-			cas.setService("https://localhost:8443/webapp/Fears.html");
+			cas.setService("http://localhost:8080/webapp/Fears.html");
 
 
 			System.out.println("Deubg ticket:"+ticket);

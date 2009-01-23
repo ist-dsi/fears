@@ -1,12 +1,15 @@
 TODO:
 
--> Administrador de Projecto.
+
 -> Paginação na pagina de listar sugestoes.
--> Editar Projectos.
--> Verificar que mudanças de Estado impedem votos. [Que mudanças de Estado? ]
+
 -> Verificar como tratar erros de accções nao executadas.
--> Acrescentar Estado Rejeitado.
--> Acrescentar modificações de webdesigner, na pesquisa, e nas paginas de admin.
+-> (Acrescentar modificações de webdesigner, na pesquisa, e nas paginas de admin.)
+
+-> Actualizar Estado do Voto, quando se muda Estado.
+-> Votos do utilizador são os votos "usados", votos disponiveis = votos do projecto - votos "usados".
+-> Editar Projectos.
+-> Administrador de Projecto.
 
 BUGS:
  - -
