@@ -132,6 +132,7 @@ public class FeatureResumeWidget  extends Composite{
 
 	public void updateUserInfo(){
 		if(Fears.isLogedIn() && _state.equals(State.Novo) ){
+			_voteButton.setStyleName("ActionVotes");
 			_voteButton.setVisible(true);
 			_voteButton.removeClickListener(_removeVote);
 			_voteButton.removeClickListener(_vote);
@@ -150,6 +151,7 @@ public class FeatureResumeWidget  extends Composite{
 
 	public void update(ViewFeatureDetailed f, boolean updateDescription){
 
+		_state= f.getState();
 		_stateLabel.setHTML(f.getState().getHTML());
 		_stateLabel.setStyleName(f.getState().toString());
 		_userHasVoted=f.userHasVoted();

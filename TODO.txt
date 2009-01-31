@@ -4,9 +4,9 @@ TODO:
 -> Paginação na pagina de listar sugestoes.
 
 -> Verificar como tratar erros de accções nao executadas.
--> (Acrescentar modificações de webdesigner, na pesquisa, e nas paginas de admin.)
+-> (Acrescentar modificações de webdesigner nas paginas de admin.)
 
--> Actualizar Estado do Voto, quando se muda Estado.
+
 -> Votos do utilizador são os votos "usados", votos disponiveis = votos do projecto - votos "usados".
 -> Editar Projectos.
 -> Administrador de Projecto.
@@ -26,4 +26,4 @@ DONE (Tudo o que está aqui está feito, verificar se alguma coisa parecida
 
 -> Verificações de segurança e Erros na Interface:	 	
 	- Verificar que as interfaces so aparecem a admins -> paginas de admin, e estado votacoes. - DONE.
-	- Actualizar estado de botao Votar, na lista de sugestoes.-> DONE.
+	
