@@ -281,6 +281,10 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 				((Admin)f).viewChangeAdmins();
 		}else if(url.startsWith("logout")){
 			f.viewLogout();
+		}else if(url.startsWith("createProject")){
+			if(f instanceof Admin)
+				((Admin)f).viewCreateProject();
+			
 		}
 
 
@@ -325,6 +329,10 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 		}
 		else if(parse.startsWith("filter")){
 			f.listFeatures(projectID, parse.substring("filter".length()));
+		}else if(parse.startsWith("edit")){
+			if(f instanceof Admin)
+				((Admin)f).viewEditProject(projectID);
+			
 		}
 
 	}

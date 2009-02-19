@@ -22,15 +22,15 @@ public class FeatureRequest extends FeatureRequest_Base {
 		super();
 	}
 
-	public FeatureRequest(String name, String description, Voter voter){
+	public FeatureRequest(String name, String description, Voter voter, int projectInitialVotes){
 		setName(name);
 		//Remove all \r inserted by IE browser.
 		setDescription(description.replaceAll("\r",""));
 
 		setAuthor(voter);
 		setState(State.Novo);
-		if(voter.getVotesLeft()>0){
-			voter.setVotesLeft(voter.getVotesLeft()-1);
+		if(voter.getVotesUsed() < projectInitialVotes){
+			voter.setVotesUsed(voter.getVotesUsed()+1);
 			addVoter(voter);
 		}
 		
@@ -54,11 +54,11 @@ public class FeatureRequest extends FeatureRequest_Base {
 			throw new ActionNotExecuted("Utilizador ja votou.");
 		}
 
-		if(voter.getVotesLeft()<=0){
+		if(voter.getVotesUsed() >= getProject().getInitialVotes()){
 			throw new ActionNotExecuted("Utilizador nao tem votos.");
 		}
 
-		voter.setVotesLeft(voter.getVotesLeft()-1);
+		voter.setVotesUsed(voter.getVotesUsed()+1);
 		addVoter(voter);
 	}
 
@@ -66,7 +66,7 @@ public class FeatureRequest extends FeatureRequest_Base {
 		if(!hasVoter(voter))
 			throw new ActionNotExecuted("Utilizador nao tem voto.");
 
-		voter.setVotesLeft(voter.getVotesLeft()+1);
+		voter.setVotesUsed(voter.getVotesUsed()-1);
 		removeVoter(voter);
 	}
 

@@ -31,11 +31,9 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 
 		History.fireCurrentHistoryState();
 	}	
-
-
-
-	public void viewListProjects(){
-
+	
+	
+	public void verifyAdmin(){
 		content.clear();
 		if(!verifyLogin(true)){
 			content.clear();
@@ -48,7 +46,14 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 				Fears.getHeader().update(false, false);
 				return;
 			}
-		}
+		}	
+	}
+
+
+
+	public void viewListProjects(){
+		verifyAdmin();
+		
 
 		ListProjectsWidget projects = new ListProjectsWidget();
 		projects.update();	
@@ -57,20 +62,7 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 	}
 
 	public void viewChangeAdmins(){
-		content.clear();
-		if(!verifyLogin(true)){
-			content.clear();
-			content.add(new HTML("Por favor fa&ccedil;a login para continuar"));
-			Fears.getHeader().update(false, false);
-			return;
-		}
-		else{
-			if(!_curretUser.isAdmin()){
-				Fears.setError(new HTML("Esta p&aacute;gina &eacute; exclusiva para Administradores."));
-				Fears.getHeader().update(false, false);
-				return;
-			}
-		}
+		verifyAdmin();
 
 		ListAdmins admins = new ListAdmins();
 		admins.update();
@@ -78,6 +70,19 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 
 	}
 
+	public void viewCreateProject(){
+		verifyAdmin();
+		
+		CreateProject c= new CreateProject();
+		content.add(c);
+	}
+	
+	public void viewEditProject(String projectID){
+		verifyAdmin();
+		
+		EditProject e= new EditProject(projectID);
+		content.add(e);
+	}
 
 	public void onHistoryChanged(String historyToken) {
 		// This method is called whenever the application's history changes. Set

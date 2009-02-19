@@ -125,7 +125,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		if(p==null)
 			throw new NoProjectException(projectID);
 
-		p.addFeature(new FeatureRequest(name, description, getUserFromSession(sessionID).getVoter(p) ));
+		p.addFeature(new FeatureRequest(name, description, getUserFromSession(sessionID).getVoter(p), p.getInitialVotes() ));
 	}
 
 
@@ -174,7 +174,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 			if(feature.getState().equals(State.Novo)
 					&& !newState.equals(State.Novo)){
 				for(Voter v: feature.getVoterSet()){
-					v.setVotesLeft(v.getVotesLeft()+1);
+					v.setVotesUsed(v.getVotesUsed()-1);
 				}
 			}
 			
@@ -183,8 +183,8 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 			if(!feature.getState().equals(State.Novo)
 					&& newState.equals(State.Novo)){	
 				for(Voter v: feature.getVoterSet()){
-					if(v.getVotesLeft()>0)
-					v.setVotesLeft(v.getVotesLeft()-1);
+					if(v.getVotesUsed() < p.getInitialVotes())
+					v.setVotesUsed(v.getVotesUsed()+1);
 				}
 			}
 			
@@ -194,10 +194,21 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		return p.getFeature(featureName).getDetailedView(getUserFromSession(sessionID).getVoter(p));
 	}
 
-	public void addProject(String name, String description, String sessionID) throws FearsException{
+	public void addProject(String name, String description, int nvotes, String sessionID) throws FearsException{
 		isAdmin(sessionID);
 
-		FearsApp.getFears().addProject(new Project(name, description, getUserFromSession(sessionID)), getUserFromSession(sessionID));
+		FearsApp.getFears().addProject(new Project(name, description, nvotes, getUserFromSession(sessionID)), getUserFromSession(sessionID));
+	}
+	
+	public void editProject(String projectID, String name, String description, int nvotes, String sessionID) throws FearsException{
+		isAdmin(sessionID);
+		
+		Project p =FearsApp.getFears().getProject(projectID);
+
+		if(p==null)
+			throw new NoProjectException(projectID);
+
+		p.edit(name, description, nvotes);
 	}
 
 	public ViewProject[] getProjects(String sessionID) {
@@ -299,7 +310,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		return p.search(search, sort, page, filter, getUserFromSession(sessionID).getVoter(p));
 
 	}
-
+	
 	public String getProjectName(String projectID) throws FearsException {
 		Project p =FearsApp.getFears().getProject(projectID);
 
@@ -307,6 +318,15 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 			throw new NoProjectException(projectID);
 
 		return p.getName();
+	}
+
+	public ViewProject getProject(String projectID) throws FearsException {
+		Project p =FearsApp.getFears().getProject(projectID);
+
+		if(p==null)
+			throw new NoProjectException(projectID);
+
+		return p.getView();
 	}
 
 

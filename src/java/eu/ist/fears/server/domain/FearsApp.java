@@ -42,7 +42,6 @@ public class FearsApp extends FearsApp_Base {
 		addProject(p);
 	}
 
-
 	public void deleteProject(String projectID){
 		int projID;
 		try{
@@ -94,7 +93,7 @@ public class FearsApp extends FearsApp_Base {
 		
 		int i=0;
 		for(Project p : getProjectSet()){
-			res[i]=new ViewProject(p.getName(), p.getIdInternal(),  p.getDescription(), p.getNFeatures(), p.getAuthor().getUsername(), 5);
+			res[i]=p.getView();
 			i++;
 		}
 

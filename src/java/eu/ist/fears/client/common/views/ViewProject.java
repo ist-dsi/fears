@@ -15,19 +15,19 @@ public class ViewProject implements Serializable {
 	protected String _description;
 	protected int _nFeatures;
 	protected String _author;
-	protected int _votesLeft;
+	protected int _initialVotes;
 
 	public ViewProject(){
 
 	}
 
-	public ViewProject(String name, int webID, String description, int nFeatures, String author, int votesLeft){
+	public ViewProject(String name, int webID, String description, int nFeatures, String author, int initialVotes){
 		_name=name;
 		_webID=webID;
 		_description=description;
 		_nFeatures = nFeatures;
 		_author=author;
-		_votesLeft = votesLeft;
+		_initialVotes = initialVotes;
 	}
 
 	public String getName() {
@@ -50,6 +50,9 @@ public class ViewProject implements Serializable {
 		return _author;
 	}
 	
+	public int getInitialVotes() {
+		return _initialVotes;
+	}
 	
 
 }

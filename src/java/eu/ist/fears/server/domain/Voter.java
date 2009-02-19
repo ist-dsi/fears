@@ -15,20 +15,6 @@ public class Voter extends Voter_Base implements AccessControlUser {
         setUser(user);
     }
 
-   /* public void addCreatedFeature(FeatureRequest f){
-        if(!getFeaturesCreated().contains(f)){
-            addFeaturesCreated(f);
-            setVotesLeft(getVotesLeft()-1);
-        }
-    } */
-
-   /* public void addVotedFeature(FeatureRequest f){
-        if(!getFeaturesVoted().contains(f)){
-            addFeaturesVoted(f);
-            setVotesLeft(getVotesLeft()-1);
-        }
-    }*/
-
     public List<ViewFeatureResume> getViewFeaturesCreated(){
         return FearsApp.getViewFeaturesResumes(getFeaturesCreatedSet(), this);
     }
@@ -66,7 +52,12 @@ public class Voter extends Voter_Base implements AccessControlUser {
     }
 	
 	public ViewVoterResume getCurrentVoterView(String sessionID){
-		return new ViewVoterResume(getUser().getUsername(),sessionID,getVotesLeft(), FearsApp.getFears().isAdmin(getUser()));
+		int votesLeft;
+		if(getProject().getInitialVotes() - getVotesUsed()>=0)
+			votesLeft=getProject().getInitialVotes() - getVotesUsed();
+			else votesLeft=0;
+			
+		return new ViewVoterResume(getUser().getUsername(),sessionID, votesLeft, FearsApp.getFears().isAdmin(getUser()));
 		
 	}
 	

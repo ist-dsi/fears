@@ -52,24 +52,9 @@ public class ListProjectsWidget extends Composite{
 	}
 
 	private void displayCreateProject(){
-		_projPanel.add(new HTML("<br><br><h2>Criar Projecto</h2>"));
-		_projPanel.add(new Label("Nome do Projecto:"));
-		_newProjectName.setText("");
-		_newProjectDescription.setText("");
-		_projPanel.add(_newProjectName);
-		_projPanel.add(new Label("Descricao do Projecto:"));
-		_newProjectDescription.setVisibleLines(7);
-		_newProjectDescription.setCharacterWidth(40);
-		_projPanel.add(_newProjectDescription);
-		_createProjectButton = new Button("Adicionar Projecto");
-		_projPanel.add(_createProjectButton);
-
-		_createProjectButton.addClickListener(new ClickListener(){
-			public void onClick(Widget sender) {
-				_com.addProject(_newProjectName.getText(),
-						_newProjectDescription.getText(), Cookies.getCookie("fears"), updateCB);
-			}
-		}); 
+		
+		Hyperlink createProjectButton  = new Hyperlink("Criar Projecto","createProject");
+		_projPanel.add(createProjectButton);
 	}
 
 	public void update(){
@@ -114,7 +99,7 @@ public class ListProjectsWidget extends Composite{
 			
 			_admin.add(_author);
 			_admin.add(new HTML("&nbsp;|&nbsp;"));
-			_admin.add(new Hyperlink("Editar","Editar"));
+			_admin.add(new Hyperlink("Editar","Project"+p.getwebID()+"&"+"edit"));
 			_admin.add(new HTML("&nbsp;|&nbsp;"));
 			
 			

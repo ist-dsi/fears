@@ -110,5 +110,23 @@ public class Path extends Composite{
 
 	}
 
+	public void setCreateProject() {
+		_path.clear();
+		_path.add(new Hyperlink("Projectos","listProjects"));
+		_path.add(new HTML("&nbsp;/ " + "Criar Projecto"));
+		
+		
+	}
+
+	public void setEditProject(String project, String projectID) {
+		_path.clear();
+		_path.add(new Hyperlink("Projectos","listProjects"));
+		_path.add(new HTML("&nbsp;/&nbsp;"));
+		_path.add(new Hyperlink(project,"Project"+projectID));
+		_path.add(new HTML("&nbsp;/Editar Projecto"));
+		
+		
+	}
+
 
 }

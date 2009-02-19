@@ -1,22 +1,20 @@
 TODO:
 
+(-> Votos do utilizador são os votos "usados", votos disponiveis = votos do projecto - votos "usados".) -> DONE!
+(-> Editar Projectos.) - >DONE
+-> Administrador de Projecto.
+-> Login. [Janela completa ]
 
 -> Paginação na pagina de listar sugestoes.
-
 -> Verificar como tratar erros de accções nao executadas.
 -> (Acrescentar modificações de webdesigner nas paginas de admin.)
 
 
--> Votos do utilizador são os votos "usados", votos disponiveis = votos do projecto - votos "usados".
--> Editar Projectos.
--> Administrador de Projecto.
-
 BUGS:
- - -
+--
 
 WebDesigner:
  -> Na pagina da sugestao falta: ranking.
- -> Login. [Janela completa ]
  
  
 DONE (Tudo o que está aqui está feito, verificar se alguma coisa parecida

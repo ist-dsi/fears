@@ -48,9 +48,14 @@ public class Communication implements FearsServiceAsync{
 		_service.addComment(projectName, featureID, comment, newState, sessionID, callback);
 	}
 
-	public void addProject(String name, String description,
-			String sessionID, AsyncCallback callback) {
-		_service.addProject(name, description, sessionID, callback);
+	public void addProject(String name, String description,  int nvotes,
+			 String sessionID, AsyncCallback callback) {
+		_service.addProject(name, description, nvotes,  sessionID, callback);
+	}
+	
+	public void editProject(String projectID, String name, String description,  int nvotes,
+			 String sessionID, AsyncCallback callback) {
+		_service.editProject(projectID, name, description, nvotes,  sessionID, callback);
 	}
 
 	public void getProjects(String sessionID, AsyncCallback callback) {
@@ -89,9 +94,13 @@ public class Communication implements FearsServiceAsync{
 	public void search(String projectID, String search, String sort, int page, String filter, String sessionID, AsyncCallback callback ){
 		_service.search(projectID, search, sort, page, filter, sessionID, callback);
 	}
-
+	
 	public void getProjectName(String projectID, AsyncCallback callback) {
 		_service.getProjectName(projectID, callback);	
+	}
+
+	public void getProject(String projectID, AsyncCallback callback) {
+		_service.getProject(projectID, callback);	
 	}
 
 	public void getVoter(String projectid, String voterName, String cookie,

@@ -129,7 +129,7 @@ public class DisplayVoter extends Composite {
 	}
 
 	public void updateProjectName(){
-		_com.getProjectName(_projectID, getProjectName);
+		_com.getProject(_projectID, getProjectName);
 	}
 
 	AsyncCallback getProjectName = new ExceptionsTreatment() {

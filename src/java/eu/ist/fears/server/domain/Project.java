@@ -8,19 +8,19 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import eu.ist.fears.client.common.views.ViewFeatureResume;
-
+import eu.ist.fears.client.common.views.ViewProject;
 
 public class Project extends Project_Base {
 
 
 
-	public Project(String name, String description, User user){
+	public Project(String name, String description, int nvotes, User user){
 		setName(name);
 		Voter v =new Voter(user);
 		setDescription(description);
 		setAuthor(user);
 		setFeaturesIncrementID(0);
-		setInitialVotes(10);
+		setInitialVotes(nvotes);
 		addVoter(v);
 		
 	}
@@ -132,8 +132,14 @@ public class Project extends Project_Base {
 	}
 
 	public void addVoter(Voter v){
-		v.setVotesLeft(getInitialVotes());
+		v.setVotesUsed(0);
 		super.addVoter(v);
+	}
+	
+	public ViewProject getView(){
+		return new ViewProject(getName(), getIdInternal(), getDescription(), getNFeatures(), getAuthorName(), getInitialVotes());
+		
+		
 	}
 	
 	protected class VoteComparator implements Comparator<ViewFeatureResume>{
@@ -149,8 +155,14 @@ public class Project extends Project_Base {
 			return o2.getFeatureID()-o1.getFeatureID();
 		}
 	}
-	
-	
+
+	public void edit(String name, String description,
+			int nvotes) {
+		setName(name);
+		setDescription(description);
+		setInitialVotes(nvotes);
+		
+	}
 	
 	
 }

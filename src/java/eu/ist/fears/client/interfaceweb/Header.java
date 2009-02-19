@@ -33,7 +33,7 @@ public class Header extends Composite {
 		_votes= new HTML();
 		_headerBox = new HorizontalPanel();
 		_headerBox.setStyleName("headerBox");
-		_adminLink = new HTML("&nbsp;<a href=\"Admin.html\">Admin</a>");
+		_adminLink = new HTML("&nbsp;<a href=\"Admin.html\">Admin</a>&nbsp;|&nbsp;");
 		_adminAdministrators = new Hyperlink("","");
 
 		HorizontalPanel left = new HorizontalPanel();
@@ -51,8 +51,8 @@ public class Header extends Composite {
 		left.add(new HTML("<a href=\"Fears.html\">fears</a> |"));
 
 		left.add(_adminLink);
-		left.add(new HTML("&nbsp;|&nbsp;"));
 		left.add(_adminAdministrators);
+		
 		right.setStyleName("right");
 		right.add(_votes);
 		right.add(new HTML("Bem-vindo&nbsp;"));
@@ -85,7 +85,6 @@ public class Header extends Composite {
 			_adminAdministrators.setText("Administradores");
 			_adminAdministrators.setTargetHistoryToken("admins");
 		}else {
-			_adminLink.setHTML("&nbsp;<a href=\"Admin.html\">Admin</a>");
 			_adminAdministrators.setText("");
 		}
 

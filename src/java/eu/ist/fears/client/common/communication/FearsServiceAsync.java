@@ -15,10 +15,12 @@ public interface FearsServiceAsync {
 	public void getFeature(String projectName, String featureName, String sessionID, AsyncCallback callback);
 	public void addComment(String projectName, String featureName, String comment, State newState, String sessionID, AsyncCallback callback);
 	
-	public void addProject(String name, String description, String sessionID,  AsyncCallback callback);
+	public void addProject(String name, String description, int nvotes, String sessionID,  AsyncCallback callback);
+	public void editProject(String  projectID, String name, String description, int nvotes, String sessionID,  AsyncCallback callback);
 	public void getProjects(String sessionID, AsyncCallback callback);
 	public void deleteProject(String name, String sessionID, AsyncCallback callback);
 	public void getProjectName(String projectID, AsyncCallback callback);
+	public void getProject(String projectID, AsyncCallback callback);
 	
 	public void validateSessionID(String sessionID, AsyncCallback callback);
 	//public void login(String user, String password, AsyncCallback callback);
