@@ -2,6 +2,7 @@ package eu.ist.fears.client.interfaceweb;
 
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
@@ -20,7 +21,7 @@ import eu.ist.fears.client.common.views.ViewVoterResume;
 
 public class Header extends Composite {
 
-	protected Hyperlink sessionLink; 
+	protected HTML sessionLink; 
 	protected Label userName;
 	protected HorizontalPanel _headerBox; 
 	protected HTML _adminLink;
@@ -40,7 +41,7 @@ public class Header extends Composite {
 		HorizontalPanel right = new HorizontalPanel();
 		HorizontalPanel header = new HorizontalPanel();
 		userName = new Label();
-		sessionLink = new Hyperlink();
+		sessionLink = new HTML();
 		header.setStyleName("header");
 		_headerBox.add(header);
 		header.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
@@ -52,7 +53,7 @@ public class Header extends Composite {
 
 		left.add(_adminLink);
 		left.add(_adminAdministrators);
-		
+
 		right.setStyleName("right");
 		right.add(_votes);
 		right.add(new HTML("Bem-vindo&nbsp;"));
@@ -71,14 +72,19 @@ public class Header extends Composite {
 
 		if(!Fears.isLogedIn()){
 			_votes.setText("");
-			sessionLink.setText("Login");
-			sessionLink.setTargetHistoryToken("login");
+			if(adminPage)
+				sessionLink.setHTML("<a href=\"https://localhost:8443/cas/?service="+GWT.getModuleBaseURL()+"Admin.html\">login</a>");
+			else
+				sessionLink.setHTML("<a href=\"https://localhost:8443/cas/?service="+GWT.getModuleBaseURL()+"Fears.html\">login</a>");
+
 		}else{
 			if(inProjectPage)
 				_votes.setHTML("Tem " + Fears.getVotesLeft() + " votos. |&nbsp;");
 			else _votes.setText("");
-			sessionLink.setText("Logout");
-			sessionLink.setTargetHistoryToken("logout");
+			if(adminPage)
+				sessionLink.setHTML("<a href=\""+GWT.getModuleBaseURL()+"Admin.html#logout\">logout</a>");
+			else
+				sessionLink.setHTML("<a href=\""+GWT.getModuleBaseURL()+"Fears.html#logout\">logout</a>");
 		}
 
 		if(adminPage){

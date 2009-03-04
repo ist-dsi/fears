@@ -1,6 +1,7 @@
 package eu.ist.fears.client;
 
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -32,9 +33,11 @@ public class Login extends Composite {
 		_main.add(_loginButton);
 		_loginButton.addClickListener(new LoginButton(f));*/
 		
-		Frame iframe =new Frame("https://localhost:8443/cas/?service=http://localhost:8080/webapp/Fears.html");
-		iframe.setSize("507px", "450px");
-		_main.add(iframe);
+		//Window.open("https://localhost:8443/cas/?service=http://localhost:8080/webapp/Fears.html", "_self", "");
+		
+		//Frame iframe =new Frame("https://localhost:8443/cas/?service=http://localhost:8080/webapp/Fears.html");
+		//iframe.setSize("507px", "450px");
+		//_main.add(iframe);
 		
 		/*EventManager.addListener(iframe.getElement(), "load", new EventCallback() {
             public void execute(EventObject e) {

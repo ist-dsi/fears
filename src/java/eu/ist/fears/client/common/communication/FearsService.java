@@ -44,6 +44,6 @@ public interface FearsService extends RemoteService  {
 	
 	public ViewVoterResume getCurrentVoter(String _projectid, String cookie) throws FearsException;
 	
-	public ViewVoterResume CASlogin(String ticket, String cookie) throws FearsException;
+	public ViewVoterResume CASlogin(String ticket, boolean admin, String cookie) throws FearsException;
 	
 }

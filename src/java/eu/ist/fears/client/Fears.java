@@ -2,6 +2,7 @@ package eu.ist.fears.client;
 
 
 import java.util.Date;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -15,6 +16,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -83,7 +85,10 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 
 		String ticket=getTicket();
 		if(ticket!=null && !ticket.isEmpty()){
-			_com.CASlogin(ticket, null, new WaitForLogin());
+			if(this instanceof Admin)
+			_com.CASlogin(ticket, true, null, new WaitForLogin());
+			else  _com.CASlogin(ticket, false, null, new WaitForLogin());
+			
 			return;
 		}
 
@@ -188,7 +193,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 
 		verifyLogin(false);
 
-		if(popup!=null)
+		/*if(popup!=null)
 			popup.setVisible(false);
 		
 		popup =  new DialogBox(false,false);
@@ -205,7 +210,14 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 		popup.setPopupPosition(500, 50);
 		saveFears(this);
 		popup.show();
-		//popup.getElement().setId("FEARSPOPUP");
+		//popup.getElement().setId("FEARSPOPUP"); */
+		if(this instanceof Admin)
+			Window.open("https://localhost:8443/cas/?service=" + GWT.getModuleBaseURL() + "Admin.html", "_self", "");
+		else 
+			Window.open("https://localhost:8443/cas/?service=" + GWT.getModuleBaseURL() + "Fears.html", "_self", "");
+			
+		//Login login = new Login(this);
+		//content.add(login);
 
 	}
 
@@ -256,7 +268,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 
 		if(!"login".equals(historyToken) && !"logoff".equals(historyToken))
 			lastURL=historyToken;
-
+		
 		header.update(false,false);
 		parseURL(historyToken, this);
 	}
@@ -338,23 +350,26 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 	}
 
 	public void loggedIn(){
-		popup.hide();
+		//popup.hide();
 		if(History.getToken().equals("login")){
 			History.newItem(lastURL);
+			if(History.getToken().equals("loggedIn")){
+				History.newItem(lastURL);
+			}
 		}else{
 			History.fireCurrentHistoryState();
 		}
 	}
 
-	public native void saveFears(Fears f)/*-{
+	/*public native void saveFears(Fears f)-{
 		$wnd.myfears=f;
-	}-*/;
+	}-; */
 	
 
-	public static native void callLoggedIn()/*-{
+	/*public static native void callLoggedIn()-{
 	var temp=$wnd.parent.myfears;
 		temp.@eu.ist.fears.client.Fears::loggedIn()();
-	}-*/;
+	}-; */
 
 	public static native String getParamString() /*-{
     return $wnd.location.search;
@@ -408,10 +423,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 			}
 			else {
 				Fears.setCurrentUser(voter);	
-				content.clear();
-				content.add(new HTML("Utilizador logado, a fechar janela de login..."));
-				frameBox.setVisible(false);
-				Fears.callLoggedIn();
+				loggedIn();
 				return;
 			}
 		}

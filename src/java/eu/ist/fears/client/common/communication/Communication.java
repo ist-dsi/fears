@@ -115,8 +115,8 @@ public class Communication implements FearsServiceAsync{
 		
 	}
 
-	public void CASlogin(String ticket, String cookie, AsyncCallback callback){
-		_service.CASlogin(ticket, cookie, callback);
+	public void CASlogin(String ticket, boolean login, String cookie,  AsyncCallback callback){
+		_service.CASlogin(ticket, login, cookie, callback);
 	}
 
 	

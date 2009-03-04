@@ -37,6 +37,6 @@ public interface FearsServiceAsync {
 	public void getCurrentVoter(String _projectid, String cookie,
 			AsyncCallback callback);
 		
-	public void CASlogin(String ticket, String cookie, AsyncCallback callback);
+	public void CASlogin(String ticket, boolean admin, String cookie, AsyncCallback callback);
 	
 }

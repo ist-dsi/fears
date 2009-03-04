@@ -33,26 +33,30 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 	}	
 	
 	
-	public void verifyAdmin(){
+	public boolean verifyAdmin(){
 		content.clear();
-		if(!verifyLogin(true)){
+		if(!verifyLogin(false)){
 			content.clear();
-			content.add(new HTML("Por favor fa&ccedil;a login para continuar"));
-			Fears.getHeader().update(false, false);
-			return;
+			Fears.setError(new HTML("Esta p&aacute;gina &eacute; exclusiva para Administradores.<br>" +
+					"Fa&ccedil;a login para continuar."));
+			//content.add(new HTML(""))
+			Fears.getHeader().update(false, true);
+			return false;
 		}else{
 			if(!_curretUser.isAdmin()){
 				Fears.setError(new HTML("Esta p&aacute;gina &eacute; exclusiva para Administradores."));
-				Fears.getHeader().update(false, false);
-				return;
+				Fears.getHeader().update(false, true);
+				return false;
 			}
 		}	
+		return true;
 	}
 
 
 
 	public void viewListProjects(){
-		verifyAdmin();
+		if(!verifyAdmin())
+			return;
 		
 
 		ListProjectsWidget projects = new ListProjectsWidget();
@@ -62,7 +66,8 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 	}
 
 	public void viewChangeAdmins(){
-		verifyAdmin();
+		if(!verifyAdmin())
+			return;
 
 		ListAdmins admins = new ListAdmins();
 		admins.update();
@@ -71,14 +76,16 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 	}
 
 	public void viewCreateProject(){
-		verifyAdmin();
+		if(!verifyAdmin())
+			return;
 		
 		CreateProject c= new CreateProject();
 		content.add(c);
 	}
 	
 	public void viewEditProject(String projectID){
-		verifyAdmin();
+		if(!verifyAdmin())
+			return;
 		
 		EditProject e= new EditProject(projectID);
 		content.add(e);

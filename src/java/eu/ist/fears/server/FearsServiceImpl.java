@@ -107,7 +107,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 		if(f==null)
 			throw new NoFeatureException(projectID, name);
-		
+
 		if(!f.getState().equals(State.Novo)){
 			throw new FearsException("So pode votar em sugestoes com o Estado Novo.");
 		}
@@ -163,12 +163,12 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 			throw new NoFeatureException(projectID, featureName);
 
 		FeatureRequest feature =p.getFeature(featureName);
-		
+
 		feature.addComment(comment, getUserFromSession(sessionID).getVoter(p), newState);
 
 		if(newState!=null){
 			isAdmin(sessionID);
-	
+
 			//See if the old state is "New", and the new state any other.
 			//Add 1 vote to all voters.
 			if(feature.getState().equals(State.Novo)
@@ -177,17 +177,17 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 					v.setVotesUsed(v.getVotesUsed()-1);
 				}
 			}
-			
+
 			//See if the old state is other than "New", and the new state is "New".
 			//Remove 1 vote to all voters that have votes left.
 			if(!feature.getState().equals(State.Novo)
 					&& newState.equals(State.Novo)){	
 				for(Voter v: feature.getVoterSet()){
 					if(v.getVotesUsed() < p.getInitialVotes())
-					v.setVotesUsed(v.getVotesUsed()+1);
+						v.setVotesUsed(v.getVotesUsed()+1);
 				}
 			}
-			
+
 			feature.setState(newState);
 		}
 
@@ -199,10 +199,10 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 		FearsApp.getFears().addProject(new Project(name, description, nvotes, getUserFromSession(sessionID)), getUserFromSession(sessionID));
 	}
-	
+
 	public void editProject(String projectID, String name, String description, int nvotes, String sessionID) throws FearsException{
 		isAdmin(sessionID);
-		
+
 		Project p =FearsApp.getFears().getProject(projectID);
 
 		if(p==null)
@@ -239,7 +239,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	public ViewVoterResume validateSessionID(String sessionID) {
 		HttpSession session = this.getThreadLocalRequest().getSession();
 		ViewVoterResume temp = (ViewVoterResume)session.getAttribute("fears_voter");
-		
+
 		return temp;
 	}
 
@@ -264,7 +264,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 		if(f==null)
 			throw new NoFeatureException(projectID, feature);
-		
+
 		if(!f.getState().equals(State.Novo)){
 			throw new FearsException("So pode retirar o voto de sugestoes com o Estado Novo.");
 		}
@@ -310,7 +310,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		return p.search(search, sort, page, filter, getUserFromSession(sessionID).getVoter(p));
 
 	}
-	
+
 	public String getProjectName(String projectID) throws FearsException {
 		Project p =FearsApp.getFears().getProject(projectID);
 
@@ -365,11 +365,11 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	}
 
 
-	public ViewVoterResume CASlogin(String ticket, String sessionID)
+	public ViewVoterResume CASlogin(String ticket, boolean admin, String sessionID)
 	throws FearsException {
 		HttpSession session = this.getThreadLocalRequest().getSession();
 
-		String username=validateTicket(ticket, sessionID);
+		String username=validateTicket(ticket, admin, sessionID);
 		if(username!=null){
 			username = username.toLowerCase();
 			User temp = FearsApp.getFears().getUser(username);
@@ -382,7 +382,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 	}
 
-	public String validateTicket(String ticket, String sessionID){
+	public String validateTicket(String ticket, boolean admin, String sessionID){
 		HttpSession session = this.getThreadLocalRequest().getSession();
 
 		String user = null;
@@ -395,8 +395,10 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 			cas = new ServiceTicketValidator();
 			/* set its parameters */
 			cas.setCasValidateUrl("https://localhost:8443/cas/serviceValidate");
-			cas.setService("http://localhost:8080/webapp/Fears.html");
-
+			if(admin)
+				cas.setService("http://localhost:8080/webapp/Admin.html");
+			else
+				cas.setService("http://localhost:8080/webapp/Fears.html");
 
 			System.out.println("Deubg ticket:"+ticket);
 			cas.setServiceTicket(ticket);
@@ -405,31 +407,31 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 				cas.validate();
 			} catch (IOException e) {
 				System.out.println("Validate error:"+ e);
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (SAXException e) {
-				System.out.println("Validate error:"+ e);
-				// TODO Auto-generated catch block
+				System.out.println("SAXException:"+ e);
 				e.printStackTrace();
 			} catch (ParserConfigurationException e) {
-				System.out.println("Validate error:"+ e);
-				// TODO Auto-generated catch block
+				System.out.println("ParserConfigurationException:"+ e);
 				e.printStackTrace();
 			}
 
 			if(cas.isAuthenticationSuccesful()) {
 				user = cas.getUser();
 				session.setAttribute("fears_CAS", cas);
+
 			} else {
-				errorCode = cas.getErrorCode();
-				errorMessage = cas.getErrorMessage();
-				System.out.println(errorCode +errorMessage );
-				/* handle the error */
-			}
+					errorCode = cas.getErrorCode();
+					errorMessage = cas.getErrorMessage();
+					System.out.println(errorCode +errorMessage );
+					/* handle the error */
+				}
+
 
 			return user;
 		}
-		
+
+
 		//We have already authenticaed
 		else{
 			System.out.println("We have already authenticad.");
