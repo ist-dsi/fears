@@ -2,8 +2,8 @@ TODO:
 
 (-> Votos do utilizador são os votos "usados", votos disponiveis = votos do projecto - votos "usados".) -> DONE!
 (-> Editar Projectos.) - >DONE
--> Administrador de Projecto.
--> Login. [Janela completa ]
+(-> Administrador de Projecto.) -> DONE.
+(-> Login. [Janela completa ]) -> DONE.
 
 -> Paginação na pagina de listar sugestoes.
 -> Verificar como tratar erros de accções nao executadas.
@@ -15,13 +15,5 @@ BUGS:
 
 WebDesigner:
  -> Na pagina da sugestao falta: ranking.
- 
- 
-DONE (Tudo o que está aqui está feito, verificar se alguma coisa parecida
- foi esquecida nestes pontos):
- 
--> Verifcaçoes de segurança no serviço. (Usar TFC do G. Dumiense)[ Fazer 1º manual]) - DONE.
 
--> Verificações de segurança e Erros na Interface:	 	
-	- Verificar que as interfaces so aparecem a admins -> paginas de admin, e estado votacoes. - DONE.
 	
