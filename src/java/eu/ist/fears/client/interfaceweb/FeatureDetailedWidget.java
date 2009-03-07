@@ -114,7 +114,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 				}
 			}
 			_newCommentBox.add(_commentTextArea);
-			if(Fears.isAdminUser())
+			if(Fears.isAdminUser() || f.isProjectAdmin())
 				_newCommentBox.add(stateChooser);
 			_newCommentBox.add(_commentButton);
 			_newCommentBox.add(_errors);

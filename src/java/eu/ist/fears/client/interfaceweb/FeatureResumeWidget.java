@@ -43,6 +43,7 @@ public class FeatureResumeWidget  extends Composite{
 	protected AsyncCallback _cb;
 	protected ClickListener _removeVote;
 	protected ClickListener _vote;
+	protected ViewFeatureResume _viewFeature;
 
 	public FeatureResumeWidget(ViewFeatureResume f, AsyncCallback cb){
 
@@ -67,6 +68,7 @@ public class FeatureResumeWidget  extends Composite{
 		_vote = new VoteButton();
 		_userHasVoted=f.userHasVoted();
 		_state = f.getState();
+		_viewFeature=f;
 
 		_feature.add(_featureResume);
 
@@ -155,6 +157,7 @@ public class FeatureResumeWidget  extends Composite{
 		_stateLabel.setHTML(f.getState().getHTML());
 		_stateLabel.setStyleName(f.getState().toString());
 		_userHasVoted=f.userHasVoted();
+		_viewFeature=f;
 
 		if(updateDescription)
 			_description.setText(f.getDescription());

@@ -2,7 +2,6 @@ package eu.ist.fears.server;
 
 
 import java.io.IOException;
-import java.security.acl.NotOwnerException;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -80,23 +79,23 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		}
 	}
 
-	protected void isLoggedIn(String sessionID) throws FearsException{
-		if(getUserFromSession(sessionID)==null){
+	protected void isLoggedIn() throws FearsException{
+		if(getUserFromSession()==null){
 			throw new RequiredLogin();
 		}
 
 	}
 
-	protected void isAdmin(String sessionID) throws FearsException{
-		isLoggedIn(sessionID);
+	protected void isAdmin() throws FearsException{
+		isLoggedIn();
 
-		if(!FearsApp.getFears().isAdmin(getUserFromSession(sessionID)))
+		if(!FearsApp.getFears().isAdmin(getUserFromSession()))
 			throw new RequiredLogin();
 
 	}
 
 	public ViewFeatureDetailed vote(String projectID, String name, String sessionID) throws FearsException{
-		isLoggedIn(sessionID);
+		isLoggedIn();
 
 		Project p =FearsApp.getFears().getProject(projectID);
 
@@ -112,20 +111,20 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 			throw new FearsException("So pode votar em sugestoes com o Estado Novo.");
 		}
 
-		f.vote(getUserFromSession(sessionID).getVoter(p));
-		return  f.getDetailedView(getUserFromSession(sessionID).getVoter(p));
+		f.vote(getUserFromSession().getVoter(p));
+		return  f.getDetailedView(getUserFromSession().getVoter(p));
 	}
 
 	public void addFeature(String projectID, String name,
 			String description, String sessionID) throws FearsException{
-		isLoggedIn(sessionID);
+		isLoggedIn();
 
 		Project p = FearsApp.getFears().getProject(projectID);
 
 		if(p==null)
 			throw new NoProjectException(projectID);
 
-		p.addFeature(new FeatureRequest(name, description, getUserFromSession(sessionID).getVoter(p), p.getInitialVotes() ));
+		p.addFeature(new FeatureRequest(name, description, getUserFromSession().getVoter(p), p.getInitialVotes() ));
 	}
 
 
@@ -142,16 +141,16 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		if(p.getFeature(name)==null)
 			throw new NoFeatureException(projectID, name);
 
-		if(getUserFromSession(sessionID)==null)
+		if(getUserFromSession()==null)
 			return p.getFeature(name).getDetailedView(null);
 
-		return p.getFeature(name).getDetailedView(getUserFromSession(sessionID).getVoter(p));
+		return p.getFeature(name).getDetailedView(getUserFromSession().getVoter(p));
 
 	}
 
 	public ViewFeatureDetailed addComment(String projectID,
 			String featureName, String comment, State newState, String sessionID) throws FearsException {
-		isLoggedIn(sessionID);
+		isLoggedIn();
 
 		Project p =FearsApp.getFears().getProject(projectID);
 
@@ -164,10 +163,11 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 		FeatureRequest feature =p.getFeature(featureName);
 
-		feature.addComment(comment, getUserFromSession(sessionID).getVoter(p), newState);
+		feature.addComment(comment, getUserFromSession().getVoter(p), newState);
 
 		if(newState!=null){
-			isAdmin(sessionID);
+			if(!p.isProjectAdmin(getUserFromSession()))
+				isAdmin();
 
 			//See if the old state is "New", and the new state any other.
 			//Add 1 vote to all voters.
@@ -191,17 +191,17 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 			feature.setState(newState);
 		}
 
-		return p.getFeature(featureName).getDetailedView(getUserFromSession(sessionID).getVoter(p));
+		return p.getFeature(featureName).getDetailedView(getUserFromSession().getVoter(p));
 	}
 
 	public void addProject(String name, String description, int nvotes, String sessionID) throws FearsException{
-		isAdmin(sessionID);
+		isAdmin();
 
-		FearsApp.getFears().addProject(new Project(name, description, nvotes, getUserFromSession(sessionID)), getUserFromSession(sessionID));
+		FearsApp.getFears().addProject(new Project(name, description, nvotes, getUserFromSession()), getUserFromSession());
 	}
 
 	public void editProject(String projectID, String name, String description, int nvotes, String sessionID) throws FearsException{
-		isAdmin(sessionID);
+		isAdmin();
 
 		Project p =FearsApp.getFears().getProject(projectID);
 
@@ -216,7 +216,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	}
 
 	public void deleteProject(String name, String sessionID) throws FearsException{
-		isAdmin(sessionID);
+		isAdmin();
 
 		if(FearsApp.getFears().getProject(name).getFeatureRequestCount()>0)
 			throw new FearsException("Projecto n&atilde;o pode ser remoido, porque tem sugest&otilde;oes");
@@ -243,7 +243,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		return temp;
 	}
 
-	public User getUserFromSession(String sessionID){
+	public User getUserFromSession(){
 		HttpSession session = this.getThreadLocalRequest().getSession();
 		ViewVoterResume temp = (ViewVoterResume)session.getAttribute("fears_voter");
 		if(temp==null)
@@ -253,7 +253,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 	public ViewFeatureDetailed removeVote(String projectID, String feature,
 			String sessionID) throws FearsException {
-		isLoggedIn(sessionID);
+		isLoggedIn();
 
 		Project p =FearsApp.getFears().getProject(projectID);
 
@@ -269,19 +269,19 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 			throw new FearsException("So pode retirar o voto de sugestoes com o Estado Novo.");
 		}
 
-		f.removeVote(getUserFromSession(sessionID).getVoter(p));
-		return  f.getDetailedView(getUserFromSession(sessionID).getVoter(p));
+		f.removeVote(getUserFromSession().getVoter(p));
+		return  f.getDetailedView(getUserFromSession().getVoter(p));
 	}
 
 	public ViewAdmins getAdmins(String sessionID) throws FearsException {
-		isAdmin(sessionID);
+		isAdmin();
 
 		return FearsApp.getFears().getViewAdmins();
 	}
 
 
 	public ViewAdmins addAdmin(String userName, String sessionID) throws FearsException {
-		isAdmin(sessionID);
+		isAdmin();
 
 		FearsApp.getFears().addAdmin(FearsApp.getFears().getUser(userName));
 		return FearsApp.getFears().getViewAdmins();
@@ -289,8 +289,11 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 
 	public ViewAdmins removeAdmin(String userName, String sessionID) throws FearsException {
-		isAdmin(sessionID);
+		isAdmin();
 
+		if(userName.equals(getUserFromSession().getName()))
+			throw new FearsException("Nao se pode remover a si proprio de Administrador.");
+		
 		FearsApp.getFears().removeAdmin(FearsApp.getFears().getUser(userName));
 		return FearsApp.getFears().getViewAdmins();
 	}
@@ -303,11 +306,11 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		if(p==null)
 			throw new NoProjectException(projectID);
 
-		if(getUserFromSession(sessionID)==null)
+		if(getUserFromSession()==null)
 			return p.search(search, sort, page, filter, null);		
 
 
-		return p.search(search, sort, page, filter, getUserFromSession(sessionID).getVoter(p));
+		return p.search(search, sort, page, filter, getUserFromSession().getVoter(p));
 
 	}
 
@@ -329,6 +332,44 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		return p.getView();
 	}
 
+	public ViewAdmins getProjectAdmins(String projectID)throws FearsException{
+		Project p =FearsApp.getFears().getProject(projectID);
+		
+		
+		if(p==null)
+			throw new NoProjectException(projectID);
+		return p.getViewAdmins();
+		
+	}
+	
+	public ViewAdmins addProjectAdmin(String newAdmin, String projectID)throws FearsException{
+		isAdmin();
+		
+		Project p =FearsApp.getFears().getProject(projectID);
+		
+		if(p==null)
+			throw new NoProjectException(projectID);
+		
+		p.addAdmin(FearsApp.getFears().getUser(newAdmin));
+		
+		return p.getViewAdmins();
+	}
+	
+	public ViewAdmins removeProjectAdmin(String oldAdmin, String projectID)throws FearsException{
+		isAdmin();
+		
+		Project p =FearsApp.getFears().getProject(projectID);
+		
+		if(p==null)
+			throw new NoProjectException(projectID);
+		
+		if(oldAdmin.equals(getUserFromSession().getName()))
+			throw new FearsException("Nao se pode remover a si proprio de Administrador.");
+		
+		p.removeAdmin(FearsApp.getFears().getUser(oldAdmin));
+		
+		return p.getViewAdmins();
+	}
 
 	public ViewVoterDetailed getVoter(String projectID, String voterName,
 			String sessionID) throws FearsException {
@@ -342,7 +383,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	}
 
 	public void logoff(String sessionID) throws FearsException{
-		isLoggedIn(sessionID);
+		isLoggedIn();
 
 		HttpSession session = this.getThreadLocalRequest().getSession();
 		session.invalidate();
@@ -356,7 +397,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		if(p==null)
 			throw new NoProjectException(projectID);
 
-		User u = getUserFromSession(sessionID);
+		User u = getUserFromSession();
 
 		if(u==null)
 			return null;

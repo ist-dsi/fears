@@ -32,13 +32,13 @@ public class Path extends Composite{
 		_back.clear();
 	}
 	
-	public void setProject(String project, String projectID){
+	public void setProject(String projectName, String projectID){
 		_path.clear();
 		
 		_path.add(new Hyperlink("Projectos","listProjects"));
 
 		_path.add(new HTML("&nbsp;/&nbsp;"));
-		_path.add(new Hyperlink(project,"Project"+projectID));
+		_path.add(new Hyperlink(projectName,"Project"+projectID));
 
 		_back.clear();
 	}
@@ -52,13 +52,13 @@ public class Path extends Composite{
 		_back.clear();
 	}
 
-	public void setFeature(String project, String projectID, String displayOnPath  ){
+	public void setFeature(String projectName, String projectID, String displayOnPath  ){
 		_path.clear();
 
 		_path.add(new Hyperlink("Projectos","listProjects"));
 
 		_path.add(new HTML("&nbsp;/&nbsp;"));
-		_path.add(new Hyperlink(project,"Project"+projectID));
+		_path.add(new Hyperlink(projectName,"Project"+projectID));
 
 		_path.add(new HTML("&nbsp;/ " + displayOnPath));
 		
@@ -66,28 +66,28 @@ public class Path extends Composite{
 		_back.add(new Hyperlink("&laquo; Back",true,"Project"+projectID));
 	}
 
-	public void setFeatureChange(String project, String projectID, String displayOnPath){
+	public void setFeatureChange(String projectName, String projectID, String displayOnPath){
 		_path.clear();
 
 		_path.add(new Hyperlink("Projectos","listProjects"));
 		
 		_path.add(new HTML("&nbsp;/&nbsp;"));
-		_path.add(new Hyperlink(project,"Project"+projectID));
+		_path.add(new Hyperlink(projectName,"Project"+projectID));
 		
 		_path.add(new HTML("&nbsp;/ " + displayOnPath));
 		
 		_back.clear();
 	}
 	
-	public void setVoter(String project, String projectID, String voter ){
+	public void setVoter(String projectName, String projectID, String voter ){
 		_path.clear();
 		
 		_path.add(new Hyperlink("Projectos","listProjects"));
 		
 		_path.add(new HTML("&nbsp;/&nbsp;"));
-		_path.add(new Hyperlink(project,"Project"+projectID));
+		_path.add(new Hyperlink(projectName,"Project"+projectID));
 		
-		_path.add(new HTML("&nbsp;/ Voters"));
+		_path.add(new HTML("&nbsp;/ Utilizadores"));
 		
 		
 		_path.add(new HTML("&nbsp;/ " + voter));
@@ -105,9 +105,7 @@ public class Path extends Composite{
 
 	public void setAdmins(){
 		_path.clear();
-		_path.add(new Hyperlink("Administradores","admin"));
-
-
+		_path.add(new Hyperlink("Administradores","admins"));
 	}
 
 	public void setCreateProject() {
@@ -118,14 +116,20 @@ public class Path extends Composite{
 		
 	}
 
-	public void setEditProject(String project, String projectID) {
+	public void setEditProject(String projectName, String projectID) {
 		_path.clear();
 		_path.add(new Hyperlink("Projectos","listProjects"));
 		_path.add(new HTML("&nbsp;/&nbsp;"));
-		_path.add(new Hyperlink(project,"Project"+projectID));
+		_path.add(new Hyperlink(projectName,"Project"+projectID));
 		_path.add(new HTML("&nbsp;/Editar Projecto"));
-		
-		
+	}
+	
+	public void setEditAdmins(String projectName, String projectID) {
+		_path.clear();
+		_path.add(new Hyperlink("Projectos","listProjects"));
+		_path.add(new HTML("&nbsp;/&nbsp;"));
+		_path.add(new Hyperlink(projectName,"Project"+projectID));
+		_path.add(new HTML("&nbsp;/ Editar Administradores"));
 	}
 
 

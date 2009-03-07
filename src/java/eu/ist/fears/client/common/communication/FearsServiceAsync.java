@@ -3,8 +3,6 @@ package eu.ist.fears.client.common.communication;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import eu.ist.fears.client.common.State;
-import eu.ist.fears.client.common.exceptions.FearsException;
-import eu.ist.fears.client.common.views.ViewVoterResume;
 
 
 public interface FearsServiceAsync {
@@ -31,6 +29,11 @@ public interface FearsServiceAsync {
 	public void removeAdmin(String userName, String sessionID, AsyncCallback callback);
 		
 	public void search(String projectID, String search, String sort, int page, String filter, String sessionID, AsyncCallback callback );
+	
+	public void getProjectAdmins(String projectID, AsyncCallback callback);
+	public void addProjectAdmin(String newAdmin, String projectID, AsyncCallback callback);
+	public void removeProjectAdmin(String oldAdmin, String projectID, AsyncCallback callback);
+	
 	public void getVoter(String _projectid, String voterName, String cookie,
 			AsyncCallback callback);
 	

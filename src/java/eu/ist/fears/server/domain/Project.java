@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import eu.ist.fears.client.common.views.ViewAdmins;
 import eu.ist.fears.client.common.views.ViewFeatureResume;
 import eu.ist.fears.client.common.views.ViewProject;
 
@@ -22,6 +23,7 @@ public class Project extends Project_Base {
 		setFeaturesIncrementID(0);
 		setInitialVotes(nvotes);
 		addVoter(v);
+		
 		
 	}
 
@@ -62,7 +64,7 @@ public class Project extends Project_Base {
 	}
 
 	public List<ViewFeatureResume> search(String search, String sort, int page, String filter, Voter v){
-		StringTokenizer s = new StringTokenizer(search," ");
+		
 		List<ViewFeatureResume> ret = new ArrayList<ViewFeatureResume>();
 
 		if(this.getFeatureRequestCount()==0)
@@ -71,12 +73,15 @@ public class Project extends Project_Base {
 		if(!filter.isEmpty()){
 			return sortAndPage(filter(filter, v), sort, page);
 		}
+		
+		search = search.toLowerCase(); 
+		StringTokenizer s = new StringTokenizer(search," ");
 				
 		//Make the list with the features that have the first token
 		if(s.countTokens()>0){
 			String first = s.nextToken();
 			for(FeatureRequest f : getFeatureRequestSet()){
-				if(f.getDescription().contains(first) || f.getName().contains(first))
+				if(f.getDescription().toLowerCase().contains(first) || f.getName().toLowerCase().contains(first))
 					ret.add( f.getResumeView(v));
 			}
 		}else {//Return All
@@ -89,7 +94,7 @@ public class Project extends Project_Base {
 			String token = s.nextToken();
 			int i=0;
 			while(i<ret.size()){
-				if(!ret.get(i).getDescription().contains(token) && !ret.get(i).getName().contains(token)){
+				if(!ret.get(i).getDescription().toLowerCase().contains(token) && !ret.get(i).getName().toLowerCase().contains(token)){
 					ret.remove(i);
 					i--;
 				}
@@ -141,6 +146,24 @@ public class Project extends Project_Base {
 		
 		
 	}
+	
+	public boolean isProjectAdmin(User u){
+		List<User> l =getAdmin();
+		if(l.contains(u))
+		return true;
+		else return false;
+	}
+	
+	public ViewAdmins getViewAdmins(){
+		List<String>admins = new ArrayList<String>();
+		
+		for(User u : getAdmin()){
+			admins.add(u.getUsername());
+		}
+		return new ViewAdmins(admins, getIdInternal().toString(), getName());
+		
+	}
+	
 	
 	protected class VoteComparator implements Comparator<ViewFeatureResume>{
 

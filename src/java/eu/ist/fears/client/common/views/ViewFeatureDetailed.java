@@ -18,11 +18,13 @@ public class ViewFeatureDetailed extends ViewFeatureResume implements Serializab
 	
 	private List<ViewComment> _comments;
 	
+	private boolean _isProjectAdmin;
+	
 	public ViewFeatureDetailed(){
 		
 	}
 	
-	public  ViewFeatureDetailed(String projectName, int projectID,  String name, int featureID, State state, boolean userHasvoted, String description, String author, String date,  List<ViewVoterResume> voters, List<ViewComment> comments) {
+	public  ViewFeatureDetailed(String projectName, int projectID,  String name, int featureID, State state, boolean userHasvoted, String description, String author, String date, boolean isProjectAdmin,  List<ViewVoterResume> voters, List<ViewComment> comments) {
 		_projectName = projectName;
 		_projectID = projectID;
 		_name= name;
@@ -36,6 +38,7 @@ public class ViewFeatureDetailed extends ViewFeatureResume implements Serializab
 		_voters=voters;
 		_author = author;
 		_date=date;
+		_isProjectAdmin=isProjectAdmin;
 		
 	}	
 	
@@ -47,4 +50,8 @@ public class ViewFeatureDetailed extends ViewFeatureResume implements Serializab
 		return _voters;
 	}
 
+	public boolean isProjectAdmin(){
+		return _isProjectAdmin;
+	}
+	
 }

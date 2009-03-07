@@ -25,18 +25,20 @@ public class ListAdmins  extends Composite {
 	private TextBox _newAdminName; 
 	private Button _createAdminButton;
 	protected VerticalPanel _errors;
+	protected String _projectId;
 
-	public ListAdmins(){
+	public ListAdmins(String projectId){
 		_com= new Communication("service");
 		_contentPanel = new VerticalPanel();
 		_errors= new VerticalPanel();
 		_errors.setStyleName("error");
+		_projectId=projectId;
 
-		Fears.getPath().setAdmins();
 		_newAdminName = new TextBox();
 
 		initWidget(_contentPanel);
 		init();
+		update();
 	}
 
 	private void init(){
@@ -45,12 +47,16 @@ public class ListAdmins  extends Composite {
 	}
 
 	public void update(){
-		_com.getAdmins(Cookies.getCookie("fears"), getProjectsCB);	
+		if(_projectId==null)
+			_com.getAdmins(Cookies.getCookie("fears"), getAdminCB);
+		else _com.getProjectAdmins(_projectId, getAdminCB);
 	}
 
 	private void displayCreateAdmin(){
-
-		_contentPanel.add(new HTML("<br><br><h2>Criar Administrador</h2>"));
+		if(!Fears.isAdminUser())
+			return;
+		
+		_contentPanel.add(new HTML("<br><br><h2>Adicionar Administrador</h2>"));
 		_contentPanel.add(new Label("Nome do Administrador:"));
 		_newAdminName.setText("");
 		_contentPanel.add(_newAdminName);
@@ -67,7 +73,9 @@ public class ListAdmins  extends Composite {
 					return;
 				}
 				
-				_com.addAdmin(_newAdminName.getText(), Cookies.getCookie("fears"), getProjectsCB);
+				if(_projectId==null)
+					_com.addAdmin(_newAdminName.getText(), Cookies.getCookie("fears"), getAdminCB);
+				else _com.addProjectAdmin(_newAdminName.getText(), _projectId, getAdminCB);
 			}
 		}); 
 
@@ -95,7 +103,10 @@ public class ListAdmins  extends Composite {
 		protected class RemoveAdmin implements ClickListener{
 
 			public void onClick(Widget sender) {
-				_com.removeAdmin(_name.getText(), Cookies.getCookie("fears"), getProjectsCB);
+				if(_projectId==null)
+				_com.removeAdmin(_name.getText(), Cookies.getCookie("fears"), getAdminCB);
+				else
+				_com.removeProjectAdmin(_name.getText(), _projectId, getAdminCB);
 			}
 
 		}
@@ -104,6 +115,10 @@ public class ListAdmins  extends Composite {
 
 	protected void updateAdmin(ViewAdmins admins){
 		init();
+		if(admins.getProjectId()==null)
+			Fears.getPath().setAdmins();
+		else Fears.getPath().setEditAdmins(admins.getProjectName(), admins.getProjectId());
+			
 
 		if(admins==null || admins.getAdmins()==null  || admins.getAdmins().size()==0){
 			_contentPanel.add(new Label("Nao ha Administradores"));
@@ -120,7 +135,7 @@ public class ListAdmins  extends Composite {
 	}
 
 
-	AsyncCallback getProjectsCB = new ExceptionsTreatment() {
+	AsyncCallback getAdminCB = new ExceptionsTreatment() {
 		public void onSuccess(Object result){ 
 			updateAdmin((ViewAdmins) result);
 		}

@@ -99,10 +99,10 @@ public class ListProjectsWidget extends Composite{
 			
 			_admin.add(_author);
 			_admin.add(new HTML("&nbsp;|&nbsp;"));
-			_admin.add(new Hyperlink("Editar","Project"+p.getwebID()+"&"+"edit"));
+			_admin.add(new Hyperlink("Editar Projecto","Project"+p.getwebID()+"&"+"edit"));
 			_admin.add(new HTML("&nbsp;|&nbsp;"));
-			
-			
+			_admin.add(new Hyperlink("Editar Administradores","Project"+p.getwebID()+"&"+"adminEdit"));
+			_admin.add(new HTML("&nbsp;|&nbsp;"));
 			_removePanel = new DisclosurePanel();
 			_removePanel.setHeader(new HTML("Remover"));
 			

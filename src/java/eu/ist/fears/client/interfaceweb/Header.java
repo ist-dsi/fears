@@ -81,15 +81,15 @@ public class Header extends Composite {
 			if(inProjectPage)
 				_votes.setHTML("Tem " + Fears.getVotesLeft() + " votos. |&nbsp;");
 			else _votes.setText("");
-			if(adminPage)
+			if(adminPage && Fears.isAdminUser())
 				sessionLink.setHTML("<a href=\""+GWT.getModuleBaseURL()+"Admin.html#logout\">logout</a>");
 			else
 				sessionLink.setHTML("<a href=\""+GWT.getModuleBaseURL()+"Fears.html#logout\">logout</a>");
 		}
 
-		if(adminPage){
+		if(adminPage && Fears.isAdminUser()){
 			_adminAdministrators.setText("Administradores");
-			_adminAdministrators.setTargetHistoryToken("admins");
+			_adminAdministrators.setTargetHistoryToken("admins");	
 		}else {
 			_adminAdministrators.setText("");
 		}

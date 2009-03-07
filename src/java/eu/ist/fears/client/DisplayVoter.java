@@ -30,7 +30,7 @@ public class DisplayVoter extends Composite {
 		_voterName = new Label(voterName);
 		_content = new VerticalPanel();
 
-		Fears.getPath().setVoter("", projectId, voterName);
+		//Fears.getPath().setVoter("", projectId, voterName);
 
 		updateProjectName();
 		initWidget(_content);	
@@ -126,10 +126,11 @@ public class DisplayVoter extends Composite {
 
 	protected void updateProjectName(String name){
 		Fears.getPath().setVoter(name, _projectID, _voterName.getText());
+		
 	}
 
 	public void updateProjectName(){
-		_com.getProject(_projectID, getProjectName);
+		_com.getProjectName(_projectID, getProjectName);
 	}
 
 	AsyncCallback getProjectName = new ExceptionsTreatment() {

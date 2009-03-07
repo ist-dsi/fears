@@ -46,6 +46,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 	protected static ViewVoterResume _curretUser;
 	public static boolean validCookie;
 	protected static String lastURL;
+	protected static String _currentProject;
 
 
 	/**
@@ -72,6 +73,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 		content.setStyleName("width100");
 		path = new Path();
 		_curretUser=new ViewVoterResume("guest","",false);
+		_currentProject=null;
 		header = new Header("guest",validCookie, false);
 		RootPanel.get().setStyleName("centered");
 		RootPanel.get().add(header);
@@ -138,6 +140,10 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 
 	public static int getVotesLeft(){
 		return _curretUser.getVotesLeft();
+	}
+	
+	public static String getCurrentProject(){
+		return _currentProject;
 	}
 
 	public void listFeatures(String projectName,String filter){
@@ -290,7 +296,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 			projectParse(url.substring("Project".length()), f);	
 		}if(url.startsWith("admins")){
 			if(f instanceof Admin)
-				((Admin)f).viewChangeAdmins();
+				((Admin)f).viewEditAdmins();
 		}else if(url.startsWith("logout")){
 			f.viewLogout();
 		}else if(url.startsWith("createProject")){
@@ -311,6 +317,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 		//Estamos no Caso: #ProjectXPTO  
 		if(parseAt==-1 && parseB==-1 ){
 			projectID=string;
+			_currentProject=projectID;
 			/* getCurrentUser, to update Votes*/ 
 			header.update(projectID);
 			f.listFeatures(projectID,"");
@@ -327,6 +334,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 			parse = string.substring(parseB+3);
 		}
 
+		_currentProject=projectID;
 		/* getCurrentUser, to update Votes*/ 
 		header.update(projectID);
 
@@ -344,7 +352,9 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 		}else if(parse.startsWith("edit")){
 			if(f instanceof Admin)
 				((Admin)f).viewEditProject(projectID);
-			
+		}else if(parse.startsWith("adminEdit")){
+			if(f instanceof Admin)
+				((Admin)f).viewEditAdmins(projectID);
 		}
 
 	}

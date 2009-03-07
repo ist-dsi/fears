@@ -65,11 +65,11 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 
 	}
 
-	public void viewChangeAdmins(){
+	public void viewEditAdmins(){
 		if(!verifyAdmin())
 			return;
 
-		ListAdmins admins = new ListAdmins();
+		ListAdmins admins = new ListAdmins(null);
 		admins.update();
 		content.add(admins);
 
@@ -91,6 +91,16 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 		content.add(e);
 	}
 
+	public void viewEditAdmins(String projectID){
+		if(!verifyAdmin())
+			return;
+		
+		ListAdmins admins = new ListAdmins(projectID);
+		content.add(admins);
+		
+		
+	}
+	
 	public void onHistoryChanged(String historyToken) {
 		// This method is called whenever the application's history changes. Set
 		// the label to reflect the current history token.
@@ -103,5 +113,8 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 		Fears.parseURL(historyToken, this);
 
 	}
+
+
+	
 
 }

@@ -1,9 +1,7 @@
 package eu.ist.fears.server;
 
-import java.io.BufferedReader;
-import java.io.Console;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 import javax.servlet.ServletException;
 

@@ -2,7 +2,6 @@ package eu.ist.fears.client.common.communication;
 
 import java.util.List;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 
 import eu.ist.fears.client.common.State;
@@ -40,6 +39,10 @@ public interface FearsService extends RemoteService  {
 	
 	public List<ViewFeatureResume> search(String projectID, String search, String sort, int page, String filter, String sessionID) throws FearsException, NoProjectException;
 		
+	public ViewAdmins getProjectAdmins(String projectID)throws FearsException;
+	public ViewAdmins addProjectAdmin(String newAdmin, String projectID) throws FearsException;
+	public ViewAdmins removeProjectAdmin(String oldAdmin, String projectID) throws FearsException;
+	
 	public ViewVoterDetailed getVoter(String _projectid, String voterName, String cookie) throws FearsException;
 	
 	public ViewVoterResume getCurrentVoter(String _projectid, String cookie) throws FearsException;

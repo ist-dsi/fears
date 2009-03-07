@@ -82,7 +82,7 @@ public class FeatureRequest extends FeatureRequest_Base {
 
 
 
-	public ViewFeatureDetailed getDetailedView(Voter user) {
+	public ViewFeatureDetailed getDetailedView(Voter voter) {
 		List<ViewComment> comments = new ArrayList<ViewComment>();
 		for(Comment c : getCommentSet() ){
 			comments.add(c.getView());
@@ -93,10 +93,12 @@ public class FeatureRequest extends FeatureRequest_Base {
 		List<ViewVoterResume> voters = new ArrayList<ViewVoterResume>();
 		for(Voter v : getVoterSet() ){
 			voters.add(new ViewVoterResume(v.getUser().getName(),  null, false ));
-			if(v.equals(user))
+			if(v.equals(voter))
 				userhasvoted=true;
 		}
-		return new ViewFeatureDetailed(getProject().getName(), getProject().getIdInternal(), getName(), getWebID(), getState() ,userhasvoted ,  getDescription(), getAuthorName(), getCreatedTime().toString(DateTimeFormat.forPattern(DateFormat.DEFAULT_FORMAT))  ,voters , comments );
+		
+		return new ViewFeatureDetailed(getProject().getName(), getProject().getIdInternal(), getName(), getWebID(), getState() ,userhasvoted ,  getDescription(), getAuthorName(), getCreatedTime().toString(DateTimeFormat.forPattern(DateFormat.DEFAULT_FORMAT)), getProject().isProjectAdmin(voter.getUser()), voters , comments );
+		 
 	}
 
 	public ViewFeatureResume getResumeView(Voter user) {

@@ -4,29 +4,30 @@
 	<classpathentry kind="src" path="src_gen"/>
 	<classpathentry kind="src" path="src/java"/>
 	<classpathentry kind="var" path="JUNIT_HOME/junit.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="config"/>
+	<classpathentry kind="lib" path="src/dml"/>
+	<classpathentry kind="lib" path="C:/Program Files/gwt-windows-1.5.2/gwt-dev-windows.jar"/>
+	<classpathentry kind="lib" path="lib/gwt-user.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/antlr.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/asm-2.0.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/asm-commons-2.0.jar"/>
+	<classpathentry kind="lib" path="deploy-lib/asm-3.0.jar"/>
+	<classpathentry kind="lib" path="deploy-lib/asm-commons-3.0.jar"/>
+	<classpathentry kind="lib" path="deploy-lib/casclient-2.1.1.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/commons-collections-3.1.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/commons-dbcp.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/commons-lang-2.0.jar"/>
+	<classpathentry kind="lib" path="deploy-lib/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/commons-pool.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/db-ojb-1.0.0.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/dml.jar"/>
+	<classpathentry kind="lib" path="deploy-lib/DMAPL.jar"/>
+	<classpathentry kind="lib" path="deploy-lib/dml-20090306.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/fenix-framework.jar"/>
+	<classpathentry kind="lib" path="deploy-lib/gwt-servlet.jar"/>
+	<classpathentry kind="lib" path="deploy-lib/jfreechart.jar"/>
+	<classpathentry kind="lib" path="deploy-lib/joda-time-1.5.2.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/jvstm.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/log4j-1.2.8.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/mysql-connector-java-5.1.5-bin.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/xercesImpl.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="config"/>
-	<classpathentry kind="lib" path="src/dml"/>
-	<classpathentry kind="lib" path="deploy-lib/DMAPL.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/gwt-windows-1.5.2/gwt-dev-windows.jar"/>
-	<classpathentry kind="lib" path="lib/gwt-user.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/gwt-servlet.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/joda-time-1.5.2.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/casclient-2.1.1.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/gwtext.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -75,9 +75,9 @@
     <delete dir="${src.gen.dir}"/>
   </target>
 	
-  <target name="run linux" depends="compile">
+  <!-- <target name="run linux" depends="compile">
     <exec executable="Fears-shell-linux.sh"/> 
-  </target>
+  </target> -->
 
   <target name="compile-javascript" depends="compile">
     <java classname="com.google.gwt.dev.GWTCompiler" fork="true">
@@ -119,7 +119,7 @@
     </copy>
   </target>
 
-  <target name="generate-sql" depends="build-webapp">
+  <!-- <target name="generate-sql" depends="build-webapp">
     <java classname="tmp.DomainModelSQLGen">
       <arg value="${fears.dml}"/>
       <arg value="${build.dir}/fears.sql"/>
@@ -128,7 +128,7 @@
         <fileset dir="${deploy.lib.dir}"/>
       </classpath>      
     </java>
-  </target>
+  </target> -->
 	
 	<target name="addAdmin" depends="compile">
 	    <java classname="eu.ist.fears.server.AddAdmin" >

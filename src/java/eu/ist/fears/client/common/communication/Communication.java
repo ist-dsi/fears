@@ -5,7 +5,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
 import eu.ist.fears.client.common.State;
-import eu.ist.fears.client.common.exceptions.FearsException;
 
 
 public class Communication implements FearsServiceAsync{
@@ -102,7 +101,25 @@ public class Communication implements FearsServiceAsync{
 	public void getProject(String projectID, AsyncCallback callback) {
 		_service.getProject(projectID, callback);	
 	}
+	
+	public void addProjectAdmin(String newAdmin, String projectID,
+			AsyncCallback callback) {
+		_service.addProjectAdmin(newAdmin, projectID, callback);	
+	}
 
+	
+	public void getProjectAdmins(String projectID, AsyncCallback callback) {
+		_service.getProjectAdmins(projectID, callback);	
+	}
+
+
+	public void removeProjectAdmin(String oldAdmin, String projectID,
+			AsyncCallback callback) {
+		_service.removeProjectAdmin(oldAdmin, projectID, callback);	
+		
+	}
+
+	
 	public void getVoter(String projectid, String voterName, String cookie,
 			AsyncCallback callback){
 		_service.getVoter(projectid, voterName, cookie, callback);
@@ -117,8 +134,6 @@ public class Communication implements FearsServiceAsync{
 
 	public void CASlogin(String ticket, boolean login, String cookie,  AsyncCallback callback){
 		_service.CASlogin(ticket, login, cookie, callback);
-	}
-
-	
+	}	
 
 }
