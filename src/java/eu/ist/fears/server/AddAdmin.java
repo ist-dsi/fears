@@ -20,7 +20,7 @@ public class AddAdmin {
 		Config config = new Config() {{ 
 			domainModelPath = "/fears.dml";
 			dbAlias = "//localhost:3306/fears"; 
-			dbUsername = "root";
+			dbUsername="root";
 			dbPassword = "fears";
 		}};
 		FenixFramework.initialize(config);

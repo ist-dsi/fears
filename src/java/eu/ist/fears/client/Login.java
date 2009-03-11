@@ -33,9 +33,9 @@ public class Login extends Composite {
 		_main.add(_loginButton);
 		_loginButton.addClickListener(new LoginButton(f));*/
 		
-		//Window.open("https://localhost:8443/cas/?service=http://localhost:8080/webapp/Fears.html", "_self", "");
+		//Window.open("://localhost:8443/cas/?service=//localhost:8080/webapp/Fears.html", "_self", "");
 		
-		//Frame iframe =new Frame("https://localhost:8443/cas/?service=http://localhost:8080/webapp/Fears.html");
+		//Frame iframe =new Frame("//localhost:8443/cas/?service=//localhost:8080/webapp/Fears.html");
 		//iframe.setSize("507px", "450px");
 		//_main.add(iframe);
 		

@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 import eu.ist.fears.client.DisplayFeatureDetailed;
 import eu.ist.fears.client.Fears;
+import eu.ist.fears.client.common.FearsConfig;
 import eu.ist.fears.client.common.communication.Communication;
 import eu.ist.fears.client.common.exceptions.ExceptionsTreatment;
 import eu.ist.fears.client.common.views.ViewVoterResume;
@@ -73,18 +74,18 @@ public class Header extends Composite {
 		if(!Fears.isLogedIn()){
 			_votes.setText("");
 			if(adminPage)
-				sessionLink.setHTML("<a href=\"https://localhost:8443/cas/?service="+GWT.getModuleBaseURL()+"Admin.html\">login</a>");
+				sessionLink.setHTML("<a href=\""+ FearsConfig.getCasUrl() + "?service=" +GWT.getModuleBaseURL()+"Admin.html\">login</a>");
 			else
-				sessionLink.setHTML("<a href=\"https://localhost:8443/cas/?service="+GWT.getModuleBaseURL()+"Fears.html\">login</a>");
+				sessionLink.setHTML("<a href=\""+ FearsConfig.getCasUrl() + "?service=" +GWT.getModuleBaseURL()+"Fears.html\">login</a>");
 
 		}else{
 			if(inProjectPage)
 				_votes.setHTML("Tem " + Fears.getVotesLeft() + " votos. |&nbsp;");
 			else _votes.setText("");
 			if(adminPage && Fears.isAdminUser())
-				sessionLink.setHTML("<a href=\""+GWT.getModuleBaseURL()+"Admin.html#logout\">logout</a>");
+				sessionLink.setHTML("<a href=\"" + FearsConfig.getCasUrl() + "logout\">logout</a>");
 			else
-				sessionLink.setHTML("<a href=\""+GWT.getModuleBaseURL()+"Fears.html#logout\">logout</a>");
+				sessionLink.setHTML("<a href=\"" + FearsConfig.getCasUrl() + "logout\">logout</a>");
 		}
 
 		if(adminPage && Fears.isAdminUser()){

@@ -22,6 +22,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import eu.ist.fears.client.admin.Admin;
+import eu.ist.fears.client.common.FearsConfig;
 import eu.ist.fears.client.common.communication.Communication;
 import eu.ist.fears.client.common.exceptions.ExceptionsTreatment;
 import eu.ist.fears.client.common.views.ViewVoterResume;
@@ -88,9 +89,9 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 		String ticket=getTicket();
 		if(ticket!=null && !ticket.isEmpty()){
 			if(this instanceof Admin)
-			_com.CASlogin(ticket, true, null, new WaitForLogin());
+				_com.CASlogin(ticket, true, null, new WaitForLogin());
 			else  _com.CASlogin(ticket, false, null, new WaitForLogin());
-			
+
 			return;
 		}
 
@@ -141,7 +142,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 	public static int getVotesLeft(){
 		return _curretUser.getVotesLeft();
 	}
-	
+
 	public static String getCurrentProject(){
 		return _currentProject;
 	}
@@ -199,35 +200,14 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 
 		verifyLogin(false);
 
-		/*if(popup!=null)
-			popup.setVisible(false);
-		
-		popup =  new DialogBox(false,false);
-		VerticalPanel dialogContents = new VerticalPanel();
-		dialogContents.setSpacing(0);
-		popup.setWidget(dialogContents);
-
-		Login login = new Login(this);
-		dialogContents.add(login);
-		//dialogContents.add(iframe);
-
-		login.setStyleName("loginWindow");
-		popup.setSize("400px", "400px");
-		popup.setPopupPosition(500, 50);
-		saveFears(this);
-		popup.show();
-		//popup.getElement().setId("FEARSPOPUP"); */
 		if(this instanceof Admin)
-			Window.open("https://localhost:8443/cas/?service=" + GWT.getModuleBaseURL() + "Admin.html", "_self", "");
+			Window.open(FearsConfig.getCasUrl() + "?service=" + GWT.getModuleBaseURL() + "Admin.html", "_self", "");
 		else 
-			Window.open("https://localhost:8443/cas/?service=" + GWT.getModuleBaseURL() + "Fears.html", "_self", "");
-			
-		//Login login = new Login(this);
-		//content.add(login);
+			Window.open(FearsConfig.getCasUrl() + "?service=" + GWT.getModuleBaseURL() + "Fears.html", "_self", "");
 
 	}
 
-	public void viewLogout(){
+	public void CASLogout(){
 
 		validCookie=false;
 		header.update(false, isAdminPage());
@@ -236,8 +216,8 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 		_curretUser.setName("guest");
 		Cookies.removeCookie("fears");
 		Cookies.removeCookie("JSESSIONID");
-		History.back();
 		
+
 	}
 
 
@@ -274,7 +254,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 
 		if(!"login".equals(historyToken) && !"logoff".equals(historyToken))
 			lastURL=historyToken;
-		
+
 		header.update(false,false);
 		parseURL(historyToken, this);
 	}
@@ -298,11 +278,11 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 			if(f instanceof Admin)
 				((Admin)f).viewEditAdmins();
 		}else if(url.startsWith("logout")){
-			f.viewLogout();
+			f.CASLogout();
 		}else if(url.startsWith("createProject")){
 			if(f instanceof Admin)
 				((Admin)f).viewCreateProject();
-			
+
 		}
 
 
@@ -374,7 +354,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 	/*public native void saveFears(Fears f)-{
 		$wnd.myfears=f;
 	}-; */
-	
+
 
 	/*public static native void callLoggedIn()-{
 	var temp=$wnd.parent.myfears;

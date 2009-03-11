@@ -15,10 +15,12 @@ import pt.ist.fenixframework.Config;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.pstm.Transaction;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import edu.yale.its.tp.cas.client.ServiceTicketValidator;
+import eu.ist.fears.client.common.FearsConfig;
 import eu.ist.fears.client.common.State;
 import eu.ist.fears.client.common.communication.FearsService;
 import eu.ist.fears.client.common.exceptions.FearsException;
@@ -49,7 +51,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		Config config = new Config() {{ 
 			domainModelPath = "/fears.dml";
 			dbAlias = "//localhost:3306/fears"; 
-			dbUsername = "root";
+			dbUsername="root";
 			dbPassword = "fears";
 		}};
 		FenixFramework.initialize(config);
@@ -416,7 +418,6 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 			User temp = FearsApp.getFears().getUser(username);
 			ViewVoterResume ret =  new ViewVoterResume(temp.getName(),  session.getId(), FearsApp.getFears().isAdmin(temp));
 			session.setAttribute("fears_voter", ret);
-			System.out.println("CAS Login: User:" + ret.getName());
 			return ret;
 		}else System.out.println("ERRO NO CAS....");
 		return null;
@@ -430,20 +431,19 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		String errorCode = null;
 		String errorMessage = null;
 
-		ServiceTicketValidator cas = (ServiceTicketValidator)session.getAttribute("fears_CAS");
+		ServiceTicketValidator cas = new ServiceTicketValidator();
 		/* instantiate a new ServiceTicketValidator */
-		if(cas==null){
-			cas = new ServiceTicketValidator();
+
+
 			/* set its parameters */
-			cas.setCasValidateUrl("https://localhost:8443/cas/serviceValidate");
+			cas.setCasValidateUrl( FearsConfig.getCasUrl() + "serviceValidate");
 			if(admin)
-				cas.setService("http://localhost:8080/webapp/Admin.html");
+				cas.setService(FearsConfig.getFearsUrl() + "Admin.html");
 			else
-				cas.setService("http://localhost:8080/webapp/Fears.html");
+				cas.setService(FearsConfig.getFearsUrl() + "Fears.html");
 
-			System.out.println("Deubg ticket:"+ticket);
 			cas.setServiceTicket(ticket);
-
+			
 			try {
 				cas.validate();
 			} catch (IOException e) {
@@ -459,9 +459,8 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 			if(cas.isAuthenticationSuccesful()) {
 				user = cas.getUser();
-				session.setAttribute("fears_CAS", cas);
-
 			} else {
+				System.out.println("CAS ERROR\n");
 					errorCode = cas.getErrorCode();
 					errorMessage = cas.getErrorMessage();
 					System.out.println(errorCode +errorMessage );
@@ -470,24 +469,6 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 
 			return user;
-		}
-
-
-		//We have already authenticaed
-		else{
-			System.out.println("We have already authenticad.");
-			if(cas.isAuthenticationSuccesful()) {
-				user = cas.getUser();
-				System.out.println("User is valid.");
-			} else {
-				errorCode = cas.getErrorCode();
-				errorMessage = cas.getErrorMessage();
-				System.out.println(errorCode +errorMessage );
-				/* handle the error */
-			}
-			return user;
-
-		}
 
 	}
 

@@ -117,8 +117,13 @@
     <copy todir="${build.webapp.dir}">
       <fileset dir="${www.dir}/eu.ist.fears.Fears" />
     </copy>
+  	<copy file="${build.webapp.dir}/Fears.html" tofile="${build.webapp.dir}/index.html"> </copy>
   </target>
-
+	
+	<target name="build-war" depends="build-webapp">
+	<zip destfile="fears.war" basedir="${build.webapp.dir}"></zip>
+	</target>
+	
   <!-- <target name="generate-sql" depends="build-webapp">
     <java classname="tmp.DomainModelSQLGen">
       <arg value="${fears.dml}"/>
