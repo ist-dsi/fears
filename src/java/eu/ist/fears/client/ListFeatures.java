@@ -101,7 +101,7 @@ public class ListFeatures extends Composite {
 					_filterLinks[0].setStyleName("currentFilter");
 					_actualFilter="";
 					History.newItem("Project"+_projectID, false);
-					_com.search(_projectID, sBox.getText(), lb.getItemText(lb.getSelectedIndex()), 0,"" ,Cookies.getCookie("Fears"), getFeaturesCB);
+					_com.search(_projectID, sBox.getText(), lb.getSelectedIndex(), 0,"" ,Cookies.getCookie("Fears"), getFeaturesCB);
 				}
 			}
 
@@ -121,7 +121,7 @@ public class ListFeatures extends Composite {
 				_filterLinks[0].setStyleName("currentFilter");
 				_actualFilter="";
 				History.newItem("Project"+_projectID, false);
-				_com.search(_projectID, sBox.getText(), lb.getItemText(lb.getSelectedIndex()), 0, "",  Cookies.getCookie("Fears"), getFeaturesCB);
+				_com.search(_projectID, sBox.getText(), lb.getSelectedIndex(), 0, "",  Cookies.getCookie("Fears"), getFeaturesCB);
 			}
 		});
 
@@ -171,12 +171,13 @@ public class ListFeatures extends Composite {
 		_filter.add(filtersTab);
 		_filter.setHorizontalAlignment(HorizontalPanel.ALIGN_RIGHT);
 
+		lb.addItem("Ordenar por Último Comentário");
 		lb.addItem("Ordenar por Votos");
-		lb.addItem("Ordenar por Data");
+		lb.addItem("Ordenar por Data de Criação");
 		lb.setVisibleItemCount(1);
 		lb.addChangeListener(new ChangeListener(){
 			public void onChange(Widget arg0) {
-				_com.search(_projectID, sBox.getText(), lb.getItemText(lb.getSelectedIndex()), 0,_actualFilter ,Cookies.getCookie("Fears"), getFeaturesCB);
+				_com.search(_projectID, sBox.getText(), lb.getSelectedIndex(), 0,_actualFilter ,Cookies.getCookie("Fears"), getFeaturesCB);
 			}
 
 		});
@@ -185,7 +186,7 @@ public class ListFeatures extends Composite {
 	}
 
 	public void update(){
-		_com.search(_projectID, "", lb.getItemText(lb.getSelectedIndex()), 0,_actualFilter, Cookies.getCookie("Fears"), getFeaturesCB);
+		_com.search(_projectID, "", lb.getSelectedIndex(), 0,_actualFilter, Cookies.getCookie("Fears"), getFeaturesCB);
 		_com.getProjectName(_projectID, getProjectName);
 	}
 

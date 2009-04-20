@@ -43,10 +43,13 @@ public class ViewFeatureResume implements IsSerializable{
 		_userHasVoted = userHasvoted;
 		int length= description.length();
 		if(length>200){
-			_description= description.substring(0, 200) + "(...)";
+			_description= description.substring(0, 200) + " (...)";
 		}else _description= description;
 		//Remove new lines
-		_description = description.replaceAll("\n", " ");
+		_description = _description.replaceAll("\n", " ");
+		if(length>100){
+			_description =  _description.substring(0,100) + "\n" + _description.substring(100, _description.length());
+		}
 		_votes=votes;
 		_nComments= nComments;
 		_author = author;

@@ -302,7 +302,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 
 	public List<ViewFeatureResume> search(String projectID, String search,
-			String sort, int page, String filter, String sessionID) throws FearsException{
+			int sort, int page, String filter, String sessionID) throws FearsException{
 		Project p =FearsApp.getFears().getProject(projectID);
 
 		if(p==null)

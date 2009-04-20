@@ -7,6 +7,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
+
 import eu.ist.fears.client.common.views.ViewAdmins;
 import eu.ist.fears.client.common.views.ViewFeatureResume;
 import eu.ist.fears.client.common.views.ViewProject;
@@ -63,7 +66,7 @@ public class Project extends Project_Base {
 		f.setWebID(getFeaturesIncrementID());
 	}
 
-	public List<ViewFeatureResume> search(String search, String sort, int page, String filter, Voter v){
+	public List<ViewFeatureResume> search(String search, int sort, int page, String filter, Voter v){
 		
 		List<ViewFeatureResume> ret = new ArrayList<ViewFeatureResume>();
 
@@ -121,17 +124,17 @@ public class Project extends Project_Base {
 
 
 	private List<ViewFeatureResume> sortAndPage(List<ViewFeatureResume> ret,
-			String sort, int page) {
+			int sort, int page) {
 	
 		
-		
-		//Sort For Date:
-		if("Ordenar por Data".equals(sort)){
+		//Sort for last change
+		if(sort==0)
+			Collections.sort(ret, new CommentDateComparator());
+		//Sort For Votes:
+		else if(sort==1){
+			Collections.sort(ret, new VoteComparator()); 
+		}else if(sort==2)//Sort For Date:
 			Collections.sort(ret, new DateComparator());
-		}else Collections.sort(ret, new VoteComparator()); //Sort For Votes:
-		
-		//Page:
-		
 		
 		return ret;
 	}
@@ -172,10 +175,31 @@ public class Project extends Project_Base {
 		}
 	}
 	
+	
 	protected class DateComparator implements Comparator<ViewFeatureResume>{
 
 		public int compare(ViewFeatureResume o1, ViewFeatureResume o2) {
 			return o2.getFeatureID()-o1.getFeatureID();
+		}
+	}
+	
+	protected class CommentDateComparator implements Comparator<ViewFeatureResume>{
+
+		public int compare(ViewFeatureResume o1, ViewFeatureResume o2) {
+			FeatureRequest f1=getFeature(new Integer(o1.getFeatureID()).toString());
+			FeatureRequest f2=getFeature(new Integer(o2.getFeatureID()).toString());
+			
+			DateTime t1=f1.getCreatedTime();
+			DateTime t2=f2.getCreatedTime();
+			
+			List<Comment> c1=f1.getComment();
+			List<Comment> c2=f2.getComment();
+			if(!c1.isEmpty())
+				t1=c1.get(0).getCreatedTime();
+			if(!c2.isEmpty())
+				t2=c2.get(0).getCreatedTime();
+			
+			return t2.compareTo(t1);
 		}
 	}
 

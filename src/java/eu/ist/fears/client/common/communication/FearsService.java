@@ -37,7 +37,7 @@ public interface FearsService extends RemoteService  {
 	public ViewAdmins addAdmin(String userName, String sessionID) throws FearsException;
 	public ViewAdmins removeAdmin(String userName, String sessionID) throws FearsException;
 	
-	public List<ViewFeatureResume> search(String projectID, String search, String sort, int page, String filter, String sessionID) throws FearsException, NoProjectException;
+	public List<ViewFeatureResume> search(String projectID, String search, int sort, int page, String filter, String sessionID) throws FearsException, NoProjectException;
 		
 	public ViewAdmins getProjectAdmins(String projectID)throws FearsException;
 	public ViewAdmins addProjectAdmin(String newAdmin, String projectID) throws FearsException;

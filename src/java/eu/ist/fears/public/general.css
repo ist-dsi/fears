@@ -341,6 +341,11 @@ border-bottom: 2px solid #d1e3ed;
 margin-top: 20px;
 }
 
+.featureDescription{
+white-space: pre;
+white-space: pre-line;
+}
+
 
 .votersMeta {
 color: #999;
@@ -422,6 +427,8 @@ border-top: 1px dotted #ccc;
 
 .commentItem{
 margin-left: 89px;
+white-space: pre;
+white-space: pre-line;
 }
 
 .newComment {

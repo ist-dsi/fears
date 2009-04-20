@@ -90,7 +90,7 @@ public class Communication implements FearsServiceAsync{
 		_service.removeAdmin(userName, sessionID,  callback);
 	}
 	
-	public void search(String projectID, String search, String sort, int page, String filter, String sessionID, AsyncCallback callback ){
+	public void search(String projectID, String search, int sort, int page, String filter, String sessionID, AsyncCallback callback ){
 		_service.search(projectID, search, sort, page, filter, sessionID, callback);
 	}
 	

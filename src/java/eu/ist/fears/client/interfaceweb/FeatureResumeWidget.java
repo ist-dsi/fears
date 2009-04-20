@@ -11,14 +11,12 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import eu.ist.fears.client.Fears;
 import eu.ist.fears.client.common.State;
 import eu.ist.fears.client.common.communication.Communication;
-import eu.ist.fears.client.common.exceptions.ExceptionsTreatment;
 import eu.ist.fears.client.common.views.ViewFeatureDetailed;
 import eu.ist.fears.client.common.views.ViewFeatureResume;
 
@@ -123,6 +121,8 @@ public class FeatureResumeWidget  extends Composite{
 		info.add(_ncomments);
 		info.add(new HTML("&nbsp;coment&aacute;rios"));
 
+
+		_description.setStyleName("featureDescription");
 		_mainBox.add(_description);
 		initWidget(_feature);
 

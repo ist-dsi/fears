@@ -25,8 +25,20 @@ public class FeatureRequest extends FeatureRequest_Base {
 	public FeatureRequest(String name, String description, Voter voter, int projectInitialVotes){
 		setName(name);
 		//Remove all \r inserted by IE browser.
-		setDescription(description.replaceAll("\r",""));
+		description=description.replaceAll("\r","");
 
+		//Insert \n every 100 characters
+		int count=0;
+		for(int i=0;i<description.length();i++,count++){
+			if(description.charAt(i)=='\n'){
+				count=0;
+				continue;
+			}else if(count>=100){
+				description=description.substring(0,i) + "\n" + description.substring(i, description.length());
+				count=0;
+			}
+		}
+		setDescription(description);
 		setAuthor(voter);
 		setState(State.Novo);
 		if(voter.getVotesUsed() < projectInitialVotes){

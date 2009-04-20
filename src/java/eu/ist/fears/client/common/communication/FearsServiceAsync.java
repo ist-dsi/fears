@@ -28,7 +28,7 @@ public interface FearsServiceAsync {
 	public void addAdmin(String userName, String sessionID, AsyncCallback callback);
 	public void removeAdmin(String userName, String sessionID, AsyncCallback callback);
 		
-	public void search(String projectID, String search, String sort, int page, String filter, String sessionID, AsyncCallback callback );
+	public void search(String projectID, String search, int sort, int page, String filter, String sessionID, AsyncCallback callback );
 	
 	public void getProjectAdmins(String projectID, AsyncCallback callback);
 	public void addProjectAdmin(String newAdmin, String projectID, AsyncCallback callback);
