@@ -11,6 +11,7 @@ import eu.ist.fears.client.common.DateFormat;
 import eu.ist.fears.client.common.views.ViewAdmins;
 import eu.ist.fears.client.common.views.ViewFeatureResume;
 import eu.ist.fears.client.common.views.ViewProject;
+import eu.ist.fears.server.FearsServiceImpl;
 
 public class FearsApp extends FearsApp_Base {
 
@@ -115,7 +116,7 @@ public class FearsApp extends FearsApp_Base {
 					userHasvoted=true;
 			}
 			res.add(new ViewFeatureResume(f.getProject().getName(), f.getProject().getIdInternal(), f.getName(), f.getWebID() , f.getState(), userHasvoted , f.getDescription(),
-					f.getVotes(), f.getNComments(), f.getAuthor().getUser().getName(), f.getCreatedTime().toString(DateTimeFormat.forPattern(DateFormat.DEFAULT_FORMAT)) ));
+					f.getVotes(), f.getNComments(), f.getAuthor().getUser().getName(), FearsServiceImpl.getNickName(f.getAuthor().getUser().getName()) ,f.getCreatedTime().toString(DateTimeFormat.forPattern(DateFormat.DEFAULT_FORMAT)) ));
 		}
 
 		return res;
@@ -123,12 +124,14 @@ public class FearsApp extends FearsApp_Base {
 
 	public ViewAdmins getViewAdmins(){
 		List<String >admins = new ArrayList<String>();
+		List<String >adminsNicks = new ArrayList<String>();
 		
 		for(User u : getFears().getAdmins()){
 			admins.add(u.getUsername());
+			adminsNicks.add(FearsServiceImpl.getNickName(u.getUsername()));
 		}
 		
-		return new ViewAdmins(admins);	
+		return new ViewAdmins(admins,adminsNicks);	
 	}
 
 }

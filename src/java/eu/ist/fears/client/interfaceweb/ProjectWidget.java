@@ -35,7 +35,7 @@ public class ProjectWidget extends Composite{
 		_projectContainer.setStyleName("project");
 		
 		HorizontalPanel top = new HorizontalPanel();
-		top.setStyleName("project");
+		top.setStyleName("projectTop");
 		Hyperlink title = new Hyperlink(_name.getText(), "Project" + p.getwebID());
 		title.setStyleName("projectTitle");
 		top.add(title);

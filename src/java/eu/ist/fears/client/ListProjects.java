@@ -27,6 +27,7 @@ public class ListProjects extends Composite{
 		Fears.getPath().setFears();
 
 		init();
+		_projPanel.add(new Label("A carregar lista de Projectos..."));
 		initWidget(_projPanel);
 	}
 
@@ -50,7 +51,6 @@ public class ListProjects extends Composite{
 
 		for(int i=0;i< projects.length;i++){
 			_projPanel.add(new ProjectWidget(projects[i]));
-			_projPanel.add(new HTML("<br>")); //Line Break
 		}
 
 	}

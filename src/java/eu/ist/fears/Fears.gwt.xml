@@ -2,8 +2,9 @@
 
 	<!-- Inherit the core Web Toolkit stuff.                  -->
 	<inherits name='com.google.gwt.user.User'/>
-		
 	
+	<inherits name="com.google.gwt.json.JSON" />
+		
 	<!-- Specify the app entry point class.                   -->
 	<entry-point class='eu.ist.fears.client.Fears'/>
 	<entry-point class='eu.ist.fears.client.admin.Admin'/> 

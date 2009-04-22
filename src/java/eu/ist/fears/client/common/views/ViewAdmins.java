@@ -12,23 +12,30 @@ public class ViewAdmins implements Serializable{
 	
 	
 	protected List<java.lang.String> _admins;
+	protected List<java.lang.String> _adminsNicks;
 	protected String _projectID;
 	protected String _projectName;
 	
 	public ViewAdmins(){}
 	
-	public ViewAdmins(List<java.lang.String> admins, String projectId, String projectName){
+	public ViewAdmins(List<java.lang.String> admins, List<java.lang.String> adminsNick, String projectId, String projectName){
 		_admins=admins;
+		_adminsNicks=adminsNick;
 		_projectID=projectId;
 		_projectName=projectName;
 	}
 	
-	public ViewAdmins(List<java.lang.String> admins){
+	public ViewAdmins(List<java.lang.String> admins, List<java.lang.String> adminsNick){
 		_admins=admins;
+		_admins=adminsNick;
 	}
 	
 	public List<java.lang.String> getAdmins(){
 		return _admins;
+	}
+	
+	public List<java.lang.String> getAdminsNick(){
+		return _adminsNicks;
 	}
 	
 	public String getProjectId(){

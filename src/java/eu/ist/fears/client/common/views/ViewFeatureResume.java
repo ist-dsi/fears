@@ -25,6 +25,7 @@ public class ViewFeatureResume implements IsSerializable{
 	protected int _votes;
 	protected int _nComments;
 	protected String _author;
+	protected String _authorNick;
 	protected String _date;
 
 	
@@ -34,7 +35,7 @@ public class ViewFeatureResume implements IsSerializable{
 	}
 	
 	public  ViewFeatureResume(String projectName, int projectID, String name, int featureID, State state, boolean userHasvoted, String description,
-			int votes, int nComments, String author, String date){
+			int votes, int nComments, String author, String authorNick, String date){
 		_projectName = projectName;
 		_projectID = projectID;
 		_name= name;
@@ -42,8 +43,8 @@ public class ViewFeatureResume implements IsSerializable{
 		_state=state;
 		_userHasVoted = userHasvoted;
 		int length= description.length();
-		if(length>200){
-			_description= description.substring(0, 200) + " (...)";
+		if(length>194){
+			_description= description.substring(0, 194) + " (...)";
 		}else _description= description;
 		//Remove new lines
 		_description = _description.replaceAll("\n", " ");
@@ -53,6 +54,7 @@ public class ViewFeatureResume implements IsSerializable{
 		_votes=votes;
 		_nComments= nComments;
 		_author = author;
+		_authorNick=authorNick;
 		_date=date;
 	}
 	
@@ -102,6 +104,10 @@ public class ViewFeatureResume implements IsSerializable{
 	
 	public String getCreatedDate(){
 		return _date;
+	}
+	
+	public String getAuthorNick(){
+		return _authorNick;
 	}
 	
 	

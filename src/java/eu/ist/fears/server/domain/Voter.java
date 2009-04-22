@@ -5,9 +5,11 @@ import java.util.List;
 
 import pt.ist.dmapl.AccessControlRole;
 import pt.ist.dmapl.AccessControlUser;
+import eu.ist.fears.client.common.communication.FearsService;
 import eu.ist.fears.client.common.views.ViewFeatureResume;
 import eu.ist.fears.client.common.views.ViewVoterDetailed;
 import eu.ist.fears.client.common.views.ViewVoterResume;
+import eu.ist.fears.server.FearsServiceImpl;
 
 public class Voter extends Voter_Base implements AccessControlUser {
     
@@ -47,7 +49,7 @@ public class Voter extends Voter_Base implements AccessControlUser {
 	}*/
 	
 	public ViewVoterDetailed getView(String sessionID){
-    	return new ViewVoterDetailed(getUser().getName(), sessionID, getViewFeaturesCreated(), getViewFeaturesVoted());
+    	return new ViewVoterDetailed(getUser().getName(),FearsServiceImpl.getNickName(getUser().getName()) , sessionID, getViewFeaturesCreated(), getViewFeaturesVoted());
     	
     }
 	
@@ -57,7 +59,7 @@ public class Voter extends Voter_Base implements AccessControlUser {
 			votesLeft=getProject().getInitialVotes() - getVotesUsed();
 			else votesLeft=0;
 			
-		return new ViewVoterResume(getUser().getUsername(),sessionID, votesLeft, FearsApp.getFears().isAdmin(getUser()));
+		return new ViewVoterResume(getUser().getUsername(),FearsServiceImpl.getNickName(getUser().getUsername())  ,sessionID, votesLeft, FearsApp.getFears().isAdmin(getUser()));
 		
 	}
 	

@@ -109,11 +109,10 @@ public class ListFeatures extends Composite {
 			public void onKeyUp(Widget arg0, char arg1, int arg2){}			
 		});
 
-
-
-
+		
 		PushButton searchButton = new PushButton(new Image("button01.gif",0,0,105,32),new Image("button01.gif",-2,-2,105,32));
 		_search.add(searchButton);
+		searchButton.setStyleName("searchButton");
 		searchButton.addClickListener(new ClickListener(){
 			public void onClick(Widget sender) {
 				for(int i=1;i<_filterLinks.length;i++ )
@@ -125,8 +124,9 @@ public class ListFeatures extends Composite {
 			}
 		});
 
-
+		
 		PushButton addButton = new PushButton(new Image("button02.gif",0,0,135,32),new Image("button02.gif",-2,-2,135,32)); 
+		addButton.setStyleName("addButton");
 		_search.add(addButton);
 		addButton.addClickListener(new ClickListener(){
 			public void onClick(Widget sender) {

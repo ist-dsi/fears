@@ -6,6 +6,7 @@ import org.joda.time.format.DateTimeFormat;
 import eu.ist.fears.client.common.DateFormat;
 import eu.ist.fears.client.common.State;
 import eu.ist.fears.client.common.views.ViewComment;
+import eu.ist.fears.server.FearsServiceImpl;
 
 public class Comment extends Comment_Base {
     
@@ -32,6 +33,6 @@ public class Comment extends Comment_Base {
     }
 
     public ViewComment getView(){
-        return new ViewComment(getComment(), getAuthor().getUser().getName(), getNewState(), getOldState() , getCreatedTime().toString(DateTimeFormat.forPattern(DateFormat.DEFAULT_FORMAT)));
+        return new ViewComment(getComment(), getAuthor().getUser().getName(),FearsServiceImpl.getNickName(getAuthor().getUser().getName()) , getNewState(), getOldState() , getCreatedTime().toString(DateTimeFormat.forPattern(DateFormat.DEFAULT_FORMAT)));
     }
 }

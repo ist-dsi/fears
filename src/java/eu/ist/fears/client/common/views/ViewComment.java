@@ -13,6 +13,7 @@ public class ViewComment implements Serializable {
 
 	protected String _comment;
 	protected String _author;
+	protected String _authorNick;
 	protected State _oldState;
 	protected State _newState;
 	protected String _date;
@@ -21,9 +22,10 @@ public class ViewComment implements Serializable {
 		
 	}
 	
-	public ViewComment(String c,String a, State newState, State oldstate, String date ){
+	public ViewComment(String c,String a, String aNick, State newState, State oldstate, String date ){
 		_comment=c;
 		_author=a;
+		_authorNick=aNick;
 		_newState=newState;
 		_oldState=oldstate;
 		_date=date;
@@ -48,6 +50,10 @@ public class ViewComment implements Serializable {
 	
 	public String getCreatedDate(){
 		return _date;
+	}
+	
+	public String getAuthorNick(){
+		return _authorNick;
 	}
 	
 	

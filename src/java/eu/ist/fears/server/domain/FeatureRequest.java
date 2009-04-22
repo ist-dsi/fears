@@ -14,6 +14,7 @@ import eu.ist.fears.client.common.views.ViewComment;
 import eu.ist.fears.client.common.views.ViewFeatureDetailed;
 import eu.ist.fears.client.common.views.ViewFeatureResume;
 import eu.ist.fears.client.common.views.ViewVoterResume;
+import eu.ist.fears.server.FearsServiceImpl;
 
 
 public class FeatureRequest extends FeatureRequest_Base {
@@ -104,7 +105,7 @@ public class FeatureRequest extends FeatureRequest_Base {
 
 		List<ViewVoterResume> voters = new ArrayList<ViewVoterResume>();
 		for(Voter v : getVoterSet() ){
-			voters.add(new ViewVoterResume(v.getUser().getName(),  null, false ));
+			voters.add(new ViewVoterResume(v.getUser().getName(),FearsServiceImpl.getNickName(v.getUser().getName()) ,  null, false ));
 			if(v.equals(voter))
 				userhasvoted=true;
 		}
@@ -121,11 +122,14 @@ public class FeatureRequest extends FeatureRequest_Base {
 
 		List<ViewVoterResume> voters = new ArrayList<ViewVoterResume>();
 		for(Voter v : getVoterSet() ){
-			voters.add(new ViewVoterResume(v.getUser().getName(),  null, false ));
+			voters.add(new ViewVoterResume(v.getUser().getName(),FearsServiceImpl.getNickName(v.getUser().getName()) ,  null, false ));
 			if(v.equals(user))
 				userhasvoted=true;
 		}
-		return new ViewFeatureResume(getProject().getName(), getProject().getIdInternal(), getName(), getWebID(), getState(), userhasvoted ,  getDescription(), getVoterCount(), getCommentCount(), getAuthorName(), getCreatedTime().toString(DateTimeFormat.forPattern(DateFormat.DEFAULT_FORMAT)) );
+		return new ViewFeatureResume(getProject().getName(), getProject().getIdInternal(), getName(),
+				getWebID(), getState(), userhasvoted ,  getDescription(), getVoterCount(), getCommentCount(),
+				getAuthorName(), FearsServiceImpl.getNickName(getAuthorName()) ,
+				getCreatedTime().toString(DateTimeFormat.forPattern(DateFormat.DEFAULT_FORMAT)) );
 	}
 
 

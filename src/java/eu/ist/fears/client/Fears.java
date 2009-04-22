@@ -5,17 +5,14 @@ import java.util.Date;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.IFrameElement;
 import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -42,6 +39,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 	protected VerticalPanel frame;
 	protected static VerticalPanel content;
 	protected static Header header; 
+	protected static HorizontalPanel footer; 
 	protected static DialogBox  popup;
 	protected static Path path;
 	protected static ViewVoterResume _curretUser;
@@ -71,9 +69,10 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 		frameBox =  new VerticalPanel();
 		frame = new VerticalPanel();
 		content = new VerticalPanel();
+		footer = new HorizontalPanel();
 		content.setStyleName("width100");
 		path = new Path();
-		_curretUser=new ViewVoterResume("guest","",false);
+		_curretUser=new ViewVoterResume("guest","guest" ,"",false);
 		_currentProject=null;
 		header = new Header("guest",validCookie, false);
 		RootPanel.get().setStyleName("centered");
@@ -84,7 +83,10 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 		frameBox.add(frame);
 		frame.add(path);
 		frame.add(content);
-
+		footer.setStyleName("footer");
+		footer.add(new Label("© 2009, Instituto Superior Técnico. Todos os direitos reservados.  |  "));
+		footer.add(new Hyperlink("Sobre o FeaRS","help"));
+		RootPanel.get().add(footer);
 
 		String ticket=getTicket();
 		if(ticket!=null && !ticket.isEmpty()){
@@ -193,6 +195,78 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 
 		projects.update();	
 		content.add(projects);
+		showHelp(true);
+	}
+
+	public void viewHelp(){
+		content.clear();
+
+		verifyLogin(false);
+		Fears.getPath().setHelp();
+		showHelp(false);
+	}
+
+	public void showHelp(boolean showHelp){
+		VerticalPanel help = new VerticalPanel();
+
+		if(showHelp){
+			Label title = new Label("Sobre o FeaRS");
+			title.setStyleName("helpMainTitle");
+			help.add(title);
+		}
+		
+		Label first = new Label("O FeaRS é um sistema que permite gerir sugestões. Os utilizadores podem criar novas sugestões e votar em sugestões já existentes. As sugestões podem ser pedidos de novas funcionalidades ou de alterações a funcionalidades existentes, com o objectivo de melhorar o serviço.  Através do número de votos das sugestões, os responsáveis pelos projectos percebem quais as sugestões mais populares, ajudando-os a priorizar a implementação das mesmas.",true);
+		help.add(first);
+
+
+		Label titleproj = new Label("Projectos");
+		titleproj.setStyleName("helpTitles");
+		Label proj=  new Label("Cada projecto tem um conjunto de sugestões próprio. Ao entrar no FeaRS o utilizador deve escolher o projecto no qual pretende criar ou consultar sugestões.",true);
+		help.add(titleproj);
+		help.add(proj);
+
+		Label titleList = new Label("Lista de Sugestões");
+		titleList.setStyleName("helpTitles");
+		Label list = new Label("Depois de escolher o projecto, é visualizada a lista de sugestões existentes. Esta lista aparece ordenada por \"data de modificação\", aparecendo no topo as sugestões que foram alvo de algum tipo de modificação (um comentário, mudança de estado, etc.). No entanto é possível ordenar e filtrar a lista por outros critérios. Para isso basta utilizar a barra de opções por baixo do campo de pesquisa.",true);
+		help.add(titleList);
+		help.add(list);
+
+		Label titleState = new Label("Estados");
+		titleState.setStyleName("helpTitles");
+		Label state = new HTML("Uma sugestão pode ter cinco estados diferentes. São os responsáveis pelo projecto que controlam o estado das sugestão.<p>" + 
+				"<ul><li> <b>Novo</b> - Estado inicial.</li>"+
+				"<li> <b>Planeado</b> - A sugestão foi aprovada e a sua implementação está prevista.</li>"+
+				"<li> <b>Implementação</b> - A sugestão está a ser implementada no sistema.</li>"+
+				"<li> <b>Completo</b> - A sugestão já está implementada no sistema.</li>"+
+				"<li> <b>Rejeitado</b> - A sugestão não foi aprovada.</li></ul>");
+		help.add(titleState);
+		help.add(state);
+
+		Label titleVote = new Label("Votos");
+		titleVote.setStyleName("helpTitles");
+		Label vote = new Label("Os votos permitem medir a popularidade de uma sugestão. Cada utilizador tem um número limitado de votos para usar nas sugestões que achar mais importantes. Uma vez esgotados todos os seus votos, o utilizador não pode votar em mais nenhuma sugestão até ter de novo mais votos disponíveis. Um utilizador recupera votos quando as sugestões em que tenha votado passam para o estado Completo, ou quando remove votos de sugestões em que tenha votado anteriormente. Só é possível votar e remover votos se a sugestão estiver no estado Novo.",true);
+		help.add(titleVote);
+		help.add(vote);
+
+		Label titleCreate = new Label("Criar uma Sugestão");
+		titleCreate.setStyleName("helpTitles");
+		Label create = new Label("Qualquer utilizador pode criar uma sugestão desde que tenha acesso ao projecto. Para criar uma sugestão basta carregar no botão ao lado do botão de pesquisa e preencher o formulário.",true);
+		help.add(titleCreate);
+		help.add(create);
+
+		Label titleGoodPractices = new Label("Boas práticas para a criação de sugestões");
+		titleGoodPractices.setStyleName("helpTitles");
+		Label goodPractices = new HTML("A utilidade e eficácia do sistema FeaRS depende em grande parte das sugestões criadas. Por isso, sugere-se a adopção das seguintes boas práticas na criação de novas sugestões:<p>"+
+"<ul><li> <b>Pesquisar primeiro</b> - Antes de criar uma nova sugestão utilize a opção de pesquisa para verificar se não existe já uma sugestão idêntica, na qual pode votar e/ou adicionar um comentário.</li>"+
+"<li> <b>Uma ideia por sugestão</b> - Exponha apenas uma ideia por cada sugestão feita, em vez de propor várias em simultâneo na mesma sugestão.</li>"+
+"<li> <b>Rever antes de criar</b> - Releia a sua sugestão antes de a criar, reescrevendo-a se necessário para a tornar mais clara.</li>"+
+"<li> <b>Ser sucinto</b> - Seja sucinto na forma como expõe a sua sugestão.</li>"+
+"<li> <b>Ser construtivo</b> - Se tiver ideias de como resolver um determinado problema, apresente as suas ideias, para além de indicar o que está mal.</li></ul>");
+		help.add(titleGoodPractices);
+		help.add(goodPractices);
+		
+		
+		content.add(help);
 	}
 
 	public void viewLogin(){
@@ -216,7 +290,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 		_curretUser.setName("guest");
 		Cookies.removeCookie("fears");
 		Cookies.removeCookie("JSESSIONID");
-		
+
 
 	}
 
@@ -282,9 +356,9 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 		}else if(url.startsWith("createProject")){
 			if(f instanceof Admin)
 				((Admin)f).viewCreateProject();
-
+		}else if(url.startsWith("help")){
+			f.viewHelp();
 		}
-
 
 	}
 

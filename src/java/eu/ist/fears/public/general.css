@@ -52,10 +52,9 @@ margin: 0 0 60px 0;
 .headerBox {
 width: 699px;
 margin: 0 auto;
-color: #8a8a7f;
 color: #5a5a4f;
-margin-top: 20px;
-margin-bottom: 21px;
+margin-top: 5px;
+margin-bottom: 5px;
 }
 
 .header {
@@ -63,7 +62,6 @@ width: 699px;
 }
 
 .header a {
-color: #8a8a7f;
 color: #5a5a4f;
 }
 
@@ -82,7 +80,7 @@ margin: 20px 30px 40px 30px;
 
 .Path{
 font-size:  1.75em;
-margin: 10px 0;
+margin: 5px 0;
 color: #888;
 font-weight: bold;
 height: 20px;
@@ -112,7 +110,12 @@ CSS da pagina de Listar Projectos:
 ************* */
 
 .project{
-margin-top:4px;
+margin-top:5px;
+margin-bottom:19px;
+}
+
+.projectTop{
+margin-bottom:0.3em;
 }
 
 .projectTitle{
@@ -175,7 +178,7 @@ height: 65px;
 }
 
 .search {
-width: 84%;
+width: 80%;
 margin-top: 15px;
 margin-left: 25px;
 }
@@ -184,6 +187,13 @@ margin-left: 25px;
 border: 1px solid #bbb;
 }
 
+.searchButton{
+margin-left: 7px;
+}
+
+.addButton{
+margin-left: 7px;
+}
 
 .currentFilter a{
 color: #554;
@@ -202,7 +212,7 @@ border-bottom: 1px solid #bba;
 background: #f9f9f1;
 width: 695px;
 height: 40px;
-margin-top: 20px;
+margin-top: 15px;
 }
 
 .filter{
@@ -212,7 +222,7 @@ width: 94%;
 
 
 .featuresList{
-margin-top: 30px;
+margin-top: 20px;
 }
 
 .searchAlertBox{
@@ -237,7 +247,7 @@ CSS das Sugestoes (usado na pag. do proj. e pag da sugestao:
 
 .feature {
 border-collapse: collapse;
-margin-bottom: 45px;
+margin-bottom: 25px;
 }
 
 .Novo { 
@@ -518,4 +528,36 @@ margin: 1.5em 0 0.7em 0;
 
 .UserFeature{
 margin: 0em 0 0.5em 0;  
+}
+
+/* *************
+
+CSS da Pagina de Ajuda
+
+************* */
+
+.helpMainTitle{
+font-size: 1.75em;
+margin: 15px 0px 0.5em 0;
+color: #67a05c;
+font-weight: bold;
+}
+
+.helpTitles{
+font-size: 1.25em;
+color: #67a05c;
+margin-top: 1.5em;
+font-weight: bold;
+margin-bottom: 0.3em;
+}
+
+.footer {
+color: #5a5a4f;
+margin: 0 auto;
+margin-top: 10px;
+margin-bottom: 10px;
+}
+
+.footer a{
+color: #5a5a4f;
 }

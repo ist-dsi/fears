@@ -131,6 +131,12 @@ public class Path extends Composite{
 		_path.add(new Hyperlink(projectName,"Project"+projectID));
 		_path.add(new HTML("&nbsp;/ Editar Administradores"));
 	}
+	
+	public void setHelp(){
+		_path.clear();
+		_path.add(new Hyperlink("Sobre o FeaRS","help"));
+		
+	}
 
 
 }

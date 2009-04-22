@@ -14,20 +14,23 @@ public class ViewVoterResume implements Serializable {
 	private static final long serialVersionUID = -5527088349945022648L;
 	
 	protected String _user;
+	protected String _userNick;
 	protected String _sessionID;
 	protected int _votesLeft;
 	protected boolean _isAdmin;
 
 	public ViewVoterResume(){}
 	
-	public ViewVoterResume(String name, String sessionID, boolean isAdmin){
+	public ViewVoterResume(String name, String nick, String sessionID, boolean isAdmin){
 		_user=name;
+		_userNick=nick;
 		_sessionID = sessionID;
 		_isAdmin=isAdmin;
 	}
 	
-	public ViewVoterResume(String name, String sessionID, int votesLeft, boolean isAdmin){
+	public ViewVoterResume(String name, String nick, String sessionID, int votesLeft, boolean isAdmin){
 		_user=name;
+		_userNick=nick;
 		_sessionID = sessionID;
 		_votesLeft=votesLeft;
 		_isAdmin= isAdmin;
@@ -54,4 +57,8 @@ public class ViewVoterResume implements Serializable {
 		_user=user;
 	}
 
+	public String getNick(){
+		return _userNick;
+	}
+	
 }

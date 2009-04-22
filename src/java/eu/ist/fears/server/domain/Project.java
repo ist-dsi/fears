@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.joda.time.DateTime;
-import org.joda.time.Duration;
 
 import eu.ist.fears.client.common.views.ViewAdmins;
 import eu.ist.fears.client.common.views.ViewFeatureResume;
 import eu.ist.fears.client.common.views.ViewProject;
+import eu.ist.fears.server.FearsServiceImpl;
 
 public class Project extends Project_Base {
 
@@ -145,7 +145,7 @@ public class Project extends Project_Base {
 	}
 	
 	public ViewProject getView(){
-		return new ViewProject(getName(), getIdInternal(), getDescription(), getNFeatures(), getAuthorName(), getInitialVotes());
+		return new ViewProject(getName(), getIdInternal(), getDescription(), getNFeatures(), getAuthorName(), FearsServiceImpl.getNickName( getAuthorName()) , getInitialVotes());
 		
 		
 	}
@@ -159,11 +159,13 @@ public class Project extends Project_Base {
 	
 	public ViewAdmins getViewAdmins(){
 		List<String>admins = new ArrayList<String>();
+		List<String>adminsNicks = new ArrayList<String>();
 		
 		for(User u : getAdmin()){
 			admins.add(u.getUsername());
+			adminsNicks.add(FearsServiceImpl.getNickName(u.getUsername()));
 		}
-		return new ViewAdmins(admins, getIdInternal().toString(), getName());
+		return new ViewAdmins(admins,adminsNicks, getIdInternal().toString(), getName());
 		
 	}
 	

@@ -8,10 +8,13 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.HasVerticalAlignment.VerticalAlignmentConstant;
 
 import eu.ist.fears.client.DisplayFeatureDetailed;
 import eu.ist.fears.client.Fears;
@@ -46,20 +49,26 @@ public class Header extends Composite {
 		header.setStyleName("header");
 		_headerBox.add(header);
 		header.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+		header.setVerticalAlignment(HasVerticalAlignment.ALIGN_TOP);
 		header.add(left);
 		header.setHorizontalAlignment(HorizontalPanel.ALIGN_RIGHT);
 		header.add(right);
 		left.setStyleName("left");
-		left.add(new HTML("<a href=\"Fears.html\">fears</a> |"));
+		left.add(new Image("ist_01.gif"));
+		left.add(new HTML("&nbsp;&nbsp;<a href=\"Fears.html\">fears</a> |"));
 
 		left.add(_adminLink);
 		left.add(_adminAdministrators);
 
 		right.setStyleName("right");
-		right.add(_votes);
 		right.add(new HTML("Bem-vindo&nbsp;"));
 		right.add(userName);
 		right.add(new HTML("&nbsp;|&nbsp;"));
+		right.add(_votes);
+		HorizontalPanel help = new HorizontalPanel();
+		help.add(new Hyperlink("Ajuda","help"));
+		help.add(new HTML("&nbsp;|&nbsp;"));
+		right.add(help);
 		right.add(sessionLink);
 
 
@@ -80,7 +89,7 @@ public class Header extends Composite {
 
 		}else{
 			if(inProjectPage)
-				_votes.setHTML("Tem " + Fears.getVotesLeft() + " votos. |&nbsp;");
+				_votes.setHTML("Tem <b>" + Fears.getVotesLeft() + "</b> votos dispon&iacute;veis&nbsp;|&nbsp;");
 			else _votes.setText("");
 			if(adminPage && Fears.isAdminUser())
 				sessionLink.setHTML("<a href=\"" + FearsConfig.getCasUrl() + "logout\">logout</a>");

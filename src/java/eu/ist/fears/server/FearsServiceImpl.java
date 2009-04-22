@@ -2,6 +2,7 @@ package eu.ist.fears.server;
 
 
 import java.io.IOException;
+import java.util.Hashtable;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -15,7 +16,6 @@ import pt.ist.fenixframework.Config;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.pstm.Transaction;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -45,6 +45,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	 * 
 	 */	
 	private static final long serialVersionUID = -9186875057311859285L;
+	private static Hashtable<String, String> table;
 
 	@Override
 	public void init() throws ServletException {
@@ -55,6 +56,14 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 			dbPassword = "fears";
 		}};
 		FenixFramework.initialize(config);
+		table = new Hashtable<String, String>();
+		
+	}
+
+	public static String getNickName(String user){
+		if(table.get(user)==null)
+			return user;
+		else return table.get(user);
 	}
 
 	@Override
@@ -295,7 +304,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 		if(userName.equals(getUserFromSession().getName()))
 			throw new FearsException("Nao se pode remover a si proprio de Administrador.");
-		
+
 		FearsApp.getFears().removeAdmin(FearsApp.getFears().getUser(userName));
 		return FearsApp.getFears().getViewAdmins();
 	}
@@ -336,40 +345,40 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 	public ViewAdmins getProjectAdmins(String projectID)throws FearsException{
 		Project p =FearsApp.getFears().getProject(projectID);
-		
-		
+
+
 		if(p==null)
 			throw new NoProjectException(projectID);
 		return p.getViewAdmins();
-		
+
 	}
-	
+
 	public ViewAdmins addProjectAdmin(String newAdmin, String projectID)throws FearsException{
 		isAdmin();
-		
+
 		Project p =FearsApp.getFears().getProject(projectID);
-		
+
 		if(p==null)
 			throw new NoProjectException(projectID);
-		
+
 		p.addAdmin(FearsApp.getFears().getUser(newAdmin));
-		
+
 		return p.getViewAdmins();
 	}
-	
+
 	public ViewAdmins removeProjectAdmin(String oldAdmin, String projectID)throws FearsException{
 		isAdmin();
-		
+
 		Project p =FearsApp.getFears().getProject(projectID);
-		
+
 		if(p==null)
 			throw new NoProjectException(projectID);
-		
+
 		if(oldAdmin.equals(getUserFromSession().getName()))
 			throw new FearsException("Nao se pode remover a si proprio de Administrador.");
-		
+
 		p.removeAdmin(FearsApp.getFears().getUser(oldAdmin));
-		
+
 		return p.getViewAdmins();
 	}
 
@@ -416,7 +425,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		if(username!=null){
 			username = username.toLowerCase();
 			User temp = FearsApp.getFears().getUser(username);
-			ViewVoterResume ret =  new ViewVoterResume(temp.getName(),  session.getId(), FearsApp.getFears().isAdmin(temp));
+			ViewVoterResume ret =  new ViewVoterResume(temp.getName(), getNickName(temp.getName()),  session.getId(), FearsApp.getFears().isAdmin(temp));
 			session.setAttribute("fears_voter", ret);
 			return ret;
 		}else System.out.println("ERRO NO CAS....");
@@ -435,41 +444,38 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		/* instantiate a new ServiceTicketValidator */
 
 
-			/* set its parameters */
-			cas.setCasValidateUrl( FearsConfig.getCasUrl() + "serviceValidate");
-			if(admin)
-				cas.setService(FearsConfig.getFearsUrl() + "Admin.html");
-			else
-				cas.setService(FearsConfig.getFearsUrl() + "Fears.html");
+		/* set its parameters */
+		cas.setCasValidateUrl( FearsConfig.getCasUrl() + "serviceValidate");
+		if(admin)
+			cas.setService(FearsConfig.getFearsUrl() + "Admin.html");
+		else
+			cas.setService(FearsConfig.getFearsUrl() + "Fears.html");
 
-			cas.setServiceTicket(ticket);
-			
-			try {
-				cas.validate();
-			} catch (IOException e) {
-				System.out.println("Validate error:"+ e);
-				e.printStackTrace();
-			} catch (SAXException e) {
-				System.out.println("SAXException:"+ e);
-				e.printStackTrace();
-			} catch (ParserConfigurationException e) {
-				System.out.println("ParserConfigurationException:"+ e);
-				e.printStackTrace();
-			}
+		cas.setServiceTicket(ticket);
 
-			if(cas.isAuthenticationSuccesful()) {
-				user = cas.getUser();
-			} else {
-				System.out.println("CAS ERROR\n");
-					errorCode = cas.getErrorCode();
-					errorMessage = cas.getErrorMessage();
-					System.out.println(errorCode +errorMessage );
-					/* handle the error */
-				}
+		try {
+			cas.validate();
+		} catch (IOException e) {
+			System.out.println("Validate error:"+ e);
+			e.printStackTrace();
+		} catch (SAXException e) {
+			System.out.println("SAXException:"+ e);
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			System.out.println("ParserConfigurationException:"+ e);
+			e.printStackTrace();
+		}
 
-
-			return user;
-
+		if(cas.isAuthenticationSuccesful()) {
+			user = cas.getUser();
+		} else {
+			System.out.println("CAS ERROR\n");
+			errorCode = cas.getErrorCode();
+			errorMessage = cas.getErrorMessage();
+			System.out.println(errorCode +errorMessage );
+			/* handle the error */
+		}	
+		return user;
 	}
-
 }
+
