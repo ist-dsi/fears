@@ -70,7 +70,7 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 			return;
 
 		ListAdmins admins = new ListAdmins(null);
-		admins.update();
+		//admins.update();
 		content.add(admins);
 
 	}

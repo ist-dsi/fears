@@ -21,13 +21,15 @@ public class DisplayVoter extends Composite {
 	private Communication _com;
 	private String _projectID;
 	private VerticalPanel _content;
-	private Label _voterName;
+	private Label _voterUsername;
+	private String _voterNick;
+	private String _projectName;
 
 	public DisplayVoter(String projectId, String voterName){
 
 		_projectID=projectId;
 		_com = new Communication("service");
-		_voterName = new Label(voterName);
+		_voterUsername = new Label(voterName);
 		_content = new VerticalPanel();
 
 		//Fears.getPath().setVoter("", projectId, voterName);
@@ -39,7 +41,7 @@ public class DisplayVoter extends Composite {
 	}
 
 	protected void update(){
-		_com.getVoter(_projectID, _voterName.getText() , Cookies.getCookie("fears"), new VoterCB());
+		_com.getVoter(_projectID, _voterUsername.getText() , Cookies.getCookie("fears"), new VoterCB());
 	}
 
 	protected void updateVoter(ViewVoterDetailed u){
@@ -47,6 +49,8 @@ public class DisplayVoter extends Composite {
 		Label votedLabel = new HTML("Votou nas Sugest&otilde;es:");
 		votedLabel.setStyleName("UserSubTitle");
 		_content.add(votedLabel);
+		_voterNick = u.getNick();
+		Fears.getPath().setVoter(_projectName, _projectID, _voterNick);
 
 		int i=0;
 		if(u.getVotedFeatures()!=null){
@@ -125,8 +129,8 @@ public class DisplayVoter extends Composite {
 
 
 	protected void updateProjectName(String name){
-		Fears.getPath().setVoter(name, _projectID, _voterName.getText());
-		
+		_projectName = name;
+		Fears.getPath().setVoter(name, _projectID, _voterNick);
 	}
 
 	public void updateProjectName(){

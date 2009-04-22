@@ -78,7 +78,7 @@ public class Header extends Composite {
 
 	public void update(boolean inProjectPage, boolean adminPage){
 
-		userName.setText(Fears.getUsername());	
+		userName.setText(Fears.getNickname());	
 
 		if(!Fears.isLogedIn()){
 			_votes.setText("");

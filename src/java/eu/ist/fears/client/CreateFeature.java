@@ -82,6 +82,11 @@ public class CreateFeature extends CreateEditProjectFeature {
 		_buttons.add(_sendButton);
 		_buttons.add(_cancelButton);
 		
+		Label titleGoodPractices = new Label("Boas práticas para a criação de sugestões");
+		titleGoodPractices.setStyleName("helpTitles");
+		_goodPractices.add(titleGoodPractices);
+		_goodPractices.add(new HTML(Fears.getgoodPracticesText()));
+		
 		updateProjectName();
 	}
 

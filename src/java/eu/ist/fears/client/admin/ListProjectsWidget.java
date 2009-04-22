@@ -92,7 +92,7 @@ public class ListProjectsWidget extends Composite{
 			_admin = new HorizontalPanel();
 			_project.add(_admin);
 			_admin.setStyleName("removeMeta");
-			_author = new Label(p.getAuthor());
+			_author = new Label(p.getAuthorNick());
 			_removeButton = new Button("Sim");
 			_removeButton.addClickListener(new RemoveButton());
 			_id=new String(new Integer(p.getwebID()).toString());

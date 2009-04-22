@@ -27,7 +27,7 @@ public class ViewAdmins implements Serializable{
 	
 	public ViewAdmins(List<java.lang.String> admins, List<java.lang.String> adminsNick){
 		_admins=admins;
-		_admins=adminsNick;
+		_adminsNicks=adminsNick;
 	}
 	
 	public List<java.lang.String> getAdmins(){

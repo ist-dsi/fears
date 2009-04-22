@@ -83,17 +83,19 @@ public class ListAdmins  extends Composite {
 
 	private class AdminWidget extends Composite{
 		HorizontalPanel _contentPanel; 
-		Label _name;
+		String _name;
+		Label _nickName;
 		Button _removeButton;
 
-		public AdminWidget(String name){
-			_name = new Label(name);
+		public AdminWidget(String name, String nickName){
+			_name = name;
+			_nickName = new Label(nickName);
 			_removeButton = new Button("Remover");
 			_removeButton.setSize("66", "25");
 			_removeButton.addClickListener(new RemoveAdmin());
 			_contentPanel = new HorizontalPanel();
 
-			_contentPanel.add(_name);
+			_contentPanel.add(_nickName);
 			_contentPanel.add(_removeButton);
 
 			initWidget(_contentPanel);
@@ -104,9 +106,9 @@ public class ListAdmins  extends Composite {
 
 			public void onClick(Widget sender) {
 				if(_projectId==null)
-				_com.removeAdmin(_name.getText(), Cookies.getCookie("fears"), getAdminCB);
+				_com.removeAdmin(_name, Cookies.getCookie("fears"), getAdminCB);
 				else
-				_com.removeProjectAdmin(_name.getText(), _projectId, getAdminCB);
+				_com.removeProjectAdmin(_name, _projectId, getAdminCB);
 			}
 
 		}
@@ -124,7 +126,7 @@ public class ListAdmins  extends Composite {
 			_contentPanel.add(new Label("Nao ha Administradores"));
 		} else {
 			for(int i=0;i<admins.getAdmins().size(); i++){
-				AdminWidget a = new AdminWidget((String)admins.getAdmins().get(i));
+				AdminWidget a = new AdminWidget((String)admins.getAdmins().get(i), (String)admins.getAdminsNick().get(i));
 				a.setStyleName("admin");
 				_contentPanel.add(a);
 			}

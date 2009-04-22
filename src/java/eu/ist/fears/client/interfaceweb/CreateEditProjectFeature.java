@@ -19,12 +19,14 @@ public class CreateEditProjectFeature extends Composite {
 	protected Grid _table; 
 	protected HorizontalPanel _buttons; 
 	protected VerticalPanel _errorPanel;
+	protected VerticalPanel _goodPractices;
 	
 	public CreateEditProjectFeature(int nfields){
 		_com= new Communication("service");
 		_sugPanel = new VerticalPanel();
 		_table = new Grid(nfields, 2);
 		_projectTitle = new HorizontalPanel();
+		_goodPractices= new VerticalPanel();
 		_errorPanel= new VerticalPanel();
 		_buttons = new HorizontalPanel();
 		
@@ -40,7 +42,9 @@ public class CreateEditProjectFeature extends Composite {
 		_sugPanel.add(_table);
 		_sugPanel.setHorizontalAlignment(HorizontalPanel.ALIGN_RIGHT);
 		_sugPanel.add(_buttons);
+		_sugPanel.setHorizontalAlignment(HorizontalPanel.ALIGN_LEFT);
 		_sugPanel.add(_errorPanel);
+		_sugPanel.add(_goodPractices);
 	}
 	
 }

@@ -140,6 +140,10 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 	public static String getUsername(){
 		return _curretUser.getName();
 	}
+	
+	public static String getNickname(){
+		return _curretUser.getNick();
+	}
 
 	public static int getVotesLeft(){
 		return _curretUser.getVotesLeft();
@@ -217,6 +221,11 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 		
 		Label first = new Label("O FeaRS é um sistema que permite gerir sugestões. Os utilizadores podem criar novas sugestões e votar em sugestões já existentes. As sugestões podem ser pedidos de novas funcionalidades ou de alterações a funcionalidades existentes, com o objectivo de melhorar o serviço.  Através do número de votos das sugestões, os responsáveis pelos projectos percebem quais as sugestões mais populares, ajudando-os a priorizar a implementação das mesmas.",true);
 		help.add(first);
+		
+		if(showHelp){
+			content.add(help);
+			return;
+		}
 
 
 		Label titleproj = new Label("Projectos");
@@ -256,12 +265,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 
 		Label titleGoodPractices = new Label("Boas práticas para a criação de sugestões");
 		titleGoodPractices.setStyleName("helpTitles");
-		Label goodPractices = new HTML("A utilidade e eficácia do sistema FeaRS depende em grande parte das sugestões criadas. Por isso, sugere-se a adopção das seguintes boas práticas na criação de novas sugestões:<p>"+
-"<ul><li> <b>Pesquisar primeiro</b> - Antes de criar uma nova sugestão utilize a opção de pesquisa para verificar se não existe já uma sugestão idêntica, na qual pode votar e/ou adicionar um comentário.</li>"+
-"<li> <b>Uma ideia por sugestão</b> - Exponha apenas uma ideia por cada sugestão feita, em vez de propor várias em simultâneo na mesma sugestão.</li>"+
-"<li> <b>Rever antes de criar</b> - Releia a sua sugestão antes de a criar, reescrevendo-a se necessário para a tornar mais clara.</li>"+
-"<li> <b>Ser sucinto</b> - Seja sucinto na forma como expõe a sua sugestão.</li>"+
-"<li> <b>Ser construtivo</b> - Se tiver ideias de como resolver um determinado problema, apresente as suas ideias, para além de indicar o que está mal.</li></ul>");
+		Label goodPractices = new HTML(getgoodPracticesText());
 		help.add(titleGoodPractices);
 		help.add(goodPractices);
 		
@@ -269,6 +273,15 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 		content.add(help);
 	}
 
+	public static String getgoodPracticesText(){
+		return "A utilidade e eficácia do sistema FeaRS depende em grande parte das sugestões criadas. Por isso, sugere-se a adopção das seguintes boas práticas na criação de novas sugestões:<p>"+
+		"<ul><li> <b>Pesquisar primeiro</b> - Antes de criar uma nova sugestão utilize a opção de pesquisa para verificar se não existe já uma sugestão idêntica, na qual pode votar e/ou adicionar um comentário.</li>"+
+		"<li> <b>Uma ideia por sugestão</b> - Exponha apenas uma ideia por cada sugestão feita, em vez de propor várias em simultâneo na mesma sugestão.</li>"+
+		"<li> <b>Rever antes de criar</b> - Releia a sua sugestão antes de a criar, reescrevendo-a se necessário para a tornar mais clara.</li>"+
+		"<li> <b>Ser sucinto</b> - Seja sucinto na forma como expõe a sua sugestão.</li>"+
+		"<li> <b>Ser construtivo</b> - Se tiver ideias de como resolver um determinado problema, apresente as suas ideias, para além de indicar o que está mal.</li></ul>";
+	}
+	
 	public void viewLogin(){
 		//content.clear();
 
