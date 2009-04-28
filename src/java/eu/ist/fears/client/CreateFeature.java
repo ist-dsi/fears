@@ -4,8 +4,10 @@ package eu.ist.fears.client;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -30,6 +32,8 @@ public class CreateFeature extends CreateEditProjectFeature {
 	protected TextArea _description; 
 	protected String _projectID;
 	protected HorizontalPanel _projectTitle;
+	protected HTML _goodPracticesLong;
+	Button _displayPracticesButton;
 
 	public CreateFeature(String projectID){
 		super(2);
@@ -82,10 +86,28 @@ public class CreateFeature extends CreateEditProjectFeature {
 		_buttons.add(_sendButton);
 		_buttons.add(_cancelButton);
 		
-		Label titleGoodPractices = new Label("Boas práticas para a criação de sugestões");
-		titleGoodPractices.setStyleName("helpTitles");
-		_goodPractices.add(titleGoodPractices);
-		_goodPractices.add(new HTML(Fears.getgoodPracticesText()));
+		FlowPanel goodPracticesPanel = new FlowPanel();
+		goodPracticesPanel.add(new HTML(Fears.getgoodPracticesHead()+"."));
+		_goodPracticesLong= new HTML(Fears.getgoodPracticesLong());
+		_goodPracticesLong.setVisible(false);
+		_displayPracticesButton = new Button("Ler Mais");
+		_displayPracticesButton.addClickListener( new ClickListener(){
+			public void onClick(Widget sender) {
+				if(!_goodPracticesLong.isVisible()){
+					_goodPracticesLong.setVisible(true);
+					_displayPracticesButton.setText("Esconder");
+				}else {
+					_goodPracticesLong.setVisible(false);
+					_displayPracticesButton.setText("Ler Mais");
+				}
+			
+			}
+		});
+		_displayPracticesButton.setStyleName("moreButton");
+		goodPracticesPanel.add(_displayPracticesButton);
+		goodPracticesPanel.add(_goodPracticesLong);
+		
+		_goodPractices.add(goodPracticesPanel);
 		
 		updateProjectName();
 	}

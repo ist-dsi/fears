@@ -47,7 +47,9 @@ public class FeatureRequest extends FeatureRequest_Base {
 			addVoter(voter);
 		}
 		
-		setCreatedTime(new DateTime());
+		DateTime date = new DateTime();
+		setCreatedTime(date);
+		setLastModification(date);
 	}
 
 
@@ -85,8 +87,8 @@ public class FeatureRequest extends FeatureRequest_Base {
 
 
 	public void addComment(String comment, Voter voter, State newState) {
+		setLastModification(new DateTime());
 		addComment(new Comment(comment, voter, newState, getState()));
-
 	}
 
 	public String getAuthorName(){

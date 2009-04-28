@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class ViewProject implements Serializable {
 
 
-	
+
 	/**
 	 * 
 	 */
@@ -17,12 +17,13 @@ public class ViewProject implements Serializable {
 	protected String _author;
 	protected String _authorNick;
 	protected int _initialVotes;
+	protected int _listOrder;
 
 	public ViewProject(){
 
 	}
 
-	public ViewProject(String name, int webID, String description, int nFeatures, String author, String authorNick, int initialVotes){
+	public ViewProject(String name, int webID, String description, int nFeatures, String author, String authorNick, int initialVotes, int listOrder){
 		_name=name;
 		_webID=webID;
 		_description=description;
@@ -30,6 +31,7 @@ public class ViewProject implements Serializable {
 		_author=author;
 		_authorNick=authorNick;
 		_initialVotes = initialVotes;
+		_listOrder=listOrder;
 	}
 
 	public String getName() {
@@ -39,7 +41,7 @@ public class ViewProject implements Serializable {
 	public int getwebID() {
 		return _webID;
 	}
-	
+
 	public String getDescription() {
 		return _description;
 	}
@@ -47,18 +49,22 @@ public class ViewProject implements Serializable {
 	public int getNFeatures() {
 		return _nFeatures;
 	}
-	
+
 	public String getAuthor() {
 		return _author;
 	}
-	
+
 	public int getInitialVotes() {
 		return _initialVotes;
 	}
-	
+
 	public String getAuthorNick(){
 		return _authorNick;
 	}
-	
+
+	public int getListOrder(){
+		return _listOrder;
+	}
+
 
 }

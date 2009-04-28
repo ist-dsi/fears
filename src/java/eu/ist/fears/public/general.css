@@ -13,7 +13,7 @@ a { color: #488db7; }
 body {
 font-family: Arial;
 margin: 0 0 60px 0;
-padding: 0;
+padding: 0 0 0 0;
 font-size: 76%;
 line-height: 1.6em;
 background: #e8e8de;
@@ -24,29 +24,11 @@ white-space: pre;
 white-space: pre-line;
 }
 
-.gwt-DialogBox .Caption {
-background: white;
-padding: 0px 0px 10px 0px;
-cursor: default;
-border-top: 20px solid #d0e4f6;
-}
-
-.gwt-DialogBox{
-border: 2px solid black;
-}
-
-.loginWindow{
-background: white;
-padding-left:20px;
-}
-
-.loginButton{
-margin-bottom: 20px;
-}
 
 .centered {
 text-align: center;
-margin: 0 0 60px 0;
+margin: 0px 0px 60px 0px;
+padding: 0px 0px 0px 0px;
 } 
 
 .headerBox {
@@ -55,6 +37,8 @@ margin: 0 auto;
 color: #5a5a4f;
 margin-top: 5px;
 margin-bottom: 5px;
+padding: 0 0 0 0;
+
 }
 
 .header {
@@ -87,6 +71,14 @@ height: 20px;
 margin-bottom: 15px;
 }
 
+.pathGreen{
+color: #67a05c;
+}
+
+.pathSmall{
+font-size:  0.7em;
+}
+
 .Path a {
 color: #67a05c;
 }
@@ -108,6 +100,13 @@ margin-left: 89px;
 CSS da pagina de Listar Projectos:
 
 ************* */
+
+.listProjectsTitle{
+font-size: 1.75em;
+margin: 25px 0px 0.5em 0;
+color: #67a05c;
+font-weight: bold;
+}
 
 .project{
 margin-top:5px;
@@ -185,6 +184,7 @@ margin-left: 25px;
 
 .searchTextBox {
 border: 1px solid #bbb;
+padding: 4px;
 }
 
 .searchButton{
@@ -467,6 +467,20 @@ margin-left: 89px;
 CSS da pagina Adicionar Sugestao:
 
 ************* */	
+	
+.moreButton {
+background: transparent;
+text-decoration: underline;
+color: #488db7;
+border: 0;
+padding: 0;
+margin-left: -2px;
+}	
+
+.createFeatureForm{
+margin-top:15px;
+
+}
 	
 p.label {
 margin: 10px 0 3px 0;

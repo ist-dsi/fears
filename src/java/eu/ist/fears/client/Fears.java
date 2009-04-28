@@ -140,7 +140,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 	public static String getUsername(){
 		return _curretUser.getName();
 	}
-	
+
 	public static String getNickname(){
 		return _curretUser.getNick();
 	}
@@ -195,11 +195,18 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 
 		verifyLogin(false);
 
+		Fears.getPath().setFears();
+		
 		ListProjects projects = new ListProjects();
 
-		projects.update();	
+		projects.update();
+		HorizontalPanel intro = new HorizontalPanel();
+		if(this instanceof Admin)
+			intro.add(new HTML(getFearsIntro() + " <a href=\"" + GWT.getHostPageBaseURL() +"Admin.html#help\"> Ler Mais</a>"));
+		else intro.add(new HTML(getFearsIntro() + " <a href=\"" + GWT.getHostPageBaseURL() +"#help\"> Ler Mais</a>"));
+		
+		content.add(intro);
 		content.add(projects);
-		showHelp(true);
 	}
 
 	public void viewHelp(){
@@ -207,26 +214,14 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 
 		verifyLogin(false);
 		Fears.getPath().setHelp();
-		showHelp(false);
+		showHelp();
 	}
 
-	public void showHelp(boolean showHelp){
+	public void showHelp(){
 		VerticalPanel help = new VerticalPanel();
 
-		if(showHelp){
-			Label title = new Label("Sobre o FeaRS");
-			title.setStyleName("helpMainTitle");
-			help.add(title);
-		}
-		
-		Label first = new Label("O FeaRS é um sistema que permite gerir sugestões. Os utilizadores podem criar novas sugestões e votar em sugestões já existentes. As sugestões podem ser pedidos de novas funcionalidades ou de alterações a funcionalidades existentes, com o objectivo de melhorar o serviço.  Através do número de votos das sugestões, os responsáveis pelos projectos percebem quais as sugestões mais populares, ajudando-os a priorizar a implementação das mesmas.",true);
+		Label first = new Label(getFearsIntro(),true);
 		help.add(first);
-		
-		if(showHelp){
-			content.add(help);
-			return;
-		}
-
 
 		Label titleproj = new Label("Projectos");
 		titleproj.setStyleName("helpTitles");
@@ -247,7 +242,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 				"<li> <b>Planeado</b> - A sugestão foi aprovada e a sua implementação está prevista.</li>"+
 				"<li> <b>Implementação</b> - A sugestão está a ser implementada no sistema.</li>"+
 				"<li> <b>Completo</b> - A sugestão já está implementada no sistema.</li>"+
-				"<li> <b>Rejeitado</b> - A sugestão não foi aprovada.</li></ul>");
+		"<li> <b>Rejeitado</b> - A sugestão não foi aprovada.</li></ul>");
 		help.add(titleState);
 		help.add(state);
 
@@ -265,23 +260,31 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 
 		Label titleGoodPractices = new Label("Boas práticas para a criação de sugestões");
 		titleGoodPractices.setStyleName("helpTitles");
-		Label goodPractices = new HTML(getgoodPracticesText());
+		Label goodPractices = new HTML(getgoodPracticesHead()+":<p>"+getgoodPracticesLong());
 		help.add(titleGoodPractices);
 		help.add(goodPractices);
-		
-		
+
+
 		content.add(help);
 	}
 
-	public static String getgoodPracticesText(){
-		return "A utilidade e eficácia do sistema FeaRS depende em grande parte das sugestões criadas. Por isso, sugere-se a adopção das seguintes boas práticas na criação de novas sugestões:<p>"+
-		"<ul><li> <b>Pesquisar primeiro</b> - Antes de criar uma nova sugestão utilize a opção de pesquisa para verificar se não existe já uma sugestão idêntica, na qual pode votar e/ou adicionar um comentário.</li>"+
-		"<li> <b>Uma ideia por sugestão</b> - Exponha apenas uma ideia por cada sugestão feita, em vez de propor várias em simultâneo na mesma sugestão.</li>"+
-		"<li> <b>Rever antes de criar</b> - Releia a sua sugestão antes de a criar, reescrevendo-a se necessário para a tornar mais clara.</li>"+
-		"<li> <b>Ser sucinto</b> - Seja sucinto na forma como expõe a sua sugestão.</li>"+
-		"<li> <b>Ser construtivo</b> - Se tiver ideias de como resolver um determinado problema, apresente as suas ideias, para além de indicar o que está mal.</li></ul>";
+	public static String getgoodPracticesHead(){
+		return "A utilidade e eficácia do sistema FeaRS depende em grande parte das sugestões criadas. Por isso, sugere-se a adopção das seguintes boas práticas na criação de novas sugestões";
+		
 	}
 	
+	public static String getFearsIntro(){
+		return "O FeaRS é um sistema que permite gerir sugestões. Os utilizadores podem criar novas sugestões e votar em sugestões já existentes. As sugestões podem ser pedidos de novas funcionalidades ou de alterações a funcionalidades existentes, com o objectivo de melhorar o serviço.  Através do número de votos das sugestões, os responsáveis pelos projectos percebem quais as sugestões mais populares, ajudando-os a priorizar a implementação das mesmas.";
+	}
+	
+	public static String getgoodPracticesLong(){
+		return "<ul><li> <b>Pesquisar primeiro</b> - Antes de criar uma nova sugestão utilize a opção de pesquisa para verificar se não existe já uma sugestão idêntica, na qual pode votar e/ou adicionar um comentário.</li>"+
+				"<li> <b>Uma ideia por sugestão</b> - Exponha apenas uma ideia por cada sugestão feita, em vez de propor várias em simultâneo na mesma sugestão.</li>"+
+				"<li> <b>Rever antes de criar</b> - Releia a sua sugestão antes de a criar, reescrevendo-a se necessário para a tornar mais clara.</li>"+
+				"<li> <b>Ser sucinto</b> - Seja sucinto na forma como expõe a sua sugestão.</li>"+
+				"<li> <b>Ser construtivo</b> - Se tiver ideias de como resolver um determinado problema, apresente as suas ideias, para além de indicar o que está mal.</li></ul>";
+	}
+
 	public void viewLogin(){
 		//content.clear();
 
@@ -355,7 +358,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 			f.viewListProjects();
 		}
 
-		if(url.startsWith("listProjects")){
+		if(url.startsWith("projectos")){
 			f.viewListProjects();
 		}else if(url.startsWith("login")){
 			f.viewLogin();

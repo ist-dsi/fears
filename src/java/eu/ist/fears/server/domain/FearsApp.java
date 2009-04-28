@@ -2,7 +2,10 @@ package eu.ist.fears.server.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 import org.joda.time.format.DateTimeFormat;
 
@@ -88,15 +91,14 @@ public class FearsApp extends FearsApp_Base {
 		return getAdmins().contains(u);
 	}
 
-	public ViewProject[] getProjects() {
-		ViewProject[] res = new ViewProject[getProjectCount()];
-
+	public List<ViewProject> getProjectsViews() {
+		List<ViewProject> res = new ArrayList<ViewProject>();
 		
-		int i=0;
 		for(Project p : getProjectSet()){
-			res[i]=p.getView();
-			i++;
+			res.add(p.getView());
 		}
+		
+		Collections.sort(res, new ProjectViewOrderComparator());
 
 		return res;
 	}
@@ -134,4 +136,77 @@ public class FearsApp extends FearsApp_Base {
 		return new ViewAdmins(admins,adminsNicks);	
 	}
 
+	public void projectDown(String projectId) {
+		Project actual=null;
+		int projID;
+		int nextPosition;
+		boolean isNext=false;
+		List<Project> projects = getProject();
+		Collections.sort(projects, new ProjectOrderComparator());
+		try{
+			projID= new Integer(projectId).intValue();
+		}catch(Throwable t){
+			System.out.println("ID:" + projectId);
+			throw new RuntimeException("Nao existe esse projecto: " + projectId);
+		}
+		
+		for(Project p : projects){
+			if(isNext){
+				System.out.println("DOWN antes:"+actual.getListPosition()+","+p.getListPosition());
+				nextPosition=p.getListPosition();
+				p.setListPosition(actual.getListPosition());
+				actual.setListPosition(nextPosition);
+				System.out.println("DOWN depois"+actual.getListPosition()+","+p.getListPosition());	
+				return;
+			}
+			
+			if(p.getIdInternal()==(projID)){
+				isNext=true;
+				actual=p;
+			}
+		}
+	}
+
+
+	public void projectUp(String projectId) {
+		Project before=null;
+		int projID;
+		int beforePosition;
+		List<Project> projects = getProject();
+		Collections.sort(projects, new ProjectOrderComparator());
+		try{
+			projID= new Integer(projectId).intValue();
+		}catch(Throwable t){
+			System.out.println("ID:" + projectId);
+			throw new RuntimeException("Nao existe esse projecto: " + projectId);
+		}
+		for(Project p : projects){
+			if(p.getIdInternal()==(projID)){
+				if(before==null)//Already first
+					return;
+				System.out.println("UP antes:"+before.getListPosition()+","+p.getListPosition());
+				beforePosition=before.getListPosition();
+				before.setListPosition(p.getListPosition());
+				p.setListPosition(beforePosition);
+				System.out.println("UP depois"+before.getListPosition()+","+p.getListPosition());
+				return;
+			}
+			before=p;
+		}
+	}
+	
+	protected class ProjectViewOrderComparator implements Comparator<ViewProject>{
+
+		public int compare(ViewProject p1, ViewProject p2) {
+			return p1.getListOrder()-p2.getListOrder();
+		}
+	}
+	
+	protected class ProjectOrderComparator implements Comparator<Project>{
+
+		public int compare(Project p1, Project p2) {
+			return p1.getListPosition()-p2.getListPosition();
+		}
+	}
+	
 }

@@ -26,8 +26,7 @@ public class Project extends Project_Base {
 		setFeaturesIncrementID(0);
 		setInitialVotes(nvotes);
 		addVoter(v);
-		
-		
+		setListPosition(getIdInternal());
 	}
 
 
@@ -145,7 +144,7 @@ public class Project extends Project_Base {
 	}
 	
 	public ViewProject getView(){
-		return new ViewProject(getName(), getIdInternal(), getDescription(), getNFeatures(), getAuthorName(), FearsServiceImpl.getNickName( getAuthorName()) , getInitialVotes());
+		return new ViewProject(getName(), getIdInternal(), getDescription(), getNFeatures(), getAuthorName(), FearsServiceImpl.getNickName( getAuthorName()) , getInitialVotes(), getListPosition());
 		
 		
 	}
@@ -188,18 +187,9 @@ public class Project extends Project_Base {
 	protected class CommentDateComparator implements Comparator<ViewFeatureResume>{
 
 		public int compare(ViewFeatureResume o1, ViewFeatureResume o2) {
-			FeatureRequest f1=getFeature(new Integer(o1.getFeatureID()).toString());
-			FeatureRequest f2=getFeature(new Integer(o2.getFeatureID()).toString());
 			
-			DateTime t1=f1.getCreatedTime();
-			DateTime t2=f2.getCreatedTime();
-			
-			List<Comment> c1=f1.getComment();
-			List<Comment> c2=f2.getComment();
-			if(!c1.isEmpty())
-				t1=c1.get(0).getCreatedTime();
-			if(!c2.isEmpty())
-				t2=c2.get(0).getCreatedTime();
+			DateTime t1=getFeature(new Integer(o1.getFeatureID()).toString()).getLastModification();
+			DateTime t2=getFeature(new Integer(o2.getFeatureID()).toString()).getLastModification();
 			
 			return t2.compareTo(t1);
 		}

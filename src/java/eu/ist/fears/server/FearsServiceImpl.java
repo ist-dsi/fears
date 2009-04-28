@@ -77,7 +77,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 			URL url;
 			try {
 				url = new URL("https://fenix.ist.utl.pt//external/NameResolution.do?method=resolve&id="+
-						user+"&username=fenixRemoteRequests&password=");
+						user+"&username=fenixRemoteRequests&password=ff56852f94119557bebba46242ce6d5af4496eed");
 
 				URLConnection conn = url.openConnection();
 				// Get the response
@@ -262,8 +262,8 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		p.edit(name, description, nvotes);
 	}
 
-	public ViewProject[] getProjects(String sessionID) {
-		return  FearsApp.getFears().getProjects();
+	public List<ViewProject> getProjects(String sessionID) {
+		return  FearsApp.getFears().getProjectsViews();
 	}
 
 	public void deleteProject(String name, String sessionID) throws FearsException{
@@ -474,7 +474,6 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	}
 
 	public String validateTicket(String ticket, boolean admin, String sessionID){
-		HttpSession session = this.getThreadLocalRequest().getSession();
 
 		String user = null;
 		String errorCode = null;
@@ -517,7 +516,19 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		}	
 		return user;
 	}
+
+	public List<ViewProject> projectUp(String projectId, String cookie) throws FearsException {
+		isAdmin();
+		FearsApp.getFears().projectUp(projectId);
+		return FearsApp.getFears().getProjectsViews();
+		
+	}
 	
+	public List<ViewProject> projectDown(String projectId, String cookie) throws FearsException {
+		isAdmin();
+		FearsApp.getFears().projectDown(projectId);
+		return FearsApp.getFears().getProjectsViews();
+	}
 
 }
 

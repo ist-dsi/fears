@@ -1,11 +1,11 @@
 package eu.ist.fears.client;
 
+import java.util.List;
+
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import eu.ist.fears.client.common.communication.Communication;
@@ -23,9 +23,6 @@ public class ListProjects extends Composite{
 		_com= new Communication("service");
 		_projPanel = new VerticalPanel();
 		_projPanel.setStyleName("projectsList");
-
-		Fears.getPath().setFears();
-
 		init();
 		_projPanel.add(new Label("A carregar lista de Projectos..."));
 		initWidget(_projPanel);
@@ -33,6 +30,9 @@ public class ListProjects extends Composite{
 
 	private void init(){
 		_projPanel.clear();
+		Label projectsTitle = new Label("Projectos");
+		projectsTitle.setStyleName("listProjectsTitle");
+		_projPanel.add(projectsTitle);
 	}
 
 
@@ -40,17 +40,17 @@ public class ListProjects extends Composite{
 		_com.getProjects(Cookies.getCookie("fears"), getProjectsCB);	
 	}
 
-	protected void updateProjects(ViewProject[] projects) {
+	protected void updateProjects(List<ViewProject> projects) {
 
 		init();
 
-		if(projects==null || projects.length ==0){
+		if(projects==null || projects.size() ==0){
 			_projPanel.add(new Label("Nao ha Projectos"));
 		}
 
 
-		for(int i=0;i< projects.length;i++){
-			_projPanel.add(new ProjectWidget(projects[i]));
+		for(int i=0;i< projects.size();i++){
+			_projPanel.add(new ProjectWidget(projects.get(i)));
 		}
 
 	}
@@ -58,7 +58,7 @@ public class ListProjects extends Composite{
 
 	AsyncCallback getProjectsCB = new ExceptionsTreatment() {
 		public void onSuccess(Object result){ 
-			updateProjects((ViewProject[]) result);
+			updateProjects((List<ViewProject>) result);
 		}
 	};
 

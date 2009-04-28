@@ -10,6 +10,7 @@ class Project {
     String description;
     int featuresIncrementID;
     int initialVotes;
+    int listPosition;
 }
 
 relation FearsAppHasProjects {
@@ -96,6 +97,7 @@ class FeatureRequest {
     State state;
     int webID;
     DateTime createdTime;
+    DateTime lastModification;
 }
 
 relation ProjectFeatureRequests {

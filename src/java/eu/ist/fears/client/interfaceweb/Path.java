@@ -16,7 +16,7 @@ public class Path extends Composite{
 		_path =  new HorizontalPanel();
 		_back = new HorizontalPanel();
 		_pathBox.add(_path);
-		_path.add(new Hyperlink("Projectos","listProjects"));
+		_path.add(new Hyperlink("Projectos","projectos"));
 		_path.setStyleName("Path");
 		_pathBox.setStyleName("width100");
 		_pathBox.setHorizontalAlignment(HorizontalPanel.ALIGN_RIGHT);
@@ -27,7 +27,20 @@ public class Path extends Composite{
 	public void setFears(){
 		_path.clear();
 
-		_path.add(new Hyperlink("Projectos","listProjects"));
+		HTML fears = new HTML("FeaRS");
+		fears.setStyleName("pathGreen");
+		HTML frs = new HTML("&nbsp;/&nbsp;Feature Request System");
+		frs.setStyleName("pathSmall");
+		_path.add(fears);
+		_path.add(frs);
+
+		_back.clear();
+	}
+	
+	public void setProjects(){
+		_path.clear();
+
+		_path.add(new Hyperlink("Projectos","projectos"));
 
 		_back.clear();
 	}
@@ -35,7 +48,7 @@ public class Path extends Composite{
 	public void setProject(String projectName, String projectID){
 		_path.clear();
 		
-		_path.add(new Hyperlink("Projectos","listProjects"));
+		_path.add(new Hyperlink("Projectos","projectos"));
 
 		_path.add(new HTML("&nbsp;/&nbsp;"));
 		_path.add(new Hyperlink(projectName,"Project"+projectID));
@@ -46,7 +59,7 @@ public class Path extends Composite{
 	public void setProjectChange(String displayOnPath){
 		_path.clear();
 		
-		_path.add(new Hyperlink("Projectos","listProjects"));
+		_path.add(new Hyperlink("Projectos","projectos"));
 		_path.add(new HTML("&nbsp;/ " + displayOnPath));
 
 		_back.clear();
@@ -55,7 +68,7 @@ public class Path extends Composite{
 	public void setFeature(String projectName, String projectID, String displayOnPath  ){
 		_path.clear();
 
-		_path.add(new Hyperlink("Projectos","listProjects"));
+		_path.add(new Hyperlink("Projectos","projectos"));
 
 		_path.add(new HTML("&nbsp;/&nbsp;"));
 		_path.add(new Hyperlink(projectName,"Project"+projectID));
@@ -69,7 +82,7 @@ public class Path extends Composite{
 	public void setFeatureChange(String projectName, String projectID, String displayOnPath){
 		_path.clear();
 
-		_path.add(new Hyperlink("Projectos","listProjects"));
+		_path.add(new Hyperlink("Projectos","projectos"));
 		
 		_path.add(new HTML("&nbsp;/&nbsp;"));
 		_path.add(new Hyperlink(projectName,"Project"+projectID));
@@ -82,7 +95,7 @@ public class Path extends Composite{
 	public void setVoter(String projectName, String projectID, String voterNick){
 		_path.clear();
 		
-		_path.add(new Hyperlink("Projectos","listProjects"));
+		_path.add(new Hyperlink("Projectos","projectos"));
 		
 		_path.add(new HTML("&nbsp;/&nbsp;"));
 		_path.add(new Hyperlink(projectName,"Project"+projectID));
@@ -110,7 +123,7 @@ public class Path extends Composite{
 
 	public void setCreateProject() {
 		_path.clear();
-		_path.add(new Hyperlink("Projectos","listProjects"));
+		_path.add(new Hyperlink("Projectos","projectos"));
 		_path.add(new HTML("&nbsp;/ " + "Criar Projecto"));
 		
 		
@@ -118,7 +131,7 @@ public class Path extends Composite{
 
 	public void setEditProject(String projectName, String projectID) {
 		_path.clear();
-		_path.add(new Hyperlink("Projectos","listProjects"));
+		_path.add(new Hyperlink("Projectos","projectos"));
 		_path.add(new HTML("&nbsp;/&nbsp;"));
 		_path.add(new Hyperlink(projectName,"Project"+projectID));
 		_path.add(new HTML("&nbsp;/Editar Projecto"));
@@ -126,7 +139,7 @@ public class Path extends Composite{
 	
 	public void setEditAdmins(String projectName, String projectID) {
 		_path.clear();
-		_path.add(new Hyperlink("Projectos","listProjects"));
+		_path.add(new Hyperlink("Projectos","projectos"));
 		_path.add(new HTML("&nbsp;/&nbsp;"));
 		_path.add(new Hyperlink(projectName,"Project"+projectID));
 		_path.add(new HTML("&nbsp;/ Editar Administradores"));

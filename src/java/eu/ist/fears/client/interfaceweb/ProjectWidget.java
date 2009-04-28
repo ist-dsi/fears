@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import eu.ist.fears.client.common.communication.Communication;
 import eu.ist.fears.client.common.views.ViewProject;
 
 
@@ -21,8 +22,10 @@ public class ProjectWidget extends Composite{
 	protected Label _author;
 	protected Button _removeButton;
 	protected HorizontalPanel _admin;
+	protected Communication _com;
 
 	public ProjectWidget(ViewProject p){
+		_com= new Communication("service");
 		_name = new Label(p.getName());
 		_description= new Label(p.getDescription());
 		_nFeatures = p.getNFeatures();

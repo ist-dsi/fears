@@ -24,7 +24,7 @@ public interface FearsService extends RemoteService  {
 	
 	public void addProject(String name, String description, int nvotes, String sessionID) throws FearsException;
 	public void editProject(String projectID, String name, String description, int nvotes, String sessionID )throws FearsException;
-	public ViewProject[] getProjects(String sessionID);
+	public List<ViewProject> getProjects(String sessionID);
 	public void deleteProject(String name, String sessionID) throws FearsException;
 	public String getProjectName(String projectID) throws NoProjectException, FearsException;
 	public ViewProject getProject(String projectID) throws NoProjectException, FearsException;
@@ -48,5 +48,9 @@ public interface FearsService extends RemoteService  {
 	public ViewVoterResume getCurrentVoter(String _projectid, String cookie) throws FearsException;
 	
 	public ViewVoterResume CASlogin(String ticket, boolean admin, String cookie) throws FearsException;
+	
+	public List<ViewProject> projectUp(String projectId, String cookie) throws FearsException;
+	
+	public List<ViewProject> projectDown(String projectId, String cookie) throws FearsException;
 	
 }

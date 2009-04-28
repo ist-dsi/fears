@@ -14,6 +14,7 @@ public enum State {
     private State(String html){
 		_html=html;
 	}
+    
 	
     public String getHTML(){
     	return _html;

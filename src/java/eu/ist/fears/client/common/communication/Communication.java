@@ -5,6 +5,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
 import eu.ist.fears.client.common.State;
+import eu.ist.fears.client.common.exceptions.FearsException;
 
 
 public class Communication implements FearsServiceAsync{
@@ -21,24 +22,24 @@ public class Communication implements FearsServiceAsync{
 	}
 
 	public  void addFeature(String projectName, String name, String description,
-			 String sessionID, AsyncCallback callback) {
+			String sessionID, AsyncCallback callback) {
 		_service.addFeature(projectName, name, description, sessionID, callback);
 	}
 
 
 	public  void getFeature(String projectName, String id,
-			 String sessionID, AsyncCallback callback) {
+			String sessionID, AsyncCallback callback) {
 		_service.getFeature(projectName, id, sessionID, callback);
 	}
 
 	public  void vote(String projectName, String id,
-			 String sessionID, AsyncCallback callback) {
+			String sessionID, AsyncCallback callback) {
 		_service.vote(projectName, id, sessionID, callback);
 	}
-	
-	
+
+
 	public  void removeVote(String projectName, String feature,
-			 String sessionID, AsyncCallback callback) {
+			String sessionID, AsyncCallback callback) {
 		_service.removeVote(projectName, feature, sessionID, callback);
 	}
 
@@ -48,12 +49,12 @@ public class Communication implements FearsServiceAsync{
 	}
 
 	public void addProject(String name, String description,  int nvotes,
-			 String sessionID, AsyncCallback callback) {
+			String sessionID, AsyncCallback callback) {
 		_service.addProject(name, description, nvotes,  sessionID, callback);
 	}
-	
+
 	public void editProject(String projectID, String name, String description,  int nvotes,
-			 String sessionID, AsyncCallback callback) {
+			String sessionID, AsyncCallback callback) {
 		_service.editProject(projectID, name, description, nvotes,  sessionID, callback);
 	}
 
@@ -73,7 +74,7 @@ public class Communication implements FearsServiceAsync{
 	//public void login(String user, String password, AsyncCallback callback ) {
 	//	_service.login(user,password,  callback);
 	//}
-	
+
 	public void logoff(String sessionID, AsyncCallback callback) {
 		_service.logoff(sessionID, callback);
 	}
@@ -81,19 +82,19 @@ public class Communication implements FearsServiceAsync{
 	public void getAdmins(String sessionID, AsyncCallback callback){
 		_service.getAdmins(sessionID, callback);
 	}
-	
+
 	public void addAdmin(String userName, String sessionID, AsyncCallback callback){
 		_service.addAdmin(userName, sessionID,  callback);
 	}
-	
+
 	public void removeAdmin(String userName, String sessionID, AsyncCallback callback){
 		_service.removeAdmin(userName, sessionID,  callback);
 	}
-	
+
 	public void search(String projectID, String search, int sort, int page, String filter, String sessionID, AsyncCallback callback ){
 		_service.search(projectID, search, sort, page, filter, sessionID, callback);
 	}
-	
+
 	public void getProjectName(String projectID, AsyncCallback callback) {
 		_service.getProjectName(projectID, callback);	
 	}
@@ -101,13 +102,13 @@ public class Communication implements FearsServiceAsync{
 	public void getProject(String projectID, AsyncCallback callback) {
 		_service.getProject(projectID, callback);	
 	}
-	
+
 	public void addProjectAdmin(String newAdmin, String projectID,
 			AsyncCallback callback) {
 		_service.addProjectAdmin(newAdmin, projectID, callback);	
 	}
 
-	
+
 	public void getProjectAdmins(String projectID, AsyncCallback callback) {
 		_service.getProjectAdmins(projectID, callback);	
 	}
@@ -116,24 +117,33 @@ public class Communication implements FearsServiceAsync{
 	public void removeProjectAdmin(String oldAdmin, String projectID,
 			AsyncCallback callback) {
 		_service.removeProjectAdmin(oldAdmin, projectID, callback);	
-		
+
 	}
 
-	
+
 	public void getVoter(String projectid, String voterName, String cookie,
 			AsyncCallback callback){
 		_service.getVoter(projectid, voterName, cookie, callback);
-		
+
 	}
 
 	public void getCurrentVoter(String projectid, String cookie,
 			AsyncCallback callback) {
 		_service.getCurrentVoter(projectid, cookie, callback);
-		
+
 	}
 
 	public void CASlogin(String ticket, boolean login, String cookie,  AsyncCallback callback){
 		_service.CASlogin(ticket, login, cookie, callback);
 	}	
+
+	public void projectUp(String projectId, String cookie, AsyncCallback callback){
+		_service.projectUp( projectId,  cookie,  callback);	
+	}
+
+	public void projectDown(String projectId, String cookie, AsyncCallback callback){
+		_service.projectDown( projectId,  cookie,  callback);	
+	}
+
 
 }
