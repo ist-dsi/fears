@@ -141,7 +141,8 @@ public class FearsApp extends FearsApp_Base {
 		int projID;
 		int nextPosition;
 		boolean isNext=false;
-		List<Project> projects = getProject();
+		List<Project> projects = new ArrayList<Project>();
+		projects.addAll(getProject());
 		Collections.sort(projects, new ProjectOrderComparator());
 		try{
 			projID= new Integer(projectId).intValue();
@@ -151,12 +152,11 @@ public class FearsApp extends FearsApp_Base {
 		}
 		
 		for(Project p : projects){
+			System.out.println(p.getName()+"\n");
 			if(isNext){
-				System.out.println("DOWN antes:"+actual.getListPosition()+","+p.getListPosition());
 				nextPosition=p.getListPosition();
 				p.setListPosition(actual.getListPosition());
 				actual.setListPosition(nextPosition);
-				System.out.println("DOWN depois"+actual.getListPosition()+","+p.getListPosition());	
 				return;
 			}
 			
@@ -169,10 +169,12 @@ public class FearsApp extends FearsApp_Base {
 
 
 	public void projectUp(String projectId) {
+		
 		Project before=null;
 		int projID;
 		int beforePosition;
-		List<Project> projects = getProject();
+		List<Project> projects = new ArrayList<Project>();
+		projects.addAll(getProject());
 		Collections.sort(projects, new ProjectOrderComparator());
 		try{
 			projID= new Integer(projectId).intValue();
@@ -184,11 +186,9 @@ public class FearsApp extends FearsApp_Base {
 			if(p.getIdInternal()==(projID)){
 				if(before==null)//Already first
 					return;
-				System.out.println("UP antes:"+before.getListPosition()+","+p.getListPosition());
 				beforePosition=before.getListPosition();
 				before.setListPosition(p.getListPosition());
 				p.setListPosition(beforePosition);
-				System.out.println("UP depois"+before.getListPosition()+","+p.getListPosition());
 				return;
 			}
 			before=p;

@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Image;
@@ -16,6 +17,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.HasVerticalAlignment.VerticalAlignmentConstant;
 
 import eu.ist.fears.client.Fears;
 import eu.ist.fears.client.common.communication.Communication;
@@ -90,23 +92,28 @@ public class ListProjectsWidget extends Composite{
 			_id=new String(new Integer(p.getwebID()).toString());
 			
 			VerticalPanel changeOrder = new VerticalPanel();
-			PushButton up = new PushButton(new Image("up.png"));
+			changeOrder.setStyleName("changeOrderButtons");
+			
+			PushButton up = new PushButton(new Image("up.png",0,0,10,10));
 			up.addClickListener(new ClickListener(){
 				public void onClick(Widget sender) {
 					_com.projectUp(_id, Cookies.getCookie("fears"),updateCB);
 				}
 			});
-			PushButton down = new PushButton(new Image("down.png"));
+			up.setStyleName("orderButton");
+			PushButton down = new PushButton(new Image("down.png",0,0,10,10));
 			down.addClickListener(new ClickListener(){
 				public void onClick(Widget sender) {
 					_com.projectDown(_id, Cookies.getCookie("fears"),updateCB);
 				}
 			});
+			down.setStyleName("orderButton");
 			
-			
+			changeOrder.setVerticalAlignment(HasVerticalAlignment.ALIGN_BOTTOM);
 			changeOrder.add(up);
+			changeOrder.setVerticalAlignment(HasVerticalAlignment.ALIGN_TOP);
 			changeOrder.add(down);
-			_admin.add(new Label(new Integer(p.getListOrder()).toString()));
+			_admin.add(new HTML("Ordem: " + new Integer(p.getListOrder()).toString() + "&nbsp;&nbsp;"));
 			_admin.add(changeOrder);
 			_admin.add(new HTML("&nbsp;|&nbsp;"));
 			_admin.add(_author);

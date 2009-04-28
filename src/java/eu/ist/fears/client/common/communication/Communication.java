@@ -144,6 +144,9 @@ public class Communication implements FearsServiceAsync{
 	public void projectDown(String projectId, String cookie, AsyncCallback callback){
 		_service.projectDown( projectId,  cookie,  callback);	
 	}
-
+	
+	public void userCreatedFeature(String cookie, AsyncCallback callback){
+		_service.userCreatedFeature(cookie, callback);
+	}
 
 }

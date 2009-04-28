@@ -2,6 +2,7 @@ package eu.ist.fears.client.common.communication;
 
 import java.util.List;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 
 import eu.ist.fears.client.common.State;
@@ -52,5 +53,7 @@ public interface FearsService extends RemoteService  {
 	public List<ViewProject> projectUp(String projectId, String cookie) throws FearsException;
 	
 	public List<ViewProject> projectDown(String projectId, String cookie) throws FearsException;
+	
+	public Boolean userCreatedFeature(String cookie) throws FearsException;
 	
 }

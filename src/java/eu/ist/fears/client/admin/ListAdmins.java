@@ -57,7 +57,7 @@ public class ListAdmins  extends Composite {
 			return;
 		
 		_contentPanel.add(new HTML("<br><br><h2>Adicionar Administrador</h2>"));
-		_contentPanel.add(new Label("Nome do Administrador:"));
+		_contentPanel.add(new Label("Nome de Utilizador (IST ID) do Administrador:"));
 		_newAdminName.setText("");
 		_contentPanel.add(_newAdminName);
 		_createAdminButton = new Button("Adicionar Administrador");

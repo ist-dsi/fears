@@ -48,5 +48,6 @@ public interface FearsServiceAsync {
 	public void projectUp(String projectId, String cookie, AsyncCallback callback);
 	public void projectDown(String projectId, String cookie, AsyncCallback callback);
 
+	public void userCreatedFeature(String cookie, AsyncCallback callback);
 
 }

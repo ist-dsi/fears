@@ -77,7 +77,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 			URL url;
 			try {
 				url = new URL("https://fenix.ist.utl.pt//external/NameResolution.do?method=resolve&id="+
-						user+"&username=fenixRemoteRequests&password=ff56852f94119557bebba46242ce6d5af4496eed");
+						user+"&username=fenixRemoteRequests&password=");
 
 				URLConnection conn = url.openConnection();
 				// Get the response
@@ -528,6 +528,18 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		isAdmin();
 		FearsApp.getFears().projectDown(projectId);
 		return FearsApp.getFears().getProjectsViews();
+	}
+
+	public Boolean userCreatedFeature(String cookie)throws FearsException {
+		isLoggedIn();
+		User actual=getUserFromSession();
+		
+		for(Voter v : actual.getVoter()){
+			if(v.getFeaturesCreatedCount()>0)
+				return true;
+		}
+		
+		return false;
 	}
 
 }
