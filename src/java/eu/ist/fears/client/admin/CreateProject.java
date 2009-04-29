@@ -55,12 +55,12 @@ public class CreateProject extends CreateEditProjectFeature {
 
 				boolean error = false;
 
-				if(_name.getText().isEmpty()){	
+				if(_name.getText().length() == 0){	
 					_errorPanel.add(new HTML("Tem de preencher o nome do projecto."));
 					error=true;
 				}
 				try{
-					if(_nInitialVotes.getText().isEmpty() || new Integer(_nInitialVotes.getText()) < 0 ){
+					if(_nInitialVotes.getText().length() == 0 || new Integer(_nInitialVotes.getText()) < 0 ){
 						_errorPanel.add(new HTML("O numero de votos do projecto tem que ser maior ou igual a zero."));
 						error=true;
 					}
@@ -68,7 +68,7 @@ public class CreateProject extends CreateEditProjectFeature {
 					_errorPanel.add(new HTML("O numero de votos tem que ser um numero inteiro."));
 					error=true;
 				}
-				if(_description.getText().isEmpty()){
+				if(_description.getText().length() == 0){
 					_errorPanel.add(new HTML("Tem de preencher a descri&ccedil;&atilde;o do projecto."));		
 					error=true;
 				}

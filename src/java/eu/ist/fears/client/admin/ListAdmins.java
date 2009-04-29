@@ -67,7 +67,7 @@ public class ListAdmins  extends Composite {
 		_createAdminButton.addClickListener(new ClickListener(){
 			public void onClick(Widget sender) {
 				_errors.clear();
-				if(_newAdminName.getText().isEmpty()){
+				if(_newAdminName.getText().length() == 0){
 					_errors.add(new HTML("Erro:"));
 					_errors.add(new HTML("Tem de preencher o nome do Administrador."));	
 					return;

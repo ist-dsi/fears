@@ -208,8 +208,8 @@ public class ListFeatures extends Composite {
 			return;
 		}
 
-		if(_actualFilter.isEmpty())
-			if(sBox.getText().isEmpty())
+		if(_actualFilter.length() == 0)
+			if(sBox.getText().length() == 0)
 				searchAlert = new HTML("O projecto tem " + features.size() + " sugest&otilde;es" );
 			else searchAlert = new HTML("Foram encontradas " + features.size() + " sugest&otilde;es, sobre a pesquisa: \"" + sBox.getText()+ "\"" );
 		else  searchAlert = new HTML("Foram encontradas " + features.size() + " sugest&otilde;es, com o Estado: " + _actualFilter );

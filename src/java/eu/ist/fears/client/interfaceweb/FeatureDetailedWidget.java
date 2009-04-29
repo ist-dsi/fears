@@ -207,7 +207,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 			}
 
 			_errors.clear();
-			if(_commentTextArea.getText().isEmpty()){
+			if(_commentTextArea.getText().length() == 0){
 				_errors.add(new HTML("Erro:"));
 				_errors.add(new HTML("Tem de preencher o coment&aacute;rio."));			
 				return;

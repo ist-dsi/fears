@@ -89,7 +89,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 		RootPanel.get().add(footer);
 
 		String ticket=getTicket();
-		if(ticket!=null && !ticket.isEmpty()){
+		if(ticket!=null && !(ticket.length() == 0)){
 			if(this instanceof Admin)
 				_com.CASlogin(ticket, true, null, new WaitForLogin());
 			else  _com.CASlogin(ticket, false, null, new WaitForLogin());

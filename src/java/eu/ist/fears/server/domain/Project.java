@@ -72,7 +72,7 @@ public class Project extends Project_Base {
 		if(this.getFeatureRequestCount()==0)
 			return ret;
 		
-		if(!filter.isEmpty()){
+		if(!(filter.length() == 0)){
 			return sortAndPage(filter(filter, v), sort, page);
 		}
 		

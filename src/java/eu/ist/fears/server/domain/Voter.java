@@ -3,15 +3,13 @@ package eu.ist.fears.server.domain;
 
 import java.util.List;
 
-import pt.ist.dmapl.AccessControlRole;
-import pt.ist.dmapl.AccessControlUser;
 import eu.ist.fears.client.common.communication.FearsService;
 import eu.ist.fears.client.common.views.ViewFeatureResume;
 import eu.ist.fears.client.common.views.ViewVoterDetailed;
 import eu.ist.fears.client.common.views.ViewVoterResume;
 import eu.ist.fears.server.FearsServiceImpl;
 
-public class Voter extends Voter_Base implements AccessControlUser {
+public class Voter extends Voter_Base {
     
     public Voter(User user){
         setUser(user);
@@ -36,10 +34,6 @@ public class Voter extends Voter_Base implements AccessControlUser {
     	}else return false;
     			
     }
-
-	public boolean hasRole(AccessControlRole arg0) {
-		return hasRole(arg0);
-	}
 	
 	/*public class UserFind implements UserFinder {
 

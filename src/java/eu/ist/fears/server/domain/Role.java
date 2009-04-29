@@ -1,9 +1,6 @@
 package eu.ist.fears.server.domain;
 
-import pt.ist.dmapl.AccessControlRole;
-import pt.ist.dmapl.RoleFinder;;
-
-public class Role implements AccessControlRole {
+public class Role {
 
 	protected String _role;
 
@@ -19,8 +16,8 @@ public class Role implements AccessControlRole {
 		this._role = role;
 	}
 
-	public class RoleFind implements RoleFinder {
-		public AccessControlRole getRoleByName(String name){
+	public class RoleFind {
+		public Role getRoleByName(String name){
 			return new Role(name);
 		}
 

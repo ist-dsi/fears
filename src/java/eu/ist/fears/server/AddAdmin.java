@@ -9,7 +9,6 @@ import com.google.gwt.user.client.rpc.SerializationException;
 
 import eu.ist.fears.server.domain.FearsApp;
 
-import pt.ist.dmapl.enforcement.AccessControlSession;
 import pt.ist.fenixframework.Config;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.pstm.Transaction;
@@ -65,7 +64,6 @@ public class AddAdmin {
 				Transaction.abort();
 				txFinished = true;
 			} finally {
-				AccessControlSession.endAccessControl();
 				if (! txFinished) {
 					Transaction.abort();
 				}

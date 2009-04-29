@@ -55,11 +55,11 @@ public class CreateFeature extends CreateEditProjectFeature {
 			public void onClick(Widget sender) {
 				_errorPanel.clear();
 
-				if(_name.getText().isEmpty() || _description.getText().isEmpty()){
+				if(_name.getText().length() == 0 || _description.getText().length() == 0){
 					_errorPanel.add(new HTML("Erro:"));
-					if(_name.getText().isEmpty())
+					if(_name.getText().length() == 0)
 						_errorPanel.add(new HTML("Tem de preencher o nome da sugest&atilde;o."));
-					if(_description.getText().isEmpty())
+					if(_description.getText().length() == 0)
 						_errorPanel.add(new HTML("Tem de preencher a descri&ccedil;&atilde;o da sugest&atilde;o."));		
 
 

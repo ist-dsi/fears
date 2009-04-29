@@ -17,7 +17,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import pt.ist.dmapl.enforcement.AccessControlSession;
 import pt.ist.fenixframework.Config;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.pstm.Transaction;
@@ -122,7 +121,6 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 				Transaction.abort();
 				txFinished = true;
 			} finally {
-				AccessControlSession.endAccessControl();
 				if (! txFinished) {
 					Transaction.abort();
 				}
