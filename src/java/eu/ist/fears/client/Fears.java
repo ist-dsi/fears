@@ -220,7 +220,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 	public void showHelp(){
 		VerticalPanel help = new VerticalPanel();
 
-		Label first = new Label(getFearsIntro(),true);
+		HTML first = new HTML(getFearsIntro(),true);
 		help.add(first);
 
 		Label titleproj = new Label("Projectos");
@@ -274,7 +274,8 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 	}
 	
 	public static String getFearsIntro(){
-		return "O FeaRS é um sistema que permite gerir sugestões. Os utilizadores podem criar novas sugestões e votar em sugestões já existentes. As sugestões podem ser pedidos de novas funcionalidades ou de alterações a funcionalidades existentes, com o objectivo de melhorar o serviço.  Através do número de votos das sugestões, os responsáveis pelos projectos percebem quais as sugestões mais populares, ajudando-os a priorizar a implementação das mesmas.";
+		return "O FeaRS (Feature Request System) é um sistema que permite gerir sugestões. Os utilizadores podem criar novas sugestões e votar em sugestões já existentes. As sugestões podem ser pedidos de novas funcionalidades ou de alterações a funcionalidades existentes, com o objectivo de melhorar o serviço.  Através do número de votos das sugestões, os responsáveis pelos projectos percebem quais as sugestões mais populares, ajudando-os a definir a prioridade de implementação."+
+		"<br>Não utilize o sistema FeaRS para a indicação de erros ou \"bugs\" do sistema. Estes devem ser enviados para <a href=\"mailto:ci@ist.utl.pt\">ci@ist.utl.pt</a>, como habitualmente.";
 	}
 	
 	public static String getgoodPracticesLong(){
