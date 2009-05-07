@@ -6,7 +6,8 @@
   </description>
 	
 	
-	<property name="adminUser" value="ist153813"/>
+	<property name="adminUser" value="ist1XXXXX"/>
+
 	
   <property name="src.dir" location="src"/>
   <property name="src.gen.dir" location="src_gen"/>

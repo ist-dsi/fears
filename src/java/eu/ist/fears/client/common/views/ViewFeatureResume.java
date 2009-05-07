@@ -49,7 +49,7 @@ public class ViewFeatureResume implements IsSerializable{
 		//Remove new lines
 		_description = _description.replaceAll("\n", " ");
 		if(length>100){
-			_description =  _description.substring(0,100) + "\n" + _description.substring(100, _description.length());
+			_description = insertNewLine(100, _description);
 		}
 		_votes=votes;
 		_nComments= nComments;
@@ -110,5 +110,15 @@ public class ViewFeatureResume implements IsSerializable{
 		return _authorNick;
 	}
 	
+	//Inserts a new line before the ith position, in the position of a white space
+	//(for not cutting words)
+	private String insertNewLine(int i,String desc){
+		for(int j=i;j>0;j--){
+			if(desc.charAt(j)==' '){
+				return desc.substring(0,j) + "\n" + desc.substring(j, desc.length());
+			}
+		}
+		return desc;
+	}
 	
 }

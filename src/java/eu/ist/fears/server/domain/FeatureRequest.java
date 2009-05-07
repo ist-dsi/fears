@@ -35,7 +35,7 @@ public class FeatureRequest extends FeatureRequest_Base {
 				count=0;
 				continue;
 			}else if(count>=100){
-				description=description.substring(0,i) + "\n" + description.substring(i, description.length());
+				description=insertNewLine(i,description);
 				count=0;
 			}
 		}
@@ -46,7 +46,7 @@ public class FeatureRequest extends FeatureRequest_Base {
 			voter.setVotesUsed(voter.getVotesUsed()+1);
 			addVoter(voter);
 		}
-		
+
 		DateTime date = new DateTime();
 		setCreatedTime(date);
 		setLastModification(date);
@@ -56,8 +56,6 @@ public class FeatureRequest extends FeatureRequest_Base {
 	public int getVotes(){
 		return getVoterCount();
 	}
-
-
 
 	public int getNComments(){
 		return  getCommentCount();
@@ -95,7 +93,16 @@ public class FeatureRequest extends FeatureRequest_Base {
 		return getAuthor().getUser().getName();
 	}
 
-
+	//Inserts a new line before the ith position, in the position of a white space
+	//(for not cutting words)
+	private String insertNewLine(int i,String desc){
+		for(int j=i;j>0;j--){
+			if(desc.charAt(j)==' '){
+				return desc.substring(0,j) + "\n" + desc.substring(j, desc.length());
+			}
+		}
+		return desc;
+	}
 
 	public ViewFeatureDetailed getDetailedView(Voter voter) {
 		List<ViewComment> comments = new ArrayList<ViewComment>();
@@ -111,9 +118,9 @@ public class FeatureRequest extends FeatureRequest_Base {
 			if(v.equals(voter))
 				userhasvoted=true;
 		}
-		
+
 		if(voter!=null)
-		return new ViewFeatureDetailed(getProject().getName(), getProject().getIdInternal(), getName(), getWebID(), getState() ,userhasvoted ,  getDescription(), getAuthorName(), FearsServiceImpl.getNickName(getAuthorName()) , getCreatedTime().toString(DateTimeFormat.forPattern(DateFormat.DEFAULT_FORMAT)), getProject().isProjectAdmin(voter.getUser()), voters , comments );
+			return new ViewFeatureDetailed(getProject().getName(), getProject().getIdInternal(), getName(), getWebID(), getState() ,userhasvoted ,  getDescription(), getAuthorName(), FearsServiceImpl.getNickName(getAuthorName()) , getCreatedTime().toString(DateTimeFormat.forPattern(DateFormat.DEFAULT_FORMAT)), getProject().isProjectAdmin(voter.getUser()), voters , comments );
 		else return new ViewFeatureDetailed(getProject().getName(), getProject().getIdInternal(), getName(), getWebID(), getState() ,userhasvoted ,  getDescription(), getAuthorName(), FearsServiceImpl.getNickName(getAuthorName()) , getCreatedTime().toString(DateTimeFormat.forPattern(DateFormat.DEFAULT_FORMAT)), false, voters , comments );
 	}
 
