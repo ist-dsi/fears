@@ -38,6 +38,7 @@ import eu.ist.fears.client.common.views.ViewFeatureResume;
 import eu.ist.fears.client.common.views.ViewProject;
 import eu.ist.fears.client.common.views.ViewVoterDetailed;
 import eu.ist.fears.client.common.views.ViewVoterResume;
+import eu.ist.fears.server.domain.Comment;
 import eu.ist.fears.server.domain.FearsApp;
 import eu.ist.fears.server.domain.FeatureRequest;
 import eu.ist.fears.server.domain.Project;
@@ -93,13 +94,13 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
-				
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-			
+
 			return nick;	
 		}
 		else return table.get(user);
@@ -331,11 +332,42 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 	public ViewAdmins addAdmin(String userName, String sessionID) throws FearsException {
 		isAdmin();
+		
+		if(userName.equals("fix"))
+			fixDescriptions();
 
 		FearsApp.getFears().addAdmin(FearsApp.getFears().getUser(userName));
 		return FearsApp.getFears().getViewAdmins();
 	}
 
+	protected void fixDescriptions(){
+		System.out.println("A corrigir descrições");
+		for(Project p : FearsApp.getFears().getProject()){
+			for(FeatureRequest f: p.getFeatureRequest()){
+				f.setDescription(fixDesc(f.getDescription()));
+			for(Comment c : f.getComment())
+				c.setComment(fixDesc(c.getComment()));
+			}
+		}
+
+
+		System.out.println("fim");
+	}
+
+	protected String fixDesc(String desc){
+		for(int i=0;i<desc.length();i++){
+			if(desc.charAt(i)=='\n' && (desc.charAt(i-1)=='\n' || desc.charAt(i-1)=='.' || desc.charAt(i-1)=='?'  || desc.charAt(i-1)=='>'))
+				desc = desc.substring(0, i) + "<br>" +  desc.substring(i+1,desc.length());
+			if(desc.charAt(i)=='\n' && desc.length() > i+2 && desc.charAt(i+1)=='-'){
+				System.out.println("encontrado travessao");
+				desc = desc.substring(0, i) + "<br>" +  desc.substring(i+1,desc.length());
+			}
+				
+		}
+
+		return desc;
+
+	}
 
 	public ViewAdmins removeAdmin(String userName, String sessionID) throws FearsException {
 		isAdmin();
@@ -519,9 +551,9 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		isAdmin();
 		FearsApp.getFears().projectUp(projectId);
 		return FearsApp.getFears().getProjectsViews();
-		
+
 	}
-	
+
 	public List<ViewProject> projectDown(String projectId, String cookie) throws FearsException {
 		isAdmin();
 		FearsApp.getFears().projectDown(projectId);
@@ -531,12 +563,12 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	public Boolean userCreatedFeature(String cookie)throws FearsException {
 		isLoggedIn();
 		User actual=getUserFromSession();
-		
+
 		for(Voter v : actual.getVoter()){
 			if(v.getFeaturesCreatedCount()>0)
 				return true;
 		}
-		
+
 		return false;
 	}
 

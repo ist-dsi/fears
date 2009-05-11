@@ -177,7 +177,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 				}
 
 				text.setStyleName("meta");
-				Label commentText = new Label(actual.getComment());
+				HTML commentText = new HTML(actual.getComment());
 				commentText.setStyleName("commentItem");
 				comment = new VerticalPanel();
 				comment.setWidth("100%");

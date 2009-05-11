@@ -3,6 +3,8 @@ package eu.ist.fears.server.domain;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
+import com.google.gwt.user.client.ui.HTML;
+
 import eu.ist.fears.client.common.DateFormat;
 import eu.ist.fears.client.common.State;
 import eu.ist.fears.client.common.views.ViewComment;
@@ -14,16 +16,12 @@ public class Comment extends Comment_Base {
         super();
     	//Remove all \r inserted by IE browser.
         c=c.replaceAll("\r","");
-        
-        int count=0;
+        c = c.replaceAll("\\<.*?\\>", "");
+		//Put <br> on \n
+		int count=0;
 		for(int i=0;i<c.length();i++,count++){
-			if(c.charAt(i)=='\n'){
-				count=0;
-				continue;
-			}else if(count>=100){
-				c=insertNewLine(i,c);
-				count=0;
-			}
+			if(c.charAt(i)=='\n')
+				c= c.subSequence(0, i) + "<br>" + c.subSequence(i+1, c.length());
 		}
 		setComment(c);
         setAuthor(v);
@@ -32,16 +30,6 @@ public class Comment extends Comment_Base {
         setCreatedTime(new DateTime());
     }
 
-  //Inserts a new line before the ith position, in the position of a white space
-	//(for not cutting words)
-    private String insertNewLine(int i,String c){
-		for(int j=i;j>0;j--){
-			if(c.charAt(j)==' '){
-				return c.substring(0,j) + "\n" + c.substring(j, c.length());
-			}
-		}
-		return c;
-	}
     
     public ViewComment getView(){
         return new ViewComment(getComment(), getAuthor().getUser().getName(),FearsServiceImpl.getNickName(getAuthor().getUser().getName()) , getNewState(), getOldState() , getCreatedTime().toString(DateTimeFormat.forPattern(DateFormat.DEFAULT_FORMAT)));

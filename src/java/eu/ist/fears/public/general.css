@@ -20,8 +20,6 @@ background: #e8e8de;
 }
 
 .gwt-Label {
-white-space: pre;
-white-space: pre-line;
 }
 
 
@@ -366,8 +364,7 @@ margin-top: 20px;
 }
 
 .featureDescription{
-white-space: pre;
-white-space: pre-line;
+text-align : justify;
 }
 
 
@@ -451,8 +448,7 @@ border-top: 1px dotted #ccc;
 
 .commentItem{
 margin-left: 89px;
-white-space: pre;
-white-space: pre-line;
+text-align : justify;
 }
 
 .newComment {

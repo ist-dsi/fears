@@ -35,7 +35,7 @@ public class FeatureResumeWidget  extends Composite{
 	protected String _authorNick;
 	protected String _date;
 	protected boolean _userHasVoted;
-	protected Label _description;
+	protected HTML _description;
 	protected Label _votes;
 	protected Button _voteButton;
 	protected Label _ncomments;
@@ -58,7 +58,7 @@ public class FeatureResumeWidget  extends Composite{
 		_ncomments = new Label(new Integer(f.getNComments()).toString());
 		_date=f.getCreatedDate();
 		_mainBox = new VerticalPanel();
-		_description= new Label(f.getDescription());
+		_description= new HTML(f.getDescription());
 		_votes = new Label(new Integer(f.getVotes()).toString());
 		_featureResume = new HorizontalPanel();
 		_voteButton = new Button();
@@ -162,7 +162,7 @@ public class FeatureResumeWidget  extends Composite{
 		_viewFeature=f;
 
 		if(updateDescription)
-			_description.setText(f.getDescription());
+			_description.setHTML(f.getDescription());
 
 		_votes.setText(new Integer(f.getVotes()).toString());
 		_author=f.getAuthor();

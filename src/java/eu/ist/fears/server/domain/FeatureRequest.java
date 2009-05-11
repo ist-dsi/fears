@@ -6,6 +6,8 @@ import java.util.List;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
+import com.google.gwt.user.client.ui.HTML;
+
 import eu.ist.fears.client.common.DateFormat;
 import eu.ist.fears.client.common.State;
 import eu.ist.fears.client.common.exceptions.ActionNotExecuted;
@@ -27,17 +29,13 @@ public class FeatureRequest extends FeatureRequest_Base {
 		setName(name);
 		//Remove all \r inserted by IE browser.
 		description=description.replaceAll("\r","");
-
-		//Insert \n every 100 characters
+		//Clean HTML Code
+		description = description.replaceAll("\\<.*?\\>", "");
+		//Put <br> on \n
 		int count=0;
 		for(int i=0;i<description.length();i++,count++){
-			if(description.charAt(i)=='\n'){
-				count=0;
-				continue;
-			}else if(count>=100){
-				description=insertNewLine(i,description);
-				count=0;
-			}
+			if(description.charAt(i)=='\n')
+				description= description.subSequence(0, i) + "<br>" + description.subSequence(i+1, description.length());
 		}
 		setDescription(description);
 		setAuthor(voter);
@@ -93,16 +91,6 @@ public class FeatureRequest extends FeatureRequest_Base {
 		return getAuthor().getUser().getName();
 	}
 
-	//Inserts a new line before the ith position, in the position of a white space
-	//(for not cutting words)
-	private String insertNewLine(int i,String desc){
-		for(int j=i;j>0;j--){
-			if(desc.charAt(j)==' '){
-				return desc.substring(0,j) + "\n" + desc.substring(j, desc.length());
-			}
-		}
-		return desc;
-	}
 
 	public ViewFeatureDetailed getDetailedView(Voter voter) {
 		List<ViewComment> comments = new ArrayList<ViewComment>();
