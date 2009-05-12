@@ -44,6 +44,7 @@ public class ProjectWidget extends Composite{
 		top.add(title);
 		top.add(new HTML("&nbsp; ("+_nFeatures + " Sugest&otilde;es)"));
 		_project.add(top); 
+		_description.setStyleName("projectDescription");
 		_project.add(_description);
 		initWidget(_projectContainer);
 	}

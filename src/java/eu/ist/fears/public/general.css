@@ -139,6 +139,11 @@ margin-bottom: 0.1em;
 text-decoration: none;
 }
 
+.projectDescription{
+white-space: pre;
+white-space: pre-line;
+}
+
 .removeMeta {
 font-size: 0.95em;
 font-weight: normal;

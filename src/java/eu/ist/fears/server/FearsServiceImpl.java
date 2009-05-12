@@ -355,16 +355,11 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	}
 
 	protected String fixDesc(String desc){
-		for(int i=0;i<desc.length();i++){
-			if(desc.charAt(i)=='\n' && (desc.charAt(i-1)=='\n' || desc.charAt(i-1)=='.' || desc.charAt(i-1)=='?'  || desc.charAt(i-1)=='>'))
-				desc = desc.substring(0, i) + "<br>" +  desc.substring(i+1,desc.length());
-			if(desc.charAt(i)=='\n' && desc.length() > i+2 && desc.charAt(i+1)=='-'){
-				System.out.println("encontrado travessao");
-				desc = desc.substring(0, i) + "<br>" +  desc.substring(i+1,desc.length());
-			}
-				
-		}
-
+		desc= desc.replaceAll("automaticamentepelo", "automaticamente pelo");
+		desc= desc.replaceAll("apenaspara", "apenas para");
+		desc= desc.replaceAll("actuais,passados", "actuais, passados");
+		desc= desc.replaceAll("primeiravista", "primeira vista");
+		
 		return desc;
 
 	}
