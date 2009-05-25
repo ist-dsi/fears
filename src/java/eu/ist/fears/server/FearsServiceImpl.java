@@ -17,9 +17,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import pt.ist.fenixframework.Config;
-import pt.ist.fenixframework.FenixFramework;
-import pt.ist.fenixframework.pstm.Transaction;
+import jvstm.Atomic;
 
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -57,15 +55,8 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 	@Override
 	public void init() throws ServletException {
-		Config config = new Config() {{ 
-			domainModelPath = "/fears.dml";
-			dbAlias = "//localhost:3306/fears"; 
-			dbUsername="root";
-			dbPassword = "fears";
-		}};
-		FenixFramework.initialize(config);
-		table = new Hashtable<String, String>();
-
+            Init.init();
+            table = new Hashtable<String, String>();
 	}
 
 	public static String getNickName(String user){
@@ -107,26 +98,9 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	}
 
 	@Override
+        @Atomic
 	public String processCall(final String payload) throws SerializationException {
-		// process the RPC call within a transaction
-		while (true) {
-			Transaction.begin();
-			//AccessControlSession.beginAccessControl(getUserFromSession("..."));
-			boolean txFinished = false;
-			try {
-				String result = super.processCall(payload);
-				Transaction.commit();
-				txFinished = true;
-				return result;
-			} catch (jvstm.CommitException ce) {
-				Transaction.abort();
-				txFinished = true;
-			} finally {
-				if (! txFinished) {
-					Transaction.abort();
-				}
-			}
-		}
+            return super.processCall(payload);
 	}
 
 	protected void isLoggedIn() throws FearsException{

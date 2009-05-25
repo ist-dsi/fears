@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.joda.time.format.DateTimeFormat;
 
+import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.pstm.Transaction;
 import eu.ist.fears.client.common.DateFormat;
 import eu.ist.fears.client.common.views.ViewAdmins;
@@ -20,7 +21,7 @@ public class FearsApp extends FearsApp_Base {
 
 
 	public static FearsApp getFears(){
-		return (FearsApp)Transaction.getDomainObject(FearsApp.class.getName(), 1);
+            return FenixFramework.getRoot();
 	}
 	
 
