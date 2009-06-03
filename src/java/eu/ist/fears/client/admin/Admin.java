@@ -59,7 +59,7 @@ public class Admin extends Fears implements EntryPoint, HistoryListener  {
 			return;
 		
 		content.clear();
-		Fears.getPath().setProjects();
+		Fears.getPath().setAdminProjects();
 
 		ListProjectsWidget projects = new ListProjectsWidget();
 		projects.update();	

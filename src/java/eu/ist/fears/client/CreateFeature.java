@@ -36,7 +36,7 @@ public class CreateFeature extends CreateEditProjectFeature {
 		_projectTitle = new HorizontalPanel();
 		_com.userCreatedFeature(Cookies.getCookie("fears"), getCreatedFeatureCB);
 		
-		Fears.getPath().setFeatureChange("", _projectID, "Nova Sugest&atilde;o");
+		Fears.getPath().setFeatureChange("", _projectID, "Nova Sugestão");
 		
 		_name = new TextBox();
 		_name.setVisibleLength(50);
@@ -113,7 +113,7 @@ public class CreateFeature extends CreateEditProjectFeature {
 	}
 	
 	protected void updateProjectName(String name){
-		Fears.getPath().setFeatureChange(name, _projectID,  "Nova Sugest&atilde;o");
+		Fears.getPath().setFeatureChange(name, _projectID,  "Nova Sugestão");
 	}
 	
 	protected void getCreatedFeature(boolean created){

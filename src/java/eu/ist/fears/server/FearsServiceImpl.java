@@ -307,37 +307,12 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	public ViewAdmins addAdmin(String userName, String sessionID) throws FearsException {
 		isAdmin();
 		
-		if(userName.equals("fix"))
-			fixDescriptions();
 
 		FearsApp.getFears().addAdmin(FearsApp.getFears().getUser(userName));
 		return FearsApp.getFears().getViewAdmins();
 	}
 
-	protected void fixDescriptions(){
-		System.out.println("A corrigir descrições");
-		for(Project p : FearsApp.getFears().getProject()){
-			for(FeatureRequest f: p.getFeatureRequest()){
-				f.setDescription(fixDesc(f.getDescription()));
-			for(Comment c : f.getComment())
-				c.setComment(fixDesc(c.getComment()));
-			}
-		}
-
-
-		System.out.println("fim");
-	}
-
-	protected String fixDesc(String desc){
-		desc= desc.replaceAll("automaticamentepelo", "automaticamente pelo");
-		desc= desc.replaceAll("apenaspara", "apenas para");
-		desc= desc.replaceAll("actuais,passados", "actuais, passados");
-		desc= desc.replaceAll("primeiravista", "primeira vista");
-		
-		return desc;
-
-	}
-
+	
 	public ViewAdmins removeAdmin(String userName, String sessionID) throws FearsException {
 		isAdmin();
 

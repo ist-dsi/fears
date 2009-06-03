@@ -76,6 +76,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 		_currentProject=null;
 		header = new Header("guest",validCookie, false);
 		RootPanel.get().setStyleName("centered");
+		Window.setMargin("0px");
 		RootPanel.get().add(header);
 		frameBox.setStyleName("frameBox");
 		frame.setStyleName("frame");
@@ -85,7 +86,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 		frame.add(content);
 		footer.setStyleName("footer");
 		footer.add(new Label("© 2009, Instituto Superior Técnico. Todos os direitos reservados.  |  "));
-		footer.add(new Hyperlink("Sobre o FeaRS","help"));
+		footer.add(new Hyperlink(" Sobre o FeaRS","help"));
 		RootPanel.get().add(footer);
 
 		String ticket=getTicket();
@@ -248,7 +249,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 
 		Label titleVote = new Label("Votos");
 		titleVote.setStyleName("helpTitles");
-		Label vote = new Label("Os votos permitem medir a popularidade de uma sugestão. Cada utilizador tem um número limitado de votos para usar nas sugestões que achar mais importantes. Uma vez esgotados todos os seus votos, o utilizador não pode votar em mais nenhuma sugestão até ter de novo mais votos disponíveis. Um utilizador recupera votos quando as sugestões em que tenha votado passam para o estado Completo, ou quando remove votos de sugestões em que tenha votado anteriormente. Só é possível votar e remover votos se a sugestão estiver no estado Novo.",true);
+		Label vote = new Label("Os votos permitem medir a popularidade de uma sugestão. Cada utilizador tem um número limitado de votos para usar nas sugestões que achar mais importantes. Uma vez esgotados todos os seus votos, o utilizador não pode votar em mais nenhuma sugestão até ter de novo mais votos disponíveis. Um utilizador recupera votos quando as sugestões em que tenha votado deixam de estar no estado Novo, ou quando remove votos de sugestões em que tenha votado anteriormente. Só é possível votar e remover votos se a sugestão estiver no estado Novo.",true);
 		help.add(titleVote);
 		help.add(vote);
 

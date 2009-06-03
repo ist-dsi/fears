@@ -134,12 +134,12 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 		if(f.getVoters()!=null && f.getVoters().size()>0){
 			_voters.setHeader(new HTML("Ver "+f.getVoters().size() + " votantes &raquo;" ));
 			_voters.getHeader().setStyleName("showVoters");
-			HorizontalPanel votersExpanded = new HorizontalPanel();
+			VerticalPanel votersExpanded = new VerticalPanel();
 			int i=0;
 			for(ViewVoterResume v :  f.getVoters()){
 				votersExpanded.add(new Hyperlink(v.getNick(),"Project"+_projectID+"&"+"viewUser"+v.getName()));
-				if(i!= f.getVoters().size()-1)
-					votersExpanded.add(new HTML(",&nbsp;"));
+				//if(i!= f.getVoters().size()-1)
+					//votersExpanded.add(new HTML(",&nbsp;"));
 				i++;
 			}
 			_voters.setContent(votersExpanded);

@@ -20,8 +20,6 @@
 	<classpathentry kind="lib" path="deploy-lib/commons-pool.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/db-ojb-1.0.0.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/DMAPL.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/dml-20090306.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/fenix-framework.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/gwt-servlet.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/jfreechart.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/joda-time-1.5.2.jar"/>
@@ -29,5 +27,7 @@
 	<classpathentry kind="lib" path="deploy-lib/log4j-1.2.8.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/mysql-connector-java-5.1.5-bin.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="deploy-lib/dml-20090519.jar"/>
+	<classpathentry kind="lib" path="deploy-lib/fenix-framework-r42268.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

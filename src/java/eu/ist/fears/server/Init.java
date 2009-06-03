@@ -14,6 +14,7 @@ public class Init {
             dbUsername="root";
             dbPassword = "fears";
             rootClass = FearsApp.class;
+            updateRepositoryStructureIfNeeded = true;
         }};
         FenixFramework.initialize(config);
     }

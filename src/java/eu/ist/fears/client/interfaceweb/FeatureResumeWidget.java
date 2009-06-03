@@ -31,6 +31,7 @@ public class FeatureResumeWidget  extends Composite{
 	protected String _projectName;
 	protected String _projectID;
 	protected String _featureID;
+	protected String _featureName;
 	protected String _author;
 	protected String _authorNick;
 	protected String _date;
@@ -56,6 +57,7 @@ public class FeatureResumeWidget  extends Composite{
 		HorizontalPanel info = new HorizontalPanel();
 		_featureID= new String(new Integer(f.getFeatureID()).toString());
 		_ncomments = new Label(new Integer(f.getNComments()).toString());
+		_featureName = f.getName();
 		_date=f.getCreatedDate();
 		_mainBox = new VerticalPanel();
 		_description= new HTML(f.getDescription());
@@ -104,7 +106,7 @@ public class FeatureResumeWidget  extends Composite{
 		vote.add(_voteButton);
 
 		HorizontalPanel title = new HorizontalPanel();
-		Hyperlink link = new Hyperlink(f.getName(),"Project"+_projectID+"&"+"viewFeature"+f.getFeatureID());
+		Hyperlink link = new Hyperlink(_featureName,"Project"+_projectID+"&"+"viewFeature"+f.getFeatureID());
 		link.setStyleName("featureTitle");
 		title.add(link);
 		_stateLabel = new HTML(f.getState().getHTML());
@@ -134,6 +136,10 @@ public class FeatureResumeWidget  extends Composite{
 		return _featureID;
 	}
 
+	public String getFeatureName(){
+		return _featureName;
+	}
+	
 	public void updateUserInfo(){
 		if(Fears.isLogedIn() && _state.equals(State.Novo) ){
 			_voteButton.setStyleName("ActionVotes");

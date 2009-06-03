@@ -26,7 +26,7 @@ public class DisplayFeatureDetailed extends Composite {
 
 		_projectID = projectID;
 		_featureID= featureID;
-		Fears.getPath().setFeature("", projectID, "Sugest&atilde;o");
+		Fears.getPath().setFeature("", projectID, "Sugestão", "");
 		_com = new Communication("service");
 		_content= new VerticalPanel();
 		initWidget(_content);
@@ -54,7 +54,7 @@ public class DisplayFeatureDetailed extends Composite {
 			_feature.update(view);
 		}
 		
-		Fears.getPath().setFeature(view.getProjectName(),new Integer(view.getProjectID()).toString(), "Sugest&atilde;o");
+		Fears.getPath().setFeature(view.getProjectName(),new Integer(view.getProjectID()).toString(), "Sugestão", _feature.getFeatureName());
 	}
 
 	protected class FeatureCB extends ExceptionsTreatment{
