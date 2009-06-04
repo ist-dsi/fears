@@ -218,7 +218,7 @@ public class ListFeatures extends Composite {
 		_searchAlertBox.add(searchAlert);
 
 		for(int i=0;i< features.size();i++){
-			FeatureResumeWidget feature =new FeatureResumeWidget((ViewFeatureResume)features.get(i), new VoteOnListCB());
+			FeatureResumeWidget feature =new FeatureResumeWidget(features.get(i), new VoteOnListCB());
 			feature.setStylePrimaryName("feature");
 			_featuresList.add(feature);
 			_featuresViews.add(feature);

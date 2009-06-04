@@ -43,7 +43,7 @@ public class Voter extends Voter_Base {
 	}*/
 	
 	public ViewVoterDetailed getView(String sessionID){
-    	return new ViewVoterDetailed(getUser().getName(),FearsServiceImpl.getNickName(getUser().getName()) , sessionID, getViewFeaturesCreated(), getViewFeaturesVoted());
+    	return new ViewVoterDetailed(getUser().getName(),FearsServiceImpl.getNickName(getUser().getName()) , sessionID, getViewFeaturesCreated(), getViewFeaturesVoted(), getProject().getIdInternal().toString(), getProject().getName());
     	
     }
 	

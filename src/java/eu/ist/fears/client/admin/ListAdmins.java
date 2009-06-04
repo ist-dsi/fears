@@ -126,7 +126,7 @@ public class ListAdmins  extends Composite {
 			_contentPanel.add(new Label("Nao ha Administradores"));
 		} else {
 			for(int i=0;i<admins.getAdmins().size(); i++){
-				AdminWidget a = new AdminWidget((String)admins.getAdmins().get(i), (String)admins.getAdminsNick().get(i));
+				AdminWidget a = new AdminWidget(admins.getAdmins().get(i), admins.getAdminsNick().get(i));
 				a.setStyleName("admin");
 				_contentPanel.add(a);
 			}

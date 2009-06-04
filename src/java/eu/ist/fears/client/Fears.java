@@ -376,7 +376,9 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 				((Admin)f).viewCreateProject();
 		}else if(url.startsWith("help")){
 			f.viewHelp();
-		}
+		}else if(url.startsWith("viewUser")){
+            f.viewVoter(null, url.substring("viewUser".length()));
+        }
 
 	}
 

@@ -44,7 +44,7 @@ public interface FearsService extends RemoteService  {
 	public ViewAdmins addProjectAdmin(String newAdmin, String projectID) throws FearsException;
 	public ViewAdmins removeProjectAdmin(String oldAdmin, String projectID) throws FearsException;
 	
-	public ViewVoterDetailed getVoter(String _projectid, String voterName, String cookie) throws FearsException;
+	public List<ViewVoterDetailed> getVoter(String _projectid, String voterName, String cookie) throws FearsException;
 	
 	public ViewVoterResume getCurrentVoter(String _projectid, String cookie) throws FearsException;
 	

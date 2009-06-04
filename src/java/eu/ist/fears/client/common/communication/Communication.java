@@ -1,11 +1,14 @@
 package eu.ist.fears.client.common.communication;
 
+import java.util.List;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
 import eu.ist.fears.client.common.State;
 import eu.ist.fears.client.common.exceptions.FearsException;
+import eu.ist.fears.client.common.views.ViewVoterDetailed;
 
 
 public class Communication implements FearsServiceAsync{
@@ -122,7 +125,7 @@ public class Communication implements FearsServiceAsync{
 
 
 	public void getVoter(String projectid, String voterName, String cookie,
-			AsyncCallback callback){
+			AsyncCallback<List<ViewVoterDetailed>> callback){
 		_service.getVoter(projectid, voterName, cookie, callback);
 
 	}

@@ -8,6 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -47,208 +48,208 @@ import eu.ist.fears.server.json.JSONObject;
 
 public class FearsServiceImpl extends RemoteServiceServlet implements FearsService {
 
-	/**
-	 * 
-	 */	
-	private static final long serialVersionUID = -9186875057311859285L;
-	private static Hashtable<String, String> table;
+    /**
+     * 
+     */	
+    private static final long serialVersionUID = -9186875057311859285L;
+    private static Hashtable<String, String> table;
 
-	@Override
-	public void init() throws ServletException {
-            Init.init();
-            table = new Hashtable<String, String>();
-	}
+    @Override
+    public void init() throws ServletException {
+        Init.init();
+        table = new Hashtable<String, String>();
+    }
 
-	public static String getNickName(String user){
-		String nick = user;
-		String response = "";
+    public static String getNickName(String user){
+        String nick = user;
+        String response = "";
 
-		if(table.get(user)==null){
+        if(table.get(user)==null){
 
-			URL url;
-			try {
-				url = new URL("https://fenix.ist.utl.pt//external/NameResolution.do?method=resolve&id="+
-						user+"&username=fenixRemoteRequests&password=");
+            URL url;
+            try {
+                url = new URL("https://fenix.ist.utl.pt//external/NameResolution.do?method=resolve&id="+
+                        user+"&username=fenixRemoteRequests&password=");
 
-				URLConnection conn = url.openConnection();
-				// Get the response
-				BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream(),Charset.forName("UTF-8")));
-				String line;			
-				while ((line = rd.readLine()) != null) {
-					response = response + line + "\n";
-				}
-				rd.close();
+                URLConnection conn = url.openConnection();
+                // Get the response
+                BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream(),Charset.forName("UTF-8")));
+                String line;			
+                while ((line = rd.readLine()) != null) {
+                    response = response + line + "\n";
+                }
+                rd.close();
 
-				nick = (String)new JSONObject(response).get("nickName"); 
-				System.out.println("Nick:"+ nick);
-				table.put(user, nick);
+                nick = (String)new JSONObject(response).get("nickName"); 
+                System.out.println("Nick:"+ nick);
+                table.put(user, nick);
 
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
 
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-			return nick;	
-		}
-		else return table.get(user);
-	}
+            return nick;	
+        }
+        else return table.get(user);
+    }
 
-	@Override
-        @Atomic
-	public String processCall(final String payload) throws SerializationException {
-            return super.processCall(payload);
-	}
+    @Override
+    @Atomic
+    public String processCall(final String payload) throws SerializationException {
+        return super.processCall(payload);
+    }
 
-	protected void isLoggedIn() throws FearsException{
-		if(getUserFromSession()==null){
-			throw new RequiredLogin();
-		}
+    protected void isLoggedIn() throws FearsException{
+        if(getUserFromSession()==null){
+            throw new RequiredLogin();
+        }
 
-	}
+    }
 
-	protected void isAdmin() throws FearsException{
-		isLoggedIn();
+    protected void isAdmin() throws FearsException{
+        isLoggedIn();
 
-		if(!FearsApp.getFears().isAdmin(getUserFromSession()))
-			throw new RequiredLogin();
+        if(!FearsApp.getFears().isAdmin(getUserFromSession()))
+            throw new RequiredLogin();
 
-	}
+    }
 
-	public ViewFeatureDetailed vote(String projectID, String name, String sessionID) throws FearsException{
-		isLoggedIn();
+    public ViewFeatureDetailed vote(String projectID, String name, String sessionID) throws FearsException{
+        isLoggedIn();
 
-		Project p =FearsApp.getFears().getProject(projectID);
+        Project p =FearsApp.getFears().getProject(projectID);
 
-		if(p==null)
-			throw  new NoProjectException(projectID);
+        if(p==null)
+            throw  new NoProjectException(projectID);
 
-		FeatureRequest f= p.getFeature(name);
+        FeatureRequest f= p.getFeature(name);
 
-		if(f==null)
-			throw new NoFeatureException(projectID, name);
+        if(f==null)
+            throw new NoFeatureException(projectID, name);
 
-		if(!f.getState().equals(State.Novo)){
-			throw new FearsException("So pode votar em sugestoes com o Estado Novo.");
-		}
+        if(!f.getState().equals(State.Novo)){
+            throw new FearsException("So pode votar em sugestoes com o Estado Novo.");
+        }
 
-		f.vote(getUserFromSession().getVoter(p));
-		return  f.getDetailedView(getUserFromSession().getVoter(p));
-	}
+        f.vote(getUserFromSession().getVoter(p));
+        return  f.getDetailedView(getUserFromSession().getVoter(p));
+    }
 
-	public void addFeature(String projectID, String name,
-			String description, String sessionID) throws FearsException{
-		isLoggedIn();
+    public void addFeature(String projectID, String name,
+            String description, String sessionID) throws FearsException{
+        isLoggedIn();
 
-		Project p = FearsApp.getFears().getProject(projectID);
+        Project p = FearsApp.getFears().getProject(projectID);
 
-		if(p==null)
-			throw new NoProjectException(projectID);
+        if(p==null)
+            throw new NoProjectException(projectID);
 
-		p.addFeature(new FeatureRequest(name, description, getUserFromSession().getVoter(p), p.getInitialVotes() ));
-	}
-
-
-
-	public ViewFeatureDetailed getFeature(String projectID,
-			String name, String sessionID) throws FearsException{
+        p.addFeature(new FeatureRequest(name, description, getUserFromSession().getVoter(p), p.getInitialVotes() ));
+    }
 
 
-		Project p =FearsApp.getFears().getProject(projectID);
 
-		if(p==null)
-			throw new NoProjectException(projectID);
-
-		if(p.getFeature(name)==null)
-			throw new NoFeatureException(projectID, name);
-
-		if(getUserFromSession()==null)
-			return p.getFeature(name).getDetailedView(null);
-
-		return p.getFeature(name).getDetailedView(getUserFromSession().getVoter(p));
-
-	}
-
-	public ViewFeatureDetailed addComment(String projectID,
-			String featureName, String comment, State newState, String sessionID) throws FearsException {
-		isLoggedIn();
-
-		Project p =FearsApp.getFears().getProject(projectID);
-
-		if(p==null)
-			throw new NoProjectException(projectID);
+    public ViewFeatureDetailed getFeature(String projectID,
+            String name, String sessionID) throws FearsException{
 
 
-		if(p.getFeature(featureName)==null)
-			throw new NoFeatureException(projectID, featureName);
+        Project p =FearsApp.getFears().getProject(projectID);
 
-		FeatureRequest feature =p.getFeature(featureName);
+        if(p==null)
+            throw new NoProjectException(projectID);
 
-		feature.addComment(comment, getUserFromSession().getVoter(p), newState);
+        if(p.getFeature(name)==null)
+            throw new NoFeatureException(projectID, name);
 
-		if(newState!=null){
-			if(!p.isProjectAdmin(getUserFromSession()))
-				isAdmin();
+        if(getUserFromSession()==null)
+            return p.getFeature(name).getDetailedView(null);
 
-			//See if the old state is "New", and the new state any other.
-			//Add 1 vote to all voters.
-			if(feature.getState().equals(State.Novo)
-					&& !newState.equals(State.Novo)){
-				for(Voter v: feature.getVoterSet()){
-					v.setVotesUsed(v.getVotesUsed()-1);
-				}
-			}
+        return p.getFeature(name).getDetailedView(getUserFromSession().getVoter(p));
 
-			//See if the old state is other than "New", and the new state is "New".
-			//Remove 1 vote to all voters that have votes left.
-			if(!feature.getState().equals(State.Novo)
-					&& newState.equals(State.Novo)){	
-				for(Voter v: feature.getVoterSet()){
-					if(v.getVotesUsed() < p.getInitialVotes())
-						v.setVotesUsed(v.getVotesUsed()+1);
-				}
-			}
+    }
 
-			feature.setState(newState);
-		}
+    public ViewFeatureDetailed addComment(String projectID,
+            String featureName, String comment, State newState, String sessionID) throws FearsException {
+        isLoggedIn();
 
-		return p.getFeature(featureName).getDetailedView(getUserFromSession().getVoter(p));
-	}
+        Project p =FearsApp.getFears().getProject(projectID);
 
-	public void addProject(String name, String description, int nvotes, String sessionID) throws FearsException{
-		isAdmin();
+        if(p==null)
+            throw new NoProjectException(projectID);
 
-		FearsApp.getFears().addProject(new Project(name, description, nvotes, getUserFromSession()), getUserFromSession());
-	}
 
-	public void editProject(String projectID, String name, String description, int nvotes, String sessionID) throws FearsException{
-		isAdmin();
+        if(p.getFeature(featureName)==null)
+            throw new NoFeatureException(projectID, featureName);
 
-		Project p =FearsApp.getFears().getProject(projectID);
+        FeatureRequest feature =p.getFeature(featureName);
 
-		if(p==null)
-			throw new NoProjectException(projectID);
+        feature.addComment(comment, getUserFromSession().getVoter(p), newState);
 
-		p.edit(name, description, nvotes);
-	}
+        if(newState!=null){
+            if(!p.isProjectAdmin(getUserFromSession()))
+                isAdmin();
 
-	public List<ViewProject> getProjects(String sessionID) {
-		return  FearsApp.getFears().getProjectsViews();
-	}
+            //See if the old state is "New", and the new state any other.
+            //Add 1 vote to all voters.
+            if(feature.getState().equals(State.Novo)
+                    && !newState.equals(State.Novo)){
+                for(Voter v: feature.getVoterSet()){
+                    v.setVotesUsed(v.getVotesUsed()-1);
+                }
+            }
 
-	public void deleteProject(String name, String sessionID) throws FearsException{
-		isAdmin();
+            //See if the old state is other than "New", and the new state is "New".
+            //Remove 1 vote to all voters that have votes left.
+            if(!feature.getState().equals(State.Novo)
+                    && newState.equals(State.Novo)){	
+                for(Voter v: feature.getVoterSet()){
+                    if(v.getVotesUsed() < p.getInitialVotes())
+                        v.setVotesUsed(v.getVotesUsed()+1);
+                }
+            }
 
-		if(FearsApp.getFears().getProject(name).getFeatureRequestCount()>0)
-			throw new FearsException("Projecto n&atilde;o pode ser remoido, porque tem sugest&otilde;oes");
+            feature.setState(newState);
+        }
 
-		FearsApp.getFears().deleteProject(name);
-	}
+        return p.getFeature(featureName).getDetailedView(getUserFromSession().getVoter(p));
+    }
 
-	/*public ViewVoterResume login(String username, String password) throws FearsException{
+    public void addProject(String name, String description, int nvotes, String sessionID) throws FearsException{
+        isAdmin();
+
+        FearsApp.getFears().addProject(new Project(name, description, nvotes, getUserFromSession()), getUserFromSession());
+    }
+
+    public void editProject(String projectID, String name, String description, int nvotes, String sessionID) throws FearsException{
+        isAdmin();
+
+        Project p =FearsApp.getFears().getProject(projectID);
+
+        if(p==null)
+            throw new NoProjectException(projectID);
+
+        p.edit(name, description, nvotes);
+    }
+
+    public List<ViewProject> getProjects(String sessionID) {
+        return  FearsApp.getFears().getProjectsViews();
+    }
+
+    public void deleteProject(String name, String sessionID) throws FearsException{
+        isAdmin();
+
+        if(FearsApp.getFears().getProject(name).getFeatureRequestCount()>0)
+            throw new FearsException("Projecto n&atilde;o pode ser remoido, porque tem sugest&otilde;oes");
+
+        FearsApp.getFears().deleteProject(name);
+    }
+
+    /*public ViewVoterResume login(String username, String password) throws FearsException{
 		HttpSession session = this.getThreadLocalRequest().getSession();
 
 		//Fingir que esta tudo bem.
@@ -260,261 +261,261 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 	} */
 
-	public ViewVoterResume validateSessionID(String sessionID) {
-		HttpSession session = this.getThreadLocalRequest().getSession();
-		ViewVoterResume temp = (ViewVoterResume)session.getAttribute("fears_voter");
+    public ViewVoterResume validateSessionID(String sessionID) {
+        HttpSession session = this.getThreadLocalRequest().getSession();
+        ViewVoterResume temp = (ViewVoterResume)session.getAttribute("fears_voter");
 
-		return temp;
-	}
+        return temp;
+    }
 
-	public User getUserFromSession(){
-		HttpSession session = this.getThreadLocalRequest().getSession();
-		ViewVoterResume temp = (ViewVoterResume)session.getAttribute("fears_voter");
-		if(temp==null)
-			return null;
-		return FearsApp.getFears().getUser(temp.getName());
-	}
+    public User getUserFromSession(){
+        HttpSession session = this.getThreadLocalRequest().getSession();
+        ViewVoterResume temp = (ViewVoterResume)session.getAttribute("fears_voter");
+        if(temp==null)
+            return null;
+        return FearsApp.getFears().getUser(temp.getName());
+    }
 
-	public ViewFeatureDetailed removeVote(String projectID, String feature,
-			String sessionID) throws FearsException {
-		isLoggedIn();
+    public ViewFeatureDetailed removeVote(String projectID, String feature,
+            String sessionID) throws FearsException {
+        isLoggedIn();
 
-		Project p =FearsApp.getFears().getProject(projectID);
+        Project p =FearsApp.getFears().getProject(projectID);
 
-		if(p==null)
-			throw new NoProjectException(projectID);
+        if(p==null)
+            throw new NoProjectException(projectID);
 
-		FeatureRequest f= p.getFeature(feature);
+        FeatureRequest f= p.getFeature(feature);
 
-		if(f==null)
-			throw new NoFeatureException(projectID, feature);
+        if(f==null)
+            throw new NoFeatureException(projectID, feature);
 
-		if(!f.getState().equals(State.Novo)){
-			throw new FearsException("So pode retirar o voto de sugestoes com o Estado Novo.");
-		}
+        if(!f.getState().equals(State.Novo)){
+            throw new FearsException("So pode retirar o voto de sugestoes com o Estado Novo.");
+        }
 
-		f.removeVote(getUserFromSession().getVoter(p));
-		return  f.getDetailedView(getUserFromSession().getVoter(p));
-	}
+        f.removeVote(getUserFromSession().getVoter(p));
+        return  f.getDetailedView(getUserFromSession().getVoter(p));
+    }
 
-	public ViewAdmins getAdmins(String sessionID) throws FearsException {
-		isAdmin();
+    public ViewAdmins getAdmins(String sessionID) throws FearsException {
+        isAdmin();
 
-		return FearsApp.getFears().getViewAdmins();
-	}
+        return FearsApp.getFears().getViewAdmins();
+    }
 
 
-	public ViewAdmins addAdmin(String userName, String sessionID) throws FearsException {
-		isAdmin();
-		
+    public ViewAdmins addAdmin(String userName, String sessionID) throws FearsException {
+        isAdmin();
 
-		FearsApp.getFears().addAdmin(FearsApp.getFears().getUser(userName));
-		return FearsApp.getFears().getViewAdmins();
-	}
 
-	
-	public ViewAdmins removeAdmin(String userName, String sessionID) throws FearsException {
-		isAdmin();
+        FearsApp.getFears().addAdmin(FearsApp.getFears().getUser(userName));
+        return FearsApp.getFears().getViewAdmins();
+    }
 
-		if(userName.equals(getUserFromSession().getName()))
-			throw new FearsException("Nao se pode remover a si proprio de Administrador.");
 
-		FearsApp.getFears().removeAdmin(FearsApp.getFears().getUser(userName));
-		return FearsApp.getFears().getViewAdmins();
-	}
+    public ViewAdmins removeAdmin(String userName, String sessionID) throws FearsException {
+        isAdmin();
 
+        if(userName.equals(getUserFromSession().getName()))
+            throw new FearsException("Nao se pode remover a si proprio de Administrador.");
 
-	public List<ViewFeatureResume> search(String projectID, String search,
-			int sort, int page, String filter, String sessionID) throws FearsException{
-		Project p =FearsApp.getFears().getProject(projectID);
+        FearsApp.getFears().removeAdmin(FearsApp.getFears().getUser(userName));
+        return FearsApp.getFears().getViewAdmins();
+    }
 
-		if(p==null)
-			throw new NoProjectException(projectID);
 
-		if(getUserFromSession()==null)
-			return p.search(search, sort, page, filter, null);		
+    public List<ViewFeatureResume> search(String projectID, String search,
+            int sort, int page, String filter, String sessionID) throws FearsException{
+        Project p =FearsApp.getFears().getProject(projectID);
 
+        if(p==null)
+            throw new NoProjectException(projectID);
 
-		return p.search(search, sort, page, filter, getUserFromSession().getVoter(p));
+        if(getUserFromSession()==null)
+            return p.search(search, sort, page, filter, null);		
 
-	}
 
-	public String getProjectName(String projectID) throws FearsException {
-		Project p =FearsApp.getFears().getProject(projectID);
+        return p.search(search, sort, page, filter, getUserFromSession().getVoter(p));
 
-		if(p==null)
-			throw new NoProjectException(projectID);
+    }
 
-		return p.getName();
-	}
+    public String getProjectName(String projectID) throws FearsException {
+        Project p =FearsApp.getFears().getProject(projectID);
 
-	public ViewProject getProject(String projectID) throws FearsException {
-		Project p =FearsApp.getFears().getProject(projectID);
+        if(p==null)
+            throw new NoProjectException(projectID);
 
-		if(p==null)
-			throw new NoProjectException(projectID);
+        return p.getName();
+    }
 
-		return p.getView();
-	}
+    public ViewProject getProject(String projectID) throws FearsException {
+        Project p =FearsApp.getFears().getProject(projectID);
 
-	public ViewAdmins getProjectAdmins(String projectID)throws FearsException{
-		Project p =FearsApp.getFears().getProject(projectID);
+        if(p==null)
+            throw new NoProjectException(projectID);
 
+        return p.getView();
+    }
 
-		if(p==null)
-			throw new NoProjectException(projectID);
-		return p.getViewAdmins();
+    public ViewAdmins getProjectAdmins(String projectID)throws FearsException{
+        Project p =FearsApp.getFears().getProject(projectID);
 
-	}
 
-	public ViewAdmins addProjectAdmin(String newAdmin, String projectID)throws FearsException{
-		isAdmin();
+        if(p==null)
+            throw new NoProjectException(projectID);
+        return p.getViewAdmins();
 
-		Project p =FearsApp.getFears().getProject(projectID);
+    }
 
-		if(p==null)
-			throw new NoProjectException(projectID);
+    public ViewAdmins addProjectAdmin(String newAdmin, String projectID)throws FearsException{
+        isAdmin();
 
-		p.addAdmin(FearsApp.getFears().getUser(newAdmin));
+        Project p =FearsApp.getFears().getProject(projectID);
 
-		return p.getViewAdmins();
-	}
+        if(p==null)
+            throw new NoProjectException(projectID);
 
-	public ViewAdmins removeProjectAdmin(String oldAdmin, String projectID)throws FearsException{
-		isAdmin();
+        p.addAdmin(FearsApp.getFears().getUser(newAdmin));
 
-		Project p =FearsApp.getFears().getProject(projectID);
+        return p.getViewAdmins();
+    }
 
-		if(p==null)
-			throw new NoProjectException(projectID);
+    public ViewAdmins removeProjectAdmin(String oldAdmin, String projectID)throws FearsException{
+        isAdmin();
 
-		if(oldAdmin.equals(getUserFromSession().getName()))
-			throw new FearsException("Nao se pode remover a si proprio de Administrador.");
+        Project p =FearsApp.getFears().getProject(projectID);
 
-		p.removeAdmin(FearsApp.getFears().getUser(oldAdmin));
+        if(p==null)
+            throw new NoProjectException(projectID);
 
-		return p.getViewAdmins();
-	}
+        if(oldAdmin.equals(getUserFromSession().getName()))
+            throw new FearsException("Nao se pode remover a si proprio de Administrador.");
 
-	public ViewVoterDetailed getVoter(String projectID, String voterName,
-			String sessionID) throws FearsException {
-		Project p =FearsApp.getFears().getProject(projectID);
+        p.removeAdmin(FearsApp.getFears().getUser(oldAdmin));
 
-		if(p==null)
-			throw new NoProjectException(projectID);
+        return p.getViewAdmins();
+    }
 
+    public List<ViewVoterDetailed> getVoter(String projectID, String voterName,
+            String sessionID) throws FearsException{
 
-		return FearsApp.getFears().getUser(voterName).getVoter(p).getView(sessionID);
-	}
+        ArrayList<ViewVoterDetailed> res = new ArrayList<ViewVoterDetailed>();
+        User u = FearsApp.getFears().getUser(voterName);
+        for(Project p : FearsApp.getFears().getProject()){
+            res.add(u.getVoter(p).getView(sessionID));
+        }
+        return res;
+    }
 
-	public void logoff(String sessionID) throws FearsException{
-		isLoggedIn();
+    public void logoff(String sessionID) throws FearsException{
+        isLoggedIn();
 
-		HttpSession session = this.getThreadLocalRequest().getSession();
-		session.invalidate();
-	}
+        HttpSession session = this.getThreadLocalRequest().getSession();
+        session.invalidate();
+    }
 
 
-	public ViewVoterResume getCurrentVoter(String projectID, String sessionID) throws FearsException {
+    public ViewVoterResume getCurrentVoter(String projectID, String sessionID) throws FearsException {
 
-		Project p =FearsApp.getFears().getProject(projectID);
+        Project p =FearsApp.getFears().getProject(projectID);
 
-		if(p==null)
-			throw new NoProjectException(projectID);
+        if(p==null)
+            throw new NoProjectException(projectID);
 
-		User u = getUserFromSession();
+        User u = getUserFromSession();
 
-		if(u==null)
-			return null;
+        if(u==null)
+            return null;
 
-		return u.getVoter(p).getCurrentVoterView(sessionID);
-	}
+        return u.getVoter(p).getCurrentVoterView(sessionID);
+    }
 
 
-	public ViewVoterResume CASlogin(String ticket, boolean admin, String sessionID)
-	throws FearsException {
-		HttpSession session = this.getThreadLocalRequest().getSession();
+    public ViewVoterResume CASlogin(String ticket, boolean admin, String sessionID)
+    throws FearsException {
+        HttpSession session = this.getThreadLocalRequest().getSession();
 
-		String username=validateTicket(ticket, admin, sessionID);
-		if(username!=null){
-			username = username.toLowerCase();
-			User temp = FearsApp.getFears().getUser(username);
-			ViewVoterResume ret =  new ViewVoterResume(temp.getName(), getNickName(temp.getName()),  session.getId(), FearsApp.getFears().isAdmin(temp));
-			session.setAttribute("fears_voter", ret);
-			return ret;
-		}else System.out.println("ERRO NO CAS....");
-		return null;
+        String username=validateTicket(ticket, admin, sessionID);
+        if(username!=null){
+            username = username.toLowerCase();
+            User temp = FearsApp.getFears().getUser(username);
+            ViewVoterResume ret =  new ViewVoterResume(temp.getName(), getNickName(temp.getName()),  session.getId(), FearsApp.getFears().isAdmin(temp));
+            session.setAttribute("fears_voter", ret);
+            return ret;
+        }else System.out.println("ERRO NO CAS....");
+        return null;
 
-	}
+    }
 
-	public String validateTicket(String ticket, boolean admin, String sessionID){
+    public String validateTicket(String ticket, boolean admin, String sessionID){
 
-		String user = null;
-		String errorCode = null;
-		String errorMessage = null;
+        String user = null;
+        String errorCode = null;
+        String errorMessage = null;
 
-		ServiceTicketValidator cas = new ServiceTicketValidator();
-		/* instantiate a new ServiceTicketValidator */
+        ServiceTicketValidator cas = new ServiceTicketValidator();
+        /* instantiate a new ServiceTicketValidator */
 
 
-		/* set its parameters */
-		cas.setCasValidateUrl( FearsConfig.getCasUrl() + "serviceValidate");
-		if(admin)
-			cas.setService(FearsConfig.getFearsUrl() + "Admin.html");
-		else
-			cas.setService(FearsConfig.getFearsUrl() + "Fears.html");
+        /* set its parameters */
+        cas.setCasValidateUrl( FearsConfig.getCasUrl() + "serviceValidate");
+        if(admin)
+            cas.setService(FearsConfig.getFearsUrl() + "Admin.html");
+        else
+            cas.setService(FearsConfig.getFearsUrl() + "Fears.html");
 
-		cas.setServiceTicket(ticket);
+        cas.setServiceTicket(ticket);
 
-		try {
-			cas.validate();
-		} catch (IOException e) {
-			System.out.println("Validate error:"+ e);
-			e.printStackTrace();
-		} catch (SAXException e) {
-			System.out.println("SAXException:"+ e);
-			e.printStackTrace();
-		} catch (ParserConfigurationException e) {
-			System.out.println("ParserConfigurationException:"+ e);
-			e.printStackTrace();
-		}
+        try {
+            cas.validate();
+        } catch (IOException e) {
+            System.out.println("Validate error:"+ e);
+            e.printStackTrace();
+        } catch (SAXException e) {
+            System.out.println("SAXException:"+ e);
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            System.out.println("ParserConfigurationException:"+ e);
+            e.printStackTrace();
+        }
 
-		if(cas.isAuthenticationSuccesful()) {
-			user = cas.getUser();
-		} else {
-			System.out.println("CAS ERROR\n");
-			errorCode = cas.getErrorCode();
-			errorMessage = cas.getErrorMessage();
-			System.out.println(errorCode +errorMessage );
-			/* handle the error */
-		}	
-		return user;
-	}
+        if(cas.isAuthenticationSuccesful()) {
+            user = cas.getUser();
+        } else {
+            System.out.println("CAS ERROR\n");
+            errorCode = cas.getErrorCode();
+            errorMessage = cas.getErrorMessage();
+            System.out.println(errorCode +errorMessage );
+            /* handle the error */
+        }	
+        return user;
+    }
 
-	public List<ViewProject> projectUp(String projectId, String cookie) throws FearsException {
-		isAdmin();
-		FearsApp.getFears().projectUp(projectId);
-		return FearsApp.getFears().getProjectsViews();
+    public List<ViewProject> projectUp(String projectId, String cookie) throws FearsException {
+        isAdmin();
+        FearsApp.getFears().projectUp(projectId);
+        return FearsApp.getFears().getProjectsViews();
 
-	}
+    }
 
-	public List<ViewProject> projectDown(String projectId, String cookie) throws FearsException {
-		isAdmin();
-		FearsApp.getFears().projectDown(projectId);
-		return FearsApp.getFears().getProjectsViews();
-	}
+    public List<ViewProject> projectDown(String projectId, String cookie) throws FearsException {
+        isAdmin();
+        FearsApp.getFears().projectDown(projectId);
+        return FearsApp.getFears().getProjectsViews();
+    }
 
-	public Boolean userCreatedFeature(String cookie)throws FearsException {
-		isLoggedIn();
-		User actual=getUserFromSession();
+    public Boolean userCreatedFeature(String cookie)throws FearsException {
+        isLoggedIn();
+        User actual=getUserFromSession();
 
-		for(Voter v : actual.getVoter()){
-			if(v.getFeaturesCreatedCount()>0)
-				return true;
-		}
+        for(Voter v : actual.getVoter()){
+            if(v.getFeaturesCreatedCount()>0)
+                return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
 }
 

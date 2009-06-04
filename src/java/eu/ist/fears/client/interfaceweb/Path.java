@@ -105,13 +105,10 @@ public class Path extends Composite{
 		_back.clear();
 	}
 	
-	public void setVoter(String projectName, String projectID, String voterNick){
+	public void setVoter(String voterNick){
 		_path.clear();
 		
-		_path.add(new Hyperlink("Projectos","projectos"));
-		
-		_path.add(new HTML("&nbsp;/&nbsp;"));
-		_path.add(new Hyperlink(projectName,"Project"+projectID));
+		_path.add(new Hyperlink("FeaRS","projectos"));	
 		
 		_path.add(new HTML("&nbsp;/ Utilizadores"));
 		

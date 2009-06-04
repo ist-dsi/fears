@@ -164,13 +164,13 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 		if(f.getComments().size()>0){
 			ViewComment actual;
 			for(int i=f.getComments().size()-1; i>=0;i--){
-				actual=(ViewComment)f.getComments().get(i);
+				actual=f.getComments().get(i);
 				header= new HorizontalPanel();
 				HorizontalPanel text = new HorizontalPanel();
 				header.add(text);
 				header.setStyleName("commentItem");
 				text.add(new HTML("Por:&nbsp;"));
-				text.add(new Hyperlink(actual.getAuthorNick(),"Project"+_projectID+"&"+"viewUser"+((ViewComment)f.getComments().get(i)).getAuthor()));
+				text.add(new Hyperlink(actual.getAuthorNick(),"Project"+_projectID+"&"+"viewUser"+(f.getComments().get(i)).getAuthor()));
 				text.add(new HTML("&nbsp; em:&nbsp;" + actual.getCreatedDate()));
 				if(actual.getNewState()!=null){
 					text.add(new HTML("&nbsp;|&nbsp;Estado mudou de&nbsp;"+ actual.getOldState().getHTML()+"&nbsp;para&nbsp;" + actual.getNewState().getHTML()));

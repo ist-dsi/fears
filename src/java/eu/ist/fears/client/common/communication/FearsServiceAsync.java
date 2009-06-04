@@ -6,6 +6,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import eu.ist.fears.client.common.State;
 import eu.ist.fears.client.common.views.ViewProject;
+import eu.ist.fears.client.common.views.ViewVoterDetailed;
 
 
 public interface FearsServiceAsync {
@@ -38,7 +39,7 @@ public interface FearsServiceAsync {
 	public void removeProjectAdmin(String oldAdmin, String projectID, AsyncCallback callback);
 
 	public void getVoter(String _projectid, String voterName, String cookie,
-			AsyncCallback callback);
+			AsyncCallback<List<ViewVoterDetailed>> callback);
 
 	public void getCurrentVoter(String _projectid, String cookie,
 			AsyncCallback callback);
