@@ -552,7 +552,7 @@ CSS da Pagina dos Voters
 
 .UserSubTitle{
 font-weight: bold;
-margin: 0.7em 0 0em 60px;  
+margin: 0.7em 0 0em 25px;  
 }
 
 .UserFeature{
@@ -560,8 +560,30 @@ margin: 0em 0 0.5em 0;
 }
 
 .voterGrid{
-margin-left: 60px;
+margin-left: 25px;
 }
+
+.voterProject .header{
+} 
+
+.ProjectTitleinVoter{
+color: #488db7;
+font-size: 1.5em;
+font-weight: bold;
+text-decoration: none;
+margin-bottom: 0px;
+}
+
+.ProjectTitleinVoterBox{
+border-bottom: 2px solid #d1e3ed;
+padding-left:50px;
+}
+
+.voterProject{
+margin-top: 10px;
+margin-bottom: 15px;
+
+} 
 
 /* *************
 

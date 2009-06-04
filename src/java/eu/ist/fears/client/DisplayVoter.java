@@ -5,8 +5,13 @@ import java.util.List;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DisclosureEvent;
+import com.google.gwt.user.client.ui.DisclosureHandler;
+import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
@@ -54,14 +59,45 @@ public class DisplayVoter extends Composite {
             ViewVoterDetailed u = voterProjects.get(i);
             _voterNick = u.getNick();
 
-            _content.add(new Label("Projecto: " + u.getProjectName()));
+            DisclosurePanel _voterProject =  new DisclosurePanel();
+            _content.add(_voterProject);
+            _voterProject.setStyleName("voterProject");
+      
+            HorizontalPanel projectTitleBox = new HorizontalPanel();
+            projectTitleBox.setStyleName("ProjectTitleinVoterBox");
+            _voterProject.setHeader(projectTitleBox);
             
-            Label votedLabel = new HTML("Votou nas Sugest&otilde;es:");
+            Label projectTitle = new Label(u.getProjectName());
+            projectTitleBox.add(projectTitle);
+            projectTitle.setStyleName("ProjectTitleinVoter");
+            final HTML showhideMessage = new HTML("&nbsp;&nbsp;Mostrar mais »");
+            
+            _voterProject.addEventHandler(new DisclosureHandler(){
+                public void onClose(DisclosureEvent event){
+                    showhideMessage.setHTML("&nbsp;&nbsp;Mostrar mais »");
+                }
+                public void onOpen(DisclosureEvent event){
+                    showhideMessage.setHTML("&nbsp;&nbsp;Mostrar menos «");
+                }
+            });
+            
+            if(_projectID==u.getProjectID() || _projectID==null)
+                _voterProject.setOpen(true);
+            
+            projectTitleBox.add(showhideMessage);
+            
+            VerticalPanel _projectContent = new VerticalPanel();
+            _voterProject.setContent(_projectContent);
+           
+            Label votedLabel = new Label("");
             votedLabel.setStyleName("UserSubTitle");
-            _content.add(votedLabel);
+            _projectContent.add(votedLabel);
             
-            int j=0;
-            if(u.getVotedFeatures()!=null){
+            if(u.getVotedFeatures()==null || u.getVotedFeatures().size()==0)
+                votedLabel.setText("Não votou em nenhuma sugestão.");
+            else{
+                votedLabel.setText("Votou nas Sugestões:");
+                int j=0;
                 Grid votedFeatureTable = new Grid(u.getVotedFeatures().size(), 4);
                 votedFeatureTable.setStyleName("voterGrid");
                 for(ViewFeatureResume f : u.getVotedFeatures()){
@@ -71,7 +107,7 @@ public class DisplayVoter extends Composite {
 
                     HorizontalPanel projPanel = new HorizontalPanel();
                     projPanel.add(new HTML("&nbsp;"));
-                    Hyperlink project= new Hyperlink(f.getName(),"Project"+_projectID+"&"+"viewFeature"+f.getFeatureID());
+                    Hyperlink project= new Hyperlink(f.getName(),"Project"+f.getProjectID()+"&"+"viewFeature"+f.getFeatureID());
                     projPanel.add(project);
                     project.setStyleName("UserFeature");
                     votedFeatureTable.setWidget(j,1,projPanel);
@@ -93,17 +129,20 @@ public class DisplayVoter extends Composite {
 
                     j++;
                 }
-                _content.add(votedFeatureTable);
+                _projectContent.add(votedFeatureTable);
             }
 
-            Label createdLabel = new HTML("Criou as Sugest&otilde;es:");
+            Label createdLabel = new Label("");
             createdLabel.setStyleName("UserSubTitle");
-            _content.add(createdLabel);
+            _projectContent.add(createdLabel);
 
-            if(u.getCreatedFeatures()!=null){
+            if(u.getCreatedFeatures()==null || u.getCreatedFeatures().size()==0)
+                createdLabel.setText("Não criou nenhuma sugestão.");
+            else{
+                createdLabel.setText("Criou as Sugestões:");
                 Grid createdFeatureTable = new Grid(u.getCreatedFeatures().size(), 4);
                 createdFeatureTable.setStyleName("voterGrid");
-                j=0;
+                int j=0;
                 for(ViewFeatureResume f : u.getCreatedFeatures()){
                     HTML date = new HTML(f.getCreatedDate());
                     createdFeatureTable.setWidget(j,0,date);
@@ -111,7 +150,7 @@ public class DisplayVoter extends Composite {
 
                     HorizontalPanel projPanel = new HorizontalPanel();
                     projPanel.add(new HTML("&nbsp;"));
-                    Hyperlink project= new Hyperlink(f.getName(),"Project"+_projectID+"&"+"viewFeature"+f.getFeatureID());
+                    Hyperlink project= new Hyperlink(f.getName(),"Project"+f.getProjectID()+"&"+"viewFeature"+f.getFeatureID());
                     projPanel.add(project);
                     project.setStyleName("UserFeature");
                     createdFeatureTable.setWidget(j,1,projPanel);
@@ -134,7 +173,7 @@ public class DisplayVoter extends Composite {
 
                     j++;
                 }			
-                _content.add(createdFeatureTable);	
+                _projectContent.add(createdFeatureTable);	
             }
 
         }

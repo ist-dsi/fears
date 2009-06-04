@@ -249,18 +249,6 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
         FearsApp.getFears().deleteProject(name);
     }
 
-    /*public ViewVoterResume login(String username, String password) throws FearsException{
-		HttpSession session = this.getThreadLocalRequest().getSession();
-
-		//Fingir que esta tudo bem.
-
-		User temp = FearsApp.getFears().getUser(username);
-		ViewVoterResume ret =  new ViewVoterResume(temp.getName(),  session.getId(), FearsApp.getFears().isAdmin(temp));
-		session.setAttribute("fears_voter", ret);
-		return ret;
-
-	} */
-
     public ViewVoterResume validateSessionID(String sessionID) {
         HttpSession session = this.getThreadLocalRequest().getSession();
         ViewVoterResume temp = (ViewVoterResume)session.getAttribute("fears_voter");
@@ -400,11 +388,20 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
     public List<ViewVoterDetailed> getVoter(String projectID, String voterName,
             String sessionID) throws FearsException{
 
+        Project actualP=null;
+        if(projectID!=null)
+            actualP =FearsApp.getFears().getProject(projectID);
+
         ArrayList<ViewVoterDetailed> res = new ArrayList<ViewVoterDetailed>();
         User u = FearsApp.getFears().getUser(voterName);
+        if(actualP!=null)
+            res.add(u.getVoter(actualP).getView());
+
         for(Project p : FearsApp.getFears().getProject()){
-            res.add(u.getVoter(p).getView(sessionID));
+            if(p!=actualP)
+                res.add(u.getVoter(p).getView());
         }
+
         return res;
     }
 
@@ -440,7 +437,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
         if(username!=null){
             username = username.toLowerCase();
             User temp = FearsApp.getFears().getUser(username);
-            ViewVoterResume ret =  new ViewVoterResume(temp.getName(), getNickName(temp.getName()),  session.getId(), FearsApp.getFears().isAdmin(temp));
+            ViewVoterResume ret =  new ViewVoterResume(temp.getName(), getNickName(temp.getName()),  FearsApp.getFears().isAdmin(temp));
             session.setAttribute("fears_voter", ret);
             return ret;
         }else System.out.println("ERRO NO CAS....");

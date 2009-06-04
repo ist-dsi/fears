@@ -72,7 +72,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 		footer = new HorizontalPanel();
 		content.setStyleName("width100");
 		path = new Path();
-		_curretUser=new ViewVoterResume("guest","guest" ,"",false);
+		_curretUser=new ViewVoterResume("guest","guest",false);
 		_currentProject=null;
 		header = new Header("guest",validCookie, false);
 		RootPanel.get().setStyleName("centered");

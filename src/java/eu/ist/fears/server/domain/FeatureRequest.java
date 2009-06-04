@@ -102,7 +102,7 @@ public class FeatureRequest extends FeatureRequest_Base {
 
 		List<ViewVoterResume> voters = new ArrayList<ViewVoterResume>();
 		for(Voter v : getVoterSet() ){
-			voters.add(new ViewVoterResume(v.getUser().getName(),FearsServiceImpl.getNickName(v.getUser().getName()) ,  null, false ));
+			voters.add(new ViewVoterResume(v.getUser().getName(),FearsServiceImpl.getNickName(v.getUser().getName()) , false ));
 			if(v.equals(voter))
 				userhasvoted=true;
 		}
@@ -119,7 +119,7 @@ public class FeatureRequest extends FeatureRequest_Base {
 
 		List<ViewVoterResume> voters = new ArrayList<ViewVoterResume>();
 		for(Voter v : getVoterSet() ){
-			voters.add(new ViewVoterResume(v.getUser().getName(),FearsServiceImpl.getNickName(v.getUser().getName()) ,  null, false ));
+			voters.add(new ViewVoterResume(v.getUser().getName(),FearsServiceImpl.getNickName(v.getUser().getName()), false ));
 			if(v.equals(user))
 				userhasvoted=true;
 		}
