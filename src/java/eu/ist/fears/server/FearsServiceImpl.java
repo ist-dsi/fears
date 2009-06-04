@@ -9,6 +9,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -397,7 +398,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
         if(actualP!=null)
             res.add(u.getVoter(actualP).getView());
 
-        for(Project p : FearsApp.getFears().getProject()){
+        for(Project p : FearsApp.getFears().getProjectsSorted()){
             if(p!=actualP)
                 res.add(u.getVoter(p).getView());
         }

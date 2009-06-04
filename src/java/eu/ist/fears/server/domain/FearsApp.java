@@ -196,6 +196,14 @@ public class FearsApp extends FearsApp_Base {
 		}
 	}
 	
+	public List<Project> getProjectsSorted(){
+	    List<Project> projects = new ArrayList<Project>();
+        projects.addAll(getProject());
+        Collections.sort(projects, new FearsApp.ProjectOrderComparator());
+        return projects;
+	}
+	
+	
 	protected class ProjectViewOrderComparator implements Comparator<ViewProject>{
 
 		public int compare(ViewProject p1, ViewProject p2) {
