@@ -74,12 +74,13 @@ public class FearsApp extends FearsApp_Base {
     }
     
     public User getUserFromID(String id) throws FearsException{
-        User u = FearsApp.fromOID(new Long(id));
-      
-        if(u==null)
-        throw new NoUserException();
-        
-        return u;
+        try{
+            User u = FearsApp.fromOID(new Long(id));
+            return u;
+        }catch(Throwable e){
+            throw new NoUserException(null,null);
+        }
+       
     }
 
     public User createUser(String userName){

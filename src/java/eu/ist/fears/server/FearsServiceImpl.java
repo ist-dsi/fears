@@ -408,6 +408,8 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
         ArrayList<ViewVoterDetailed> res = new ArrayList<ViewVoterDetailed>();
         User u = FearsApp.getFears().getUserFromID(userOID);
+        
+        
         if(actualP!=null)
             res.add(u.getVoter(actualP).getView());
 
