@@ -62,8 +62,6 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 		updateStateChooser(f);
 
 		_commentButton.addClickListener(new CommentButton());
-		_commentTextArea.setVisibleLines(5);
-		_commentTextArea.setCharacterWidth(50);
 
 		
 		_votesLeft =  new HTML();
@@ -189,7 +187,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 
 		}else{
 			HTML info = new HTML("Nao existem coment&aacute;rios.");
-			info.setStyleName("commentTextArea");
+			info.setStyleName("commentButton");
 			_comments.add(info);
 		}
 

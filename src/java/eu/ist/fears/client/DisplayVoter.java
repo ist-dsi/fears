@@ -77,7 +77,7 @@ public class DisplayVoter extends Composite {
                     showhideMessage.setHTML("&nbsp;&nbsp;Mostrar mais »");
                 }
                 public void onOpen(DisclosureEvent event){
-                    showhideMessage.setHTML("&nbsp;&nbsp;Mostrar menos «");
+                    showhideMessage.setHTML("&nbsp;&nbsp;Esconder «");
                 }
             });
             

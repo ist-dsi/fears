@@ -343,6 +343,9 @@ text-decoration: underline;
 background: transparent;
 width: 46px;
 border: 0;
+display: block;
+margin-top: 2px;
+padding-top: 2px;
 }
 
 .ActionVotes:hover { 	
@@ -464,7 +467,9 @@ margin-top: 5px;
 
 .commentTextArea{
 margin-top: 10px;
-margin-left: 89px;	
+margin-left: 89px;
+width: 600px;
+height: 150px;	
 }
 
 .commentStateChooser{
@@ -515,10 +520,11 @@ border: 1px solid #bbb;
 
 .descriptionTextBox {
 width: 600px;
-height: 80px;
+height: 150px;
 padding: 4px;
 background: #fafafa;
 border: 1px solid #bbb;
+
 }
 
 .CreateFeatureCell{
