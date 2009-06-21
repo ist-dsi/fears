@@ -43,7 +43,7 @@ public class Voter extends Voter_Base {
 	}*/
 	
 	public ViewVoterDetailed getView(){
-    	return new ViewVoterDetailed(getUser().getName(),FearsServiceImpl.getNickName(getUser().getName())  , getViewFeaturesCreated(), getViewFeaturesVoted(), getProject().getIdInternal().toString(), getProject().getName());
+    	return new ViewVoterDetailed(getUser().getName(),FearsServiceImpl.getNickName(getUser().getName()), new Long(getUser().getOid()).toString()  , getViewFeaturesCreated(), getViewFeaturesVoted(), getProject().getIdInternal().toString(), getProject().getName());
     	
     }
 	
@@ -53,7 +53,7 @@ public class Voter extends Voter_Base {
 			votesLeft=getProject().getInitialVotes() - getVotesUsed();
 			else votesLeft=0;
 			
-		return new ViewVoterResume(getUser().getUsername(),FearsServiceImpl.getNickName(getUser().getUsername())  , votesLeft, FearsApp.getFears().isAdmin(getUser()));
+		return new ViewVoterResume(getUser().getUsername(),FearsServiceImpl.getNickName(getUser().getUsername()), new Long(getUser().getOid()).toString()  , votesLeft, FearsApp.getFears().isAdmin(getUser()));
 		
 	}
 	

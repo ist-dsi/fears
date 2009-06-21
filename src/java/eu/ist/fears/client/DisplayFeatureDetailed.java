@@ -17,7 +17,6 @@ public class DisplayFeatureDetailed extends Composite {
 
 	protected VerticalPanel _content;
 	protected String _projectID;
-	protected String _projectName;
 	protected String _featureID;
 	protected Communication _com;
 	protected FeatureDetailedWidget _feature;

@@ -124,9 +124,9 @@ public class Communication implements FearsServiceAsync{
 	}
 
 
-	public void getVoter(String projectid, String voterName, String cookie,
+	public void getVoter(String projectid, String userOID, String cookie,
 			AsyncCallback<List<ViewVoterDetailed>> callback){
-		_service.getVoter(projectid, voterName, cookie, callback);
+		_service.getVoter(projectid, userOID, cookie, callback);
 
 	}
 

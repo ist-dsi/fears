@@ -17,13 +17,14 @@ public class ViewVoterDetailed extends ViewVoterResume implements IsSerializable
 	List<ViewFeatureResume> _voted;
 	String _projectID;
 	String _projectName;
+	String _oid;
 	
 	private ViewVoterDetailed(){
 		
 	}
 	
-	public ViewVoterDetailed(String name, String nick, List<ViewFeatureResume> created, List<ViewFeatureResume> voted, String projID, String projName){
-		super(name, nick, false);
+	public ViewVoterDetailed(String name, String nick, String oid, List<ViewFeatureResume> created, List<ViewFeatureResume> voted, String projID, String projName){
+		super(name, nick,oid, false);
 		_created=created;
 		_voted=voted;
 		_projectID=projID;

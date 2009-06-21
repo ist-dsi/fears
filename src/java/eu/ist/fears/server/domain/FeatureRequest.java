@@ -102,14 +102,14 @@ public class FeatureRequest extends FeatureRequest_Base {
 
 		List<ViewVoterResume> voters = new ArrayList<ViewVoterResume>();
 		for(Voter v : getVoterSet() ){
-			voters.add(new ViewVoterResume(v.getUser().getName(),FearsServiceImpl.getNickName(v.getUser().getName()) , false ));
+			voters.add(new ViewVoterResume(v.getUser().getName(),FearsServiceImpl.getNickName(v.getUser().getName()), new Long(v.getUser().getOid()).toString() , false ));
 			if(v.equals(voter))
 				userhasvoted=true;
 		}
 
 		if(voter!=null)
-			return new ViewFeatureDetailed(getProject().getName(), getProject().getIdInternal(), getName(), getWebID(), getState() ,userhasvoted ,  getDescription(), getAuthorName(), FearsServiceImpl.getNickName(getAuthorName()) , getCreatedTime().toString(DateTimeFormat.forPattern(DateFormat.DEFAULT_FORMAT)), getProject().isProjectAdmin(voter.getUser()), voters , comments );
-		else return new ViewFeatureDetailed(getProject().getName(), getProject().getIdInternal(), getName(), getWebID(), getState() ,userhasvoted ,  getDescription(), getAuthorName(), FearsServiceImpl.getNickName(getAuthorName()) , getCreatedTime().toString(DateTimeFormat.forPattern(DateFormat.DEFAULT_FORMAT)), false, voters , comments );
+			return new ViewFeatureDetailed(getProject().getName(), getProject().getIdInternal(), getName(), getWebID(), getState() ,userhasvoted ,  getDescription(), FearsServiceImpl.getNickName(getAuthorName()),  new Long(getAuthor().getUser().getOid()).toString() , getCreatedTime().toString(DateTimeFormat.forPattern(DateFormat.DEFAULT_FORMAT)), getProject().isProjectAdmin(voter.getUser()), voters , comments );
+		else return new ViewFeatureDetailed(getProject().getName(), getProject().getIdInternal(), getName(), getWebID(), getState() ,userhasvoted ,  getDescription(), FearsServiceImpl.getNickName(getAuthorName()), new Long(getAuthor().getUser().getOid()).toString() , getCreatedTime().toString(DateTimeFormat.forPattern(DateFormat.DEFAULT_FORMAT)), false, voters , comments );
 	}
 
 	public ViewFeatureResume getResumeView(Voter user) {
@@ -119,13 +119,13 @@ public class FeatureRequest extends FeatureRequest_Base {
 
 		List<ViewVoterResume> voters = new ArrayList<ViewVoterResume>();
 		for(Voter v : getVoterSet() ){
-			voters.add(new ViewVoterResume(v.getUser().getName(),FearsServiceImpl.getNickName(v.getUser().getName()), false ));
+			voters.add(new ViewVoterResume(v.getUser().getName(),FearsServiceImpl.getNickName(v.getUser().getName()), new Long(v.getUser().getOid()).toString(), false ));
 			if(v.equals(user))
 				userhasvoted=true;
 		}
 		return new ViewFeatureResume(getProject().getName(), getProject().getIdInternal(), getName(),
 				getWebID(), getState(), userhasvoted ,  getDescription(), getVoterCount(), getCommentCount(),
-				getAuthorName(), FearsServiceImpl.getNickName(getAuthorName()) ,
+				FearsServiceImpl.getNickName(getAuthorName()) , new Long(getAuthor().getUser().getOid()).toString() ,
 				getCreatedTime().toString(DateTimeFormat.forPattern(DateFormat.DEFAULT_FORMAT)) );
 	}
 

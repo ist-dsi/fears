@@ -179,23 +179,6 @@ public class DisplayVoter extends Composite {
         }
     }
 
-
-    /*protected void updateProjectName(String name){
-		_projectName = name;
-		Fears.getPath().setVoter(_voterNick);
-	}
-
-	public void updateProjectName(){
-		_com.getProjectName(_projectID, getProjectName);
-	}
-
-	AsyncCallback getProjectName = new ExceptionsTreatment() {
-		public void onSuccess(Object result){ 
-			updateProjectName((String)result);
-		}
-
-	};	*/
-
     protected class VoterCB extends ExceptionsTreatment {
         //DisplayVoter _v;
 

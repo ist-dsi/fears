@@ -38,7 +38,7 @@ public interface FearsServiceAsync {
 	public void addProjectAdmin(String newAdmin, String projectID, AsyncCallback callback);
 	public void removeProjectAdmin(String oldAdmin, String projectID, AsyncCallback callback);
 
-	public void getVoter(String _projectid, String voterName, String cookie,
+	public void getVoter(String _projectid, String userOID, String cookie,
 			AsyncCallback<List<ViewVoterDetailed>> callback);
 
 	public void getCurrentVoter(String _projectid, String cookie,

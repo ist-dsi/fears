@@ -31,6 +31,7 @@ import eu.ist.fears.client.common.communication.FearsService;
 import eu.ist.fears.client.common.exceptions.FearsException;
 import eu.ist.fears.client.common.exceptions.NoFeatureException;
 import eu.ist.fears.client.common.exceptions.NoProjectException;
+import eu.ist.fears.client.common.exceptions.NoUserException;
 import eu.ist.fears.client.common.exceptions.RequiredLogin;
 import eu.ist.fears.client.common.views.ViewAdmins;
 import eu.ist.fears.client.common.views.ViewFeatureDetailed;
@@ -257,7 +258,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
         return temp;
     }
 
-    public User getUserFromSession(){
+    public User getUserFromSession()throws FearsException{
         HttpSession session = this.getThreadLocalRequest().getSession();
         ViewVoterResume temp = (ViewVoterResume)session.getAttribute("fears_voter");
         if(temp==null)
@@ -297,8 +298,14 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
     public ViewAdmins addAdmin(String userName, String sessionID) throws FearsException {
         isAdmin();
 
+        User u=null;
+        try{
+            u=FearsApp.getFears().getUser(userName);
+        }catch(NoUserException e){
+            u=FearsApp.getFears().createUser(userName);
+        }
 
-        FearsApp.getFears().addAdmin(FearsApp.getFears().getUser(userName));
+        FearsApp.getFears().addAdmin(u);
         return FearsApp.getFears().getViewAdmins();
     }
 
@@ -365,7 +372,13 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
         if(p==null)
             throw new NoProjectException(projectID);
 
-        p.addAdmin(FearsApp.getFears().getUser(newAdmin));
+        User u=null;
+        try{
+            u=FearsApp.getFears().getUser(newAdmin);
+        }catch(NoUserException e){
+            u=FearsApp.getFears().createUser(newAdmin);
+        }
+        p.addAdmin(u);
 
         return p.getViewAdmins();
     }
@@ -386,7 +399,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
         return p.getViewAdmins();
     }
 
-    public List<ViewVoterDetailed> getVoter(String projectID, String voterName,
+    public List<ViewVoterDetailed> getVoter(String projectID, String userOID,
             String sessionID) throws FearsException{
 
         Project actualP=null;
@@ -394,7 +407,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
             actualP =FearsApp.getFears().getProject(projectID);
 
         ArrayList<ViewVoterDetailed> res = new ArrayList<ViewVoterDetailed>();
-        User u = FearsApp.getFears().getUser(voterName);
+        User u = FearsApp.getFears().getUserFromID(userOID);
         if(actualP!=null)
             res.add(u.getVoter(actualP).getView());
 
@@ -437,8 +450,13 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
         String username=validateTicket(ticket, admin, sessionID);
         if(username!=null){
             username = username.toLowerCase();
-            User temp = FearsApp.getFears().getUser(username);
-            ViewVoterResume ret =  new ViewVoterResume(temp.getName(), getNickName(temp.getName()),  FearsApp.getFears().isAdmin(temp));
+            User temp=null;
+            try{
+            temp = FearsApp.getFears().getUser(username);
+            }catch(NoUserException e){
+                temp = FearsApp.getFears().createUser(username);
+            }
+            ViewVoterResume ret =  new ViewVoterResume(temp.getName(), getNickName(temp.getName()), new Long(temp.getOid()).toString() , FearsApp.getFears().isAdmin(temp));
             session.setAttribute("fears_voter", ret);
             return ret;
         }else System.out.println("ERRO NO CAS....");

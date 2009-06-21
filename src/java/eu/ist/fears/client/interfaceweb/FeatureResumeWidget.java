@@ -28,13 +28,9 @@ public class FeatureResumeWidget  extends Composite{
 	protected State _state;
 	protected HTML _stateLabel;
 	protected VerticalPanel _mainBox;
-	protected String _projectName;
 	protected String _projectID;
 	protected String _featureID;
 	protected String _featureName;
-	protected String _author;
-	protected String _authorNick;
-	protected String _date;
 	protected boolean _userHasVoted;
 	protected HTML _description;
 	protected Label _votes;
@@ -48,7 +44,6 @@ public class FeatureResumeWidget  extends Composite{
 	public FeatureResumeWidget(ViewFeatureResume f, AsyncCallback cb){
 
 		_com = new Communication("service");
-		_projectName = f.getProjectName();
 		_projectID = new Integer(f.getProjectID()).toString();
 		_cb=cb;
 		_feature = new VerticalPanel();
@@ -58,14 +53,11 @@ public class FeatureResumeWidget  extends Composite{
 		_featureID= new String(new Integer(f.getFeatureID()).toString());
 		_ncomments = new Label(new Integer(f.getNComments()).toString());
 		_featureName = f.getName();
-		_date=f.getCreatedDate();
 		_mainBox = new VerticalPanel();
 		_description= new HTML(f.getDescription());
 		_votes = new Label(new Integer(f.getVotes()).toString());
 		_featureResume = new HorizontalPanel();
 		_voteButton = new Button();
-		_author = f.getAuthor();
-		_authorNick = f.getAuthorNick();
 		_removeVote = new RemoveVoteButton();
 		_vote = new VoteButton();
 		_userHasVoted=f.userHasVoted();
@@ -120,8 +112,8 @@ public class FeatureResumeWidget  extends Composite{
 		_mainBox.add(info);
 
 		info.add(new HTML("#"+_featureID+" | Por:&nbsp;"));
-		info.add(new Hyperlink(_authorNick,"Project"+_projectID+"&"+"viewUser"+_author));
-		info.add(new HTML("&nbsp;em:&nbsp;" + _date + "&nbsp;|&nbsp;"));
+		info.add(new Hyperlink(f.getAuthorNick(),"Project"+_projectID+"&"+"viewUser"+f.getAuthorOID()));
+		info.add(new HTML("&nbsp;em:&nbsp;" + f.getCreatedDate() + "&nbsp;|&nbsp;"));
 		info.add(_ncomments);
 		info.add(new HTML("&nbsp;coment&aacute;rios"));
 
@@ -171,8 +163,8 @@ public class FeatureResumeWidget  extends Composite{
 			_description.setHTML(f.getDescription());
 
 		_votes.setText(new Integer(f.getVotes()).toString());
-		_author=f.getAuthor();
-		_authorNick= f.getAuthorNick();
+		
+		
 
 		_ncomments.setText(new Integer(f.getNComments()).toString());
 

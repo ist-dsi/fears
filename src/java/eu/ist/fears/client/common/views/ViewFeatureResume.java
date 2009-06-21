@@ -24,9 +24,10 @@ public class ViewFeatureResume implements IsSerializable{
 	protected String _description;
 	protected int _votes;
 	protected int _nComments;
-	protected String _author;
 	protected String _authorNick;
+	protected String _authorOID;
 	protected String _date;
+
 
 	
 	
@@ -35,7 +36,7 @@ public class ViewFeatureResume implements IsSerializable{
 	}
 	
 	public  ViewFeatureResume(String projectName, int projectID, String name, int featureID, State state, boolean userHasvoted, String description,
-			int votes, int nComments, String author, String authorNick, String date){
+			int votes, int nComments, String authorNick, String authorOID, String date){
 		_projectName = projectName;
 		_projectID = projectID;
 		_name= name;
@@ -50,9 +51,9 @@ public class ViewFeatureResume implements IsSerializable{
 		_description = _description.replaceAll("<br>", " ");
 		_votes=votes;
 		_nComments= nComments;
-		_author = author;
 		_authorNick=authorNick;
 		_date=date;
+		_authorOID=authorOID;
 	}
 	
 	public String getProjectName(){
@@ -85,11 +86,6 @@ public class ViewFeatureResume implements IsSerializable{
 		return _nComments;
 	}
 	
-	
-	public String getAuthor() {
-		return _author;
-	}
-	
 	public boolean userHasVoted(){
 		return _userHasVoted;
 	}
@@ -106,6 +102,10 @@ public class ViewFeatureResume implements IsSerializable{
 	public String getAuthorNick(){
 		return _authorNick;
 	}
+	
+	public String getAuthorOID(){
+        return _authorOID;
+    }
 	
 	//Inserts a new line before the ith position, in the position of a white space
 	//(for not cutting words)

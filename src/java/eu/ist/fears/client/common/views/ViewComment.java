@@ -12,8 +12,8 @@ public class ViewComment implements Serializable {
 	private static final long serialVersionUID = 8719491807239228411L;
 
 	protected String _comment;
-	protected String _author;
 	protected String _authorNick;
+	protected String _authorOID;
 	protected State _oldState;
 	protected State _newState;
 	protected String _date;
@@ -22,22 +22,17 @@ public class ViewComment implements Serializable {
 		
 	}
 	
-	public ViewComment(String c,String a, String aNick, State newState, State oldstate, String date ){
+	public ViewComment(String c, String aNick, String authorOID, State newState, State oldstate, String date ){
 		_comment=c;
-		_author=a;
 		_authorNick=aNick;
 		_newState=newState;
 		_oldState=oldstate;
 		_date=date;
+		_authorOID=authorOID;
 	}
 	
 	public String getComment(){
 		return _comment;
-	}
-	
-	public String getAuthor(){
-		return _author;
-		
 	}
 	
 	public State getNewState(){
@@ -55,6 +50,10 @@ public class ViewComment implements Serializable {
 	public String getAuthorNick(){
 		return _authorNick;
 	}
+	
+	public String getAuthorOID(){
+        return _authorOID;
+    }
 	
 	
 

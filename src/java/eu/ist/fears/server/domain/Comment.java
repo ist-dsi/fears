@@ -32,6 +32,6 @@ public class Comment extends Comment_Base {
 
     
     public ViewComment getView(){
-        return new ViewComment(getComment(), getAuthor().getUser().getName(),FearsServiceImpl.getNickName(getAuthor().getUser().getName()) , getNewState(), getOldState() , getCreatedTime().toString(DateTimeFormat.forPattern(DateFormat.DEFAULT_FORMAT)));
+        return new ViewComment(getComment(),FearsServiceImpl.getNickName(getAuthor().getUser().getName()), new Long( getAuthor().getUser().getOid()).toString() , getNewState(), getOldState() , getCreatedTime().toString(DateTimeFormat.forPattern(DateFormat.DEFAULT_FORMAT)));
     }
 }

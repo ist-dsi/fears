@@ -1,7 +1,12 @@
 package eu.ist.fears.server;
 
 import com.google.gwt.user.client.rpc.SerializationException;
+
+import eu.ist.fears.client.common.exceptions.FearsException;
+import eu.ist.fears.client.common.exceptions.NoUserException;
 import eu.ist.fears.server.domain.FearsApp;
+import eu.ist.fears.server.domain.User;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import jvstm.Atomic;
@@ -18,8 +23,9 @@ public class AddAdmin {
      * @throws ServletException 
      * @throws SerializationException 
      * @throws IOException 
+     * @throws FearsException 
      */
-    public static void main(String[] args) throws ServletException, SerializationException, IOException {
+    public static void main(String[] args) throws ServletException, SerializationException, IOException, FearsException {
         if(args.length!=1){
             System.out.println("Este programa recebe 1 argumento: o username do Administrador.");
             return;
@@ -34,7 +40,14 @@ public class AddAdmin {
     }
 
     @Atomic
-    public static void addAdmin(String adminName){
-        FearsApp.getFears().addAdmin(FearsApp.getFears().getUser(adminName));	
+    public static void addAdmin(String adminName) throws FearsException{
+        User u=null;
+        try{
+            u=FearsApp.getFears().getUser(adminName);
+        }catch(NoUserException e){
+            u=FearsApp.getFears().createUser(adminName);
+        }
+
+        FearsApp.getFears().addAdmin(u);
     }
 }

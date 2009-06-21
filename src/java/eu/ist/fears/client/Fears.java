@@ -72,7 +72,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 		footer = new HorizontalPanel();
 		content.setStyleName("width100");
 		path = new Path();
-		_curretUser=new ViewVoterResume("guest","guest",false);
+		_curretUser=new ViewVoterResume("guest","guest",null,false);
 		_currentProject=null;
 		header = new Header("guest",validCookie, false);
 		RootPanel.get().setStyleName("centered");
@@ -148,6 +148,10 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 
 	public static int getVotesLeft(){
 		return _curretUser.getVotesLeft();
+	}
+	
+	public static String getUserOID(){
+	    return _curretUser.getOID();
 	}
 
 	public static String getCurrentProject(){

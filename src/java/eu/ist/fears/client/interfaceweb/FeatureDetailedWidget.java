@@ -135,7 +135,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 			VerticalPanel votersExpanded = new VerticalPanel();
 			int i=0;
 			for(ViewVoterResume v :  f.getVoters()){
-				votersExpanded.add(new Hyperlink(v.getNick(),"Project"+_projectID+"&"+"viewUser"+v.getName()));
+				votersExpanded.add(new Hyperlink(v.getNick(),"Project"+_projectID+"&"+"viewUser"+v.getOID()));
 				//if(i!= f.getVoters().size()-1)
 					//votersExpanded.add(new HTML(",&nbsp;"));
 				i++;
@@ -168,7 +168,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 				header.add(text);
 				header.setStyleName("commentItem");
 				text.add(new HTML("Por:&nbsp;"));
-				text.add(new Hyperlink(actual.getAuthorNick(),"Project"+_projectID+"&"+"viewUser"+(f.getComments().get(i)).getAuthor()));
+				text.add(new Hyperlink(actual.getAuthorNick(),"Project"+_projectID+"&"+"viewUser"+(f.getComments().get(i)).getAuthorOID()));
 				text.add(new HTML("&nbsp; em:&nbsp;" + actual.getCreatedDate()));
 				if(actual.getNewState()!=null){
 					text.add(new HTML("&nbsp;|&nbsp;Estado mudou de&nbsp;"+ actual.getOldState().getHTML()+"&nbsp;para&nbsp;" + actual.getNewState().getHTML()));

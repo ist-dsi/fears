@@ -33,7 +33,6 @@ public class ListFeatures extends Composite {
 
 	protected Communication _com;
 	protected VerticalPanel _sugPanel;
-	protected String _projectName;
 	protected String _projectID;
 	protected HorizontalPanel _search;
 	protected HorizontalPanel _filter;

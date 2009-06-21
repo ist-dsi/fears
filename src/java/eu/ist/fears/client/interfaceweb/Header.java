@@ -85,11 +85,11 @@ public class Header extends Composite {
         }else{
             if(inProjectPage){
                 _votes.setHTML("Tem <b>" + Fears.getVotesLeft() + "</b> votos dispon&iacute;veis&nbsp;|&nbsp;");
-                _welcMessage.setHTML("<a href=\"#Project" + Fears.getCurrentProject() + "&" + "viewUser"+ Fears.getUsername()+ "\">" + "Votos de&nbsp;" + Fears.getNickname() + "</a>");
+                _welcMessage.setHTML("<a href=\"#Project" + Fears.getCurrentProject() + "&" + "viewUser"+ Fears.getUserOID()+ "\">" + "Votos de&nbsp;" + Fears.getNickname() + "</a>");
             }
             else {
                 _votes.setText("");
-                _welcMessage.setHTML("<a href=\"#" + "viewUser"+ Fears.getUsername()+ "\">" + "Votos de&nbsp;" + Fears.getNickname()  + "</a>");
+                _welcMessage.setHTML("<a href=\"#" + "viewUser"+ Fears.getUserOID() + "\">" + "Votos de&nbsp;" + Fears.getNickname()  + "</a>");
             }
             
             
