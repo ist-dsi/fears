@@ -570,6 +570,7 @@ margin-left: 25px;
 }
 
 .voterProject .header{
+text-decoration: none;
 } 
 
 .ProjectTitleinVoter{
@@ -583,6 +584,12 @@ margin-bottom: 0px;
 .ProjectTitleinVoterBox{
 border-bottom: 2px solid #d1e3ed;
 padding-left:50px;
+text-decoration: none;
+}
+
+.ProjectTitleinVoterBox:hover{ 	
+cursor: pointer;
+text-decoration: none;
 }
 
 .voterProject{

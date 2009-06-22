@@ -97,7 +97,7 @@ public class FeatureDetailedWidget extends FeatureResumeWidget {
 		if(Fears.isLogedIn()){
 			HorizontalPanel stateChooser = new HorizontalPanel();
 			Label stateLabel =new Label("Mudar Estado:");
-			stateLabel.setStyleName("commentTextArea");
+			stateLabel.setStyleName("commentButton");
 			stateChooser.add(stateLabel);
 			_lb.setStyleName("commentStateChooser");
 

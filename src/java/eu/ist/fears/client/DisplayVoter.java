@@ -64,6 +64,7 @@ public class DisplayVoter extends Composite {
             _voterProject.setStyleName("voterProject");
       
             HorizontalPanel projectTitleBox = new HorizontalPanel();
+            projectTitleBox.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
             projectTitleBox.setStyleName("ProjectTitleinVoterBox");
             _voterProject.setHeader(projectTitleBox);
             
