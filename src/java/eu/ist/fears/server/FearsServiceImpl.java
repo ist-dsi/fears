@@ -402,14 +402,20 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
     public List<ViewVoterDetailed> getVoter(String projectID, String userOID,
             String sessionID) throws FearsException{
 
+
         Project actualP=null;
         if(projectID!=null)
             actualP =FearsApp.getFears().getProject(projectID);
 
         ArrayList<ViewVoterDetailed> res = new ArrayList<ViewVoterDetailed>();
         User u = FearsApp.getFears().getUserFromID(userOID);
-        
-        
+      
+        try{ u.getName(); }
+        catch(Exception e){
+            System.out.println("erro...");
+            throw new NoUserException();
+        }
+
         if(actualP!=null)
             res.add(u.getVoter(actualP).getView());
 
@@ -454,7 +460,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
             username = username.toLowerCase();
             User temp=null;
             try{
-            temp = FearsApp.getFears().getUser(username);
+                temp = FearsApp.getFears().getUser(username);
             }catch(NoUserException e){
                 temp = FearsApp.getFears().createUser(username);
             }

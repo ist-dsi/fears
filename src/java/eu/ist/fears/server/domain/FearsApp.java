@@ -78,7 +78,7 @@ public class FearsApp extends FearsApp_Base {
             User u = FearsApp.fromOID(new Long(id));
             return u;
         }catch(Throwable e){
-            throw new NoUserException(null,null);
+            throw new NoUserException();
         }
        
     }
