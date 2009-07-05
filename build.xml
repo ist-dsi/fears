@@ -18,7 +18,7 @@
   <property name="lib.dir" location="lib"/>
   <property name="config.dir" location="config"/>
   <property name="deploy.lib.dir" location="deploy-lib"/>
-  <property name="build.webapp.dir" location="webapp"/>
+  <property name="build.webapp.dir" location="war"/>
   <property name="www.dir" location="www"/>
   <property name="fears.dml" location="${dml.src.dir}/fears.dml"/>
   <property name="dml.fenix.sqltypes" value="${config.dir}/dataTypesJDBCTypes.properties"/>
@@ -81,7 +81,7 @@
   </target> -->
 
   <target name="compile-javascript" depends="compile">
-    <java classname="com.google.gwt.dev.GWTCompiler" fork="true">
+    <java classname="com.google.gwt.dev.Compiler" fork="true">
     	<jvmarg value="-Xmx256M"/>
     		
       <classpath>
@@ -91,9 +91,9 @@
       	  <fileset file="${lib.dir}/gwt-linux/gwt-dev-linux.jar"/> 
       	<fileset file="${lib.dir}/gwt-user.jar"/> 
       </classpath>
-      <arg value="-out"/>
-      <arg value="${www.dir}"/>
-      <arg value="eu.ist.fears.Fears"/>
+     <!-- <arg value="-out"/>
+      <arg value="${www.dir}"/> -->
+      <arg value="eu.ist.fears.Fears"/> 
     	<!-- <arg value="-style"/>
     	<arg value="DETAILED"/> -->
     </java>
@@ -116,9 +116,10 @@
       <fileset dir="${config.dir}" />
     </copy>
     <copy todir="${build.webapp.dir}">
-      <fileset dir="${www.dir}/eu.ist.fears.Fears" />
+      <fileset dir="${build.webapp.dir}/fears" /> 
     </copy>
   	<copy file="${build.webapp.dir}/Fears.html" tofile="${build.webapp.dir}/index.html"> </copy>
+  	 <delete dir="${build.webapp.dir}/fears/"/>
   </target>
 	
 	<target name="build-war" depends="build-webapp">

@@ -9,7 +9,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -412,7 +411,6 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
       
         try{ u.getName(); }
         catch(Exception e){
-            System.out.println("erro...");
             throw new NoUserException();
         }
 

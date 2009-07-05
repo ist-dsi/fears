@@ -7,7 +7,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="config"/>
 	<classpathentry kind="lib" path="src/dml"/>
-	<classpathentry kind="lib" path="C:/Program Files/gwt-windows-1.5.2/gwt-dev-windows.jar"/>
 	<classpathentry kind="lib" path="lib/gwt-user.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/antlr.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/asm-3.0.jar"/>
