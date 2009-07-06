@@ -5,9 +5,9 @@ import org.joda.time.format.DateTimeFormat;
 
 import com.google.gwt.user.client.ui.HTML;
 
-import eu.ist.fears.client.common.DateFormat;
-import eu.ist.fears.client.common.State;
-import eu.ist.fears.client.common.views.ViewComment;
+import eu.ist.fears.common.DateFormat;
+import eu.ist.fears.common.State;
+import eu.ist.fears.common.views.ViewComment;
 import eu.ist.fears.server.FearsServiceImpl;
 
 public class Comment extends Comment_Base {

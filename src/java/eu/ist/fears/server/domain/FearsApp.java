@@ -11,12 +11,12 @@ import org.joda.time.format.DateTimeFormat;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.pstm.Transaction;
-import eu.ist.fears.client.common.DateFormat;
-import eu.ist.fears.client.common.exceptions.FearsException;
-import eu.ist.fears.client.common.exceptions.NoUserException;
-import eu.ist.fears.client.common.views.ViewAdmins;
-import eu.ist.fears.client.common.views.ViewFeatureResume;
-import eu.ist.fears.client.common.views.ViewProject;
+import eu.ist.fears.common.DateFormat;
+import eu.ist.fears.common.exceptions.FearsException;
+import eu.ist.fears.common.exceptions.NoUserException;
+import eu.ist.fears.common.views.ViewAdmins;
+import eu.ist.fears.common.views.ViewFeatureResume;
+import eu.ist.fears.common.views.ViewProject;
 import eu.ist.fears.server.FearsServiceImpl;
 
 public class FearsApp extends FearsApp_Base {

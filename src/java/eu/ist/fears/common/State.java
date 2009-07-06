@@ -1,4 +1,4 @@
-package eu.ist.fears.client.common;
+package eu.ist.fears.common;
 
 public enum State {
 

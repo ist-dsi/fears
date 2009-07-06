@@ -1,4 +1,4 @@
-package eu.ist.fears.client.common.views;
+package eu.ist.fears.common.views;
 
 import java.io.Serializable;
 import java.util.List;

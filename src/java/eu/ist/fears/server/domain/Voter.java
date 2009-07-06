@@ -3,10 +3,10 @@ package eu.ist.fears.server.domain;
 
 import java.util.List;
 
-import eu.ist.fears.client.common.communication.FearsService;
-import eu.ist.fears.client.common.views.ViewFeatureResume;
-import eu.ist.fears.client.common.views.ViewVoterDetailed;
-import eu.ist.fears.client.common.views.ViewVoterResume;
+import eu.ist.fears.common.communication.FearsService;
+import eu.ist.fears.common.views.ViewFeatureResume;
+import eu.ist.fears.common.views.ViewVoterDetailed;
+import eu.ist.fears.common.views.ViewVoterResume;
 import eu.ist.fears.server.FearsServiceImpl;
 
 public class Voter extends Voter_Base {

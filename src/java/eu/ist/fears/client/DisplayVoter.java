@@ -3,7 +3,6 @@ package eu.ist.fears.client;
 import java.util.List;
 
 import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DisclosureEvent;
 import com.google.gwt.user.client.ui.DisclosureHandler;
@@ -11,17 +10,15 @@ import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import eu.ist.fears.client.common.communication.Communication;
-import eu.ist.fears.client.common.exceptions.ExceptionsTreatment;
-import eu.ist.fears.client.common.views.ViewFeatureResume;
-import eu.ist.fears.client.common.views.ViewVoterDetailed;
+import eu.ist.fears.common.communication.Communication;
+import eu.ist.fears.common.exceptions.ExceptionsTreatment;
+import eu.ist.fears.common.views.ViewFeatureResume;
+import eu.ist.fears.common.views.ViewVoterDetailed;
 
 public class DisplayVoter extends Composite {
 

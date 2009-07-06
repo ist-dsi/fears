@@ -1,9 +1,9 @@
-package eu.ist.fears.client.common.views;
+package eu.ist.fears.common.views;
 
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-import eu.ist.fears.client.common.State;
+import eu.ist.fears.common.State;
 
 
 public class ViewFeatureResume implements IsSerializable{

@@ -2,8 +2,8 @@ package eu.ist.fears.server;
 
 import com.google.gwt.user.client.rpc.SerializationException;
 
-import eu.ist.fears.client.common.exceptions.FearsException;
-import eu.ist.fears.client.common.exceptions.NoUserException;
+import eu.ist.fears.common.exceptions.FearsException;
+import eu.ist.fears.common.exceptions.NoUserException;
 import eu.ist.fears.server.domain.FearsApp;
 import eu.ist.fears.server.domain.User;
 

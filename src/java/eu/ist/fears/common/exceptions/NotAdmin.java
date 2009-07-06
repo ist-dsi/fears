@@ -1,4 +1,4 @@
-package eu.ist.fears.client.common.exceptions;
+package eu.ist.fears.common.exceptions;
 
 public class NotAdmin extends FearsException {
 

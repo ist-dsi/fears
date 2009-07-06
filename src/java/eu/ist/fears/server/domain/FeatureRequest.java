@@ -8,14 +8,14 @@ import org.joda.time.format.DateTimeFormat;
 
 import com.google.gwt.user.client.ui.HTML;
 
-import eu.ist.fears.client.common.DateFormat;
-import eu.ist.fears.client.common.State;
-import eu.ist.fears.client.common.exceptions.ActionNotExecuted;
-import eu.ist.fears.client.common.exceptions.FearsException;
-import eu.ist.fears.client.common.views.ViewComment;
-import eu.ist.fears.client.common.views.ViewFeatureDetailed;
-import eu.ist.fears.client.common.views.ViewFeatureResume;
-import eu.ist.fears.client.common.views.ViewVoterResume;
+import eu.ist.fears.common.DateFormat;
+import eu.ist.fears.common.State;
+import eu.ist.fears.common.exceptions.ActionNotExecuted;
+import eu.ist.fears.common.exceptions.FearsException;
+import eu.ist.fears.common.views.ViewComment;
+import eu.ist.fears.common.views.ViewFeatureDetailed;
+import eu.ist.fears.common.views.ViewFeatureResume;
+import eu.ist.fears.common.views.ViewVoterResume;
 import eu.ist.fears.server.FearsServiceImpl;
 
 

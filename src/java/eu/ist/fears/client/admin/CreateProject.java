@@ -13,7 +13,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 import eu.ist.fears.client.Fears;
-import eu.ist.fears.client.common.exceptions.ExceptionsTreatment;
+import eu.ist.fears.common.exceptions.ExceptionsTreatment;
 import eu.ist.fears.client.interfaceweb.CreateEditProjectFeature;
 
 

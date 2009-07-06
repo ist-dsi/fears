@@ -17,11 +17,11 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import eu.ist.fears.client.Fears;
-import eu.ist.fears.client.common.State;
-import eu.ist.fears.client.common.views.ViewComment;
-import eu.ist.fears.client.common.views.ViewFeatureDetailed;
-import eu.ist.fears.client.common.views.ViewFeatureResume;
-import eu.ist.fears.client.common.views.ViewVoterResume;
+import eu.ist.fears.common.State;
+import eu.ist.fears.common.views.ViewComment;
+import eu.ist.fears.common.views.ViewFeatureDetailed;
+import eu.ist.fears.common.views.ViewFeatureResume;
+import eu.ist.fears.common.views.ViewVoterResume;
 
 public class FeatureDetailedWidget extends FeatureResumeWidget {
 

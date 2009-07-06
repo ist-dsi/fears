@@ -1,9 +1,9 @@
-package eu.ist.fears.client.common.views;
+package eu.ist.fears.common.views;
 
 import java.io.Serializable;
 import java.util.List;
 
-import eu.ist.fears.client.common.State;
+import eu.ist.fears.common.State;
 
 public class ViewFeatureDetailed extends ViewFeatureResume implements Serializable {
 	

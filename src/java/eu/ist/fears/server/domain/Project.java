@@ -9,9 +9,9 @@ import java.util.StringTokenizer;
 
 import org.joda.time.DateTime;
 
-import eu.ist.fears.client.common.views.ViewAdmins;
-import eu.ist.fears.client.common.views.ViewFeatureResume;
-import eu.ist.fears.client.common.views.ViewProject;
+import eu.ist.fears.common.views.ViewAdmins;
+import eu.ist.fears.common.views.ViewFeatureResume;
+import eu.ist.fears.common.views.ViewProject;
 import eu.ist.fears.server.FearsServiceImpl;
 
 public class Project extends Project_Base {

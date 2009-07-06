@@ -1,12 +1,11 @@
-package eu.ist.fears.client.common.communication;
+package eu.ist.fears.common.communication;
 
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import eu.ist.fears.client.common.State;
-import eu.ist.fears.client.common.views.ViewProject;
-import eu.ist.fears.client.common.views.ViewVoterDetailed;
+import eu.ist.fears.common.State;
+import eu.ist.fears.common.views.ViewVoterDetailed;
 
 
 public interface FearsServiceAsync {

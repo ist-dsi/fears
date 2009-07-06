@@ -20,9 +20,9 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.HasVerticalAlignment.VerticalAlignmentConstant;
 
 import eu.ist.fears.client.Fears;
-import eu.ist.fears.client.common.communication.Communication;
-import eu.ist.fears.client.common.exceptions.ExceptionsTreatment;
-import eu.ist.fears.client.common.views.ViewProject;
+import eu.ist.fears.common.communication.Communication;
+import eu.ist.fears.common.exceptions.ExceptionsTreatment;
+import eu.ist.fears.common.views.ViewProject;
 import eu.ist.fears.client.interfaceweb.ProjectWidget;
 
 public class ListProjectsWidget extends Composite{

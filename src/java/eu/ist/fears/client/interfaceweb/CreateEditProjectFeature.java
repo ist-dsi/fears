@@ -4,11 +4,9 @@ package eu.ist.fears.client.interfaceweb;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.TextArea;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import eu.ist.fears.client.common.communication.Communication;
+import eu.ist.fears.common.communication.Communication;
 
 
 public class CreateEditProjectFeature extends Composite {

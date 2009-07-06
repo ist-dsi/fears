@@ -1,7 +1,7 @@
 
 package eu.ist.fears.server.domain;
 
-enum eu.ist.fears.client.common.State as State;
+enum eu.ist.fears.common.State as State;
 
 class FearsApp;
 

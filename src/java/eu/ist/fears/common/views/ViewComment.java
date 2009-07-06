@@ -1,8 +1,8 @@
-package eu.ist.fears.client.common.views;
+package eu.ist.fears.common.views;
 
 import java.io.Serializable;
 
-import eu.ist.fears.client.common.State;
+import eu.ist.fears.common.State;
 
 public class ViewComment implements Serializable {
 

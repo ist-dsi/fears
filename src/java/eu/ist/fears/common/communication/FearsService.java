@@ -1,19 +1,18 @@
-package eu.ist.fears.client.common.communication;
+package eu.ist.fears.common.communication;
 
 import java.util.List;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 
-import eu.ist.fears.client.common.State;
-import eu.ist.fears.client.common.exceptions.FearsException;
-import eu.ist.fears.client.common.exceptions.NoProjectException;
-import eu.ist.fears.client.common.views.ViewAdmins;
-import eu.ist.fears.client.common.views.ViewFeatureDetailed;
-import eu.ist.fears.client.common.views.ViewFeatureResume;
-import eu.ist.fears.client.common.views.ViewProject;
-import eu.ist.fears.client.common.views.ViewVoterDetailed;
-import eu.ist.fears.client.common.views.ViewVoterResume;
+import eu.ist.fears.common.State;
+import eu.ist.fears.common.exceptions.FearsException;
+import eu.ist.fears.common.exceptions.NoProjectException;
+import eu.ist.fears.common.views.ViewAdmins;
+import eu.ist.fears.common.views.ViewFeatureDetailed;
+import eu.ist.fears.common.views.ViewFeatureResume;
+import eu.ist.fears.common.views.ViewProject;
+import eu.ist.fears.common.views.ViewVoterDetailed;
+import eu.ist.fears.common.views.ViewVoterResume;
 
 public interface FearsService extends RemoteService  {
 	

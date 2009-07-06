@@ -1,14 +1,11 @@
-package eu.ist.fears.client.common.exceptions;
+package eu.ist.fears.common.exceptions;
 
-import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
 
 import eu.ist.fears.client.Fears;
-import eu.ist.fears.client.common.views.ViewVoterDetailed;
+
 
 public abstract class ExceptionsTreatment implements AsyncCallback {
 

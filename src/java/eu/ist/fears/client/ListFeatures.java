@@ -21,11 +21,11 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-import eu.ist.fears.client.common.State;
-import eu.ist.fears.client.common.communication.Communication;
-import eu.ist.fears.client.common.exceptions.ExceptionsTreatment;
-import eu.ist.fears.client.common.views.ViewFeatureDetailed;
-import eu.ist.fears.client.common.views.ViewFeatureResume;
+import eu.ist.fears.common.State;
+import eu.ist.fears.common.communication.Communication;
+import eu.ist.fears.common.exceptions.ExceptionsTreatment;
+import eu.ist.fears.common.views.ViewFeatureDetailed;
+import eu.ist.fears.common.views.ViewFeatureResume;
 import eu.ist.fears.client.interfaceweb.FeatureResumeWidget;
 
 

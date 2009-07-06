@@ -13,6 +13,7 @@
   <property name="src.gen.dir" location="src_gen"/>
   <property name="java.src.dir" location="${src.dir}/java"/>
   <property name="dml.src.dir" location="${src.dir}/dml"/>
+	<property name="html.src.dir" location="${src.dir}/html"/>
   <property name="webapp.src.dir" location="${src.dir}/webapp"/>
   <property name="build.dir" location="bin"/>
   <property name="lib.dir" location="lib"/>
@@ -75,10 +76,6 @@
     <delete dir="${www.dir}"/>
     <delete dir="${src.gen.dir}"/>
   </target>
-	
-  <!-- <target name="run linux" depends="compile">
-    <exec executable="Fears-shell-linux.sh"/> 
-  </target> -->
 
   <target name="compile-javascript" depends="compile">
     <java classname="com.google.gwt.dev.Compiler" fork="true">
@@ -91,8 +88,6 @@
       	  <fileset file="${lib.dir}/gwt-linux/gwt-dev-linux.jar"/> 
       	<fileset file="${lib.dir}/gwt-user.jar"/> 
       </classpath>
-     <!-- <arg value="-out"/>
-      <arg value="${www.dir}"/> -->
       <arg value="eu.ist.fears.Fears"/> 
     	<!-- <arg value="-style"/>
     	<arg value="DETAILED"/> -->
@@ -116,26 +111,14 @@
       <fileset dir="${config.dir}" />
     </copy>
     <copy todir="${build.webapp.dir}">
-      <fileset dir="${build.webapp.dir}/fears" /> 
+      <fileset dir="${html.src.dir}"/> 
     </copy>
   	<copy file="${build.webapp.dir}/Fears.html" tofile="${build.webapp.dir}/index.html"> </copy>
-  	 <delete dir="${build.webapp.dir}/fears/"/>
   </target>
 	
 	<target name="build-war" depends="build-webapp">
 	<zip destfile="fears.war" basedir="${build.webapp.dir}"></zip>
 	</target>
-	
-  <!-- <target name="generate-sql" depends="build-webapp">
-    <java classname="tmp.DomainModelSQLGen">
-      <arg value="${fears.dml}"/>
-      <arg value="${build.dir}/fears.sql"/>
-      <classpath>
-        <pathelement path="${build.webapp.dir}/WEB-INF/classes"/>
-        <fileset dir="${deploy.lib.dir}"/>
-      </classpath>      
-    </java>
-  </target> -->
 	
 	<target name="addAdmin" depends="compile">
 	    <java classname="eu.ist.fears.server.AddAdmin" >

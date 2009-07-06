@@ -10,14 +10,10 @@
  	<!-- Servlet: -->
   	<servlet path='/service' class='eu.ist.fears.server.FearsServiceImpl'/>
   	
-  	 <stylesheet src="general.css"/>
-  	 
-  	 
-  	 <!-- Add the common dir -->
-  	 <!-- <source path="eu.ist.fears.common" />  -->
-  	 
-  	  
-  	 <!-- Add the common dir -->
-  	  <!-- <source path="eu.ist.fears.client"/> -->
+  	 <stylesheet src="../general.css"/>
+  	
+  	<source path="client" /> 
+	<!-- Add the common dir -->
+  	<source path="common" />
   	 	  
 </module>

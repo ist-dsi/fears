@@ -19,10 +19,10 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import eu.ist.fears.client.admin.Admin;
-import eu.ist.fears.client.common.FearsConfig;
-import eu.ist.fears.client.common.communication.Communication;
-import eu.ist.fears.client.common.exceptions.ExceptionsTreatment;
-import eu.ist.fears.client.common.views.ViewVoterResume;
+import eu.ist.fears.common.FearsConfig;
+import eu.ist.fears.common.communication.Communication;
+import eu.ist.fears.common.exceptions.ExceptionsTreatment;
+import eu.ist.fears.common.views.ViewVoterResume;
 import eu.ist.fears.client.interfaceweb.Header;
 import eu.ist.fears.client.interfaceweb.Path;
 
@@ -297,9 +297,9 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 		verifyLogin(false);
 
 		if(this instanceof Admin)
-			Window.open(FearsConfig.getCasUrl() + "?service=" + GWT.getModuleBaseURL() + "Admin.html", "_self", "");
+			Window.open(FearsConfig.getCasUrl() + "?service=" + GWT.getHostPageBaseURL() + "Admin.html", "_self", "");
 		else 
-			Window.open(FearsConfig.getCasUrl() + "?service=" + GWT.getModuleBaseURL() + "Fears.html", "_self", "");
+			Window.open(FearsConfig.getCasUrl() + "?service=" + GWT.getHostPageBaseURL() + "Fears.html", "_self", "");
 
 	}
 

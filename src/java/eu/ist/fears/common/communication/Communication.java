@@ -1,4 +1,4 @@
-package eu.ist.fears.client.common.communication;
+package eu.ist.fears.common.communication;
 
 import java.util.List;
 
@@ -6,9 +6,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
-import eu.ist.fears.client.common.State;
-import eu.ist.fears.client.common.exceptions.FearsException;
-import eu.ist.fears.client.common.views.ViewVoterDetailed;
+import eu.ist.fears.common.State;
+import eu.ist.fears.common.views.ViewVoterDetailed;
 
 
 public class Communication implements FearsServiceAsync{

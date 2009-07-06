@@ -1,9 +1,7 @@
 package eu.ist.fears.client;
 
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class Login extends Composite {

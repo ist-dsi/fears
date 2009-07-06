@@ -14,10 +14,10 @@ import com.google.gwt.user.client.ui.Image;
 
 import eu.ist.fears.client.DisplayFeatureDetailed;
 import eu.ist.fears.client.Fears;
-import eu.ist.fears.client.common.FearsConfig;
-import eu.ist.fears.client.common.communication.Communication;
-import eu.ist.fears.client.common.exceptions.ExceptionsTreatment;
-import eu.ist.fears.client.common.views.ViewVoterResume;
+import eu.ist.fears.common.FearsConfig;
+import eu.ist.fears.common.communication.Communication;
+import eu.ist.fears.common.exceptions.ExceptionsTreatment;
+import eu.ist.fears.common.views.ViewVoterResume;
 
 public class Header extends Composite {
 
@@ -76,9 +76,9 @@ public class Header extends Composite {
         if(!Fears.isLogedIn()){
             _votes.setText("");
             if(adminPage)
-                sessionLink.setHTML("<a href=\""+ FearsConfig.getCasUrl() + "?service=" +GWT.getModuleBaseURL()+"Admin.html\">login</a>");
+                sessionLink.setHTML("<a href=\""+ FearsConfig.getCasUrl() + "?service=" +GWT.getHostPageBaseURL()+"Admin.html\">login</a>");
             else
-                sessionLink.setHTML("<a href=\""+ FearsConfig.getCasUrl() + "?service=" +GWT.getModuleBaseURL()+"Fears.html\">login</a>");
+                sessionLink.setHTML("<a href=\""+ FearsConfig.getCasUrl() + "?service=" +GWT.getHostPageBaseURL()+"Fears.html\">login</a>");
 
             _welcMessage.setHTML("Votos de&nbsp;"+Fears.getNickname());
 
