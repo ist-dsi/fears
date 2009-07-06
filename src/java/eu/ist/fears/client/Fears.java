@@ -85,7 +85,7 @@ public class Fears extends Widget implements EntryPoint, HistoryListener   {
 		frame.add(path);
 		frame.add(content);
 		footer.setStyleName("footer");
-		footer.add(new Label("© 2009, Instituto Superior Técnico. Todos os direitos reservados.  |  "));
+		footer.add(new HTML("© 2009, Instituto Superior Técnico. Todos os direitos reservados.  |  &nbsp;"));
 		footer.add(new Hyperlink(" Sobre o FeaRS","help"));
 		RootPanel.get().add(footer);
 
