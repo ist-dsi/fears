@@ -1,0 +1,109 @@
+Instrucções para correr o Fears numa máquina de testes local:
+
+1 - Download do código, software necessário e Compilação
+2 - Configurar o Tomcat e o Mysql
+3 - Instalar e configurar o CAS
+4 - Acrescentar o primeiro administrador ao Fears
+
+Escrito por Adriano Simões em 27 de Agosto de 2009.
+
+----------------
+1 - Download do código, software necessário e Compilação
+----------------
+Primeiro é preciso fazer o download do código da aplicação, usando um
+cliente SVN, e o url é:
+https://fenix-ashes.ist.utl.pt/ksvn/trunk/fears
+
+Depois é necessário compilar o projecto, para isso é preciso ter o
+Ant e um compilador de java.
+
+Deverás confirmar que a configuração do Fears é de Teste:
+Ir ao ficheiro eu.ist.fears.common.FearsConfig e confirmar que as strings são:
+protected static String _casUrl = "https://localhost:8443/cas/";
+protected static String _fearsUrl= "http://localhost:8080/webapp/";
+
+Neste momento poderás compilar o projecto com o ant, correndo o target: build-webapp.
+
+
+
+---------------
+2 - Configurar Tomcat e Mysql:
+----------------
+De seguida é necessário ter instalado o Tomcat e o MySQL.
+Deverás criar um schema na BD chamado fears.
+Os dados que estão configurados para aceder à BD são: username: root, pasword: fears.
+Estes dados podem ser alterados no ficheiro:
+eu.ist.fears.server.Init.
+
+O deploy completo pode ser feito pelo ant, com o comando deploy, se o
+tomcat estiver na pasta:
+"C:\Program Files\Apache Software Foundation\Tomcat 6.0"
+(Pode-se alterar a property "tomcat" do build.xml, para onde o tomcat está instalado e o deploy será feito ai).
+(Não esquecer a pasta "webapp" no fim).
+
+E assim deverá ter o Fears a correr no Tomcat no endereço:
+http://localhost:8080/webapp/Fears.html
+(Ainda sem o CAS a funcionar, e portanto sem poder fazer login).
+
+
+
+---------------
+3 - Instalar e configurar o CAS
+---------------
+
+Estou a usar este CAS server:
+docs/install_test_files/cas.zip
+É so fazer unzip para dentro da pasta webapps do Tomcat.
+
+Configurar SSL:
+Acrescentar as seguintes linhas ao ficheiro do Tomcat, conf/server.xml:
+<Connector port="8443" protocol="HTTP/1.1" SSLEnabled="true"
+             maxThreads="150" scheme="https" secure="true"
+             clientAuth="false" sslProtocol="TLS"
+                         keystoreFile="keystore" keystorePass="changeit"
+                         >
+      <Factory
+className="org.apache.commons.httpclient.contrib.ssl.EasySSLProtocolSocketFactory"
+
+         clientAuth="false" protocol="TLS"/>
+
+</Connector>
+
+E na raiz do Tomcat acrescentar o ficheiro:
+docs/install_test_files/keystore
+
+Para o Java reconhecer este Certificado como válida vai ter que
+acrescentar este certificado à lista de certificados confiaveis, pode
+faze-lo usando o programa:
+docs/install_test_files/InstallCert.java
+
+Depois de compilar basta correr e fazer (com o Tomcat a correr): java InstallCert localhost changeit
+
+Este programa vai-se ligar ao tomcat, pedir o certificado que está a usar, e criar um ficheiro chamado jssecacerts, 
+que vai conter a informação para o Java aceitar o certificado.
+Depois basta copiar o ficheiro jssecacerts para $JAVA_HOME/lib/security.
+
+Para confirmar que o certificado está correctamente aceite pelo java, apagar o jssecacerts da 
+directoria do InstallCert e correr de novo.
+Desta vez o programa deverá dizer: No errors, certificate is already trusted.
+
+
+Neste momento deverá ter o Cas Server a correr, poderá confirmar indo a:
+https://localhost:8443/cas/
+(Aceite o certificado mesmo com erros porque já o gerei há muito tempo
+e entretanto expirou de prazo).
+
+Como o Cas Server é dummy para ser correctamente autenticado basta por
+uma password igual ao username, por exemplo: user: joao pass: joao
+
+Neste momento já é possivel fazer login no Fears.
+
+---------------
+4 - Acrescentar o primeiro administrador ao Fears
+---------------
+Para o Fears ficar a funcionar só falta acrescentar um Administrador para gerir os projectos:
+Para adicionar um utilizador à lista de admins tens que ir ao build.xml e mudar a propriedade:
+<property name="adminUser" value="ist1XXXXX"/> para por exemplo joao.
+E correr o target do ant addAdmin.
+
+A partir dai pode-se logar como joao para teres acesso administrador e acrescentar o 1º projecto.

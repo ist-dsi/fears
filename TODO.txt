@@ -1,19 +1,11 @@
 TODO:
-
-(-> Votos do utilizador são os votos "usados", votos disponiveis = votos do projecto - votos "usados".) -> DONE!
-(-> Editar Projectos.) - >DONE
-(-> Administrador de Projecto.) -> DONE.
-(-> Login. [Janela completa ]) -> DONE.
-
--> Paginação na pagina de listar sugestoes.
--> Verificar como tratar erros de accções nao executadas.
--> (Acrescentar modificações de webdesigner nas paginas de admin.)
+Pagina de "Ultimas Sugestões desde ultima visita".
 
 
 BUGS:
 --
 
 WebDesigner:
- -> Na pagina da sugestao falta: ranking.
+--
 
 	
