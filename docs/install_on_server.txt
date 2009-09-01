@@ -1,0 +1,42 @@
+Instrucções para actualizar o Fears no servidor de produção:
+
+1 - Alterações aos dados do MySQL
+2 - Alterações ao URL do CAS
+3 - Compilar, gerar o War e fazer upload para o servidor
+4 - Por a nova versão a corrrer
+
+Escrito por Adriano Simões em 1 de Agosto de 2009.
+
+
+----------------
+1 - Alterações aos dados do MySQL
+----------------
+Modificar as passwords do MySQL no ficheiro eu.ist.fears.server.Init
+dbUsername: fears_app
+dbPassword: Perguntar ao Prof. Cachopo
+
+
+----------------
+2 - Alterações ao URL do CAS
+----------------
+Ir ao ficheiro eu.ist.fears.common.FearsConfig e modificar as strings para:
+protected static String _casUrl = "https://id.ist.utl.pt/cas/";
+protected static String _fearsUrl= "https://fears.ist.utl.pt/";
+
+
+----------------
+3 - Compilar, gerar o War e fazer upload para o servidor
+----------------
+Gerar o war executando o seguinte comando ant: build-war
+Copiar o ficheiro fears.war que foi gerado para o servidor fenix64bit.ist.utl.pt
+
+
+----------------
+4 - Por a nova versão a corrrer.
+----------------
+No servidor fenix64bit.ist.utl.pt executar o comando, para instalar o war:
+project_deploy fears fears.war
+Para reiniciar o Tomcat de maneira à nova versão ser carregada, executar o comando:
+/etc/init.d/tomcat-fears restart
+Neste momento a nova versão deverá estar a correr em https://fears.ist.utl.pt
+(Convem fazer um refresh no browser para actualizar.)
