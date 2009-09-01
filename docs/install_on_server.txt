@@ -5,7 +5,7 @@ Instrucções para actualizar o Fears no servidor de produção:
 3 - Compilar, gerar o War e fazer upload para o servidor
 4 - Por a nova versão a corrrer
 
-Escrito por Adriano Simões em 1 de Agosto de 2009.
+Escrito por Adriano Simões em 1 de Setembro de 2009.
 
 
 ----------------
