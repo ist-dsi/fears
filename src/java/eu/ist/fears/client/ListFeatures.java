@@ -1,269 +1,275 @@
 package eu.ist.fears.client;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.ChangeListener;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
+import eu.ist.fears.client.interfaceweb.FeatureResumeWidget;
 import eu.ist.fears.common.State;
 import eu.ist.fears.common.communication.Communication;
-import eu.ist.fears.common.exceptions.ExceptionsTreatment;
+import eu.ist.fears.common.exceptions.FearsAsyncCallback;
 import eu.ist.fears.common.views.ViewFeatureDetailed;
 import eu.ist.fears.common.views.ViewFeatureResume;
-import eu.ist.fears.client.interfaceweb.FeatureResumeWidget;
-
 
 public class ListFeatures extends Composite {
 
-	protected Communication _com;
-	protected VerticalPanel _sugPanel;
-	protected String _projectID;
-	protected HorizontalPanel _search;
-	protected HorizontalPanel _filter;
-	protected HorizontalPanel _searchAlertBox;
-	protected VerticalPanel _featuresList;
-	protected ListBox lb;
-	protected TextBox sBox;
-	protected String _actualFilter;
-	protected Hyperlink[] _filterLinks;
-	protected List<FeatureResumeWidget> _featuresViews;
+    protected Communication com;
+    protected VerticalPanel sugPanel;
+    protected String projectID;
+    protected HorizontalPanel search;
+    protected HorizontalPanel filter;
+    protected HorizontalPanel searchAlertBox;
+    protected VerticalPanel featuresList;
+    protected ListBox lb;
+    protected TextBox sBox;
+    protected String actualFilter;
+    protected Hyperlink[] filterLinks;
+    protected List<FeatureResumeWidget> featuresViews;
 
-	public ListFeatures(String projectID, String filter){
-		_com= new Communication("service");
-		_sugPanel = new VerticalPanel();
-		_search = new HorizontalPanel();
-		_filter = new HorizontalPanel();
-		_featuresList = new VerticalPanel();
-		_featuresViews = new ArrayList<FeatureResumeWidget>();
-		_projectID = projectID;
-		_sugPanel.setStyleName("listMain");
-		_actualFilter = filter;
-		initWidget(_sugPanel);
+    public ListFeatures(String projectID, String filter) {
+	com = new Communication("service");
+	sugPanel = new VerticalPanel();
+	search = new HorizontalPanel();
+	this.filter = new HorizontalPanel();
+	featuresList = new VerticalPanel();
+	featuresViews = new ArrayList<FeatureResumeWidget>();
+	this.projectID = projectID;
+	sugPanel.setStyleName("listMain");
+	actualFilter = filter;
+	initWidget(sugPanel);
 
-		HorizontalPanel _searchBox = new HorizontalPanel();
-		_searchBox.setStyleName("searchBox");
-		_sugPanel.add(_searchBox);
-		_search.setStyleName("search");
-		_searchBox.add(_search);
-		HorizontalPanel filterBox = new HorizontalPanel();
-		filterBox.setStyleName("filterBox");
-		filterBox.setVerticalAlignment(HorizontalPanel.ALIGN_MIDDLE);
-		_filter.setStyleName("filter");
-		filterBox.add(_filter);
-		_sugPanel.add(filterBox);
-		_searchAlertBox = new HorizontalPanel();
-		_sugPanel.add(_searchAlertBox);
-		_searchAlertBox.setStyleName("searchAlertBox");
-		_featuresList.setStyleName("featuresList");
-		_sugPanel.add(_featuresList);
+	HorizontalPanel _searchBox = new HorizontalPanel();
+	_searchBox.setStyleName("searchBox");
+	sugPanel.add(_searchBox);
+	search.setStyleName("search");
+	_searchBox.add(search);
+	HorizontalPanel filterBox = new HorizontalPanel();
+	filterBox.setStyleName("filterBox");
+	filterBox.setVerticalAlignment(HorizontalPanel.ALIGN_MIDDLE);
+	this.filter.setStyleName("filter");
+	filterBox.add(this.filter);
+	sugPanel.add(filterBox);
+	searchAlertBox = new HorizontalPanel();
+	sugPanel.add(searchAlertBox);
+	searchAlertBox.setStyleName("searchAlertBox");
+	featuresList.setStyleName("featuresList");
+	sugPanel.add(featuresList);
 
-		init();
-	}
+	init();
+    }
 
-	private void init(){
-		lb = new ListBox();
-		sBox = new TextBox();
+    private void init() {
+	lb = new ListBox();
+	sBox = new TextBox();
 
-		Fears.getPath().setProject("", _projectID);
+	Fears.getPath().setProject("", projectID);
 
+	search.clear();
 
-		_search.clear();
+	search.setVerticalAlignment(VerticalPanel.ALIGN_MIDDLE);
 
-		_search.setVerticalAlignment(VerticalPanel.ALIGN_MIDDLE);
+	sBox.setVisibleLength(50);
+	sBox.setStyleName("searchTextBox");
+	search.add(sBox);
+	sBox.addKeyPressHandler(new KeyPressHandler() {
+	    public void onKeyPress(KeyPressEvent event) {
+		if (event.getCharCode() == KeyCodes.KEY_ENTER) {
+		    for (int i = 1; i < filterLinks.length; i++)
+			filterLinks[i].setStyleName("filters");
+		    filterLinks[0].setStyleName("currentFilter");
+		    actualFilter = "";
+		    History.newItem("Project" + projectID, false);
+		    com
+			    .search(projectID, sBox.getText(), lb.getSelectedIndex(), 0, "", Cookies.getCookie("Fears"),
+				    getFeaturesCB);
+		}
+	    }
+	});
 
-		sBox.setVisibleLength(50);
-		sBox.setStyleName("searchTextBox");
-		_search.add(sBox);
-		sBox.addKeyboardListener(new KeyboardListener(){
+	PushButton searchButton = new PushButton(new Image("button01.gif", 0, 0, 105, 32), new Image("button01.gif", -2, -2, 105,
+		32));
+	search.add(searchButton);
+	searchButton.setStyleName("searchButton");
+	searchButton.addClickHandler(new ClickHandler() {
+	    public void onClick(ClickEvent sender) {
+		for (int i = 1; i < filterLinks.length; i++)
+		    filterLinks[i].setStyleName("filters");
+		filterLinks[0].setStyleName("currentFilter");
+		actualFilter = "";
+		History.newItem("Project" + projectID, false);
+		com.search(projectID, sBox.getText(), lb.getSelectedIndex(), 0, "", Cookies.getCookie("Fears"), getFeaturesCB);
+	    }
+	});
 
-			public void onKeyPress(Widget arg0, char arg1, int arg2){
-				if(arg1==13){
-					for(int i=1;i<_filterLinks.length;i++ )
-						_filterLinks[i].setStyleName("filters");
-					_filterLinks[0].setStyleName("currentFilter");
-					_actualFilter="";
-					History.newItem("Project"+_projectID, false);
-					_com.search(_projectID, sBox.getText(), lb.getSelectedIndex(), 0,"" ,Cookies.getCookie("Fears"), getFeaturesCB);
-				}
-			}
+	PushButton addButton = new PushButton(new Image("button02.gif", 0, 0, 135, 32),
+		new Image("button02.gif", -2, -2, 135, 32));
+	addButton.setStyleName("addButton");
+	search.add(addButton);
+	addButton.addClickHandler(new ClickHandler() {
+	    public void onClick(ClickEvent sender) {
+		History.newItem("Project" + projectID + "&" + "addFeature");
+	    }
+	});
 
-			public void onKeyDown(Widget arg0, char arg1, int arg2){}
-			public void onKeyUp(Widget arg0, char arg1, int arg2){}			
-		});
+	filter.clear();
+	filter.setHorizontalAlignment(HorizontalPanel.ALIGN_LEFT);
+	HorizontalPanel filtersTab = new HorizontalPanel();
+	filterLinks = new Hyperlink[5];
 
-		
-		PushButton searchButton = new PushButton(new Image("button01.gif",0,0,105,32),new Image("button01.gif",-2,-2,105,32));
-		_search.add(searchButton);
-		searchButton.setStyleName("searchButton");
-		searchButton.addClickListener(new ClickListener(){
-			public void onClick(Widget sender) {
-				for(int i=1;i<_filterLinks.length;i++ )
-					_filterLinks[i].setStyleName("filters");
-				_filterLinks[0].setStyleName("currentFilter");
-				_actualFilter="";
-				History.newItem("Project"+_projectID, false);
-				_com.search(_projectID, sBox.getText(), lb.getSelectedIndex(), 0, "",  Cookies.getCookie("Fears"), getFeaturesCB);
-			}
-		});
+	filterLinks[0] = new Hyperlink("Todos", "Project" + projectID);
+	if (actualFilter.equals(""))
+	    filterLinks[0].setStyleName("currentFilter");
+	else
+	    filterLinks[0].setStyleName("filters");
+	filtersTab.add(filterLinks[0]);
+	filtersTab.add(new HTML("&nbsp;&nbsp;|&nbsp;&nbsp;"));
 
-		
-		PushButton addButton = new PushButton(new Image("button02.gif",0,0,135,32),new Image("button02.gif",-2,-2,135,32)); 
-		addButton.setStyleName("addButton");
-		_search.add(addButton);
-		addButton.addClickListener(new ClickListener(){
-			public void onClick(Widget sender) {
-				History.newItem("Project" + _projectID + "&" + "addFeature");
-			}
-		});
+	int i = 1;
+	for (State s : State.values()) {
+	    if (i == 5) { break; }
+	    if (!s.toString().equals(State.Implementacao.toString())) {
+		filterLinks[i] = new Hyperlink(s.getHTML() + "s", "Project" + projectID + "&filter" + s.toString());
+		if (actualFilter.equals(s.toString()))
+		    filterLinks[i].setStyleName("currentFilter");
+		else
+		    filterLinks[i].setStyleName("filters");
+		filtersTab.add(filterLinks[i]);
+	    } else {
+		filterLinks[i] = new Hyperlink(State.Implementacao.getHTML(), true, "Project" + projectID + "&filter"
+			+ State.Implementacao.toString());
+		if (actualFilter.equals(State.Implementacao.toString()))
+		    filterLinks[i].setStyleName("currentFilter");
+		else
+		    filterLinks[i].setStyleName("filters");
+		filtersTab.add(filterLinks[i]);
+	    }
 
-		_filter.clear();
-		_filter.setHorizontalAlignment(HorizontalPanel.ALIGN_LEFT);
-		HorizontalPanel filtersTab = new HorizontalPanel();
-		_filterLinks = new Hyperlink[5];
-
-		_filterLinks[0] = new Hyperlink("Todos","Project"+_projectID);
-		if(_actualFilter.equals(""))
-			_filterLinks[0] .setStyleName("currentFilter");
-		else _filterLinks[0] .setStyleName("filters");
-		filtersTab.add(_filterLinks[0]);
+	    if (i != 5)
 		filtersTab.add(new HTML("&nbsp;&nbsp;|&nbsp;&nbsp;"));
 
-		int i=1;
-		for(State s: State.values()){
-			if(!s.toString().equals(State.Implementacao.toString())){
-				_filterLinks[i]  = new Hyperlink(s.getHTML()+"s","Project"+_projectID+"&filter"+s.toString());
-				if(_actualFilter.equals(s.toString()))
-					_filterLinks[i] .setStyleName("currentFilter");
-				else _filterLinks[i] .setStyleName("filters");		
-				filtersTab.add(_filterLinks[i]);
-			}else {
-				_filterLinks[i]  = new Hyperlink(State.Implementacao.getHTML(),true,"Project"+_projectID+"&filter"+State.Implementacao.toString());
-				if(_actualFilter.equals(State.Implementacao.toString()))
-					_filterLinks[i].setStyleName("currentFilter");
-				else _filterLinks[i].setStyleName("filters");
-				filtersTab.add(_filterLinks[i]);
-			}
-
-			if(i!=5)
-				filtersTab.add(new HTML("&nbsp;&nbsp;|&nbsp;&nbsp;"));			
-
-			i++;
-		}
-
-		_filter.add(filtersTab);
-		_filter.setHorizontalAlignment(HorizontalPanel.ALIGN_RIGHT);
-
-		lb.addItem("Ordenar por Último Comentário");
-		lb.addItem("Ordenar por Votos");
-		lb.addItem("Ordenar por Data de Criação");
-		lb.setVisibleItemCount(1);
-		lb.addChangeListener(new ChangeListener(){
-			public void onChange(Widget arg0) {
-				_com.search(_projectID, sBox.getText(), lb.getSelectedIndex(), 0,_actualFilter ,Cookies.getCookie("Fears"), getFeaturesCB);
-			}
-
-		});
-		_filter.add(lb);
-
+	    i++;
 	}
 
-	public void update(){
-		_com.search(_projectID, "", lb.getSelectedIndex(), 0,_actualFilter, Cookies.getCookie("Fears"), getFeaturesCB);
-		_com.getProjectName(_projectID, getProjectName);
+	filter.add(filtersTab);
+	filter.setHorizontalAlignment(HorizontalPanel.ALIGN_RIGHT);
+
+	lb.addItem("Ordenar por Último Comentário");
+	lb.addItem("Ordenar por Votos");
+	lb.addItem("Ordenar por Data de Criação");
+	lb.setVisibleItemCount(1);
+	lb.addClickHandler(new ClickHandler() {
+	    
+	    public void onClick(ClickEvent event) {
+		com.search(projectID, sBox.getText(), lb.getSelectedIndex(), 0, actualFilter, Cookies.getCookie("Fears"),
+			getFeaturesCB);
+	    }
+	});
+	filter.add(lb);
+
+    }
+
+    public void update() {
+	com.search(projectID, "", lb.getSelectedIndex(), 0, actualFilter, Cookies.getCookie("Fears"), getFeaturesCB);
+	com.getProjectName(projectID, getProjectName);
+    }
+
+    protected void updateProjectName(String name) {
+	Fears.getPath().setProject(name, projectID);
+    }
+
+    public void updateFeatures(List<ViewFeatureResume> features) {
+	featuresList.clear();
+	featuresViews.clear();
+	searchAlertBox.clear();
+
+	HTML searchAlert;
+
+	if (features == null || features.size() == 0) {
+	    searchAlert = new HTML("N&atilde;o foram encontradas sugest&otilde;es.");
+	    searchAlert.setStylePrimaryName("searchAlert");
+	    searchAlertBox.add(searchAlert);
+	    return;
 	}
 
-	protected void updateProjectName(String name){
-		Fears.getPath().setProject(name, _projectID);
+	if (actualFilter.length() == 0)
+	    if (sBox.getText().length() == 0)
+		searchAlert = new HTML("O projecto tem " + features.size() + " sugest&otilde;es");
+	    else
+		searchAlert = new HTML("Foram encontradas " + features.size() + " sugest&otilde;es, sobre a pesquisa: \""
+			+ sBox.getText() + "\"");
+	else
+	    searchAlert = new HTML("Foram encontradas " + features.size() + " sugest&otilde;es, com o Estado: " + actualFilter);
+
+	searchAlert.setStylePrimaryName("searchAlert");
+	searchAlertBox.add(searchAlert);
+
+	for (int i = 0; i < features.size(); i++) {
+	    FeatureResumeWidget feature = new FeatureResumeWidget(features.get(i), new VoteOnListCB());
+	    feature.setStylePrimaryName("feature");
+	    featuresList.add(feature);
+	    featuresViews.add(feature);
+	}
+    }
+
+    public FeatureResumeWidget getFeature(String webID) {
+
+	if (featuresViews == null || featuresViews.size() == 0) {
+	    return null;
 	}
 
+	for (FeatureResumeWidget f : featuresViews) {
+	    if (f.getWebID().equals(webID))
+		return f;
+	}
+	return null;
+    }
 
-	public void updateFeatures(List<ViewFeatureResume> features){
-		_featuresList.clear();
-		_featuresViews.clear();
-		_searchAlertBox.clear();
-		
-		HTML searchAlert;
-		
-		if(features==null || features.size() ==0 ){
-			searchAlert = new HTML("N&atilde;o foram encontradas sugest&otilde;es." );
-			searchAlert.setStylePrimaryName("searchAlert");
-			_searchAlertBox.add(searchAlert);
-			return;
-		}
+    AsyncCallback<Object> getFeaturesCB = new FearsAsyncCallback<Object>() {
+	@SuppressWarnings("unchecked")
+	public void onSuccess(Object result) {
+	    updateFeatures((List<ViewFeatureResume>) result);
+	}
+    };
 
-		if(_actualFilter.length() == 0)
-			if(sBox.getText().length() == 0)
-				searchAlert = new HTML("O projecto tem " + features.size() + " sugest&otilde;es" );
-			else searchAlert = new HTML("Foram encontradas " + features.size() + " sugest&otilde;es, sobre a pesquisa: \"" + sBox.getText()+ "\"" );
-		else  searchAlert = new HTML("Foram encontradas " + features.size() + " sugest&otilde;es, com o Estado: " + _actualFilter );
+    AsyncCallback<Object> getProjectName = new FearsAsyncCallback<Object>() {
+	public void onSuccess(Object result) {
+	    updateProjectName((String) result);
+	}
+    };
 
-		searchAlert.setStylePrimaryName("searchAlert");
-		_searchAlertBox.add(searchAlert);
+    protected class VoteOnListCB extends FearsAsyncCallback<Object> {
 
-		for(int i=0;i< features.size();i++){
-			FeatureResumeWidget feature =new FeatureResumeWidget(features.get(i), new VoteOnListCB());
-			feature.setStylePrimaryName("feature");
-			_featuresList.add(feature);
-			_featuresViews.add(feature);
-		}
+	protected VoteOnListCB() {
 	}
 
-	public FeatureResumeWidget getFeature(String webID){
-
-		if(_featuresViews==null || _featuresViews.size() ==0 ){
-			return null;
-		}
-
-		for(FeatureResumeWidget f: _featuresViews){
-			if(f.getWebID().equals(webID))
-				return f;
-		}
-		return null;
+	public void onSuccess(Object result) {
+	    ViewFeatureDetailed view = (ViewFeatureDetailed) result;
+	    FeatureResumeWidget f = getFeature(new Integer(view.getFeatureID()).toString());
+	    if (f != null) {
+		f.update(view, false);
+	    }
+	    if (featuresViews != null && featuresViews.size() > 0) {
+		Fears.getHeader().update(projectID, featuresViews);
+	    }
 	}
 
-	AsyncCallback getFeaturesCB = new ExceptionsTreatment() {
-		public void onSuccess(Object result){ 
-			updateFeatures((List<ViewFeatureResume>)result);
-		}
-	};
-
-	AsyncCallback getProjectName = new ExceptionsTreatment() {
-		public void onSuccess(Object result){ 
-			updateProjectName((String)result);
-		}
-	};
-
-	protected class VoteOnListCB extends ExceptionsTreatment{
-
-		protected VoteOnListCB(){}
-
-		public void onSuccess(Object result) {
-			ViewFeatureDetailed view = (ViewFeatureDetailed) result;
-			FeatureResumeWidget f = getFeature(new Integer(view.getFeatureID()).toString());
-			if(f!=null){
-				f.update(view, false);
-			}
-			if(_featuresViews!=null && _featuresViews.size()>0){
-				Fears.getHeader().update(_projectID, _featuresViews);
-			}	
-		}
-
-	}
+    }
 
 }

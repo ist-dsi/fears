@@ -1,254 +1,241 @@
 /* *************
-
 CSS geral:
-
 ************* */
-
 table {
-border-collapse: collapse;
+	border-collapse: collapse;
 }
 
-a { color: #488db7; }
+a {
+	color: #488db7;
+}
 
 body {
-font-family: Arial;
-margin: 0 0 60px 0;
-padding: 0 0 0 0;
-font-size: 76%;
-line-height: 1.6em;
-background: #e8e8de;
+	font-family: Arial;
+	margin: 0 0 60px 0;
+	padding: 0 0 0 0;
+	font-size: 76%;
+	line-height: 1.6em;
+	background: #e8e8de;
 }
 
 .gwt-Label {
+	
 }
 
-
 .centered {
-text-align: center;
-margin: 0px 0px 60px 0px;
-padding: 0px 0px 0px 0px;
-} 
+	text-align: center;
+	margin: 0px 0px 60px 0px;
+	padding: 0px 0px 0px 0px;
+}
 
 .headerBox {
-width: 699px;
-margin: 0 auto;
-color: #5a5a4f;
-margin-top: 5px;
-margin-bottom: 5px;
-padding: 0 0 0 0;
-
+	width: 699px;
+	margin: 0 auto;
+	color: #5a5a4f;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding: 0 0 0 0;
 }
 
 .header {
-width: 699px;
+	width: 699px;
 }
 
 .header a {
-color: #5a5a4f;
+	color: #5a5a4f;
 }
 
 .frameBox {
-border: 4px solid #d5d5ca;
-border: 4px solid #d6d7c7;
-width: 764px;
-background: #fff;
-margin: 0 auto;
+	border: 4px solid #d5d5ca;
+	border: 4px solid #d6d7c7;
+	width: 764px;
+	background: #fff;
+	margin: 0 auto;
 }
 
 .frame {
-width: 694px;	
-margin: 20px 30px 40px 30px;	
+	width: 694px;
+	margin: 20px 30px 40px 30px;
 }
 
-.Path{
-font-size:  1.75em;
-margin: 5px 0;
-color: #888;
-font-weight: bold;
-height: 20px;
-margin-bottom: 15px;
+.Path {
+	font-size: 1.75em;
+	margin: 5px 0;
+	color: #888;
+	font-weight: bold;
+	height: 20px;
+	margin-bottom: 15px;
 }
 
-.pathGreen{
-color: #67a05c;
+.pathGreen {
+	color: #67a05c;
 }
 
-.pathSmall{
-font-size:  0.7em;
+.pathSmall {
+	font-size: 0.7em;
 }
 
 .Path a {
-color: #67a05c;
+	color: #67a05c;
 }
 
-.width100{
-width: 100%;
+.width100 {
+	width: 100%;
 }
 
-.error{
-color: red;
+.error {
+	color: red;
 }
 
-.error-comment{
-margin-left: 89px;
+.error-comment {
+	margin-left: 89px;
 }
 
 /* *************
-
 CSS da pagina de Listar Projectos:
-
 ************* */
 
-.changeOrderButtons{
-padding: 0 0 0 0;
-margin: 0 0 0 0;
-border: 0 0 0 0;
+.changeOrderButtons {
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
+	border: 0 0 0 0;
 }
 
-.orderButton{
-padding: 0 0 0 0;
-margin: 0 0 0 0;
-border: 0 0 0 0;
+.orderButton {
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
+	border: 0 0 0 0;
 }
 
-.listProjectsTitle{
-font-size: 1.75em;
-margin: 25px 0px 0.5em 0;
-color: #67a05c;
-font-weight: bold;
+.listProjectsTitle {
+	font-size: 1.75em;
+	margin: 25px 0px 0.5em 0;
+	color: #67a05c;
+	font-weight: bold;
 }
 
-.project{
-margin-top:5px;
-margin-bottom:19px;
+.project {
+	margin-top: 5px;
+	margin-bottom: 19px;
 }
 
-.projectTop{
-margin-bottom:0.3em;
+.projectTop {
+	margin-bottom: 0.3em;
 }
 
-.projectTitle{
-font-size: 1.5em;
-font-weight: bold;
-text-decoration: none;
-border-bottom: 2px solid #d1e3ed;
-margin-bottom: 0.1em;
+.projectTitle {
+	font-size: 1.5em;
+	font-weight: bold;
+	text-decoration: none;
+	border-bottom: 2px solid #d1e3ed;
+	margin-bottom: 0.1em;
 }
 
-.projectTitle a{
-text-decoration: none;
+.projectTitle a {
+	text-decoration: none;
 }
 
-.projectDescription{
-white-space: pre;
-white-space: pre-line;
+.projectDescription {
+	white-space: pre;
+	white-space: pre-line;
 }
 
 .removeMeta {
-font-size: 0.95em;
-font-weight: normal;
-color: #999;
-text-decoration: none;
-margin-top:1px;
+	font-size: 0.95em;
+	font-weight: normal;
+	color: #999;
+	text-decoration: none;
+	margin-top: 1px;
 }
 
-.removeMeta a{
-font-size: 1em;
-text-decoration: underline;
-font-weight: normal;
-color: #999;
+.removeMeta a {
+	font-size: 1em;
+	text-decoration: underline;
+	font-weight: normal;
+	color: #999;
 }
 
-.removeConfirm{
-background: #f4f4ec;
-font-size: 1.1em;
-font-weight: normal;
-color: #717166;
-padding: 0.3em;
+.removeConfirm {
+	background: #f4f4ec;
+	font-size: 1.1em;
+	font-weight: normal;
+	color: #717166;
+	padding: 0.3em;
 }
-
-
-
-
 
 /* *************
-
 CSS da pagina de Listar Sugestoes:
-
 ************* */
-   
-   
+
 .stats {
-color: #888;
-margin-bottom: 20px;
-margin-top: 0px;
+	color: #888;
+	margin-bottom: 20px;
+	margin-top: 0px;
 }
 
 .searchBox {
-background: #f1f1e7;
-border: 0px solid #eff0e2;
-width: 695px;
-height: 65px;
+	background: #f1f1e7;
+	border: 0px solid #eff0e2;
+	width: 695px;
+	height: 65px;
 }
 
 .search {
-width: 80%;
-margin-top: 15px;
-margin-left: 25px;
+	width: 80%;
+	margin-top: 15px;
+	margin-left: 25px;
 }
 
 .searchTextBox {
-border: 1px solid #bbb;
-padding: 4px;
+	border: 1px solid #bbb;
+	padding: 4px;
 }
 
-.searchButton{
-margin-left: 7px;
+.searchButton {
+	margin-left: 7px;
 }
 
-.addButton{
-margin-left: 7px;
+.addButton {
+	margin-left: 7px;
 }
 
-.currentFilter a{
-color: #554;
-font-weight: bold;
-text-decoration: none;
-white-space: nowrap;
+.currentFilter a {
+	color: #554;
+	font-weight: bold;
+	text-decoration: none;
+	white-space: nowrap;
 }
 
-.filters a{
-color: #554;
-text-decoration: none;
-border-bottom: 1px solid #bba;
-white-space: nowrap;
+.filters a {
+	color: #554;
+	text-decoration: none;
+	border-bottom: 1px solid #bba;
+	white-space: nowrap;
 }
 
-.filterBox {
-/*border: 2px solid #eff0e2;*/
-background: #f9f9f1;
-width: 695px;
-height: 40px;
-margin-top: 15px;
+.filterBox { /*border: 2px solid #eff0e2;*/
+	background: #f9f9f1;
+	width: 695px;
+	height: 40px;
+	margin-top: 15px;
 }
 
-.filter{
-margin-left: 20px;
-width: 94%;
+.filter {
+	margin-left: 20px;
+	width: 94%;
 }
 
-
-.featuresList{
-margin-top: 20px;
+.featuresList {
+	margin-top: 20px;
 }
 
-.searchAlertBox{
+.searchAlertBox {
 	margin-top: 12px;
 	width: 695px;
 	background: rgb(233, 243, 231);
 }
 
-.searchAlert{
+.searchAlert {
 	margin-top: 5px;
 	margin-bottom: 5px;
 	margin-left: 10px;
@@ -256,376 +243,353 @@ margin-top: 20px;
 }
 
 /* *************
-
 CSS das Sugestoes (usado na pag. do proj. e pag da sugestao:
-
 ************* */
 
-
 .feature {
-border-collapse: collapse;
-margin-bottom: 25px;
+	border-collapse: collapse;
+	margin-bottom: 25px;
 }
 
-.Novo { 
-background: #bfbdae;
-font-weight: normal;
-color: #fff;
-font-size: 12px;
-padding:2px 4px;
-margin-left:8px;
-margin-bottom: 3px;
+.Novo {
+	background: #bfbdae;
+	font-weight: normal;
+	color: #fff;
+	font-size: 12px;
+	padding: 2px 4px;
+	margin-left: 8px;
+	margin-bottom: 3px;
 }
- 
+
 .Planeado {
-background: #488db7;
-font-weight: normal;
-color: #fff;
-font-size: 12px;
-padding:2px 4px;
-margin-left:8px;
-margin-bottom: 3px;
+	background: #488db7;
+	font-weight: normal;
+	color: #fff;
+	font-size: 12px;
+	padding: 2px 4px;
+	margin-left: 8px;
+	margin-bottom: 3px;
 }
 
-.Implementacao { 
-background: #db9b48;
-font-weight: normal;
-color: #fff;
-font-size: 12px;
-padding:2px 4px;
-margin-left:8px;
-margin-bottom: 3px;
+.Implementacao {
+	background: #db9b48;
+	font-weight: normal;
+	color: #fff;
+	font-size: 12px;
+	padding: 2px 4px;
+	margin-left: 8px;
+	margin-bottom: 3px;
 }
-
 
 .Completo {
-background: #67a05c;
-font-weight: normal;
-color: #fff;
-font-size: 12px;
-padding:2px 4px;
-margin-left:8px;
-margin-bottom: 3px;
+	background: #67a05c;
+	font-weight: normal;
+	color: #fff;
+	font-size: 12px;
+	padding: 2px 4px;
+	margin-left: 8px;
+	margin-bottom: 3px;
 }
 
 .Rejeitado {
-background: #db5d48;
-font-weight: normal;
-color: #fff;
-font-size: 12px;
-padding:2px 4px;
-margin-left:8px;
-margin-bottom: 3px;
+	background: #db5d48;
+	font-weight: normal;
+	color: #fff;
+	font-size: 12px;
+	padding: 2px 4px;
+	margin-left: 8px;
+	margin-bottom: 3px;
 }
 
 .voteBox {
-background: #fbfaf5;
-border: 4px solid #eff0e2;
-width: 65px;
-height: 70px;
+	background: #fbfaf5;
+	border: 4px solid #eff0e2;
+	width: 65px;
+	height: 70px;
 }
 
-.vote{
-width: 100%;
+.vote {
+	width: 100%;
 }
 
 .NumberVotes {
-font-size: 1.6em;
-font-weight: bold;
-margin-top: 10px;
-color: #488db7;
+	font-size: 1.6em;
+	font-weight: bold;
+	margin-top: 10px;
+	color: #488db7;
 }
 
-.ActionVotes { 	
-color: #488db7;
-font-size: 0.9em;
-text-decoration: underline;
-background: transparent;
-width: 46px;
-border: 0;
-display: block;
-margin-top: 2px;
-padding-top: 2px;
+.ActionVotes {
+	color: #488db7;
+	font-size: 0.9em;
+	text-decoration: underline;
+	background: transparent;
+	width: 46px;
+	border: 0;
+	display: block;
+	margin-top: 2px;
+	padding-top: 2px;
 }
 
-.ActionVotes:hover { 	
-cursor: pointer;
+.ActionVotes:hover {
+	cursor: pointer;
 }
 
-.mainBox{
-margin-left: 20px;
-width: 600px;
+.mainBox {
+	margin-left: 20px;
+	width: 600px;
 }
 
-.mainBox a{
-font-size: 1.5em;
-font-weight: bold;
-text-decoration: none;
+.mainBox a {
+	font-size: 1.5em;
+	font-weight: bold;
+	text-decoration: none;
 }
 
-.featureTitle{
-border-bottom: 2px solid #d1e3ed;
+.featureTitle {
+	border-bottom: 2px solid #d1e3ed;
 }
 
-.featureDetailed{
-margin-top: 20px;
+.featureDetailed {
+	margin-top: 20px;
 }
 
-.featureDescription{
-text-align : justify;
+.featureDescription {
+	text-align: justify;
 }
-
 
 .votersMeta {
-color: #999;
-font-size: 1em;
-font-weight: normal;
+	color: #999;
+	font-size: 1em;
+	font-weight: normal;
 }
 
 .votersMeta a {
-color: #999;
-font-size: 1em;
-font-weight: normal;
-text-decoration: none;
-border-bottom: 1px solid #ddc;
+	color: #999;
+	font-size: 1em;
+	font-weight: normal;
+	text-decoration: none;
+	border-bottom: 1px solid #ddc;
 }
 
-
-
-.gwt-DisclosurePanel .header{
-text-decoration: underline;
-color: #999;
-width: 1px;
+.gwt-DisclosurePanel .header {
+	text-decoration: underline;
+	color: #999;
+	width: 1px;
 }
 
-.showVoters{
-width: 87px;
-cursor : hand;
-/* cursr : pointer; */
-}  
-
+.showVoters {
+	width: 87px;
+	cursor: hand;
+	/* cursr : pointer; */
+}
 
 .meta {
-margin: 0px 0 2px 0;
-font-size: 0.9em;
-font-weight: normal;
-color: #999;
+	margin: 0px 0 2px 0;
+	font-size: 0.9em;
+	font-weight: normal;
+	color: #999;
 }
-
 
 .meta a {
-margin: 4px 0 2px 0;
-color: #999;
-font-size: 1em;
-font-weight: normal;
-text-decoration: none;
- border-bottom: 1px solid #ddc; 
+	margin: 4px 0 2px 0;
+	color: #999;
+	font-size: 1em;
+	font-weight: normal;
+	text-decoration: none;
+	border-bottom: 1px solid #ddc;
 }
 
-.noUnderline{
-text-decoration: none;
+.noUnderline {
+	text-decoration: none;
 }
 
 /* *************
-
 CSS da pagina dos Comentarios (pagina de Sugestao):
-
 ************* */
 
 .votesAndVoters {
-margin-left: 89px;
-font-size: 0.9em;
-color: #999;
-margin-top: 10px;
+	margin-left: 89px;
+	font-size: 0.9em;
+	color: #999;
+	margin-top: 10px;
 }
 
 .commentTitle {
-font-size:  1.5em;
-margin-top: 20px;
-margin-bottom: 5px;
-margin-left: 89px;
-color: #888;
-font-weight: bold;
+	font-size: 1.5em;
+	margin-top: 20px;
+	margin-bottom: 5px;
+	margin-left: 89px;
+	color: #888;
+	font-weight: bold;
 }
 
-.comment{
-margin-top: 5px;
-margin-bottom: 15px;
-border-top: 1px dotted #ccc;
+.comment {
+	margin-top: 5px;
+	margin-bottom: 15px;
+	border-top: 1px dotted #ccc;
 }
 
-.commentItem{
-margin-left: 89px;
-text-align : justify;
+.commentItem {
+	margin-left: 89px;
+	text-align: justify;
 }
 
 .newComment {
-width: 100%;
-border-top: 1px dotted #ccc;
-margin-top: 5px;
+	width: 100%;
+	border-top: 1px dotted #ccc;
+	margin-top: 5px;
 }
 
-.commentTextArea{
-margin-top: 10px;
-margin-left: 89px;
-width: 600px;
-height: 150px;	
+.commentTextArea {
+	margin-top: 10px;
+	margin-left: 89px;
+	width: 600px;
+	height: 150px;
 }
 
-.commentStateChooser{
-margin-top: 10px;
-margin-left: 9px;	
+.commentStateChooser {
+	margin-top: 10px;
+	margin-left: 9px;
 }
 
-.commentButton{
-margin-top: 10px;
-margin-left: 89px;	
+.commentButton {
+	margin-top: 10px;
+	margin-left: 89px;
 }
-	
+
 /* *************
-
 CSS da pagina Adicionar Sugestao:
+************* */
 
-************* */	
-	
 .moreButton {
-background: transparent;
-text-decoration: underline;
-color: #488db7;
-border: 0;
-padding: 0;
-margin-left: -2px;
-}	
-
-.createFeatureForm{
-margin-top:15px;
-
+	background: transparent;
+	text-decoration: underline;
+	color: #488db7;
+	border: 0;
+	padding: 0;
+	margin-left: -2px;
 }
-	
+
+.createFeatureForm {
+	margin-top: 15px;
+}
+
 p.label {
-margin: 10px 0 3px 0;
-padding: 0;
+	margin: 10px 0 3px 0;
+	padding: 0;
 }
 
 p.input {
-margin: 0;
-padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 .titleTextBox {
-padding: 4px;
-background: #fafafa;
-border: 1px solid #bbb;
+	padding: 4px;
+	background: #fafafa;
+	border: 1px solid #bbb;
 }
 
 .descriptionTextBox {
-width: 600px;
-height: 150px;
-padding: 4px;
-background: #fafafa;
-border: 1px solid #bbb;
-
+	width: 600px;
+	height: 150px;
+	padding: 4px;
+	background: #fafafa;
+	border: 1px solid #bbb;
 }
 
-.CreateFeatureCell{
-font-weight: normal;
-vertical-align: top;
-text-align: left;
-border-top: 1px solid #ddd;
-border-bottom: 1px solid #ddd;
-padding: 15px 10px 15px 0;
+.CreateFeatureCell {
+	font-weight: normal;
+	vertical-align: top;
+	text-align: left;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	padding: 15px 10px 15px 0;
 }
 
-.createButtons{
-margin-top: 20px;
+.createButtons {
+	margin-top: 20px;
 }
 
-.pright5{
-margin-right: 7px;	
+.pright5 {
+	margin-right: 7px;
 }
 
-
-.admin{
-margin-bottom: 15px;	
+.admin {
+	margin-bottom: 15px;
 }
-
 
 /* *************
-
 CSS da Pagina dos Voters
-
 ************* */
 
-.UserSubTitle{
-font-weight: bold;
-margin: 0.7em 0 0em 25px;  
+.UserSubTitle {
+	font-weight: bold;
+	margin: 0.7em 0 0em 25px;
 }
 
-.UserFeature{
-margin: 0em 0 0.5em 0;  
+.UserFeature {
+	margin: 0em 0 0.5em 0;
 }
 
-.voterGrid{
-margin-left: 25px;
+.voterGrid {
+	margin-left: 25px;
 }
 
-.voterProject .header{
-text-decoration: none;
-
-} 
-
-.ProjectTitleinVoter{
-color: #488db7;
-font-size: 1.5em;
-font-weight: bold;
-text-decoration: none;
-margin-bottom: 0px;
+.voterProject .header {
+	text-decoration: none;
 }
 
-.ProjectTitleinVoterBox{
-border-bottom: 2px solid #d1e3ed;
-text-decoration: none;
+.ProjectTitleinVoter {
+	color: #488db7;
+	font-size: 1.5em;
+	font-weight: bold;
+	text-decoration: none;
+	margin-bottom: 0px;
 }
 
-.ProjectTitleinVoterBox:hover{ 	
-cursor: pointer;
-text-decoration: none;
+.ProjectTitleinVoterBox {
+	border-bottom: 2px solid #d1e3ed;
+	text-decoration: none;
 }
 
-.voterProject{
-margin-top: 10px;
-margin-bottom: 15px;
+.ProjectTitleinVoterBox:hover {
+	cursor: pointer;
+	text-decoration: none;
+}
 
-} 
+.voterProject {
+	margin-top: 10px;
+	margin-bottom: 15px;
+}
 
 /* *************
-
 CSS da Pagina de Ajuda
-
 ************* */
 
-.helpMainTitle{
-font-size: 1.75em;
-margin: 15px 0px 0.5em 0;
-color: #67a05c;
-font-weight: bold;
+.helpMainTitle {
+	font-size: 1.75em;
+	margin: 15px 0px 0.5em 0;
+	color: #67a05c;
+	font-weight: bold;
 }
 
-.helpTitles{
-font-size: 1.25em;
-color: #67a05c;
-margin-top: 1.5em;
-font-weight: bold;
-margin-bottom: 0.3em;
+.helpTitles {
+	font-size: 1.25em;
+	color: #67a05c;
+	margin-top: 1.5em;
+	font-weight: bold;
+	margin-bottom: 0.3em;
 }
 
 .footer {
-color: #5a5a4f;
-margin: 0 auto;
-margin-top: 10px;
-margin-bottom: 0px;
+	color: #5a5a4f;
+	margin: 0 auto;
+	margin-top: 10px;
+	margin-bottom: 0px;
 }
 
-.footer a{
-color: #5a5a4f;
+.footer a {
+	color: #5a5a4f;
 }

@@ -4,67 +4,62 @@ import java.io.Serializable;
 
 public class ViewProject implements Serializable {
 
+    private static final long serialVersionUID = 727148316108470024L;
+    protected String name;
+    protected int webID;
+    protected String description;
+    protected int nFeatures;
+    protected String author;
+    protected String authorNick;
+    protected int initialVotes;
+    protected int listOrder;
 
+    public ViewProject() {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 727148316108470024L;
-	protected String _name;
-	protected int _webID;
-	protected String _description;
-	protected int _nFeatures;
-	protected String _author;
-	protected String _authorNick;
-	protected int _initialVotes;
-	protected int _listOrder;
+    }
 
-	public ViewProject(){
+    public ViewProject(String name, int webID, String description, int nFeatures, String author, String authorNick,
+	    int initialVotes, int listOrder) {
+	this.name = name;
+	this.webID = webID;
+	this.description = description;
+	this.nFeatures = nFeatures;
+	this.author = author;
+	this.authorNick = authorNick;
+	this.initialVotes = initialVotes;
+	this.listOrder = listOrder;
+    }
 
-	}
+    public String getName() {
+	return name;
+    }
 
-	public ViewProject(String name, int webID, String description, int nFeatures, String author, String authorNick, int initialVotes, int listOrder){
-		_name=name;
-		_webID=webID;
-		_description=description;
-		_nFeatures = nFeatures;
-		_author=author;
-		_authorNick=authorNick;
-		_initialVotes = initialVotes;
-		_listOrder=listOrder;
-	}
+    public int getwebID() {
+	return webID;
+    }
 
-	public String getName() {
-		return _name;
-	}
+    public String getDescription() {
+	return description;
+    }
 
-	public int getwebID() {
-		return _webID;
-	}
+    public int getNFeatures() {
+	return nFeatures;
+    }
 
-	public String getDescription() {
-		return _description;
-	}
+    public String getAuthor() {
+	return author;
+    }
 
-	public int getNFeatures() {
-		return _nFeatures;
-	}
+    public int getInitialVotes() {
+	return initialVotes;
+    }
 
-	public String getAuthor() {
-		return _author;
-	}
+    public String getAuthorNick() {
+	return authorNick;
+    }
 
-	public int getInitialVotes() {
-		return _initialVotes;
-	}
-
-	public String getAuthorNick(){
-		return _authorNick;
-	}
-
-	public int getListOrder(){
-		return _listOrder;
-	}
-
+    public int getListOrder() {
+	return listOrder;
+    }
 
 }

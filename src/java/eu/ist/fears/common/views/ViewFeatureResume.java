@@ -1,121 +1,100 @@
 package eu.ist.fears.common.views;
 
-
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 import eu.ist.fears.common.State;
 
+public class ViewFeatureResume implements IsSerializable {
 
-public class ViewFeatureResume implements IsSerializable{
-	
-	
-	
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4452593206230245849L;
-	protected String _projectName;
-	protected int _projectID;
-	protected String _name;
-	protected int _featureID;
-	protected State _state;
-	protected boolean _userHasVoted;
-	protected String _description;
-	protected int _votes;
-	protected int _nComments;
-	protected String _authorNick;
-	protected String _authorOID;
-	protected String _date;
+    private static final long serialVersionUID = -4452593206230245849L;
+    protected String projectName;
+    protected int projectID;
+    protected String name;
+    protected int featureID;
+    protected State state;
+    protected boolean userHasVoted;
+    protected String _description;
+    protected int votes;
+    protected int nComments;
+    protected String authorNick;
+    protected String authorOID;
+    protected String date;
 
+    public ViewFeatureResume() {
 
-	
-	
-	public  ViewFeatureResume(){
-		
-	}
-	
-	public  ViewFeatureResume(String projectName, int projectID, String name, int featureID, State state, boolean userHasvoted, String description,
-			int votes, int nComments, String authorNick, String authorOID, String date){
-		_projectName = projectName;
-		_projectID = projectID;
-		_name= name;
-		_featureID=featureID;
-		_state=state;
-		_userHasVoted = userHasvoted;
-		int length= description.length();
-		if(length>194){
-			_description= description.substring(0, 194) + " (...)";
-		}else _description= description;
-		//Remove new lines
-		_description = _description.replaceAll("<br>", " ");
-		_votes=votes;
-		_nComments= nComments;
-		_authorNick=authorNick;
-		_date=date;
-		_authorOID=authorOID;
-	}
-	
-	public String getProjectName(){
-		return _projectName;
-		
-	}
-	
-	public int getProjectID(){
-		return _projectID;
-		
-	}
-	
-	public String getName() {
-		return _name;
-	}
-	
-	public int getFeatureID(){
-		return _featureID;
-	}
-	
-	public String getDescription() {
-		return _description;
-	}
-	
-	public int getVotes() {
-		return _votes;
-	}
-	
-	public int getNComments() {
-		return _nComments;
-	}
-	
-	public boolean userHasVoted(){
-		return _userHasVoted;
-	}
-	
-	public State getState(){
-		return _state;
-		
-	}
-	
-	public String getCreatedDate(){
-		return _date;
-	}
-	
-	public String getAuthorNick(){
-		return _authorNick;
-	}
-	
-	public String getAuthorOID(){
-        return _authorOID;
     }
-	
-	//Inserts a new line before the ith position, in the position of a white space
-	//(for not cutting words)
-	private String insertNewLine(int i,String desc){
-		for(int j=i;j>0;j--){
-			if(desc.charAt(j)==' '){
-				return desc.substring(0,j) + "\n" + desc.substring(j, desc.length());
-			}
-		}
-		return desc;
-	}
-	
+
+    public ViewFeatureResume(String projectName, int projectID, String name, int featureID, State state, boolean userHasvoted,
+	    String description, int votes, int nComments, String authorNick, String authorOID, String date) {
+	this.projectName = projectName;
+	this.projectID = projectID;
+	this.name = name;
+	this.featureID = featureID;
+	this.state = state;
+	this.userHasVoted = userHasvoted;
+	int length = description.length();
+	if (length > 194) {
+	    _description = description.substring(0, 194) + " (...)";
+	} else
+	    _description = description;
+	// Remove new lines
+	_description = _description.replaceAll("<br>", " ");
+	this.votes = votes;
+	this.nComments = nComments;
+	this.authorNick = authorNick;
+	this.date = date;
+	this.authorOID = authorOID;
+    }
+
+    public String getProjectName() {
+	return projectName;
+
+    }
+
+    public int getProjectID() {
+	return projectID;
+
+    }
+
+    public String getName() {
+	return name;
+    }
+
+    public int getFeatureID() {
+	return featureID;
+    }
+
+    public String getDescription() {
+	return _description;
+    }
+
+    public int getVotes() {
+	return votes;
+    }
+
+    public int getNComments() {
+	return nComments;
+    }
+
+    public boolean userHasVoted() {
+	return userHasVoted;
+    }
+
+    public State getState() {
+	return state;
+
+    }
+
+    public String getCreatedDate() {
+	return date;
+    }
+
+    public String getAuthorNick() {
+	return authorNick;
+    }
+
+    public String getAuthorOID() {
+	return authorOID;
+    }
+
 }

@@ -16,153 +16,150 @@ import eu.ist.fears.client.DisplayFeatureDetailed;
 import eu.ist.fears.client.Fears;
 import eu.ist.fears.common.FearsConfig;
 import eu.ist.fears.common.communication.Communication;
-import eu.ist.fears.common.exceptions.ExceptionsTreatment;
+import eu.ist.fears.common.exceptions.FearsAsyncCallback;
 import eu.ist.fears.common.views.ViewVoterResume;
 
 public class Header extends Composite {
 
-    protected HTML sessionLink; 
-    protected HTML _welcMessage; 
-    protected HorizontalPanel _headerBox; 
-    protected HTML _adminLink;
-    protected Hyperlink _adminAdministrators;
-    protected Communication _com;
-    protected HTML _votes;
+    protected HTML sessionLink;
+    protected HTML welcMessage;
+    protected HorizontalPanel headerBox;
+    protected HTML adminLink;
+    protected Hyperlink adminAdministrators;
+    protected Communication com;
+    protected HTML votes;
 
-    public Header(String username ,boolean loggedIn, boolean admin){
-        _com=new Communication("service");
-        _votes= new HTML();
-        _headerBox = new HorizontalPanel();
-        _headerBox.setStyleName("headerBox");
-        _adminLink = new HTML("&nbsp;<a href=\"Admin.html\">Admin</a>&nbsp;|&nbsp;");
-        _adminAdministrators = new Hyperlink("","");
+    public Header(String username, boolean loggedIn, boolean admin) {
+	com = new Communication("service");
+	votes = new HTML();
+	headerBox = new HorizontalPanel();
+	headerBox.setStyleName("headerBox");
+	adminLink = new HTML("&nbsp;<a href=\"Admin.html\">Admin</a>&nbsp;|&nbsp;");
+	adminAdministrators = new Hyperlink("", "");
 
-        HorizontalPanel left = new HorizontalPanel();
-        HorizontalPanel right = new HorizontalPanel();
-        HorizontalPanel header = new HorizontalPanel();
-        sessionLink = new HTML();
-        header.setStyleName("header");
-        _headerBox.add(header);
-        header.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
-        header.setVerticalAlignment(HasVerticalAlignment.ALIGN_TOP);
-        header.add(left);
-        header.setHorizontalAlignment(HorizontalPanel.ALIGN_RIGHT);
-        header.add(right);
-        left.setStyleName("left");
-        left.add(new Image("ist_01.gif"));
-        left.add(new HTML("&nbsp;&nbsp;<a href=\"index.html\">fears</a> |"));
+	HorizontalPanel left = new HorizontalPanel();
+	HorizontalPanel right = new HorizontalPanel();
+	HorizontalPanel header = new HorizontalPanel();
+	sessionLink = new HTML();
+	header.setStyleName("header");
+	headerBox.add(header);
+	header.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+	header.setVerticalAlignment(HasVerticalAlignment.ALIGN_TOP);
+	header.add(left);
+	header.setHorizontalAlignment(HorizontalPanel.ALIGN_RIGHT);
+	header.add(right);
+	left.setStyleName("left");
+	left.add(new Image("ist_01.gif"));
+	left.add(new HTML("&nbsp;&nbsp;<a href=\"index.html\">fears</a> |"));
 
-        left.add(_adminLink);
-        left.add(_adminAdministrators);
+	left.add(adminLink);
+	left.add(adminAdministrators);
 
-        right.setStyleName("right");
-        _welcMessage = new HTML("Votos de&nbsp;" + Fears.getNickname());
-        right.add(_welcMessage);
-        right.add(new HTML("&nbsp;|&nbsp;"));
-        right.add(_votes);
-        HorizontalPanel help = new HorizontalPanel();
-        help.add(new Hyperlink("Ajuda","help"));
-        help.add(new HTML("&nbsp;|&nbsp;"));
-        right.add(help);
-        right.add(sessionLink);
+	right.setStyleName("right");
+	welcMessage = new HTML("Votos de&nbsp;" + Fears.getNickname());
+	right.add(welcMessage);
+	right.add(new HTML("&nbsp;|&nbsp;"));
+	right.add(votes);
+	HorizontalPanel help = new HorizontalPanel();
+	help.add(new Hyperlink("Ajuda", "help"));
+	help.add(new HTML("&nbsp;|&nbsp;"));
+	right.add(help);
+	right.add(sessionLink);
 
-
-        initWidget(_headerBox);
-        update(false, admin);
+	initWidget(headerBox);
+	update(false, admin);
     }
 
-    public void update(boolean inProjectPage, boolean adminPage){
+    public void update(boolean inProjectPage, boolean adminPage) {
 
-        if(!Fears.isLogedIn()){
-            _votes.setText("");
-            if(adminPage)
-                sessionLink.setHTML("<a href=\""+ FearsConfig.getCasUrl() + "?service=" +GWT.getHostPageBaseURL()+"Admin.html\">login</a>");
-            else
-                sessionLink.setHTML("<a href=\""+ FearsConfig.getCasUrl() + "?service=" +GWT.getHostPageBaseURL()+"Fears.html\">login</a>");
+	if (!Fears.isLogedIn()) {
+	    votes.setText("");
+	    if (adminPage)
+		sessionLink.setHTML("<a href=\"" + FearsConfig.getCasUrl() + "?service=" + GWT.getHostPageBaseURL()
+			+ "Admin.html\">login</a>");
+	    else
+		sessionLink.setHTML("<a href=\"" + FearsConfig.getCasUrl() + "?service=" + GWT.getHostPageBaseURL()
+			+ "Fears.html\">login</a>");
 
-            _welcMessage.setHTML("Votos de&nbsp;"+Fears.getNickname());
+	    welcMessage.setHTML("Votos de&nbsp;" + Fears.getNickname());
 
-        }else{
-            if(inProjectPage){
-                _votes.setHTML("Tem <b>" + Fears.getVotesLeft() + "</b> votos dispon&iacute;veis&nbsp;|&nbsp;");
-                _welcMessage.setHTML("<a href=\"#Project" + Fears.getCurrentProject() + "&" + "viewUser"+ Fears.getUserOID()+ "\">" + "Votos de&nbsp;" + Fears.getNickname() + "</a>");
-            }
-            else {
-                _votes.setText("");
-                _welcMessage.setHTML("<a href=\"#" + "viewUser"+ Fears.getUserOID() + "\">" + "Votos de&nbsp;" + Fears.getNickname()  + "</a>");
-            }
-            
-            
-            if(adminPage && Fears.isAdminUser())
-                sessionLink.setHTML("<a href=\"" + FearsConfig.getCasUrl() + "logout\">logout</a>");
-            else
-                sessionLink.setHTML("<a href=\"" + FearsConfig.getCasUrl() + "logout\">logout</a>");
-                  
-        }
+	} else {
+	    if (inProjectPage) {
+		votes.setHTML("Tem <b>" + Fears.getVotesLeft() + "</b> votos dispon&iacute;veis&nbsp;|&nbsp;");
+		welcMessage.setHTML("<a href=\"#Project" + Fears.getCurrentProject() + "&" + "viewUser" + Fears.getUserOID()
+			+ "\">" + "Votos de&nbsp;" + Fears.getNickname() + "</a>");
+	    } else {
+		votes.setText("");
+		welcMessage.setHTML("<a href=\"#" + "viewUser" + Fears.getUserOID() + "\">" + "Votos de&nbsp;"
+			+ Fears.getNickname() + "</a>");
+	    }
 
-        if(adminPage && Fears.isAdminUser()){
-            _adminAdministrators.setText("Administradores");
-            _adminAdministrators.setTargetHistoryToken("admins");	
-        }else {
-            _adminAdministrators.setText("");
-        }
+	    if (adminPage && Fears.isAdminUser())
+		sessionLink.setHTML("<a href=\"" + FearsConfig.getCasUrl() + "logout\">logout</a>");
+	    else
+		sessionLink.setHTML("<a href=\"" + FearsConfig.getCasUrl() + "logout\">logout</a>");
+
+	}
+
+	if (adminPage && Fears.isAdminUser()) {
+	    adminAdministrators.setText("Administradores");
+	    adminAdministrators.setTargetHistoryToken("admins");
+	} else {
+	    adminAdministrators.setText("");
+	}
 
     }
 
-    public void update(String projectID, DisplayFeatureDetailed d){
-        _com.getCurrentVoter(projectID, Cookies.getCookie("fears"), new GetCurrentVoter(d));
+    public void update(String projectID, DisplayFeatureDetailed d) {
+	com.getCurrentVoter(projectID, Cookies.getCookie("fears"), new GetCurrentVoter(d));
     }
 
-    public void update(String projectID, List<FeatureResumeWidget> f){
-        _com.getCurrentVoter(projectID, Cookies.getCookie("fears"), new GetCurrentVoter(f));
+    public void update(String projectID, List<FeatureResumeWidget> f) {
+	com.getCurrentVoter(projectID, Cookies.getCookie("fears"), new GetCurrentVoter(f));
     }
 
-    public void update(String projectID){
-        _com.getCurrentVoter(projectID, Cookies.getCookie("fears"), new GetCurrentVoter());
+    public void update(String projectID) {
+	com.getCurrentVoter(projectID, Cookies.getCookie("fears"), new GetCurrentVoter());
     }
 
+    protected class GetCurrentVoter extends FearsAsyncCallback<Object> {
+	DisplayFeatureDetailed _d;
+	List<FeatureResumeWidget> _f;
 
-    protected class GetCurrentVoter extends ExceptionsTreatment{
-        DisplayFeatureDetailed _d;
-        List<FeatureResumeWidget> _f;
+	public GetCurrentVoter() {
+	}
 
-        public GetCurrentVoter(){
-        }
+	public GetCurrentVoter(DisplayFeatureDetailed d) {
+	    _d = d;
+	}
 
-        public GetCurrentVoter(DisplayFeatureDetailed d){
-            _d=d;
-        }
+	public GetCurrentVoter(List<FeatureResumeWidget> f) {
+	    _f = f;
+	}
 
-        public GetCurrentVoter(List<FeatureResumeWidget> f){
-            _f=f;
-        }
+	public void onSuccess(Object result) {
+	    ViewVoterResume voter = (ViewVoterResume) result;
+	    if (voter != null) {
+		Fears.validCookie = true;
+		Fears.setCurrentUser(voter);
+		Header.this.update(true, Fears.isAdminPage());
 
-        public void onSuccess(Object result){
-            ViewVoterResume voter = (ViewVoterResume) result;
-            if(voter!=null){
-                Fears.validCookie= true;
-                Fears.setCurrentUser(voter);
-                Header.this.update(true, Fears.isAdminPage());
+		if (_d != null) {
+		    _d.updateUserInfo();
+		}
 
-                if(_d!=null){
-                    _d.updateUserInfo();
-                }
+		if (_f != null && _f.size() > 0) {
+		    for (FeatureResumeWidget f : _f) {
+			f.updateUserInfo();
+		    }
 
-                if(_f!=null && _f.size()>0){
-                    for(FeatureResumeWidget f : _f ){
-                        f.updateUserInfo();
-                    }
-
-                }
-            }
-            else {
-                Fears.validCookie= false;
-                Header.this.update(false, Fears.isAdminPage());
-            }
-        }
-
+		}
+	    } else {
+		Fears.validCookie = false;
+		Header.this.update(false, Fears.isAdminPage());
+	    }
+	}
 
     };
-
 
 }

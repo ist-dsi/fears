@@ -1,146 +1,144 @@
 package eu.ist.fears.client.admin;
 
-
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 import eu.ist.fears.client.Fears;
 import eu.ist.fears.common.communication.Communication;
-import eu.ist.fears.common.exceptions.ExceptionsTreatment;
+import eu.ist.fears.common.exceptions.FearsAsyncCallback;
 import eu.ist.fears.common.views.ViewAdmins;
 
-public class ListAdmins  extends Composite {
-	protected Communication _com;
-	protected VerticalPanel _contentPanel;
-	private TextBox _newAdminName; 
-	private Button _createAdminButton;
-	protected VerticalPanel _errors;
-	protected String _projectId;
+public class ListAdmins extends Composite {
+    protected Communication com;
+    protected VerticalPanel contentPanel;
+    private TextBox newAdminName;
+    private Button createAdminButton;
+    protected VerticalPanel errors;
+    protected String projectId;
 
-	public ListAdmins(String projectId){
-		_com= new Communication("service");
-		_contentPanel = new VerticalPanel();
-		_errors= new VerticalPanel();
-		_errors.setStyleName("error");
-		_projectId=projectId;
+    public ListAdmins(String projectId) {
+	com = new Communication("service");
+	contentPanel = new VerticalPanel();
+	errors = new VerticalPanel();
+	errors.setStyleName("error");
+	this.projectId = projectId;
 
-		_newAdminName = new TextBox();
+	newAdminName = new TextBox();
 
-		initWidget(_contentPanel);
-		init();
-		update();
-	}
+	initWidget(contentPanel);
+	init();
+	update();
+    }
 
-	private void init(){
-		_contentPanel.clear();
+    private void init() {
+	contentPanel.clear();
 
-	}
+    }
 
-	public void update(){
-		if(_projectId==null)
-			_com.getAdmins(Cookies.getCookie("fears"), getAdminCB);
-		else _com.getProjectAdmins(_projectId, getAdminCB);
-	}
+    public void update() {
+	if (projectId == null)
+	    com.getAdmins(Cookies.getCookie("fears"), getAdminCB);
+	else
+	    com.getProjectAdmins(projectId, getAdminCB);
+    }
 
-	private void displayCreateAdmin(){
-		if(!Fears.isAdminUser())
-			return;
-		
-		_contentPanel.add(new HTML("<br><br><h2>Adicionar Administrador</h2>"));
-		_contentPanel.add(new Label("Nome de Utilizador (IST ID) do Administrador:"));
-		_newAdminName.setText("");
-		_contentPanel.add(_newAdminName);
-		_createAdminButton = new Button("Adicionar Administrador");
-		_contentPanel.add(_createAdminButton);
-		_contentPanel.add(_errors);
+    private void displayCreateAdmin() {
+	if (!Fears.isAdminUser())
+	    return;
 
-		_createAdminButton.addClickListener(new ClickListener(){
-			public void onClick(Widget sender) {
-				_errors.clear();
-				if(_newAdminName.getText().length() == 0){
-					_errors.add(new HTML("Erro:"));
-					_errors.add(new HTML("Tem de preencher o nome do Administrador."));	
-					return;
-				}
-				
-				if(_projectId==null)
-					_com.addAdmin(_newAdminName.getText(), Cookies.getCookie("fears"), getAdminCB);
-				else _com.addProjectAdmin(_newAdminName.getText(), _projectId, getAdminCB);
-			}
-		}); 
+	contentPanel.add(new HTML("<br><br><h2>Adicionar Administrador</h2>"));
+	contentPanel.add(new Label("Nome de Utilizador (IST ID) do Administrador:"));
+	newAdminName.setText("");
+	contentPanel.add(newAdminName);
+	createAdminButton = new Button("Adicionar Administrador");
+	contentPanel.add(createAdminButton);
+	contentPanel.add(errors);
+	createAdminButton.addClickHandler(new ClickHandler() {
 
-	}
-
-	private class AdminWidget extends Composite{
-		HorizontalPanel _contentPanel; 
-		String _name;
-		Label _nickName;
-		Button _removeButton;
-
-		public AdminWidget(String name, String nickName){
-			_name = name;
-			_nickName = new Label(nickName);
-			_removeButton = new Button("Remover");
-			_removeButton.setSize("66", "25");
-			_removeButton.addClickListener(new RemoveAdmin());
-			_contentPanel = new HorizontalPanel();
-
-			_contentPanel.add(_nickName);
-			_contentPanel.add(_removeButton);
-
-			initWidget(_contentPanel);
+	    public void onClick(ClickEvent event) {
+		errors.clear();
+		if (newAdminName.getText().length() == 0) {
+		    errors.add(new HTML("Erro:"));
+		    errors.add(new HTML("Tem de preencher o nome do Administrador."));
+		    return;
 		}
 
+		if (projectId == null)
+		    com.addAdmin(newAdminName.getText(), Cookies.getCookie("fears"), getAdminCB);
+		else
+		    com.addProjectAdmin(newAdminName.getText(), projectId, getAdminCB);
+	    }
+	});
 
-		protected class RemoveAdmin implements ClickListener{
+    }
 
-			public void onClick(Widget sender) {
-				if(_projectId==null)
-				_com.removeAdmin(_name, Cookies.getCookie("fears"), getAdminCB);
-				else
-				_com.removeProjectAdmin(_name, _projectId, getAdminCB);
-			}
+    private class AdminWidget extends Composite {
+	private HorizontalPanel contentPanel;
+	private String name;
+	private Label nickName;
+	private Button removeButton;
 
-		}
+	public AdminWidget(String name, String nickName) {
+	    this.name = name;
+	    this.nickName = new Label(nickName);
+	    removeButton = new Button("Remover");
+	    removeButton.setSize("66", "25");
+	    removeButton.addClickHandler(new RemoveAdmin());
+	    contentPanel = new HorizontalPanel();
+
+	    contentPanel.add(this.nickName);
+	    contentPanel.add(removeButton);
+
+	    initWidget(contentPanel);
+	}
+
+	protected class RemoveAdmin implements ClickHandler {
+	    public void onClick(ClickEvent sender) {
+		if (projectId == null)
+		    com.removeAdmin(name, Cookies.getCookie("fears"), getAdminCB);
+		else
+		    com.removeProjectAdmin(name, projectId, getAdminCB);
+	    }
 
 	}
 
-	protected void updateAdmin(ViewAdmins admins){
-		init();
-		if(admins.getProjectId()==null)
-			Fears.getPath().setAdmins();
-		else Fears.getPath().setEditAdmins(admins.getProjectName(), admins.getProjectId());
-			
+    }
 
-		if(admins==null || admins.getAdmins()==null  || admins.getAdmins().size()==0){
-			_contentPanel.add(new Label("Nao ha Administradores"));
-		} else {
-			for(int i=0;i<admins.getAdmins().size(); i++){
-				AdminWidget a = new AdminWidget(admins.getAdmins().get(i), admins.getAdminsNick().get(i));
-				a.setStyleName("admin");
-				_contentPanel.add(a);
-			}
-		}
+    protected void updateAdmin(ViewAdmins admins) {
+	init();
+	if (admins.getProjectId() == null)
+	    Fears.getPath().setAdmins();
+	else
+	    Fears.getPath().setEditAdmins(admins.getProjectName(), admins.getProjectId());
 
-		displayCreateAdmin();
-
+	if (admins == null || admins.getAdmins() == null || admins.getAdmins().size() == 0) {
+	    contentPanel.add(new Label("Nao ha Administradores"));
+	} else {
+	    for (int i = 0; i < admins.getAdmins().size(); i++) {
+		AdminWidget a = new AdminWidget(admins.getAdmins().get(i), admins.getAdminsNick().get(i));
+		a.setStyleName("admin");
+		contentPanel.add(a);
+	    }
 	}
 
+	displayCreateAdmin();
 
-	AsyncCallback getAdminCB = new ExceptionsTreatment() {
-		public void onSuccess(Object result){ 
-			updateAdmin((ViewAdmins) result);
-		}
-		
-	};
+    }
+
+    AsyncCallback<Object> getAdminCB = new FearsAsyncCallback<Object>() {
+	public void onSuccess(Object result) {
+	    updateAdmin((ViewAdmins) result);
+	}
+
+    };
 
 }

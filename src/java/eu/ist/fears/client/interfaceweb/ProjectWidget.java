@@ -14,39 +14,38 @@ import eu.ist.fears.common.views.ViewProject;
 
 public class ProjectWidget extends Composite{
 
-	protected VerticalPanel _project; 
-	protected VerticalPanel _projectContainer;
-	protected Label _name;
-	protected Label _description;
-	protected int _nFeatures;
-	protected Label _author;
-	protected Button _removeButton;
-	protected HorizontalPanel _admin;
-	protected Communication _com;
+	protected VerticalPanel project; 
+	protected VerticalPanel projectContainer;
+	protected Label name;
+	protected Label description;
+	protected int nFeatures;
+	protected Label author;
+	protected Button removeButton;
+	protected HorizontalPanel admin;
+	protected Communication com;
 
 	public ProjectWidget(ViewProject p){
-		_com= new Communication("service");
-		_name = new Label(p.getName());
-		_description= new Label(p.getDescription());
-		_nFeatures = p.getNFeatures();
-		_author= new Label(p.getAuthor());
+		com= new Communication("service");
+		name = new Label(p.getName());
+		description= new Label(p.getDescription());
+		nFeatures = p.getNFeatures();
+		author= new Label(p.getAuthor());
+		project = new VerticalPanel();
+		projectContainer = new VerticalPanel();
 
-		_project = new VerticalPanel();
-		_projectContainer = new VerticalPanel();
-
-		_projectContainer.add(_project);
-		_projectContainer.setStyleName("project");
+		projectContainer.add(project);
+		projectContainer.setStyleName("project");
 		
 		HorizontalPanel top = new HorizontalPanel();
 		top.setStyleName("projectTop");
-		Hyperlink title = new Hyperlink(_name.getText(), "Project" + p.getwebID());
+		Hyperlink title = new Hyperlink(name.getText(), "Project" + p.getwebID());
 		title.setStyleName("projectTitle");
 		top.add(title);
-		top.add(new HTML("&nbsp; ("+_nFeatures + " Sugest&otilde;es)"));
-		_project.add(top); 
-		_description.setStyleName("projectDescription");
-		_project.add(_description);
-		initWidget(_projectContainer);
+		top.add(new HTML("&nbsp; ("+nFeatures + " Sugest&otilde;es)"));
+		project.add(top); 
+		description.setStyleName("projectDescription");
+		project.add(description);
+		initWidget(projectContainer);
 	}
 
 }

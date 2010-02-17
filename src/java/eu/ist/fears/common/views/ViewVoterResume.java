@@ -2,64 +2,57 @@ package eu.ist.fears.common.views;
 
 import java.io.Serializable;
 
-
-
 public class ViewVoterResume implements Serializable {
 
-
-
-    /**
-     * 
-     */
     private static final long serialVersionUID = -5527088349945022648L;
 
-    protected String _user;
-    protected String _userNick;
-    protected String _oid;
-    protected int _votesLeft;
-    protected boolean _isAdmin;
+    protected String user;
+    protected String userNick;
+    protected String oid;
+    protected int votesLeft;
+    protected boolean isAdmin;
 
-    public ViewVoterResume(){}
+    public ViewVoterResume() {
+    }
 
-    public ViewVoterResume(String name, String nick, String oid, boolean isAdmin){
-        _user=name;
-        _userNick=nick;
-        _isAdmin=isAdmin;
-        _oid=oid;
+    public ViewVoterResume(String name, String nick, String oid, boolean isAdmin) {
+	user = name;
+	userNick = nick;
+	this.isAdmin = isAdmin;
+	this.oid = oid;
 
     }
 
-    public ViewVoterResume(String name, String nick, String oid, int votesLeft, boolean isAdmin){
-        _user=name;
-        _userNick=nick;
-        _votesLeft=votesLeft;
-        _isAdmin= isAdmin;
-        _oid=oid;
+    public ViewVoterResume(String name, String nick, String oid, int votesLeft, boolean isAdmin) {
+	user = name;
+	userNick = nick;
+	this.votesLeft = votesLeft;
+	this.isAdmin = isAdmin;
+	this.oid = oid;
     }
 
-
-    public String getName(){
-        return _user;
+    public String getName() {
+	return user;
     }
 
-    public int getVotesLeft(){
-        return _votesLeft;
+    public int getVotesLeft() {
+	return votesLeft;
     }
 
-    public boolean isAdmin(){
-        return _isAdmin;
+    public boolean isAdmin() {
+	return isAdmin;
     }
 
-    public void setName(String user){
-        _user=user;
+    public void setName(String user) {
+	this.user = user;
     }
 
-    public String getNick(){
-        return _userNick;
+    public String getNick() {
+	return userNick;
     }
 
-    public String getOID(){
-        return _oid;
+    public String getOID() {
+	return oid;
     }
 
 }

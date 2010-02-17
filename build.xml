@@ -1,143 +1,136 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project name="Fears" default="compile" basedir=".">
-  <description>
-    Fears build file.  This is used to package up your project as a jar,
-    if you want to distribute it.  This isn't needed for normal operation.
-  </description>
-	
-	
-	<property name="adminUser" value="ist1XXXXX"/>
+	<property name="adminUser" value="ist1XXXXX" />
 
-	
-  <property name="src.dir" location="src"/>
-  <property name="src.gen.dir" location="src_gen"/>
-  <property name="java.src.dir" location="${src.dir}/java"/>
-  <property name="dml.src.dir" location="${src.dir}/dml"/>
-	<property name="html.src.dir" location="${src.dir}/html"/>
-  <property name="webapp.src.dir" location="${src.dir}/webapp"/>
-  <property name="build.dir" location="bin"/>
-  <property name="lib.dir" location="lib"/>
-  <property name="config.dir" location="config"/>
-  <property name="deploy.lib.dir" location="deploy-lib"/>
-  <property name="build.webapp.dir" location="war"/>
-  <property name="www.dir" location="www"/>
-  <property name="fears.dml" location="${dml.src.dir}/fears.dml"/>
-  <property name="dml.fenix.sqltypes" value="${config.dir}/dataTypesJDBCTypes.properties"/>
-  <property name="dml.fenix.typeconverters" value="${config.dir}/dataTypeConversors.properties"/>
 
-<property name="tomcat" value="C:\Program Files\Apache Software Foundation\Tomcat 6.0\webapps\webapp\"/>
-	
-	
-	<import file="dml-generate.xml"/>
+	<property name="src.dir" location="src" />
+	<property name="src.gen.dir" location="src_gen" />
+	<property name="java.src.dir" location="${src.dir}/java" />
+	<property name="dml.src.dir" location="${src.dir}/dml" />
+	<property name="html.src.dir" location="${src.dir}/html" />
+	<property name="webapp.src.dir" location="${src.dir}/webapp" />
+	<property name="build.dir" location="bin" />
+	<property name="lib.dir" location="lib" />
+	<property name="config.dir" location="config" />
+	<property name="deploy.lib.dir" location="deploy-lib" />
+	<property name="build.webapp.dir" location="war" />
+	<property name="www.dir" location="www" />
+	<property name="fears.dml" location="${dml.src.dir}/fears.dml" />
+	<property name="dml.fenix.sqltypes" value="${config.dir}/dataTypesJDBCTypes.properties" />
+	<property name="dml.fenix.typeconverters" value="${config.dir}/dataTypeConversors.properties" />
+	<property name="deploy.dir" value="deploy" />
+	<import file="dml-generate.xml" />
 
-  <!-- set classpath -->
-  <path id="project.class.path">
-    <pathelement path="${java.class.path}/"/>
-    <pathelement path="lib/gwt-user.jar"/>
-    <!-- Additional dependencies (such as junit) go here -->
-  </path>
+	<!-- set classpath -->
+	<path id="classpath">
+		<pathelement path="${java.class.path}/" />
+		<pathelement path="lib/ant-gwt.jar" />
+		<pathelement path="lib/gwt-user.jar" />
+		<pathelement path="lib/gwt-dev.jar" />
+	</path>
 
-	
+	<taskdef resource="dk/contix/ant/gwt/ant-gwt.xml" classpathref="classpath" />
+
 	<target name="generate-domain" description="Generates the domain classes">
-	   <dml-compile dml="${fears.dml}" java-sources="${java.src.dir}" java-gen="${src.gen.dir}">
-	   	<classpath>
-	   	        <fileset dir="${deploy.lib.dir}">
-	   	        </fileset>
-	   	      </classpath>
-	    <!-- <classpath refid="project.class.path"/> -->
-	   </dml-compile>
-	 </target>
-
-  
-  <target name="compile" depends="generate-domain" description="Compile src to bin">
-    <mkdir dir="${build.dir}"/>
-    <javac destdir="${build.dir}" extdirs="${lib.dir}:${deploy.lib.dir}" debug="on" debuglevel="lines,vars,source" target="1.5">
-      <src path="${java.src.dir}"/>
-      <src path="${src.gen.dir}"/>
-    </javac>
-
-    <java classname="pt.ist.fenixframework.pstm.PostProcessDomainClasses" 
-          dir="${build.dir}"
-          fork="true">
-      <classpath>
-        <pathelement path="${build.dir}"/>
-       <!-- Tirei a dir lib, o windows nao gostava de tantos argumentos... -->
-        <fileset dir="${deploy.lib.dir}"/>
-      </classpath>
-      <arg value="-d"/>
-      <arg value="${fears.dml}"/>
-    </java>
-  </target>
-
-  <target name="clean">
-    <!-- Delete the bin directory tree -->
-    <delete dir="${build.dir}"/>
-    <delete dir="${build.webapp.dir}"/>
-    <delete dir="${www.dir}"/>
-    <delete dir="${src.gen.dir}"/>
-  </target>
-
-  <target name="compile-javascript" depends="compile">
-    <java classname="com.google.gwt.dev.Compiler" fork="true">
-    	<jvmarg value="-Xmx256M"/>
-    		
-      <classpath>
-        <pathelement path="${java.src.dir}"/>
-         <pathelement path="${build.dir}"/>
-      	<!-- Tirei dir, o windows nao gostava de muitos parametros -->
-      	  <fileset file="${lib.dir}/gwt-linux/gwt-dev-linux.jar"/> 
-      	<fileset file="${lib.dir}/gwt-user.jar"/> 
-      </classpath>
-      <arg value="eu.ist.fears.Fears"/> 
-    	<!-- <arg value="-style"/>
-    	<arg value="DETAILED"/> -->
-    </java>
-  </target>
-
-  <target name="build-webapp" depends="compile-javascript">
-    <mkdir dir="${build.webapp.dir}"/>
-    <mkdir dir="${build.webapp.dir}/WEB-INF"/>
-    <mkdir dir="${build.webapp.dir}/WEB-INF/lib"/>
-    <mkdir dir="${build.webapp.dir}/WEB-INF/classes"/>
-    <copy todir="${build.webapp.dir}/WEB-INF">
-      <fileset dir="${webapp.src.dir}" />
-    </copy>
-    <copy todir="${build.webapp.dir}/WEB-INF/lib">
-      <fileset dir="${deploy.lib.dir}" />
-    </copy>
-    <copy todir="${build.webapp.dir}/WEB-INF/classes">
-      <fileset dir="${build.dir}" />
-      <fileset dir="${dml.src.dir}" />
-      <fileset dir="${config.dir}" />
-    </copy>
-    <copy todir="${build.webapp.dir}">
-      <fileset dir="${html.src.dir}"/> 
-    </copy>
-  	<copy file="${build.webapp.dir}/Fears.html" tofile="${build.webapp.dir}/index.html"> </copy>
-  </target>
-	
-	<target name="build-war" depends="build-webapp">
-	<zip destfile="fears.war" basedir="${build.webapp.dir}"></zip>
+		<dml-compile dml="${fears.dml}" java-sources="${java.src.dir}" java-gen="${src.gen.dir}">
+			<classpath>
+				<fileset dir="${deploy.lib.dir}">
+				</fileset>
+			</classpath>
+		</dml-compile>
 	</target>
-	
+
+
+	<target name="compile-code" depends="generate-domain" description="Compile src to bin">
+		<mkdir dir="${build.dir}" />
+		<javac destdir="${build.dir}" extdirs="${lib.dir}:${deploy.lib.dir}" debug="on" debuglevel="lines,vars,source" target="1.5">
+			<src path="${java.src.dir}" />
+			<src path="${src.gen.dir}" />
+		</javac>
+
+		<java classname="pt.ist.fenixframework.pstm.PostProcessDomainClasses" dir="${build.dir}" fork="true">
+			<classpath>
+				<pathelement path="${build.dir}" />
+				<!-- Tirei a dir lib, o windows nao gostava de tantos argumentos... -->
+				<fileset dir="${deploy.lib.dir}" />
+			</classpath>
+			<arg value="-d" />
+			<arg value="${fears.dml}" />
+		</java>
+	</target>
+
+	<target name="clean-all">
+		<delete dir="${build.dir}" />
+		<delete includeemptydirs="true">
+			<fileset dir="${build.webapp.dir}" includes="**/*" />
+		</delete>
+
+		<delete dir="${www.dir}" />
+		<delete dir="${src.gen.dir}" />
+	</target>
+
+	<condition property="compile-javascript.notRequired">
+		<uptodate targetfile="${build.webapp.dir}/fears/fears.nocache.js">
+			<srcfiles dir="${src.dir}/java/eu/ist/fears/client" />
+		</uptodate>
+	</condition>
+
+	<target name="compile-javascript" depends="compile-code" unless="compile-javascript.notRequired">
+		<java classname="com.google.gwt.dev.Compiler" fork="true">
+			<jvmarg value="-Xmx256M" />
+
+			<classpath>
+				<pathelement path="${java.src.dir}" />
+				<pathelement path="${build.dir}" />
+				<!-- Tirei dir, o windows nao gostava de muitos parametros -->
+				<fileset file="${lib.dir}/gwt-dev.jar" />
+				<fileset file="${lib.dir}/gwt-user.jar" />
+			</classpath>
+			<arg value="-style" />
+			<arg value="DETAILED" />
+			<arg value="eu.ist.fears.Fears" />
+			<!-- <arg value="-style"/>
+	    	<arg value="DETAILED"/> -->
+		</java>
+	</target>
+
+	<target name="compile" depends="compile-code,compile-javascript">
+		<mkdir dir="${build.webapp.dir}" />
+		<mkdir dir="${build.webapp.dir}/WEB-INF" />
+		<mkdir dir="${build.webapp.dir}/WEB-INF/lib" />
+		<mkdir dir="${build.webapp.dir}/WEB-INF/classes" />
+		<copy todir="${build.webapp.dir}/WEB-INF">
+			<fileset dir="${webapp.src.dir}" />
+		</copy>
+		<copy todir="${build.webapp.dir}/WEB-INF/lib">
+			<fileset dir="${deploy.lib.dir}" />
+		</copy>
+		<copy todir="${build.webapp.dir}/WEB-INF/classes">
+			<fileset dir="${build.dir}" />
+			<fileset dir="${dml.src.dir}" />
+			<fileset dir="${config.dir}" />
+		</copy>
+		<copy todir="${build.webapp.dir}">
+			<fileset dir="${html.src.dir}" />
+		</copy>
+		<copy file="${build.webapp.dir}/Fears.html" tofile="${build.webapp.dir}/index.html">
+		</copy>
+	</target>
+
 	<target name="addAdmin" depends="compile">
-	    <java classname="eu.ist.fears.server.AddAdmin" >
-	    	<arg value="${adminUser}"/>
-	    	 <classpath>
-	    	 <pathelement path="${build.dir}"/>
-	    	 <!-- Tirei a dir lib, o windows nao gostava de tantos argumentos... -->
-	    	<fileset dir="${deploy.lib.dir}"/>
-	    	<fileset dir="${lib.dir}"/>
-	    	<pathelement path="${dml.src.dir}/"/>
-	    	</classpath>    
-	    </java>
-	  </target>
-	
-	<target name="deploy" depends="build-webapp">
-			<mkdir dir="${tomcat}"/>
-			<copy    todir="${tomcat}">
-			   <fileset dir="${build.webapp.dir}"/>
-			</copy>
-		</target>
-	
+		<java classname="eu.ist.fears.server.AddAdmin">
+			<arg value="${adminUser}" />
+			<classpath>
+				<pathelement path="${build.dir}" />
+				<fileset dir="${deploy.lib.dir}" />
+				<fileset dir="${lib.dir}" />
+				<pathelement path="${dml.src.dir}/" />
+			</classpath>
+		</java>
+	</target>
+
+	<target name="war" depends="compile">
+		<zip destfile="${deploy.dir}/fears.war" basedir="${build.webapp.dir}">
+		</zip>
+	</target>
 </project>

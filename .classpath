@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="src" path="src_gen"/>
 	<classpathentry kind="src" path="src/java"/>
-	<classpathentry kind="var" path="JUNIT_HOME/junit.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="config"/>
-	<classpathentry kind="lib" path="src/dml"/>
-	<classpathentry kind="lib" path="lib/gwt-user.jar"/>
+	<classpathentry kind="src" path="src_gen"/>
+	<classpathentry kind="lib" path="lib/gwt-dev.jar"/>
+	<classpathentry kind="lib" path="lib/ant-gwt.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/antlr.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/asm-3.0.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/asm-commons-3.0.jar"/>
@@ -19,6 +15,8 @@
 	<classpathentry kind="lib" path="deploy-lib/commons-pool.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/db-ojb-1.0.0.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/DMAPL.jar"/>
+	<classpathentry kind="lib" path="deploy-lib/dml-20090519.jar"/>
+	<classpathentry kind="lib" path="deploy-lib/fenix-framework-r42268.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/gwt-servlet.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/jfreechart.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/joda-time-1.5.2.jar"/>
@@ -26,7 +24,7 @@
 	<classpathentry kind="lib" path="deploy-lib/log4j-1.2.8.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/mysql-connector-java-5.1.5-bin.jar"/>
 	<classpathentry kind="lib" path="deploy-lib/xercesImpl.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/dml-20090519.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/fenix-framework-r42268.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

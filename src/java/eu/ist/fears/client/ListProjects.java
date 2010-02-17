@@ -9,63 +9,61 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import eu.ist.fears.common.communication.Communication;
-import eu.ist.fears.common.exceptions.ExceptionsTreatment;
+import eu.ist.fears.common.exceptions.FearsAsyncCallback;
 import eu.ist.fears.common.views.ViewProject;
 import eu.ist.fears.client.interfaceweb.ProjectWidget;
 
-public class ListProjects extends Composite{
+public class ListProjects extends Composite {
 
-	private Communication _com;
-	private VerticalPanel _projPanel;
+    private Communication com;
+    private VerticalPanel projPanel;
 
-	public ListProjects(){
+    public ListProjects() {
 
-		_com= new Communication("service");
-		_projPanel = new VerticalPanel();
-		_projPanel.setStyleName("projectsList");
-		init();
-		_projPanel.add(new Label("A carregar lista de Projectos..."));
-		initWidget(_projPanel);
+	com = new Communication("service");
+	projPanel = new VerticalPanel();
+	projPanel.setStyleName("projectsList");
+	init();
+	projPanel.add(new Label("A carregar lista de Projectos..."));
+	initWidget(projPanel);
+    }
+
+    private void init() {
+	projPanel.clear();
+	Label projectsTitle = new Label("Projectos");
+	projectsTitle.setStyleName("listProjectsTitle");
+	projPanel.add(projectsTitle);
+    }
+
+    public void update() {
+	com.getProjects(Cookies.getCookie("fears"), getProjectsCB);
+    }
+
+    protected void updateProjects(List<ViewProject> projects) {
+
+	init();
+
+	if (projects == null || projects.size() == 0) {
+	    projPanel.add(new Label("Nao ha Projectos"));
 	}
 
-	private void init(){
-		_projPanel.clear();
-		Label projectsTitle = new Label("Projectos");
-		projectsTitle.setStyleName("listProjectsTitle");
-		_projPanel.add(projectsTitle);
+	for (int i = 0; i < projects.size(); i++) {
+	    projPanel.add(new ProjectWidget(projects.get(i)));
 	}
 
+    }
 
-	public void update(){
-		_com.getProjects(Cookies.getCookie("fears"), getProjectsCB);	
+    AsyncCallback<Object> getProjectsCB = new FearsAsyncCallback<Object>() {
+	@SuppressWarnings("unchecked")
+	public void onSuccess(Object result) {
+	    updateProjects((List<ViewProject>) result);
 	}
+    };
 
-	protected void updateProjects(List<ViewProject> projects) {
-
-		init();
-
-		if(projects==null || projects.size() ==0){
-			_projPanel.add(new Label("Nao ha Projectos"));
-		}
-
-
-		for(int i=0;i< projects.size();i++){
-			_projPanel.add(new ProjectWidget(projects.get(i)));
-		}
-
+    AsyncCallback<Object> updateCB = new FearsAsyncCallback<Object>() {
+	public void onSuccess(Object result) {
+	    update();
 	}
-
-
-	AsyncCallback getProjectsCB = new ExceptionsTreatment() {
-		public void onSuccess(Object result){ 
-			updateProjects((List<ViewProject>) result);
-		}
-	};
-
-	AsyncCallback updateCB = new ExceptionsTreatment() {
-		public void onSuccess(Object result){ 
-			update();	
-		}
-	};
+    };
 
 }
