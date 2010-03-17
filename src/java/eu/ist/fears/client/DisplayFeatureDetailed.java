@@ -5,10 +5,10 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import eu.ist.fears.common.communication.Communication;
-import eu.ist.fears.common.exceptions.FearsAsyncCallback;
-import eu.ist.fears.common.views.ViewFeatureDetailed;
 import eu.ist.fears.client.interfaceweb.FeatureDetailedWidget;
+import eu.ist.fears.common.FearsAsyncCallback;
+import eu.ist.fears.common.communication.Communication;
+import eu.ist.fears.common.views.ViewFeatureDetailed;
 
 public class DisplayFeatureDetailed extends Composite {
 

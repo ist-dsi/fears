@@ -18,7 +18,6 @@ public class Init {
 		updateRepositoryStructureIfNeeded = true;
 	    }
 	};
-	
 	FenixFramework.initialize(config);
     }
 }

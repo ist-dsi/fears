@@ -29,8 +29,6 @@
 		<pathelement path="lib/gwt-dev.jar" />
 	</path>
 
-	<taskdef resource="dk/contix/ant/gwt/ant-gwt.xml" classpathref="classpath" />
-
 	<target name="generate-domain" description="Generates the domain classes">
 		<dml-compile dml="${fears.dml}" java-sources="${java.src.dir}" java-gen="${src.gen.dir}">
 			<classpath>
@@ -57,6 +55,22 @@
 			<arg value="-d" />
 			<arg value="${fears.dml}" />
 		</java>
+
+		<mkdir dir="${build.webapp.dir}" />
+		<mkdir dir="${build.webapp.dir}/WEB-INF" />
+		<mkdir dir="${build.webapp.dir}/WEB-INF/lib" />
+		<mkdir dir="${build.webapp.dir}/WEB-INF/classes" />
+		<copy todir="${build.webapp.dir}/WEB-INF">
+			<fileset dir="${webapp.src.dir}" />
+		</copy>
+		<copy todir="${build.webapp.dir}/WEB-INF/lib">
+			<fileset dir="${deploy.lib.dir}" />
+		</copy>
+		<copy todir="${build.webapp.dir}/WEB-INF/classes">
+			<fileset dir="${build.dir}" />
+			<fileset dir="${dml.src.dir}" />
+			<fileset dir="${config.dir}" />
+		</copy>
 	</target>
 
 	<target name="clean-all">
@@ -70,9 +84,14 @@
 	</target>
 
 	<condition property="compile-javascript.notRequired">
-		<uptodate targetfile="${build.webapp.dir}/fears/fears.nocache.js">
-			<srcfiles dir="${src.dir}/java/eu/ist/fears/client" />
-		</uptodate>
+		<and>
+			<uptodate targetfile="${build.webapp.dir}/fears/fears.nocache.js">
+				<srcfiles dir="${src.dir}/java/eu/ist/fears/client" />
+			</uptodate>
+			<uptodate targetfile="${build.webapp.dir}/fears/fears.nocache.js">
+				<srcfiles dir="${src.dir}/java/eu/ist/fears/common" />
+			</uptodate>
+		</and>
 	</condition>
 
 	<target name="compile-javascript" depends="compile-code" unless="compile-javascript.notRequired">
@@ -89,30 +108,28 @@
 			<arg value="-style" />
 			<arg value="DETAILED" />
 			<arg value="eu.ist.fears.Fears" />
-			<!-- <arg value="-style"/>
-	    	<arg value="DETAILED"/> -->
+		</java>
+		<java classname="com.google.gwt.dev.Compiler" fork="true">
+			<jvmarg value="-Xmx256M" />
+
+			<classpath>
+				<pathelement path="${java.src.dir}" />
+				<pathelement path="${build.dir}" />
+				<!-- Tirei dir, o windows nao gostava de muitos parametros -->
+				<fileset file="${lib.dir}/gwt-dev.jar" />
+				<fileset file="${lib.dir}/gwt-user.jar" />
+			</classpath>
+			<arg value="-style" />
+			<arg value="DETAILED" />
+			<arg value="eu.ist.fears.Login" />
 		</java>
 	</target>
 
 	<target name="compile" depends="compile-code,compile-javascript">
-		<mkdir dir="${build.webapp.dir}" />
-		<mkdir dir="${build.webapp.dir}/WEB-INF" />
-		<mkdir dir="${build.webapp.dir}/WEB-INF/lib" />
-		<mkdir dir="${build.webapp.dir}/WEB-INF/classes" />
-		<copy todir="${build.webapp.dir}/WEB-INF">
-			<fileset dir="${webapp.src.dir}" />
-		</copy>
-		<copy todir="${build.webapp.dir}/WEB-INF/lib">
-			<fileset dir="${deploy.lib.dir}" />
-		</copy>
-		<copy todir="${build.webapp.dir}/WEB-INF/classes">
-			<fileset dir="${build.dir}" />
-			<fileset dir="${dml.src.dir}" />
-			<fileset dir="${config.dir}" />
-		</copy>
 		<copy todir="${build.webapp.dir}">
 			<fileset dir="${html.src.dir}" />
 		</copy>
+		<copy tofile="${build.webapp.dir}/WEB-INF/classes/build.properties" file="build.properties" />
 		<copy file="${build.webapp.dir}/Fears.html" tofile="${build.webapp.dir}/index.html">
 		</copy>
 	</target>

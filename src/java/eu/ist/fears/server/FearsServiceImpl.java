@@ -23,7 +23,7 @@ import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import edu.yale.its.tp.cas.client.ServiceTicketValidator;
-import eu.ist.fears.common.FearsConfig;
+import eu.ist.fears.common.FearsConfigClient;
 import eu.ist.fears.common.State;
 import eu.ist.fears.common.communication.FearsService;
 import eu.ist.fears.common.exceptions.FearsException;
@@ -59,9 +59,8 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
     public static String getNickName(String user) {
 	String nick = user;
 	String response = "";
-
-	if (table.get(user) == null) { 	
-	    if (FearsConfig.PRODUCTION) {
+	if (FearsConfigServer.isRunningInProduction()) {
+	    if (table.get(user) == null) {
 		URL url;
 		try {
 		    url = new URL("https://fenix.ist.utl.pt//external/NameResolution.do?method=resolve&id=" + user
@@ -90,10 +89,10 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 
 		return nick;
 	    } else {
-		return "Foo Bar";
+		return table.get(user);
 	    }
-	} else {
-	    return table.get(user);
+	}else{
+	    return SimpleNameGenerator.solveName(user);
 	}
     }
 
@@ -455,45 +454,49 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
     }
 
     public String validateTicket(String ticket, boolean admin, String sessionID) {
+	if (FearsConfigServer.isRunningInProduction()) {
+	    String user = null;
+	    String errorCode = null;
+	    String errorMessage = null;
 
-	String user = null;
-	String errorCode = null;
-	String errorMessage = null;
+	    ServiceTicketValidator cas = new ServiceTicketValidator();
+	    /* instantiate a new ServiceTicketValidator */
 
-	ServiceTicketValidator cas = new ServiceTicketValidator();
-	/* instantiate a new ServiceTicketValidator */
+	    /* set its parameters */
+	    cas.setCasValidateUrl(FearsConfigClient.getCasUrl() + "serviceValidate");
+	    if (admin)
+		cas.setService(FearsConfigClient.getFearsUrl() + "Admin.html");
+	    else
+		cas.setService(FearsConfigClient.getFearsUrl() + "Fears.html");
 
-	/* set its parameters */
-	cas.setCasValidateUrl(FearsConfig.getCasUrl() + "serviceValidate");
-	if (admin)
-	    cas.setService(FearsConfig.getFearsUrl() + "Admin.html");
-	else
-	    cas.setService(FearsConfig.getFearsUrl() + "Fears.html");
+	    cas.setServiceTicket(ticket);
 
-	cas.setServiceTicket(ticket);
+	    try {
+		cas.validate();
+	    } catch (IOException e) {
+		System.out.println("Validate error:" + e);
+		e.printStackTrace();
+	    } catch (SAXException e) {
+		System.out.println("SAXException:" + e);
+		e.printStackTrace();
+	    } catch (ParserConfigurationException e) {
+		System.out.println("ParserConfigurationException:" + e);
+		e.printStackTrace();
+	    }
 
-	try {
-	    cas.validate();
-	} catch (IOException e) {
-	    System.out.println("Validate error:" + e);
-	    e.printStackTrace();
-	} catch (SAXException e) {
-	    System.out.println("SAXException:" + e);
-	    e.printStackTrace();
-	} catch (ParserConfigurationException e) {
-	    System.out.println("ParserConfigurationException:" + e);
-	    e.printStackTrace();
-	}
-
-	if (cas.isAuthenticationSuccesful()) {
-	    user = cas.getUser();
+	    if (cas.isAuthenticationSuccesful()) {
+		user = cas.getUser();
+	    } else {
+		System.out.println("CAS ERROR\n");
+		errorCode = cas.getErrorCode();
+		errorMessage = cas.getErrorMessage();
+		System.out.println(errorCode + errorMessage);
+	    }
+	    return user;
 	} else {
-	    System.out.println("CAS ERROR\n");
-	    errorCode = cas.getErrorCode();
-	    errorMessage = cas.getErrorMessage();
-	    System.out.println(errorCode + errorMessage);
+	    String user = ticket.substring(0, ticket.indexOf('/'));
+	    return user;
 	}
-	return user;
     }
 
     public List<ViewProject> projectUp(String projectId, String cookie) throws FearsException {

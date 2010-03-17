@@ -19,8 +19,8 @@ import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import eu.ist.fears.client.interfaceweb.ProjectWidget;
+import eu.ist.fears.common.FearsAsyncCallback;
 import eu.ist.fears.common.communication.Communication;
-import eu.ist.fears.common.exceptions.FearsAsyncCallback;
 import eu.ist.fears.common.views.ViewProject;
 
 public class ListProjectsWidget extends Composite {

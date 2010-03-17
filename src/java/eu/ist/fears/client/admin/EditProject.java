@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.TextBox;
 
 import eu.ist.fears.client.Fears;
 import eu.ist.fears.client.interfaceweb.CreateEditProjectFeature;
-import eu.ist.fears.common.exceptions.FearsAsyncCallback;
+import eu.ist.fears.common.FearsAsyncCallback;
 import eu.ist.fears.common.views.ViewProject;
 
 public class EditProject extends CreateEditProjectFeature {

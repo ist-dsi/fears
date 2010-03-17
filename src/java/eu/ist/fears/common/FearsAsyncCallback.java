@@ -1,9 +1,13 @@
-package eu.ist.fears.common.exceptions;
+package eu.ist.fears.common;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTML;
 
 import eu.ist.fears.client.Fears;
+import eu.ist.fears.common.exceptions.FearsException;
+import eu.ist.fears.common.exceptions.NoFeatureException;
+import eu.ist.fears.common.exceptions.NoProjectException;
+import eu.ist.fears.common.exceptions.NoUserException;
 
 public abstract class FearsAsyncCallback<T> implements AsyncCallback<T> {
 

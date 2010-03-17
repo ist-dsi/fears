@@ -8,10 +8,10 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import eu.ist.fears.common.communication.Communication;
-import eu.ist.fears.common.exceptions.FearsAsyncCallback;
-import eu.ist.fears.common.views.ViewProject;
 import eu.ist.fears.client.interfaceweb.ProjectWidget;
+import eu.ist.fears.common.FearsAsyncCallback;
+import eu.ist.fears.common.communication.Communication;
+import eu.ist.fears.common.views.ViewProject;
 
 public class ListProjects extends Composite {
 

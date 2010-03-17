@@ -22,9 +22,9 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import eu.ist.fears.client.interfaceweb.FeatureResumeWidget;
+import eu.ist.fears.common.FearsAsyncCallback;
 import eu.ist.fears.common.State;
 import eu.ist.fears.common.communication.Communication;
-import eu.ist.fears.common.exceptions.FearsAsyncCallback;
 import eu.ist.fears.common.views.ViewFeatureDetailed;
 import eu.ist.fears.common.views.ViewFeatureResume;
 

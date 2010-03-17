@@ -1,22 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app>
-    <servlet>
-        <servlet-name>
-            FearsService
-        </servlet-name>
-        <servlet-class>
-            eu.ist.fears.server.FearsServiceImpl
-        </servlet-class>
-        <load-on-startup>
-            1
+	<servlet>
+		<servlet-name>LoginRedirect</servlet-name>
+		<servlet-class>eu.ist.fears.server.LoginServlet</servlet-class>
+		<load-on-startup>
+			1
         </load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>
-            FearsService
+	</servlet>
+	<servlet>
+		<servlet-name>
+			FearsService
         </servlet-name>
-        <url-pattern>
-            /fears/service
+		<servlet-class>
+			eu.ist.fears.server.FearsServiceImpl
+        </servlet-class>
+		<load-on-startup>
+			1
+        </load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>
+			LoginRedirect
+        </servlet-name>
+		<url-pattern>
+			/redirectLogin
         </url-pattern>
-    </servlet-mapping>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>
+			FearsService
+        </servlet-name>
+		<url-pattern>
+			/fears/service
+        </url-pattern>
+	</servlet-mapping>
 </web-app>

@@ -14,9 +14,9 @@ import com.google.gwt.user.client.ui.Image;
 
 import eu.ist.fears.client.DisplayFeatureDetailed;
 import eu.ist.fears.client.Fears;
-import eu.ist.fears.common.FearsConfig;
+import eu.ist.fears.common.FearsAsyncCallback;
+import eu.ist.fears.common.FearsConfigClient;
 import eu.ist.fears.common.communication.Communication;
-import eu.ist.fears.common.exceptions.FearsAsyncCallback;
 import eu.ist.fears.common.views.ViewVoterResume;
 
 public class Header extends Composite {
@@ -75,10 +75,10 @@ public class Header extends Composite {
 	if (!Fears.isLogedIn()) {
 	    votes.setText("");
 	    if (adminPage)
-		sessionLink.setHTML("<a href=\"" + FearsConfig.getCasUrl() + "?service=" + GWT.getHostPageBaseURL()
+		sessionLink.setHTML("<a href=\"" + FearsConfigClient.getCasUrl() + "?service=" + GWT.getHostPageBaseURL()
 			+ "Admin.html\">login</a>");
 	    else
-		sessionLink.setHTML("<a href=\"" + FearsConfig.getCasUrl() + "?service=" + GWT.getHostPageBaseURL()
+		sessionLink.setHTML("<a href=\"" + FearsConfigClient.getCasUrl() + "?service=" + GWT.getHostPageBaseURL()
 			+ "Fears.html\">login</a>");
 
 	    welcMessage.setHTML("Votos de&nbsp;" + Fears.getNickname());
@@ -95,9 +95,9 @@ public class Header extends Composite {
 	    }
 
 	    if (adminPage && Fears.isAdminUser())
-		sessionLink.setHTML("<a href=\"" + FearsConfig.getCasUrl() + "logout\">logout</a>");
+		sessionLink.setHTML("<a href=\"" + FearsConfigClient.getCasUrl() + "logout\">logout</a>");
 	    else
-		sessionLink.setHTML("<a href=\"" + FearsConfig.getCasUrl() + "logout\">logout</a>");
+		sessionLink.setHTML("<a href=\"" + FearsConfigClient.getCasUrl() + "logout\">logout</a>");
 
 	}
 

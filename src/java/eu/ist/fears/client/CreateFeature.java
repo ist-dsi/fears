@@ -15,7 +15,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 
 import eu.ist.fears.client.interfaceweb.CreateEditProjectFeature;
-import eu.ist.fears.common.exceptions.FearsAsyncCallback;
+import eu.ist.fears.common.FearsAsyncCallback;
 
 public class CreateFeature extends CreateEditProjectFeature {
 
@@ -125,9 +125,9 @@ public class CreateFeature extends CreateEditProjectFeature {
 	}
     };
 
-    AsyncCallback<Object> getProjectName = new FearsAsyncCallback<Object>() {
-	public void onSuccess(Object result) {
-	    updateProjectName((String) result);
+    AsyncCallback<String> getProjectName = new FearsAsyncCallback<String>() {
+	public void onSuccess(String result) {
+	    updateProjectName(result);
 	}
 
     };

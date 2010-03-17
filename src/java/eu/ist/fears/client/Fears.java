@@ -21,9 +21,9 @@ import com.google.gwt.user.client.ui.Widget;
 import eu.ist.fears.client.admin.Admin;
 import eu.ist.fears.client.interfaceweb.Header;
 import eu.ist.fears.client.interfaceweb.Path;
-import eu.ist.fears.common.FearsConfig;
+import eu.ist.fears.common.FearsAsyncCallback;
+import eu.ist.fears.common.FearsConfigClient;
 import eu.ist.fears.common.communication.Communication;
-import eu.ist.fears.common.exceptions.FearsAsyncCallback;
 import eu.ist.fears.common.views.ViewVoterResume;
 
 /**
@@ -59,6 +59,7 @@ public class Fears extends Widget implements EntryPoint, ValueChangeHandler<Stri
 	History.fireCurrentHistoryState();
     }
 
+    @SuppressWarnings("deprecation")
     public void init() {
 	com = new Communication("service");
 
@@ -81,7 +82,8 @@ public class Fears extends Widget implements EntryPoint, ValueChangeHandler<Stri
 	frame.add(path);
 	frame.add(content);
 	footer.setStyleName("footer");
-	footer.add(new HTML("© 2009, Instituto Superior Técnico. Todos os direitos reservados.  |  &nbsp;"));
+	footer.add(new HTML("© " + (new Date().getYear() + 1900)
+		+ ", Instituto Superior Técnico. Todos os direitos reservados.  |  &nbsp;"));
 	footer.add(new Hyperlink(" Sobre o FeaRS", "help"));
 	RootPanel.get().add(footer);
 
@@ -302,9 +304,9 @@ public class Fears extends Widget implements EntryPoint, ValueChangeHandler<Stri
 	verifyLogin(false);
 
 	if (this instanceof Admin)
-	    Window.open(FearsConfig.getCasUrl() + "?service=" + GWT.getHostPageBaseURL() + "Admin.html", "_self", "");
+	    Window.open(FearsConfigClient.getCasUrl() + "?service=" + GWT.getHostPageBaseURL() + "Admin.html", "_self", "");
 	else
-	    Window.open(FearsConfig.getCasUrl() + "?service=" + GWT.getHostPageBaseURL() + "Fears.html", "_self", "");
+	    Window.open(FearsConfigClient.getCasUrl() + "?service=" + GWT.getHostPageBaseURL() + "Fears.html", "_self", "");
 
     }
 
@@ -324,7 +326,7 @@ public class Fears extends Widget implements EntryPoint, ValueChangeHandler<Stri
 
     public void setCookie(String value, ViewVoterResume user) {
 	final long DURATION = 1000 * 60 * 60 * 1; // duration remembering login,
-						  // 1 hour
+	// 1 hour
 	Date expires = new Date(System.currentTimeMillis() + DURATION);
 	Cookies.setCookie("fears", value, expires);
 	setCurrentUser(user);
@@ -449,11 +451,12 @@ public class Fears extends Widget implements EntryPoint, ValueChangeHandler<Stri
      */
 
     public static native String getParamString() /*-{
-						 return $wnd.location.search;
-						 }-*/;
+        return $wnd.location.search;
+    }-*/;
 
     public static String getTicket() {
 	String string = getParamString();
+	
 	if (!string.startsWith("?ticket="))
 	    return null;
 
@@ -496,8 +499,8 @@ public class Fears extends Widget implements EntryPoint, ValueChangeHandler<Stri
 
 	public void onSuccess(Object result) {
 	    ViewVoterResume voter = (ViewVoterResume) result;
-	    if (voter == null) {
-	    } else {
+	    if (voter != null) {
+		Log.log("yes");
 		Fears.setCurrentUser(voter);
 		loggedIn();
 		return;
@@ -517,7 +520,7 @@ public class Fears extends Widget implements EntryPoint, ValueChangeHandler<Stri
 
 	header.update(false, false);
 	parseURL(historyToken, this);
-	
+
     }
 
 }
