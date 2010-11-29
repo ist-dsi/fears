@@ -11,9 +11,9 @@ public class Init {
 	Config config = new Config() {
 	    {
 		domainModelPath = "/fears.dml";
-		dbAlias = "//localhost:3306/fears";
-		dbUsername = "root";
-		dbPassword = "";
+		dbAlias = PropertiesManager.getProperty("database.alias");
+		dbUsername = PropertiesManager.getProperty("database.username");
+		dbPassword = PropertiesManager.getProperty("database.password");
 		rootClass = FearsApp.class;
 		updateRepositoryStructureIfNeeded = true;
 	    }
