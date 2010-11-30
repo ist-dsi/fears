@@ -465,10 +465,10 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	    /* set its parameters */
 	    cas.setCasValidateUrl(FearsConfigClient.getCasUrl() + "serviceValidate");
 	    if (admin)
-		cas.setService(FearsConfigClient.getFearsUrl() + "Admin.html");
+		cas.setService(PropertiesManager.getProperty("production.url") + "Admin.html");
 	    else
-		cas.setService(FearsConfigClient.getFearsUrl() + "Fears.html");
-
+		cas.setService(PropertiesManager.getProperty("production.url") + "Fears.html");
+	    
 	    cas.setServiceTicket(ticket);
 
 	    try {
