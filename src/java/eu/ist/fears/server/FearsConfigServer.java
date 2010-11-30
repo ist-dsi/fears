@@ -5,7 +5,7 @@ public class FearsConfigServer {
 	return PropertiesManager.getProperty("deployment.type").equals("production");
     }
     
-    public static String fenixRPCPassword(){
-	return  PropertiesManager.getProperty("password");
+    public static String fenixAPIPassword(){
+	return  PropertiesManager.getProperty("fenix.api.password");
     }
 }

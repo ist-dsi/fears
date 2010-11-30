@@ -29,7 +29,7 @@ public class Header extends Composite {
     protected Communication com;
     protected HTML votes;
 
-    public Header(String username, boolean loggedIn, boolean admin) {
+    public Header() {
 	com = new Communication("service");
 	votes = new HTML();
 	headerBox = new HorizontalPanel();
@@ -67,22 +67,16 @@ public class Header extends Composite {
 	right.add(sessionLink);
 
 	initWidget(headerBox);
-	update(false, admin);
+	update(false, false);
     }
 
     public void update(boolean inProjectPage, boolean adminPage) {
 
 	if (!Fears.isLogedIn()) {
 	    votes.setText("");
-	    if (adminPage)
-		sessionLink.setHTML("<a href=\"" + FearsConfigClient.getCasUrl() + "?service=" + GWT.getHostPageBaseURL()
-			+ "Admin.html\">login</a>");
-	    else
-		sessionLink.setHTML("<a href=\"" + FearsConfigClient.getCasUrl() + "?service=" + GWT.getHostPageBaseURL()
-			+ "Fears.html\">login</a>");
-
+	    sessionLink.setHTML("<a href=\"" + FearsConfigClient.getCasUrl() + "?service=" + GWT.getHostPageBaseURL()
+		    + (adminPage ? "Admin.html" : "Fears.html") + "\">login</a>");
 	    welcMessage.setHTML("Votos de&nbsp;" + Fears.getNickname());
-
 	} else {
 	    if (inProjectPage) {
 		votes.setHTML("Tem <b>" + Fears.getVotesLeft() + "</b> votos dispon&iacute;veis&nbsp;|&nbsp;");
@@ -93,12 +87,7 @@ public class Header extends Composite {
 		welcMessage.setHTML("<a href=\"#" + "viewUser" + Fears.getUserOID() + "\">" + "Votos de&nbsp;"
 			+ Fears.getNickname() + "</a>");
 	    }
-
-	    if (adminPage && Fears.isAdminUser())
-		sessionLink.setHTML("<a href=\"" + FearsConfigClient.getCasUrl() + "logout\">logout</a>");
-	    else
-		sessionLink.setHTML("<a href=\"" + FearsConfigClient.getCasUrl() + "logout\">logout</a>");
-
+	    sessionLink.setHTML("<a href=\"" + FearsConfigClient.getCasUrl() + "logout\">logout</a>");
 	}
 
 	if (adminPage && Fears.isAdminUser()) {
@@ -110,12 +99,12 @@ public class Header extends Composite {
 
     }
 
-    public void update(String projectID, DisplayFeatureDetailed d) {
-	com.getCurrentVoter(projectID, Cookies.getCookie("fears"), new GetCurrentVoter(d));
+    public void update(String projectID, DisplayFeatureDetailed displayFeatureDetail) {
+	com.getCurrentVoter(projectID, Cookies.getCookie("fears"), new GetCurrentVoter(displayFeatureDetail));
     }
 
-    public void update(String projectID, List<FeatureResumeWidget> f) {
-	com.getCurrentVoter(projectID, Cookies.getCookie("fears"), new GetCurrentVoter(f));
+    public void update(String projectID, List<FeatureResumeWidget> featureResumeWidgetList) {
+	com.getCurrentVoter(projectID, Cookies.getCookie("fears"), new GetCurrentVoter(featureResumeWidgetList));
     }
 
     public void update(String projectID) {

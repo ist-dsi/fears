@@ -3,6 +3,10 @@ package eu.ist.fears.server.domain;
 
 enum eu.ist.fears.common.State as State;
 
+
+/** 
+ * Entities
+ */
 class FearsApp;
 
 class Project {
@@ -13,21 +17,41 @@ class Project {
     int listPosition;
 }
 
-relation FearsAppHasProjects {
-    FearsApp playsRole fearsApp;
-    Project playsRole project {
-        multiplicity *;
-    }
-}
 
 class User {
     String username;
 }
 
 class Voter {
-int votesUsed;
+    int votesUsed;
 }
 
+class FeatureRequest {
+    String name;
+    String description;
+    State state;
+    int webID;
+    DateTime createdTime;
+    DateTime lastModification;
+}
+
+class Comment {	
+    String comment;
+    State newState;
+    State oldState;
+    DateTime createdTime;
+}
+
+/** 
+ * Relationships
+ */
+
+relation FearsAppHasProjects {
+    FearsApp playsRole fearsApp;
+    Project playsRole project {
+        multiplicity *;
+    }
+}
 
 relation FearsAppHasUsers {
     FearsApp playsRole fearsApp{
@@ -89,29 +113,11 @@ relation ProjectAuthor {
     }
 }
 
-
-
-class FeatureRequest {
-    String name;
-    String description;
-    State state;
-    int webID;
-    DateTime createdTime;
-    DateTime lastModification;
-}
-
 relation ProjectFeatureRequests {
     Project playsRole project;
     FeatureRequest playsRole featureRequest {
         multiplicity *;
     }
-}
-
-class Comment {	
-    String comment;
-    State newState;
-    State oldState;
-    DateTime createdTime;
 }
 
 relation FeatureRequestComments {

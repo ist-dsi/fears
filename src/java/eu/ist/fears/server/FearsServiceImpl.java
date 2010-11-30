@@ -64,7 +64,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 		URL url;
 		try {
 		    url = new URL("https://fenix.ist.utl.pt//external/NameResolution.do?method=resolve&id=" + user
-			    + "&username=fenixRemoteRequests&password=" + FearsConfigServer.fenixRPCPassword());
+			    + "&username=fenixRemoteRequests&password=" + FearsConfigServer.fenixAPIPassword());
 		    URLConnection conn = url.openConnection();
 		    // Get the response
 		    BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), Charset.forName("UTF-8")));

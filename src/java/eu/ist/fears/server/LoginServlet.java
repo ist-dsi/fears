@@ -17,7 +17,7 @@ public class LoginServlet extends HttpServlet {
 	if (FearsConfigServer.isRunningInProduction()) {
 	    url = PropertiesManager.getProperty("production.login.url") + "?";
 	} else {
-	    url = "Login.html?gwt.codesvr=localhost:9997&";
+	    url = "Login.html?";
 	}
 	response.sendRedirect(url + "service=" + request.getParameter("service"));
     }

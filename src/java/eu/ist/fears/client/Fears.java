@@ -62,7 +62,8 @@ public class Fears extends Widget implements EntryPoint, ValueChangeHandler<Stri
     @SuppressWarnings("deprecation")
     public void init() {
 	com = new Communication("service");
-
+	verifyAuthentication();
+	
 	frameBox = new VerticalPanel();
 	frame = new VerticalPanel();
 	content = new VerticalPanel();
@@ -71,7 +72,7 @@ public class Fears extends Widget implements EntryPoint, ValueChangeHandler<Stri
 	path = new Path();
 	curretUser = new ViewVoterResume("guest", "guest", null, false);
 	currentProject = null;
-	header = new Header("guest", validCookie, false);
+	header = new Header();
 	RootPanel.get().setStyleName("centered");
 	Window.setMargin("0px");
 	RootPanel.get().add(header);
@@ -87,6 +88,12 @@ public class Fears extends Widget implements EntryPoint, ValueChangeHandler<Stri
 	footer.add(new Hyperlink(" Sobre o FeaRS", "help"));
 	RootPanel.get().add(footer);
 
+	
+	Fears.getHeader().update(false, isAdminPage());
+
+    }
+
+    private void verifyAuthentication() {
 	String ticket = getTicket();
 	if (ticket != null && !(ticket.length() == 0)) {
 	    if (this instanceof Admin)
@@ -96,10 +103,7 @@ public class Fears extends Widget implements EntryPoint, ValueChangeHandler<Stri
 
 	    return;
 	}
-
 	verifyLogin(false);
-	Fears.getHeader().update(false, isAdminPage());
-
     }
 
     public static void setContet(Widget w) {
@@ -340,7 +344,6 @@ public class Fears extends Widget implements EntryPoint, ValueChangeHandler<Stri
 	}
 
 	String sessionID = Cookies.getCookie("fears");
-
 	com.validateSessionID(sessionID, new ValidateSession(this, tryToLogin));
 	return false;
 

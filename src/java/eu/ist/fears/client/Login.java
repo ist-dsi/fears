@@ -20,7 +20,7 @@ public class Login implements EntryPoint{
 	sendButton.addClickHandler(new ClickHandler() {
 	    
 	    public void onClick(ClickEvent arg0) {
-		Window.open("Fears.html?ticket=" + nameField.getText() + "/bogusTicket&gwt.codesvr=localhost:9997", "_self", "");		
+		Window.open("Fears.html?ticket=" + nameField.getText() + "/bogusTicket", "_self", "");		
 	    }
 	});
 	nameField.setFocus(true);
