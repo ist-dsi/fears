@@ -463,7 +463,7 @@ public class FearsServiceImpl extends RemoteServiceServlet implements FearsServi
 	    /* instantiate a new ServiceTicketValidator */
 
 	    /* set its parameters */
-	    cas.setCasValidateUrl(FearsConfigClient.getCasUrl() + "serviceValidate");
+	    cas.setCasValidateUrl(PropertiesManager.getProperty("production.login.url") + "serviceValidate");
 	    if (admin)
 		cas.setService(PropertiesManager.getProperty("production.url") + "Admin.html");
 	    else
