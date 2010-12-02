@@ -308,9 +308,9 @@ public class Fears extends Widget implements EntryPoint, ValueChangeHandler<Stri
 	verifyLogin(false);
 
 	if (this instanceof Admin)
-	    Window.open(FearsConfigClient.getCasUrl() + "?service=" + GWT.getHostPageBaseURL() + "Admin.html", "_self", "");
+	    Window.open("redirectLogin?service=" + GWT.getHostPageBaseURL() + "Admin.html", "_self", "");
 	else
-	    Window.open(FearsConfigClient.getCasUrl() + "?service=" + GWT.getHostPageBaseURL() + "Fears.html", "_self", "");
+	    Window.open("redirectLogin?service=" + GWT.getHostPageBaseURL() + "Fears.html", "_self", "");
 
     }
 
