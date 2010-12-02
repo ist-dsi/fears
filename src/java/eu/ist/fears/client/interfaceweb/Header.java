@@ -75,7 +75,7 @@ public class Header extends Composite {
 	if (!Fears.isLogedIn()) {
 	    votes.setText("");
 	    sessionLink.setHTML("<a href=\"redirectLogin?service=" + GWT.getHostPageBaseURL()
-		    + (adminPage ? "Admin.html" : "index.html") + "\">login</a>");
+		    + (adminPage ? "Admin.html" : "Fears.html") + "\">login</a>");
 	    welcMessage.setHTML("Votos de&nbsp;" + Fears.getNickname());
 	} else {
 	    if (inProjectPage) {
