@@ -50,7 +50,7 @@ public class Header extends Composite {
 	header.add(right);
 	left.setStyleName("left");
 	left.add(new Image("ist_01.gif"));
-	left.add(new HTML("&nbsp;&nbsp;<a href=\"index.html\">fears</a> |"));
+	left.add(new HTML("&nbsp;&nbsp;<a href=\"index.html\">FeaRS</a> |"));
 
 	left.add(adminLink);
 	left.add(adminAdministrators);
@@ -74,7 +74,7 @@ public class Header extends Composite {
 
 	if (!Fears.isLogedIn()) {
 	    votes.setText("");
-	    sessionLink.setHTML("<a href=\"" + FearsConfigClient.getCasUrl() + "?service=" + GWT.getHostPageBaseURL()
+	    sessionLink.setHTML("<a href=\"redirectLogin?service=" + GWT.getHostPageBaseURL()
 		    + (adminPage ? "Admin.html" : "Fears.html") + "\">login</a>");
 	    welcMessage.setHTML("Votos de&nbsp;" + Fears.getNickname());
 	} else {

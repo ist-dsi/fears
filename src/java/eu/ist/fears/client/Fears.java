@@ -130,6 +130,7 @@ public class Fears extends Widget implements EntryPoint, ValueChangeHandler<Stri
 
     public static void setCurrentUser(ViewVoterResume v) {
 	curretUser = v;
+	header.update((getCurrentProject() != null ? true : false), isAdminUser());
     }
 
     public static boolean isLogedIn() {

@@ -2,29 +2,38 @@
 <classpath>
 	<classpathentry kind="src" path="src/java"/>
 	<classpathentry kind="src" path="src_gen"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="lib" path="lib/gwt-dev.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/antlr.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/asm-3.0.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/asm-commons-3.0.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/casclient-2.1.1.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/commons-collections-3.1.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/commons-dbcp.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/commons-lang-2.0.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/commons-pool.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/db-ojb-1.0.0.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/DMAPL.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/dml-20090519.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/fenix-framework-r42268.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/gwt-servlet.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/jfreechart.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/joda-time-1.5.2.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/jvstm.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/log4j-1.2.8.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/mysql-connector-java-5.1.5-bin.jar"/>
-	<classpathentry kind="lib" path="deploy-lib/xercesImpl.jar"/>
-	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="deploy-lib/fenix-tools.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/antlr.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/asm-3.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/asm-commons-3.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/casclient-2.1.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-dbcp.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-lang-2.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-pool.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/db-ojb-1.0.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/DMAPL.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/dml-20090519.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/fenix-framework-r42268.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/fenix-tools.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-servlet.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/jfreechart.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/joda-time-1.5.2.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/jvstm.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/log4j-1.2.8.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/mysql-connector-java-5.1.5-bin.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="/home/nurv/bolsa/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301309/gwt-2.0.4/gwt-user.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/home/nurv/bolsa/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301309/gwt-2.0.4/doc/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/nurv/bolsa/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301309/gwt-2.0.4/gwt-dev.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/home/nurv/bolsa/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301309/gwt-2.0.4/doc/javadoc/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
