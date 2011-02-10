@@ -3,6 +3,8 @@ package eu.ist.fears.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -10,6 +12,7 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
@@ -174,9 +177,10 @@ public class ListFeatures extends Composite {
 	lb.addItem("Ordenar por Votos");
 	lb.addItem("Ordenar por Data de Criação");
 	lb.setVisibleItemCount(1);
-	lb.addClickHandler(new ClickHandler() {
+	lb.addChangeHandler(new ChangeHandler() {
 	    
-	    public void onClick(ClickEvent event) {
+	    @Override
+	    public void onChange(ChangeEvent event) {
 		com.search(projectID, sBox.getText(), lb.getSelectedIndex(), 0, actualFilter, Cookies.getCookie("Fears"),
 			getFeaturesCB);
 	    }
