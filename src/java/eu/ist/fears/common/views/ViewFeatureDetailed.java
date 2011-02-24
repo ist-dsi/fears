@@ -20,7 +20,7 @@ public class ViewFeatureDetailed extends ViewFeatureResume implements Serializab
 	    String description, String authorNick, String authorOID, String date, boolean isProjectAdmin,
 	    List<ViewVoterResume> voters, List<ViewComment> comments) {
 	super(projectName, projectID, name, featureID, state, userHasvoted, description, voters.size(), comments.size(),
-		authorNick, authorOID, date);
+		authorNick, authorOID, date,false);
 	this.comments = comments;
 	this.isProjectAdmin = isProjectAdmin;
     }

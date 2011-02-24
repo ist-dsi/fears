@@ -23,9 +23,14 @@ public class ViewFeatureResume implements IsSerializable {
     public ViewFeatureResume() {
 
     }
-
+    
     public ViewFeatureResume(String projectName, int projectID, String name, int featureID, State state, boolean userHasvoted,
 	    String description, int votes, int nComments, String authorNick, String authorOID, String date) {
+	this(projectName, projectID, name, featureID, state, userHasvoted, description, votes, nComments, authorNick, authorOID, date, true);
+    }
+
+    public ViewFeatureResume(String projectName, int projectID, String name, int featureID, State state, boolean userHasvoted,
+	    String description, int votes, int nComments, String authorNick, String authorOID, String date, boolean shorten) {
 	this.projectName = projectName;
 	this.projectID = projectID;
 	this.name = name;
@@ -33,7 +38,7 @@ public class ViewFeatureResume implements IsSerializable {
 	this.state = state;
 	this.userHasVoted = userHasvoted;
 	int length = description.length();
-	if (length > 194) {
+	if (length > 194 && shorten) {
 	    _description = description.substring(0, 194) + " (...)";
 	} else
 	    _description = description;
